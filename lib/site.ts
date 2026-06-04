@@ -37,6 +37,7 @@ export const NAV = [
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -174,6 +175,103 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
 export function getCategory(slug: string): ServiceCategory | undefined {
   return SERVICE_CATEGORIES.find((c) => c.slug === slug);
 }
+
+
+// Confirmed credentials — EDIT or remove any that aren't 100% accurate.
+export const CREDENTIALS = [
+  "CMIOSH \u2014 Chartered",
+  "AIFireE (IFE)",
+  "MIFSM",
+  "DipFRA",
+  "ISO 45001",
+  "PI Insured",
+];
+
+// About-your-assessor — REPLACE the placeholder name/bio with your real details.
+export const ASSESSOR = {
+  name: "Batir Turakulov",
+  role: "Principal Fire Risk Assessor & Health & Safety Consultant",
+  // Save a professional headshot to public/assessor.jpg to replace the initials.
+  photo: "/assessor.jpg",
+  bio:
+    "With hands-on experience across residential, commercial, and construction premises, I carry out fire risk assessments, fire strategies, and health & safety work personally — so you deal directly with a qualified assessor, not a call centre. Every recommendation is proportionate, grounded in current UK legislation, and explained in plain English.",
+  credentials: ["CMIOSH", "DipFRA", "MIIRSM", "MIWFM", "AIEMA", "AIFireE", "MIFSM"],
+};
+
+export const WHO_WE_HELP = [
+  {
+    title: "Landlords & Responsible Persons",
+    body: "Meet your duties under the Fire Safety Order with clear, prioritised assessments and straightforward guidance — so you stay compliant and protect your residents.",
+  },
+  {
+    title: "Managing Agents",
+    body: "Portfolio-wide fire risk assessments, action tracking, and a single point of contact across all your blocks — with audit-ready records whenever you need them.",
+  },
+  {
+    title: "Construction & Developers",
+    body: "Fire strategies, RAMS, and construction phase plans that support planning and Building Regulations, delivered alongside your project team.",
+  },
+  {
+    title: "Businesses & Employers",
+    body: "Health & safety risk assessments, audits, and policies that keep your people safe and your business compliant under the Health and Safety at Work Act.",
+  },
+];
+
+export const FAQS = [
+  {
+    q: "How often do I need a fire risk assessment?",
+    a: "There is no fixed legal interval, but the Fire Safety Order requires your assessment to be kept up to date. As a rule of thumb, review it annually and carry out a fresh assessment every 1–2 years, or sooner after significant changes to the building, its use, or its occupants.",
+  },
+  {
+    q: "Is a fire risk assessment a legal requirement?",
+    a: "Yes. Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person for almost any non-domestic premises — and the common parts of residential blocks — must carry out and maintain a suitable and sufficient fire risk assessment.",
+  },
+  {
+    q: "What is the difference between a Type 1 and Type 4 fire risk assessment?",
+    a: "The types refer to how far the assessment looks into a building. Type 1 is the most common, non-destructive review of common parts. Types 2–4 go progressively further, including destructive inspection and sampling of individual flats, and are used where there is reason to look deeper.",
+  },
+  {
+    q: "Do I need a fire strategy as well as a fire risk assessment?",
+    a: "Not always. A fire risk assessment evaluates an existing building in use. A fire strategy is a design document for new builds, change-of-use, or complex buildings, setting out the fire safety principles to support planning and Building Regulations. We can advise which you need.",
+  },
+  {
+    q: "Who is the 'Responsible Person'?",
+    a: "It is whoever has control of the premises — typically the employer, building owner, landlord, or managing agent. The Responsible Person carries the legal duty to manage fire safety and act on the assessment's findings.",
+  },
+  {
+    q: "How quickly can you carry out an assessment?",
+    a: "We aim to be responsive and will agree a timescale with you up front, prioritising urgent or enforcement-driven work. Get in touch with your requirements and we'll confirm availability.",
+  },
+  {
+    q: "Do you cover health & safety as well as fire?",
+    a: "Yes. Alongside fire safety we provide general health & safety risk assessments, audits, RAMS, policies, and competent person support — so you can manage both through one consultancy.",
+  },
+  {
+    q: "What areas do you cover?",
+    a: "We are based in London and work across London and the wider UK for residential, commercial, and construction clients.",
+  },
+];
+
+export const RESOURCES = [
+  {
+    title: "Free Fire & Health Safety Training",
+    body: "Access our free training hub for practical fire and health & safety learning.",
+    href: "https://ignite-safe-hub.lovable.app/",
+    external: true,
+  },
+  {
+    title: "UK Fire & Safety Community",
+    body: "Join our community to ask questions and stay up to date with UK fire safety.",
+    href: "https://uk-fire-expert.lovable.app/",
+    external: true,
+  },
+  {
+    title: "Fire Safety Checklist",
+    body: "A quick self-check for landlords and Responsible Persons before your assessment.",
+    href: "/resources/fire-safety-checklist",
+    external: false,
+  },
+];
 
 export const WHY_US = [
   {

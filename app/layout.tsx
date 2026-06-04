@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import FloatingContact from "@/components/FloatingContact";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const sora = Sora({
@@ -55,9 +57,11 @@ export default function RootLayout({
     <html lang="en-GB" className={`${inter.variable} ${sora.variable}`}>
       <body className="flex min-h-screen flex-col">
         <StructuredData />
+        <ScrollProgress />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <FloatingContact />
       </body>
     </html>
   );

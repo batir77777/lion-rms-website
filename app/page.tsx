@@ -1,10 +1,17 @@
+import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import CredentialsBand from "@/components/CredentialsBand";
+import WhoWeHelp from "@/components/WhoWeHelp";
+import AssessorSection from "@/components/AssessorSection";
+import ResourcesSection from "@/components/ResourcesSection";
+import FaqAccordion from "@/components/FaqAccordion";
+import FaqJsonLd from "@/components/FaqJsonLd";
 import CtaButtons from "@/components/CtaButtons";
 import AuthorityStrip from "@/components/AuthorityStrip";
 import ServiceSection from "@/components/ServiceSection";
 import ProcessSection from "@/components/ProcessSection";
 import StatsBand from "@/components/StatsBand";
-import { IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
+import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
 
 export default function HomePage() {
   return (
@@ -40,6 +47,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <CredentialsBand />
+
       <AuthorityStrip />
 
       {/* Positioning statement */}
@@ -53,6 +62,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <WhoWeHelp />
+
       {/* 2–4. Service categories with photos */}
       {SERVICE_CATEGORIES.map((cat, i) => (
         <ServiceSection key={cat.slug} cat={cat} index={i} />
@@ -60,6 +71,8 @@ export default function HomePage() {
 
       {/* How we work */}
       <ProcessSection />
+
+      <AssessorSection />
 
       {/* Credibility band */}
       <StatsBand />
@@ -88,6 +101,31 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      <FaqJsonLd />
+      <section className="bg-ink-50">
+        <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-700">
+              FAQ
+            </p>
+            <h2 className="text-3xl font-bold text-ink-950 sm:text-4xl">
+              Frequently asked questions
+            </h2>
+          </Reveal>
+          <div className="mt-10">
+            <FaqAccordion items={FAQS.slice(0, 6)} />
+          </div>
+          <div className="mt-6 text-center">
+            <Link href="/faq" className="text-sm font-semibold text-brand-700 hover:underline">
+              See all questions →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <ResourcesSection />
 
       {/* Final CTA — photo background */}
       <section className="relative isolate overflow-hidden bg-ink-950">

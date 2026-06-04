@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
 import ServiceIcon from "./ServiceIcon";
+import DashboardMockup from "./DashboardMockup";
 import type { ServiceCategory } from "@/lib/site";
 
 export default function ServiceSection({
@@ -17,13 +18,17 @@ export default function ServiceSection({
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
           <Reveal className={flip ? "lg:order-2" : ""}>
-            <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-ink-900/5">
-              <div
-                className="aspect-[4/3] bg-cover bg-center transition-transform duration-700 hover:scale-105"
-                style={{ backgroundImage: `url('${cat.image}')` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
-            </div>
+            {cat.slug === "digital-compliance" ? (
+              <DashboardMockup />
+            ) : (
+              <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-ink-900/5">
+                <div
+                  className="aspect-[4/3] bg-cover bg-center transition-transform duration-700 hover:scale-105"
+                  style={{ backgroundImage: `url('${cat.image}')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
+              </div>
+            )}
           </Reveal>
 
           {/* Content */}
