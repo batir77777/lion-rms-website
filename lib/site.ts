@@ -10,7 +10,7 @@ export const SITE = {
   location: "London, UK",
   logo: "/logo.png", // save your logo here: public/logo.png
   // Paste your Formspree form ID here (e.g. "xxxxbcde").
-  formspreeId: "YOUR_FORMSPREE_ID",
+  formspreeId: "meewegnp",
   community: {
     training: "https://ignite-safe-hub.lovable.app/",
     forum: "https://uk-fire-expert.lovable.app/",
