@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <p className="text-sm leading-relaxed text-ink-300">
             Fire safety, health &amp; safety, and digital compliance consultancy
-            across London — every borough.
+            across East London.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
             ))}
             <li>
               <Link href="/areas" className="font-medium text-brand-300 transition hover:text-white">
-                All London areas →
+                All East London areas →
               </Link>
             </li>
           </ul>

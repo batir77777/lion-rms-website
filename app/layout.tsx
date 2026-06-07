@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "London-based consultancy for fire safety, health & safety, and digital compliance. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems for businesses, landlords, managing agents, and construction clients across London.",
+    "London-based consultancy for fire safety, health & safety, and digital compliance. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems for businesses, landlords, managing agents, and construction clients across East London.",
   keywords: [
     "fire risk assessment London",
     "fire safety consultant",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Lion Risk Management Solutions",
     title: "Fire Safety, Health & Safety & Digital Compliance Consultancy | Lion RMS",
     description:
-      "Practical fire safety, health & safety, and bespoke digital compliance solutions across London.",
+      "Practical fire safety, health & safety, and bespoke digital compliance solutions across East London.",
   },
   robots: { index: true, follow: true },
 };

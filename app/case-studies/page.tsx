@@ -7,7 +7,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Examples of fire safety, health & safety, and digital compliance work delivered by Lion Risk Management Solutions for clients across London.",
+    "Examples of fire safety, health & safety, and digital compliance work delivered by Lion Risk Management Solutions for clients across East London.",
 };
 
 const CASES = [
@@ -43,7 +43,7 @@ export default function CaseStudiesPage() {
       <PhotoHero
         image={IMAGES.city}
         eyebrow="Case Studies"
-        title="Trusted by clients across London"
+        title="Trusted by clients across East London"
         body="A snapshot of the fire safety, health & safety, and digital compliance work we deliver. Client details are kept confidential; examples are representative of typical engagements."
       />
       <section className="bg-white">

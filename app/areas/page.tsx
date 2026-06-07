@@ -8,7 +8,7 @@ import { IMAGES } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Areas We Cover Across London",
   description:
-    "Fire risk assessments and fire & health & safety consultancy across London — Westminster, Camden, Islington, Tower Hamlets, Southwark, Croydon and every London borough.",
+    "Fire risk assessments and fire & health & safety consultancy across East London — Stratford, Canary Wharf, Hackney, Tower Hamlets, Newham, Walthamstow and every East London area.",
 };
 
 export default function AreasPage() {
@@ -17,8 +17,8 @@ export default function AreasPage() {
       <PhotoHero
         image={IMAGES.city}
         eyebrow="Areas we cover"
-        title="Fire & safety services across London"
-        body="We provide fire risk assessments, fire strategies and health & safety support to clients in every London borough. Find your area below."
+        title="Fire & safety services across East London"
+        body="We provide fire risk assessments, fire strategies and health & safety support to clients across East London. Find your area below."
       />
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
@@ -38,7 +38,7 @@ export default function AreasPage() {
             ))}
           </div>
           <p className="mt-10 text-center text-sm text-ink-500">
-            Don&apos;t see your area? We cover all London boroughs —{" "}
+            Don&apos;t see your area? We cover all of East London —{" "}
             <Link href="/contact" className="font-semibold text-brand-700 hover:underline">
               get in touch
             </Link>

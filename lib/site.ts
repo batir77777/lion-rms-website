@@ -179,10 +179,11 @@ export function getCategory(slug: string): ServiceCategory | undefined {
 
 // Confirmed credentials — EDIT or remove any that aren't 100% accurate.
 export const CREDENTIALS = [
+  "BAFE SP205",
   "CMIOSH \u2014 Chartered",
   "AIFireE (IFE)",
   "MIFSM",
-  "DipFRA",
+  "DipFRA Advanced",
   "ISO 45001",
   "PI Insured",
 ];
@@ -190,12 +191,12 @@ export const CREDENTIALS = [
 // About-your-assessor — REPLACE the placeholder name/bio with your real details.
 export const ASSESSOR = {
   name: "Batir Turakulov",
-  role: "Principal Fire Risk Assessor & Health & Safety Consultant",
+  role: "Fire, Health & Safety, Water & Environmental Consultant",
   // Save a professional headshot to public/assessor.jpg to replace the initials.
   photo: "/assessor.jpg",
   bio:
-    "With hands-on experience across residential, commercial, and construction premises, I carry out fire risk assessments, fire strategies, and health & safety work personally — so you deal directly with a qualified assessor, not a call centre. Every recommendation is proportionate, grounded in current UK legislation, and explained in plain English.",
-  credentials: ["CMIOSH", "DipFRA", "MIIRSM", "MIWFM", "AIEMA", "AIFireE", "MIFSM"],
+    "A BAFE SP205 registered fire risk assessor and validator and Chartered safety practitioner (CMIOSH), I deliver expert risk assessments, compliance strategies, and safety solutions across fire safety, health & safety, water management (Legionella), and environmental protection. I carry out every assessment personally — identifying and mitigating hazards, ensuring regulatory compliance, and supporting sustainable practice — with clear, proportionate recommendations grounded in current UK legislation.",
+  credentials: ["BAFE SP205", "CMIOSH", "MIIRSM", "MIFSM", "AIFireE", "AIEMA", "DipNCRQ", "DipFRA Advanced (NAFRAR)"],
 };
 
 export const WHO_WE_HELP = [
@@ -248,7 +249,7 @@ export const FAQS = [
   },
   {
     q: "What areas do you cover?",
-    a: "We are based in London and work across every London borough for residential, commercial, and construction clients.",
+    a: "We are based in East London and work across every East London borough for residential, commercial, and construction clients.",
   },
 ];
 

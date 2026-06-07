@@ -97,7 +97,7 @@ export default function ChecklistPage() {
             Want a professional assessment?
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm text-ink-600">
-            We carry out fully compliant fire risk assessments across London. Call {SITE.phone} or request one online.
+            We carry out fully compliant fire risk assessments across East London. Call {SITE.phone} or request one online.
           </p>
           <Link
             href="/contact?service=fire-risk-assessment"

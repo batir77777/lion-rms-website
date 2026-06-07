@@ -100,7 +100,7 @@ export default async function AreaPage({
 
           <p className="mt-8 text-center text-sm text-ink-500">
             <Link href="/areas" className="font-semibold text-brand-700 hover:underline">
-              ← All London areas we cover
+              ← All East London areas we cover
             </Link>
           </p>
         </div>

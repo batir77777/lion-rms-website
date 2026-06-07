@@ -47,7 +47,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <dt className="font-medium text-ink-500">Coverage</dt>
-                <dd className="text-ink-800">Across London — all boroughs</dd>
+                <dd className="text-ink-800">Across East London</dd>
               </div>
             </dl>
 
