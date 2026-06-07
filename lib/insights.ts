@@ -6,36 +6,38 @@ export interface Post {
   dateLabel: string;
   excerpt: string;
   tags: string[];
-  body: string; // simple markdown: blank line = paragraph, "## " = heading
+  body: string; // simple markdown: blank line = paragraph, "## " = heading, **bold**
 }
 
 export const POSTS: Post[] = [
   {
     slug: "pas-9970-bsi-consultation-fire-safety-construction",
     title:
-      "Contributing to the BSI consultation on PAS 9970: fire safety during construction",
+      "Fire safety during construction: contributing to the BSI PAS 9970 consultation",
     date: "2026-06-07",
     dateLabel: "June 2026",
     excerpt:
-      "We were pleased to contribute practical, site-based feedback to the BSI public consultation on PAS 9970-1 and PAS 9970-2 — two new standards addressing fire safety during the construction phase.",
-    tags: ["Fire safety", "Construction", "Standards", "PAS 9970"],
-    body: `I recently contributed comments to the BSI public consultation on **PAS 9970-1** and **PAS 9970-2** — two new standards focused on fire safety during construction.
+      "Construction sites are among the hardest environments in which to manage fire risk. We shared practical, site-based feedback on two new BSI standards — PAS 9970-1 and PAS 9970-2 — shaping how fire safety is managed during the construction phase.",
+    tags: ["Construction fire safety", "PAS 9970", "Standards", "Fire strategy"],
+    body: `Construction sites are among the most challenging environments in which to manage fire risk — so the new **PAS 9970** standards are a welcome step towards managing it more consistently. I was pleased to contribute comments to the BSI public consultation on **PAS 9970-1** and **PAS 9970-2**, drawing directly on what I see on live projects.
 
-## What the standards cover
+## What PAS 9970 sets out to do
 
-Between them, the two parts address two sides of the same challenge. One part looks at how fire safety is organised and managed on site overall; the other sets out clearer expectations for the temporary fire detection and alarm systems used during the construction phase.
+The two parts tackle two sides of the same problem. One addresses how fire safety is **organised and managed across the site as a whole** — the coordination, responsibilities and arrangements that hold everything together. The other sets clearer expectations for the **temporary fire detection and alarm systems** relied upon during the construction phase, before the permanent systems are in place.
 
-## Why construction-phase fire safety is different
+## Why construction-phase fire safety is uniquely difficult
 
-Construction sites are genuinely difficult when it comes to fire risk. Everything keeps changing — the layout, the number of people on site, and the materials being stored and used. That means fire safety cannot be a one-off plan written at the start and then filed away. It has to stay flexible and be properly coordinated as the project moves forward, with arrangements that keep pace with the work.
+On a live site, almost nothing stays still. The layout changes week to week, the number of people on site rises and falls, and the materials being stored and worked with shift constantly. A fire safety plan written once at the start and filed away simply cannot keep up. Construction fire safety has to be **living and coordinated** — reviewed and adjusted as the project moves through its phases, so the controls always match the actual conditions on the ground.
 
-## Sharing practical, on-site feedback
+## Why standards like this matter
 
-It was genuinely useful to review the drafts and share feedback grounded in what actually works — and what does not — on live projects. Standards like these help the whole industry manage these risks in a more consistent, joined-up way, rather than every project reinventing its own approach. I am looking forward to seeing how the final versions develop following the consultation.
+Clearer, shared standards raise the floor for the whole industry. Instead of every project improvising its own approach, teams can work to a consistent, recognised benchmark — which makes fire safety easier to plan, easier to audit, and ultimately more effective. Reviewing the drafts and feeding back from real-world experience is a small way to help get them right.
 
-## How we help on construction projects
+I will be following the consultation closely, and look forward to seeing how the final versions develop.
 
-At Lion Risk Management Solutions we support developers, principal contractors and project teams with construction-phase fire safety — including fire strategies, RAMS and construction phase plans, and practical site fire safety arrangements. If you would like to discuss fire safety on a current or upcoming project, get in touch.`,
+## How we support construction projects
+
+At Lion Risk Management Solutions we help developers, principal contractors and project teams manage fire safety through the construction phase — from **fire strategies** and **RAMS and construction phase plans** to practical, on-site fire safety arrangements that keep pace with the work. If you are planning or running a project in East London and want fire safety handled properly from the outset, please get in touch.`,
   },
 ];
 
