@@ -7,14 +7,11 @@ export default function StructuredData() {
     "@type": "ProfessionalService",
     name: SITE.name,
     description:
-      "Fire safety, health & safety, and digital compliance consultancy serving London and the UK. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems.",
+      "Fire safety, health & safety, and digital compliance consultancy serving London and every London borough. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems.",
     url: "https://www.lionrms.uk",
     telephone: "+447766317818",
     email: SITE.email,
-    areaServed: [
-      { "@type": "City", name: "London" },
-      { "@type": "Country", name: "United Kingdom" },
-    ],
+    areaServed: { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
     address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
     knowsAbout: [
       "Fire Risk Assessment",

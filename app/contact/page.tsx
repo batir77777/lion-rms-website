@@ -7,7 +7,7 @@ import { IMAGES, SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Lion Risk Management Solutions to discuss fire risk assessments, health & safety support, or a bespoke digital compliance solution in London and the UK.",
+    "Contact Lion Risk Management Solutions to discuss fire risk assessments, health & safety support, or a bespoke digital compliance solution in London.",
 };
 
 export default function ContactPage() {
@@ -47,7 +47,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <dt className="font-medium text-ink-500">Coverage</dt>
-                <dd className="text-ink-800">{SITE.location} &amp; across the UK</dd>
+                <dd className="text-ink-800">Across London — all boroughs</dd>
               </div>
             </dl>
 

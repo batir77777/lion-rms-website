@@ -1,18 +1,19 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { NAV, SITE } from "@/lib/site";
+import { AREAS } from "@/lib/areas";
 
 export default function Footer() {
   return (
     <footer className="border-t border-ink-100 bg-ink-950 text-ink-200">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
           <div className="mb-3">
             <Logo className="h-14 w-auto" dark />
           </div>
           <p className="text-sm leading-relaxed text-ink-300">
             Fire safety, health &amp; safety, and digital compliance consultancy
-            for London and across the UK.
+            across London — every borough.
           </p>
         </div>
 
@@ -28,6 +29,26 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-ink-400">
+            Areas we cover
+          </h3>
+          <ul className="space-y-2 text-sm">
+            {AREAS.slice(0, 6).map((a) => (
+              <li key={a.slug}>
+                <Link href={`/areas/${a.slug}`} className="text-ink-300 transition hover:text-white">
+                  {a.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/areas" className="font-medium text-brand-300 transition hover:text-white">
+                All London areas →
+              </Link>
+            </li>
           </ul>
         </div>
 

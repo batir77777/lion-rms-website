@@ -7,7 +7,7 @@ export const SITE = {
   phoneHref: "tel:+447766317818",
   email: "admin@lionrms.uk",
   emailHref: "mailto:admin@lionrms.uk",
-  location: "London, UK",
+  location: "London",
   logo: "/logo.png", // save your logo here: public/logo.png
   // Paste your Formspree form ID here (e.g. "xxxxbcde").
   formspreeId: "meewegnp",
@@ -248,7 +248,7 @@ export const FAQS = [
   },
   {
     q: "What areas do you cover?",
-    a: "We are based in London and work across London and the wider UK for residential, commercial, and construction clients.",
+    a: "We are based in London and work across every London borough for residential, commercial, and construction clients.",
   },
 ];
 

@@ -7,7 +7,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions is a London-based fire safety, health & safety, and digital compliance consultancy serving clients across the UK.",
+    "Lion Risk Management Solutions is a London-based fire safety, health & safety, and digital compliance consultancy serving clients across London.",
 };
 
 const VALUES = [
@@ -33,7 +33,7 @@ export default function AboutPage() {
               <p>
                 Lion Risk Management Solutions provides fire safety, health &amp;
                 safety, and digital compliance consultancy to residential,
-                commercial, and construction clients across London and the UK. We
+                commercial, and construction clients across London. We
                 work with landlords, managing agents, property developers,
                 contractors, and businesses of all sizes.
               </p>

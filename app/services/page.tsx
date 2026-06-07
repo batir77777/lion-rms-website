@@ -7,7 +7,7 @@ import { IMAGES, POSITIONING, SERVICE_CATEGORIES } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Fire safety, health & safety, and digital compliance services from Lion Risk Management Solutions — joined-up consultancy for London and the UK.",
+    "Fire safety, health & safety, and digital compliance services from Lion Risk Management Solutions — joined-up consultancy across London.",
 };
 
 export default function ServicesPage() {

@@ -38,7 +38,7 @@ export default function HomePage() {
             </p>
             <p className="mt-3 text-sm text-ink-300">
               Trusted by businesses, landlords, managing agents, and construction
-              clients in London and across the UK.
+              clients across London — every borough.
             </p>
             <div className="mt-9">
               <CtaButtons />

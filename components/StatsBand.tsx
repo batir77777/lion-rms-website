@@ -2,7 +2,7 @@ import Reveal from "./Reveal";
 
 const STATS = [
   { value: "3", label: "Disciplines under one roof" },
-  { value: "London", label: "& across the UK" },
+  { value: "London", label: "Every borough covered" },
   { value: "RRO 2005", label: "& HSWA 1974 compliant" },
   { value: "End-to-end", label: "Assess · advise · digitise" },
 ];

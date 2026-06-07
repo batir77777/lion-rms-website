@@ -8,7 +8,7 @@ import { FAQS, IMAGES } from "@/lib/site";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about fire risk assessments, fire strategies, and health & safety compliance in London and the UK.",
+    "Answers to common questions about fire risk assessments, fire strategies, and health & safety compliance in London.",
 };
 
 export default function FaqPage() {
