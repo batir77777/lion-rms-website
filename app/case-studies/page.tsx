@@ -24,6 +24,18 @@ const CASES = [
     tags: ["RAMS", "CDM", "H&S"],
   },
   {
+    sector: "Property Management · Managing Agent",
+    title: "Compliance platform for a property management company",
+    body: "A bespoke digital compliance platform built for a property management company, centralising fire and health & safety inspections, certificates, and remedial actions into a single, auditable view across their managed portfolio.",
+    tags: ["Digital Compliance", "Property Management", "Platform"],
+  },
+  {
+    sector: "Professional Services · Consultancy",
+    title: "Digital compliance solution for a consultancy",
+    body: "A tailored compliance platform delivered for a consultancy firm, streamlining how assessments, records, and client deliverables are produced, tracked, and stored — improving consistency and turnaround while maintaining a clear audit trail.",
+    tags: ["Digital Compliance", "Consultancy", "Automation"],
+  },
+  {
     sector: "Commercial · Multi-site Business",
     title: "Bespoke compliance dashboard",
     body: "A tailored digital portal centralising inspections, actions, and records across sites — giving the client real-time visibility of fire and health & safety compliance.",
