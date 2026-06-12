@@ -131,6 +131,21 @@ async function run() {
   });
   report("anchor jump (#digital-compliance), in/above viewport", res3);
 
+  // ---- Conversion-layer pages ----
+  for (const path of ["/check"]) {
+    await page.goto(`${BASE}${path}`, { waitUntil: "networkidle2", timeout: 60000 });
+    await settle(page, 800);
+    await page.evaluate(async () => {
+      const h = document.documentElement.scrollHeight;
+      for (let y = 0; y <= h; y += 700) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 150));
+      }
+    });
+    await settle(page, 2200);
+    report(`page ${path}`, await hiddenRevealCount(page));
+  }
+
   // ---- Console error check (Clock deprecation must be gone) ----
   const warnings = [];
   page.on("console", (m) => {

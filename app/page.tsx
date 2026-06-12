@@ -13,6 +13,7 @@ import FaqJsonLd from "@/components/FaqJsonLd";
 import CtaButtons from "@/components/CtaButtons";
 import ServiceSection from "@/components/ServiceSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
+import TrueCostSection from "@/components/TrueCostSection";
 // StatsBand & Testimonials: removed pending real figures / consented client
 // quotes — re-add when available (components kept in components/).
 import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
@@ -39,7 +40,10 @@ export default function HomePage() {
             </p>
             <p className="mt-3 text-sm text-ink-300">
               Trusted by businesses, landlords, managing agents, and construction
-              clients across East London.
+              clients across East London.{" "}
+              <span className="font-semibold text-white">
+                Fixed fee confirmed same day.
+              </span>
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <MagneticButton href="/contact">
@@ -79,6 +83,9 @@ export default function HomePage() {
       <ServicesOverview />
 
       <WhoWeHelp />
+
+      {/* The true cost of a cheap FRA — conversion comparison */}
+      <TrueCostSection />
 
       {/* 2–4. Service categories with photos */}
       {SERVICE_CATEGORIES.map((cat, i) => (
@@ -171,6 +178,10 @@ export default function HomePage() {
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-200 sm:text-lg">
               Whether you need a fire risk assessment, health and safety support,
               or a bespoke digital compliance platform, we are here to help.
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-ink-300">
+              The right assessment from £250 + VAT — the wrong one can cost you
+              thousands in unnecessary works or enforcement.
             </p>
             <div className="mt-9 flex justify-center">
               <CtaButtons variant="final" />

@@ -141,9 +141,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     eyebrow: "Digital Compliance",
     title: "Digital Compliance Solutions",
     short:
-      "Bespoke digital tools, portals, dashboards, and workflow systems to manage inspections, actions, records, and ongoing compliance.",
+      "Every assessment we deliver can feed a live compliance dashboard — reports, actions, fire door inspections, alarm and emergency lighting test schedules, H&S records — all synced in one place, audit-ready, with automated reminders.",
     intro:
-      "A natural extension of our consultancy — not separate software development. For clients who need structure, we design bespoke digital systems built around how fire and health & safety compliance actually works in your organisation, helping you maintain, record, and manage it more efficiently.",
+      "The assessment is the start, not the end. A natural extension of our consultancy — not separate software development. Every assessment we deliver can feed a live compliance dashboard: reports, actions, fire door inspections, alarm and emergency lighting test schedules, and H&S records, all synced in one place, audit-ready, with automated reminders built around how compliance actually works in your organisation.",
     items: [
       {
         name: "Bespoke compliance portals",
@@ -255,6 +255,12 @@ export const FAQS = [
 ];
 
 export const RESOURCES = [
+  {
+    title: "Compliance Self-Check",
+    body: "Ten yes/no questions across your fire and H&S duties — instant red/amber/green score, no sign-up needed.",
+    href: "/check",
+    external: false,
+  },
   {
     title: "Free Fire & Health Safety Training",
     body: "Access our free training hub for practical fire and health & safety learning.",
