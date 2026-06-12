@@ -11,7 +11,7 @@ export default function PageHero({
 }) {
   return (
     <section className="bg-ink-950">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-36 sm:px-6">
         <Reveal>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-300">
             {eyebrow}

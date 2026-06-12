@@ -5,31 +5,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Ember/amber accent — used sparingly against near-black ink.
         brand: {
-          50: "#eef4ff",
-          100: "#d9e6ff",
-          200: "#bcd3ff",
-          300: "#8eb5ff",
-          400: "#5b8cff",
-          500: "#3b6cf6",
-          600: "#244ee8",
-          700: "#1d3fd1",
-          800: "#1e36a8",
-          900: "#1f3285",
-          950: "#161e4d",
+          50: "#fff8ed",
+          100: "#ffefd4",
+          200: "#ffdba8",
+          300: "#ffc070",
+          400: "#ff9d36",
+          500: "#f97f11",
+          600: "#ea6507",
+          700: "#c24b08",
+          800: "#9a3c0f",
+          900: "#7c3310",
+          950: "#431806",
         },
+        // Warm near-black ink ramp; ink-50 doubles as the warm off-white surface.
         ink: {
-          50: "#f6f7f9",
-          100: "#eceef3",
-          200: "#d4d8e2",
-          300: "#aab2c5",
-          400: "#828ca6",
-          500: "#5b6883",
-          600: "#46506a",
-          700: "#3a4258",
-          800: "#262c3d",
-          900: "#161a26",
-          950: "#0b0e16",
+          50: "#f8f6f2",
+          100: "#efebe4",
+          200: "#ded7cc",
+          300: "#c0b6a8",
+          400: "#9c9183",
+          500: "#7d7265",
+          600: "#5f5749",
+          700: "#4a443a",
+          800: "#2e2a24",
+          900: "#1c1915",
+          950: "#0e0c09",
         },
       },
       fontFamily: {
@@ -37,7 +39,13 @@ const config: Config = {
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
       },
       letterSpacing: {
-        tightest: "-0.04em",
+        tightest: "-0.045em",
+      },
+      boxShadow: {
+        // Soft card lift + ember border glow used on hover states.
+        lift: "0 12px 32px -12px rgba(14, 12, 9, 0.18)",
+        ember:
+          "0 0 0 1px rgba(249, 127, 17, 0.35), 0 16px 40px -16px rgba(249, 127, 17, 0.25)",
       },
       keyframes: {
         "fade-up": {
@@ -48,10 +56,16 @@ const config: Config = {
           "0%": { transform: "scale(1)" },
           "100%": { transform: "scale(1.08)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease-out both",
         "slow-zoom": "slow-zoom 18s ease-out forwards",
+        kenburns: "slow-zoom 26s ease-in-out infinite alternate",
+        marquee: "marquee 36s linear infinite",
       },
     },
   },

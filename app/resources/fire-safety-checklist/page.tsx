@@ -58,20 +58,25 @@ const SECTIONS = [
 export default function ChecklistPage() {
   return (
     <article className="bg-white">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-          Free resource
-        </p>
-        <h1 className="mt-2 text-3xl font-bold text-ink-950 sm:text-4xl">
-          Fire Safety Checklist
-        </h1>
-        <p className="mt-3 text-base leading-relaxed text-ink-600">
-          A practical starting point for landlords and Responsible Persons. This
-          is a self-check to help you spot obvious issues — it does{" "}
-          <strong>not</strong> replace a professional fire risk assessment, which
-          is a legal requirement under the Fire Safety Order.
-        </p>
-
+      {/* Dark page header — consistent with the fixed transparent site header. */}
+      <div className="bg-ink-950 print:bg-white">
+        <div className="mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 print:pt-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-400 print:text-ink-500">
+            Free resource
+          </p>
+          <h1 className="mt-3 text-3xl font-bold text-white sm:text-4xl print:text-ink-950">
+            Fire Safety Checklist
+          </h1>
+          <p className="mt-4 text-base leading-relaxed text-ink-200 print:text-ink-700">
+            A practical starting point for landlords and Responsible Persons. This
+            is a self-check to help you spot obvious issues — it does{" "}
+            <strong className="text-white print:text-ink-950">not</strong> replace a
+            professional fire risk assessment, which is a legal requirement under the
+            Fire Safety Order.
+          </p>
+        </div>
+      </div>
+      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <PrintButton />
 
         <div className="mt-10 space-y-8">

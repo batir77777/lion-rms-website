@@ -73,25 +73,30 @@ export default async function PostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <Reveal>
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-            {p.dateLabel} · Insights
-          </p>
-          <h1 className="mt-2 text-3xl font-bold leading-tight text-ink-950 sm:text-4xl">
-            {p.title}
-          </h1>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {p.tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-800">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </Reveal>
+      {/* Dark article header — consistent with the fixed transparent header. */}
+      <div className="bg-ink-950">
+        <div className="mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">
+              {p.dateLabel} · Insights
+            </p>
+            <h1 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl">
+              {p.title}
+            </h1>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {p.tags.map((tag) => (
+                <span key={tag} className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-medium text-ink-200">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </div>
 
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <Reveal>
-          <div className="mt-6">{render(p.body)}</div>
+          <div>{render(p.body)}</div>
         </Reveal>
 
         <div className="mt-12 rounded-2xl bg-brand-800 p-8 text-center">

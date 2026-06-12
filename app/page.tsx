@@ -1,59 +1,73 @@
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import CredentialsBand from "@/components/CredentialsBand";
+import HeroBackdrop from "@/components/hero/HeroBackdrop";
+import MagneticButton from "@/components/MagneticButton";
+import CredibilityMarquee from "@/components/CredibilityMarquee";
+import ServicesOverview from "@/components/ServicesOverview";
 import WhoWeHelp from "@/components/WhoWeHelp";
 import AssessorSection from "@/components/AssessorSection";
 import ResourcesSection from "@/components/ResourcesSection";
 import FaqAccordion from "@/components/FaqAccordion";
 import FaqJsonLd from "@/components/FaqJsonLd";
 import CtaButtons from "@/components/CtaButtons";
-import AuthorityStrip from "@/components/AuthorityStrip";
 import ServiceSection from "@/components/ServiceSection";
-import ProcessSection from "@/components/ProcessSection";
+import ProcessTimeline from "@/components/ProcessTimeline";
 import StatsBand from "@/components/StatsBand";
+import Testimonials from "@/components/Testimonials";
 import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
 
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero — full-bleed photo */}
-      <section className="relative isolate overflow-hidden bg-ink-950">
-        <div
-          className="photo-overlay absolute inset-0 animate-slow-zoom bg-cover bg-center"
-          style={{ backgroundImage: `url('${IMAGES.hero}')` }}
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-6xl px-4 py-28 sm:px-6 sm:py-36 lg:py-44">
+      {/* 1. Hero — signature ember field (3D, gated & lazy-loaded) */}
+      <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink-950">
+        <HeroBackdrop />
+        <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-32 sm:px-6">
           <div className="max-w-3xl animate-fade-up">
-            <p className="mb-5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/90 backdrop-blur">
+            <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden />
               Fire · Health &amp; Safety · Digital Compliance
             </p>
-            <h1 className="text-4xl font-bold leading-[1.03] text-white sm:text-6xl lg:text-7xl">
-              Fire Safety, Health &amp; Safety, and Digital Compliance Solutions
+            <h1 className="text-4xl font-bold leading-[0.98] text-white sm:text-6xl lg:text-[5.25rem]">
+              Fire Safety, Health &amp;&nbsp;Safety, and Digital Compliance Solutions
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-200 sm:text-xl">
-              We help residential, commercial, and construction clients manage
-              fire safety, health and safety, and ongoing compliance through
-              practical consultancy, training, and bespoke digital systems.
+              Practical, joined-up consultancy for residential, commercial, and
+              construction clients — assessed, advised, and digitised by one
+              accountable expert.
             </p>
             <p className="mt-3 text-sm text-ink-300">
               Trusted by businesses, landlords, managing agents, and construction
               clients across East London.
             </p>
-            <div className="mt-9">
-              <CtaButtons />
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <MagneticButton href="/contact">
+                Book a consultation
+                <span aria-hidden>→</span>
+              </MagneticButton>
+              <MagneticButton href="/services" variant="ghost">
+                Our services
+              </MagneticButton>
             </div>
+          </div>
+        </div>
+        {/* Scroll cue */}
+        <div
+          className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 sm:block"
+          aria-hidden
+        >
+          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/20 p-1.5">
+            <div className="h-2 w-[3px] animate-bounce rounded-full bg-brand-500" />
           </div>
         </div>
       </section>
 
-      <CredentialsBand />
-
-      <AuthorityStrip />
+      <CredibilityMarquee />
 
       {/* Positioning statement */}
       <section className="bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6">
+        <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:py-24">
           <Reveal>
             <p className="font-display text-2xl font-medium leading-snug tracking-tight text-ink-950 sm:text-3xl">
               {POSITIONING}
@@ -61,6 +75,8 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      <ServicesOverview />
 
       <WhoWeHelp />
 
@@ -70,7 +86,7 @@ export default function HomePage() {
       ))}
 
       {/* How we work */}
-      <ProcessSection />
+      <ProcessTimeline />
 
       <AssessorSection />
 
@@ -102,6 +118,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <Testimonials />
+
       {/* FAQ */}
       <FaqJsonLd />
       <section className="bg-ink-50">
@@ -127,14 +145,26 @@ export default function HomePage() {
 
       <ResourcesSection />
 
-      {/* Final CTA — photo background */}
+      {/* Final CTA — photo background with slow Ken Burns zoom */}
       <section className="relative isolate overflow-hidden bg-ink-950">
-        <div
-          className="photo-overlay absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${IMAGES.city}')` }}
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-5xl px-4 py-24 text-center sm:px-6">
+        <div className="absolute inset-0 animate-kenburns" aria-hidden>
+          <Image
+            src={IMAGES.city}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(60% 80% at 50% 30%, rgba(249, 127, 17, 0.08), transparent 70%)," +
+                "linear-gradient(180deg, rgba(14, 12, 9, 0.86) 0%, rgba(14, 12, 9, 0.94) 100%)",
+            }}
+          />
+        </div>
+        <div className="relative mx-auto max-w-5xl px-4 py-28 text-center sm:px-6 lg:py-36">
           <Reveal>
             <h2 className="text-3xl font-bold text-white sm:text-5xl">
               Ready to get started?

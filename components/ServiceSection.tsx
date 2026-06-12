@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import ServiceIcon from "./ServiceIcon";
 import DashboardMockup from "./DashboardMockup";
@@ -13,18 +14,25 @@ export default function ServiceSection({
 }) {
   const flip = index % 2 === 1;
   return (
-    <section id={cat.slug} className="scroll-mt-24 bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+    <section
+      id={cat.slug}
+      data-nav="/services"
+      className={`scroll-mt-24 ${flip ? "bg-ink-50" : "bg-white"}`}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
           <Reveal className={flip ? "lg:order-2" : ""}>
             {cat.slug === "digital-compliance" ? (
               <DashboardMockup />
             ) : (
-              <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-ink-900/5">
-                <div
-                  className="aspect-[4/3] bg-cover bg-center transition-transform duration-700 hover:scale-105"
-                  style={{ backgroundImage: `url('${cat.image}')` }}
+              <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl ring-1 ring-ink-900/5">
+                <Image
+                  src={cat.image}
+                  alt={cat.title}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
               </div>
@@ -60,7 +68,7 @@ export default function ServiceSection({
               </ul>
               <Link
                 href={`/services/${cat.slug}`}
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 hover:shadow-ember"
               >
                 Explore {cat.title}
                 <span aria-hidden>→</span>

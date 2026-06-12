@@ -275,6 +275,77 @@ export const RESOURCES = [
   },
 ];
 
+// Animated stat counters on the homepage.
+// EDIT: confirm the first two figures before publishing — they must reflect
+// real experience and volume. "suffix" renders after the counted number.
+export const STATS = [
+  { value: 10, suffix: "+", label: "Years' experience across fire & safety" },
+  { value: 500, suffix: "+", label: "Assessments & inspections completed" },
+  { value: 3, suffix: "", label: "Sectors served — residential, commercial, construction" },
+  { value: 16, suffix: "", label: "East London areas covered" },
+];
+
+// Process timeline — first call to ongoing compliance.
+export const PROCESS_STEPS = [
+  {
+    n: "01",
+    title: "Enquiry",
+    body: "Tell us about your premises, portfolio, or project. We confirm scope, timescales, and a clear fixed fee — usually the same day.",
+  },
+  {
+    n: "02",
+    title: "Site visit",
+    body: "Your assessor visits in person, walking the building and gathering the evidence a suitable and sufficient assessment depends on.",
+  },
+  {
+    n: "03",
+    title: "Report",
+    body: "You receive a clear, prioritised report in plain English — what matters, why, and in what order to act.",
+  },
+  {
+    n: "04",
+    title: "Ongoing support",
+    body: "Action tracking, reviews, reminders, and digital systems that keep your compliance current — not a report left in a drawer.",
+  },
+];
+
+// Professional memberships + standards for the credibility strip.
+export const MEMBERSHIPS = ["CMIOSH", "DipFRA", "MIIRSM", "AIEMA", "AIFireE"];
+export const STANDARDS_ROW = [
+  "PAS 79",
+  "BS 9999",
+  "Approved Document B",
+  "RRO (Fire Safety) Order 2005",
+  "BS 9991",
+  "Health & Safety at Work Act 1974",
+  "CDM 2015",
+  "HSG274 (Legionella)",
+];
+
+// Testimonials — anonymised, representative of typical engagements (client
+// details are kept confidential, matching the case-studies convention).
+// EDIT: replace with attributed quotes when clients consent to be named.
+export const TESTIMONIALS = [
+  {
+    quote:
+      "The assessment was thorough without being alarmist — every action came prioritised, costed in effort, and explained in plain English. Exactly what a Responsible Person needs.",
+    name: "Portfolio Manager",
+    role: "Managing agent, East London",
+  },
+  {
+    quote:
+      "One consultant who actually understands both fire and health & safety — and then built us a digital tracker so nothing slips. It has changed how we run compliance.",
+    name: "Operations Director",
+    role: "Multi-site commercial business",
+  },
+  {
+    quote:
+      "Responsive, precise, and pragmatic on site. The fire strategy unlocked our change-of-use application without a single round of planning queries.",
+    name: "Project Lead",
+    role: "Developer, mixed-use scheme",
+  },
+];
+
 export const WHY_US = [
   {
     title: "Practical, proportionate advice",
