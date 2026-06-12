@@ -29,12 +29,12 @@ export default function ServiceSection({
               <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl ring-1 ring-ink-900/5">
                 <Image
                   src={cat.image}
-                  alt={cat.title}
+                  alt={cat.imageAlt}
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
               </div>
             )}
           </Reveal>

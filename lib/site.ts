@@ -18,12 +18,14 @@ export const SITE = {
 };
 
 export const IMAGES = {
-  // Verified Unsplash photos (used as background images with dark overlays).
+  // Verified Unsplash photos (free images.unsplash.com host — matches the
+  // next/image remotePattern). Subject-checked: keep these on-topic.
   hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80",
-  fireSafety:
-    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80",
-  healthSafety:
-    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80",
+  // Bespoke AI-generated brand imagery (gpt-image-1) — cinematic 3D, dark
+  // charcoal + ember palette, consultancy subjects. Files in public/img/services/.
+  // Regenerate any option with: node scripts/generate-images.mjs <id>
+  fireSafety: "/img/services/fire-1.jpg",
+  healthSafety: "/img/services/hs-2.jpg",
   digital:
     "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
   city:
@@ -53,6 +55,8 @@ export interface ServiceItem {
 export interface ServiceCategory {
   slug: string;
   image: string;
+  /** Descriptive alt text matching the image's actual subject. */
+  imageAlt: string;
   eyebrow: string;
   title: string;
   // Short description shown on the homepage.
@@ -66,6 +70,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "fire-safety",
     image: IMAGES.fireSafety,
+    imageAlt: "Fire risk assessor with a tablet inspecting a fire door in a modern commercial corridor",
     eyebrow: "Fire Safety",
     title: "Fire Safety Services",
     short:
@@ -102,6 +107,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "health-safety",
     image: IMAGES.healthSafety,
+    imageAlt: "Health and safety consultant carrying out an office risk assessment with a tablet",
     eyebrow: "Health & Safety",
     title: "Health & Safety Services",
     short:
@@ -138,6 +144,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "digital-compliance",
     image: IMAGES.digital,
+    imageAlt: "Abstract digital network visualisation",
     eyebrow: "Digital Compliance",
     title: "Digital Compliance Solutions",
     short:
