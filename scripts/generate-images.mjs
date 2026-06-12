@@ -117,6 +117,27 @@ const JOBS = [
       "Cinematic lighting, realistic materials, luxury corporate aesthetic, architectural visualisation quality. " +
       "No people, no text, no logos, no vehicles. Wide landscape composition, website hero image quality.",
   },
+  {
+    id: "fire-5",
+    prompt:
+      "Premium modern commercial corridor with clearly visible emergency exit signage (green pictogram-only running-man " +
+      "signs, no lettering), fire doors with steel closers and panic hardware, recessed emergency lighting, and a clean " +
+      "protected escape route receding into the distance. Dark charcoal and black colour palette with subtle warm " +
+      "orange accent lighting along walls and floor. Clean, realistic, high-end architectural visualisation, cinematic " +
+      "lighting, realistic PBR materials, luxury corporate aesthetic. No people, no readable text or lettering " +
+      "anywhere, no logos, no watermarks. Wide landscape composition.",
+  },
+  {
+    id: "hs-5",
+    prompt:
+      "Premium modern office environment with a sleek desk and computer workstation, an organised compliance-focused " +
+      "workspace — tidy monitor, ergonomic chair, neat shelving and subtle safety-conscious design details. Clean, " +
+      "organised, professional setting representing workplace risk assessments and audits. Dark charcoal and black " +
+      "colour palette with subtle warm orange accent lighting (desk lamp glow, LED strips), soft dusk window light. " +
+      "High-end architectural visualisation, cinematic lighting, realistic materials, luxury corporate aesthetic. " +
+      "No people, no readable text on any screen or surface (screens dark or showing abstract dim glow), no logos, " +
+      "no watermarks. Wide landscape composition.",
+  },
 ];
 
 const only = process.argv[2];

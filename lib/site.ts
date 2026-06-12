@@ -24,8 +24,8 @@ export const IMAGES = {
   // Bespoke AI-generated brand imagery (gpt-image-1) — cinematic 3D, dark
   // charcoal + ember palette, consultancy subjects. Files in public/img/services/.
   // Regenerate any option with: node scripts/generate-images.mjs <id>
-  fireSafety: "/img/services/fire-1.jpg",
-  healthSafety: "/img/services/hs-2.jpg",
+  fireSafety: "/img/services/fire-5.jpg",
+  healthSafety: "/img/services/hs-5.jpg",
   digital:
     "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
   city:
@@ -70,7 +70,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "fire-safety",
     image: IMAGES.fireSafety,
-    imageAlt: "Fire risk assessor with a tablet inspecting a fire door in a modern commercial corridor",
+    imageAlt: "Protected escape corridor with fire doors, emergency lighting and illuminated exit signage",
     eyebrow: "Fire Safety",
     title: "Fire Safety Services",
     short:
@@ -107,7 +107,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "health-safety",
     image: IMAGES.healthSafety,
-    imageAlt: "Health and safety consultant carrying out an office risk assessment with a tablet",
+    imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
     eyebrow: "Health & Safety",
     title: "Health & Safety Services",
     short:
