@@ -1,5 +1,9 @@
 "use client";
 
+// NOTE: Removed pending real figures / consented client quotes — re-add when
+// available. Replace the placeholder TESTIMONIALS in lib/site.ts with
+// attributed, consented quotes before re-mounting.
+//
 // Large-quote testimonial carousel — subtle crossfade, auto-advances gently,
 // pauses on hover/focus, manual controls, reduced-motion safe.
 

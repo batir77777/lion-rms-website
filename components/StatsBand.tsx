@@ -1,5 +1,8 @@
 "use client";
 
+// NOTE: Removed pending real figures / consented client quotes — re-add when
+// available. Confirm the STATS values in lib/site.ts before re-mounting.
+//
 // Credibility band with animated stat counters — counts up once when scrolled
 // into view. Values live in lib/site.ts (STATS) for easy editing.
 

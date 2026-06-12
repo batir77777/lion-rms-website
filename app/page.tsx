@@ -13,8 +13,8 @@ import FaqJsonLd from "@/components/FaqJsonLd";
 import CtaButtons from "@/components/CtaButtons";
 import ServiceSection from "@/components/ServiceSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
-import StatsBand from "@/components/StatsBand";
-import Testimonials from "@/components/Testimonials";
+// StatsBand & Testimonials: removed pending real figures / consented client
+// quotes — re-add when available (components kept in components/).
 import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
 
 export default function HomePage() {
@@ -90,8 +90,7 @@ export default function HomePage() {
 
       <AssessorSection />
 
-      {/* Credibility band */}
-      <StatsBand />
+      {/* StatsBand removed pending real figures — re-add when available. */}
 
       {/* Why Choose Us */}
       <section className="bg-white">
@@ -118,7 +117,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Testimonials />
+      {/* Testimonials removed pending consented client quotes — re-add when available. */}
 
       {/* FAQ */}
       <FaqJsonLd />
