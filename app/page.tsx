@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/hero/HeroBackdrop";
+import HeroDemo from "@/components/hero/HeroDemo";
 import MagneticButton from "@/components/MagneticButton";
 import CredibilityMarquee from "@/components/CredibilityMarquee";
 import ServicesOverview from "@/components/ServicesOverview";
@@ -14,6 +15,7 @@ import CtaButtons from "@/components/CtaButtons";
 import ServiceSection from "@/components/ServiceSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TrueCostSection from "@/components/TrueCostSection";
+import ComplianceShowcase from "@/components/showcase/ComplianceShowcase";
 // StatsBand & Testimonials: removed pending real figures / consented client
 // quotes — re-add when available (components kept in components/).
 import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
@@ -21,44 +23,52 @@ import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/l
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero — signature ember field (3D, gated & lazy-loaded) */}
+      {/* 1. Hero — split: messaging left, live product demo right, ember field behind */}
       <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink-950">
         <HeroBackdrop />
-        <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-32 sm:px-6">
-          <div className="max-w-3xl animate-fade-up">
-            <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden />
-              Fire · Health &amp; Safety · Digital Compliance
-            </p>
-            <h1 className="text-4xl font-bold leading-[0.98] text-white sm:text-6xl lg:text-[5.25rem]">
-              Fire Safety, Health &amp;&nbsp;Safety, and Digital Compliance Solutions
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-200 sm:text-xl">
-              Practical, joined-up consultancy for residential, commercial, and
-              construction clients — assessed, advised, and digitised by one
-              accountable expert.
-            </p>
-            <p className="mt-3 text-sm text-ink-300">
-              Trusted by businesses, landlords, managing agents, and construction
-              clients across East London.{" "}
-              <span className="font-semibold text-white">
-                Fixed fee confirmed same day.
-              </span>
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <MagneticButton href="/contact">
-                Book a consultation
-                <span aria-hidden>→</span>
-              </MagneticButton>
-              <MagneticButton href="/services" variant="ghost">
-                Our services
-              </MagneticButton>
+        <div className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-32 sm:px-6 lg:pb-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,46%)] lg:gap-10">
+            {/* Left: headline, value promise, CTAs */}
+            <div className="animate-fade-up">
+              <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden />
+                Fire · Health &amp; Safety · Digital Compliance
+              </p>
+              <h1 className="text-4xl font-bold leading-[0.98] text-white sm:text-6xl lg:text-6xl xl:text-7xl">
+                Fire Safety, Health &amp;&nbsp;Safety, and Digital Compliance Solutions
+              </h1>
+              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-200 sm:text-xl">
+                Practical, joined-up consultancy for residential, commercial, and
+                construction clients — assessed, advised, and digitised by one
+                accountable expert.
+              </p>
+              <p className="mt-3 text-sm text-ink-300">
+                Trusted by businesses, landlords, managing agents, and construction
+                clients across East London.{" "}
+                <span className="font-semibold text-white">
+                  Fixed fee confirmed same day.
+                </span>
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <MagneticButton href="/contact">
+                  Book a consultation
+                  <span aria-hidden>→</span>
+                </MagneticButton>
+                <MagneticButton href="/services" variant="ghost">
+                  Our services
+                </MagneticButton>
+              </div>
+            </div>
+
+            {/* Right: live product demo (static final-state card on mobile) */}
+            <div className="animate-fade-up">
+              <HeroDemo />
             </div>
           </div>
         </div>
         {/* Scroll cue */}
         <div
-          className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 sm:block"
+          className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 lg:block"
           aria-hidden
         >
           <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/20 p-1.5">
@@ -87,10 +97,16 @@ export default function HomePage() {
       {/* The true cost of a cheap FRA — conversion comparison */}
       <TrueCostSection />
 
-      {/* 2–4. Service categories with photos */}
-      {SERVICE_CATEGORIES.map((cat, i) => (
-        <ServiceSection key={cat.slug} cat={cat} index={i} />
-      ))}
+      {/* 2–3. Fire & H&S service sections with photos */}
+      {SERVICE_CATEGORIES.filter((c) => c.slug !== "digital-compliance").map(
+        (cat, i) => (
+          <ServiceSection key={cat.slug} cat={cat} index={i} />
+        ),
+      )}
+
+      {/* 4. Digital compliance — full-width animated product showcase
+          (replaces the static dashboard mock; keeps the #digital-compliance anchor) */}
+      <ComplianceShowcase />
 
       {/* How we work */}
       <ProcessTimeline />

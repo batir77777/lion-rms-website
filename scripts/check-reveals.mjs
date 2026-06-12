@@ -29,6 +29,9 @@ async function hiddenRevealCount(page) {
       // Ignore decorative/fixed chrome (scroll progress bar etc.)
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) return false;
+      // Ignore the animated product demo's internals — its elements are
+      // intentionally shown/hidden as the looping sequence plays.
+      if (el.closest("[data-anim-demo]")) return false;
       return true;
     });
     const read = () => els.map((el) => parseFloat(getComputedStyle(el).opacity));
@@ -113,6 +116,7 @@ async function run() {
     ).filter((el) => {
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) return false;
+      if (el.closest("[data-anim-demo]")) return false; // looping demo internals
       return r.top < window.innerHeight; // in or above the viewport
     });
     const hidden = els.filter(
