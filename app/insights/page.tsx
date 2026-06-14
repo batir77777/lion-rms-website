@@ -18,7 +18,7 @@ export default function InsightsPage() {
         image={IMAGES.office}
         eyebrow="Insights"
         title="Fire & safety insights"
-        body="Practical guidance, standards updates, and thinking from our work across East London."
+        body="Practical guidance, standards updates, and thinking from our work across London."
       />
       <section className="bg-white">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
@@ -27,14 +27,14 @@ export default function InsightsPage() {
               <Reveal key={p.slug} delay={i * 60}>
                 <Link
                   href={`/insights/${p.slug}`}
-                  className="block rounded-2xl border border-ink-100 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-md"
+                  className="block rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-md"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                     {p.dateLabel}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold text-ink-950">{p.title}</h2>
-                  <p className="mt-3 text-sm leading-relaxed text-ink-600">{p.excerpt}</p>
-                  <span className="mt-4 inline-block text-sm font-semibold text-brand-700">
+                  <h2 className="mt-2 text-xl font-bold text-slate-900">{p.title}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{p.excerpt}</p>
+                  <span className="mt-4 inline-block text-sm font-semibold text-teal-600">
                     Read more →
                   </span>
                 </Link>

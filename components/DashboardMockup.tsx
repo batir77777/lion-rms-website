@@ -37,7 +37,7 @@ export default function DashboardMockup() {
         </div>
         <div className="flex h-20 items-end gap-2">
           {[40, 55, 48, 70, 62, 88].map((h, i) => (
-            <div key={i} className="flex-1 rounded-t bg-gradient-to-t from-brand-700 to-brand-400" style={{ height: `${h}%` }} />
+            <div key={i} className="flex-1 rounded-t bg-gradient-to-t from-teal-700 to-teal-400" style={{ height: `${h}%` }} />
           ))}
         </div>
       </div>

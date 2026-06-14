@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 function Check() {
   return (
     <svg
-      className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600"
+      className="mt-0.5 h-5 w-5 flex-shrink-0 text-teal-600"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"
@@ -22,7 +22,7 @@ export default function ServiceGrid({ items }: { items: string[] }) {
     <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
       {items.map((item, i) => (
         <Reveal key={item} delay={i * 50}>
-          <li className="flex items-start gap-3 rounded-xl border border-ink-100 bg-white p-4 shadow-sm transition hover:border-brand-200 hover:shadow-md">
+          <li className="flex items-start gap-3 rounded-xl border border-ink-100 bg-white p-4 shadow-sm transition hover:border-teal-200 hover:shadow-md">
             <Check />
             <span className="text-sm font-medium text-ink-800">{item}</span>
           </li>

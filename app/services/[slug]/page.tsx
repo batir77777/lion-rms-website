@@ -38,11 +38,11 @@ export default async function ServiceDetailPage({
           <div className="grid gap-6 sm:grid-cols-2">
             {cat.items.map((item, i) => (
               <Reveal key={item.name} delay={i * 50}>
-                <div className="h-full rounded-2xl border border-ink-100 bg-ink-50 p-6">
-                  <h2 className="text-base font-semibold text-ink-900">
+                <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                  <h2 className="text-base font-semibold text-slate-900">
                     {item.name}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-600">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
                     {item.desc}
                   </p>
                 </div>
@@ -50,13 +50,13 @@ export default async function ServiceDetailPage({
             ))}
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-ink-100 pt-8">
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-8">
             <div className="flex gap-4 text-sm">
               {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
                 <Link
                   key={c.slug}
                   href={`/services/${c.slug}`}
-                  className="font-medium text-brand-700 hover:underline"
+                  className="font-medium text-teal-600 hover:underline"
                 >
                   {c.title} →
                 </Link>
@@ -64,11 +64,11 @@ export default async function ServiceDetailPage({
             </div>
           </div>
 
-          <div className="mt-10 rounded-2xl bg-brand-800 p-8 text-center">
+          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
             <h2 className="text-2xl font-bold text-white">
               Discuss your {cat.eyebrow.toLowerCase()} requirements
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-brand-100">
+            <p className="mx-auto mt-3 max-w-xl text-sm text-slate-300">
               Tell us about your premises or project and we&apos;ll recommend a
               proportionate, compliant way forward.
             </p>

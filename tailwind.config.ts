@@ -5,7 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Ember/amber accent — used sparingly against near-black ink.
+        mws: {
+          950: "#070c18",
+          900: "#0a0f1e",
+          800: "#111827",
+          700: "#161e32",
+          600: "#1e2a44",
+          teal: "#0ea5a0",
+          green: "#10b981",
+        },
         brand: {
           50: "#fff8ed",
           100: "#ffefd4",
@@ -19,7 +27,6 @@ const config: Config = {
           900: "#7c3310",
           950: "#431806",
         },
-        // Warm near-black ink ramp; ink-50 doubles as the warm off-white surface.
         ink: {
           50: "#f8f6f2",
           100: "#efebe4",
@@ -38,14 +45,10 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
       },
-      letterSpacing: {
-        tightest: "-0.045em",
-      },
+      letterSpacing: { tightest: "-0.045em" },
       boxShadow: {
-        // Soft card lift + ember border glow used on hover states.
         lift: "0 12px 32px -12px rgba(14, 12, 9, 0.18)",
-        ember:
-          "0 0 0 1px rgba(249, 127, 17, 0.35), 0 16px 40px -16px rgba(249, 127, 17, 0.25)",
+        ember: "0 0 0 1px rgba(249, 127, 17, 0.35), 0 16px 40px -16px rgba(249, 127, 17, 0.25)",
       },
       keyframes: {
         "fade-up": {

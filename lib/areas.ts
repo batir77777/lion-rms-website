@@ -1,4 +1,4 @@
-// East London areas served — powers the local-SEO area pages.
+// London areas served — powers the local-SEO area pages.
 export interface Area {
   slug: string;
   name: string;

@@ -1,9 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
 
-// Outcomes-led services overview — crisp icon cards linking into the detail
-// sections and service pages.
-
 const CARDS: {
   title: string;
   body: string;
@@ -69,11 +66,11 @@ export default function ServicesOverview() {
     <section className="bg-white" data-nav="/services">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <Reveal>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-600">
             What we do
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-ink-950 sm:text-5xl">
-            One consultancy. Every angle of compliance covered.
+          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-5xl">
+            One platform. Every angle of compliance covered.
           </h2>
         </Reveal>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -81,9 +78,9 @@ export default function ServicesOverview() {
             <Reveal key={c.title} delay={i * 70}>
               <Link
                 href={c.href}
-                className="group flex h-full flex-col rounded-2xl border border-ink-100 bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-300 hover:shadow-ember"
+                className="group flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-200 hover:shadow-md"
               >
-                <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-ink-950 text-brand-400 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+                <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600 transition-colors group-hover:bg-teal-600 group-hover:text-white">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -97,34 +94,34 @@ export default function ServicesOverview() {
                     {c.icon}
                   </svg>
                 </span>
-                <h3 className="font-display text-lg font-semibold text-ink-950">
+                <h3 className="font-display text-lg font-semibold text-slate-900">
                   {c.title}
                 </h3>
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-ink-600">
+                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-500">
                   {c.body}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-transform group-hover:translate-x-1">
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 transition-transform group-hover:translate-x-1">
                   Learn more <span aria-hidden>→</span>
                 </span>
               </Link>
             </Reveal>
           ))}
-          {/* Filler card keeps the 6-grid balanced: direct contact promo. */}
           <Reveal delay={CARDS.length * 70}>
             <Link
               href="/contact"
-              className="group flex h-full flex-col justify-between rounded-2xl bg-ink-950 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-ember"
+              className="group flex h-full flex-col justify-between rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5"
+              style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
             >
               <div>
                 <h3 className="font-display text-lg font-semibold text-white">
                   Not sure what you need?
                 </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-ink-300">
+                <p className="mt-2.5 text-sm leading-relaxed text-white/80">
                   Describe the building or project and we&apos;ll tell you exactly
                   what applies — no obligation, no jargon.
                 </p>
               </div>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-400 transition-transform group-hover:translate-x-1">
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-transform group-hover:translate-x-1">
                 Talk it through <span aria-hidden>→</span>
               </span>
             </Link>

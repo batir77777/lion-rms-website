@@ -38,7 +38,7 @@ export default function MagneticButton({
 
   const styles =
     variant === "primary"
-      ? "bg-brand-600 text-white shadow-lg shadow-brand-950/40 hover:bg-brand-500"
+      ? "bg-teal-600 text-white shadow-lg shadow-teal-950/40 hover:bg-teal-500"
       : "border border-white/25 bg-white/[0.06] text-white backdrop-blur hover:border-white/45 hover:bg-white/[0.12]";
 
   return (

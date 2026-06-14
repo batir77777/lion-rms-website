@@ -1,220 +1,110 @@
 import Link from "next/link";
-import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import HeroBackdrop from "@/components/hero/HeroBackdrop";
-import HeroDemo from "@/components/hero/HeroDemo";
-import MagneticButton from "@/components/MagneticButton";
-import CredibilityMarquee from "@/components/CredibilityMarquee";
-import ServicesOverview from "@/components/ServicesOverview";
-import WhoWeHelp from "@/components/WhoWeHelp";
-import AssessorSection from "@/components/AssessorSection";
-import ResourcesSection from "@/components/ResourcesSection";
-import FaqAccordion from "@/components/FaqAccordion";
-import FaqJsonLd from "@/components/FaqJsonLd";
-import CtaButtons from "@/components/CtaButtons";
-import ServiceSection from "@/components/ServiceSection";
-import ProcessTimeline from "@/components/ProcessTimeline";
-import TrueCostSection from "@/components/TrueCostSection";
-import ComplianceShowcase from "@/components/showcase/ComplianceShowcase";
-// StatsBand & Testimonials: removed pending real figures / consented client
-// quotes — re-add when available (components kept in components/).
-import { FAQS, IMAGES, POSITIONING, SERVICE_CATEGORIES, SITE, WHY_US } from "@/lib/site";
+import MwsDashboardCard from "@/components/mywebsuite/MwsDashboardCard";
+import MwsBenefits from "@/components/mywebsuite/MwsBenefits";
+import MwsModules from "@/components/mywebsuite/MwsModules";
+import MwsHowItWorks from "@/components/mywebsuite/MwsHowItWorks";
+import MwsOutcomes from "@/components/mywebsuite/MwsOutcomes";
+import MwsPlatformPreview from "@/components/mywebsuite/MwsPlatformPreview";
+import MwsFinalCta from "@/components/mywebsuite/MwsFinalCta";
+import { GradientText, PrimaryBtn } from "@/components/mywebsuite/MwsUi";
+
+const CHECKS = [
+  "No more switching between tools",
+  "Live from day one — no developer needed",
+  "UK-hosted, GDPR-ready, always on",
+];
+
+const TRUST_LABELS = ["Consultancy", "Health & Safety", "Property", "Legal", "Trade", "Compliance"];
 
 export default function HomePage() {
   return (
-    <>
-      {/* 1. Hero — split: messaging left, live product demo right, ember field behind */}
-      <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink-950">
-        <HeroBackdrop />
-        <div className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-32 sm:px-6 lg:pb-24">
-          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,46%)] lg:gap-10">
-            {/* Left: headline, value promise, CTAs */}
+    <div className="bg-white text-slate-800">
+
+      {/* HERO */}
+      <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-white">
+        {/* Subtle teal glow — works on white */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div
+            className="absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-40"
+            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.12) 0%, transparent 70%)" }}
+          />
+        </div>
+
+        <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-36 sm:px-6 lg:pb-28">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,50%)]">
+
             <div className="animate-fade-up">
-              <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden />
-                Fire · Health &amp; Safety · Digital Compliance
+              <p
+                className="mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-600"
+                style={{ borderColor: "rgba(14,165,160,0.25)", background: "rgba(14,165,160,0.06)" }}
+              >
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-500" aria-hidden />
+                MyWebSuite — Now Live
               </p>
-              <h1 className="text-4xl font-bold leading-[0.98] text-white sm:text-6xl lg:text-6xl xl:text-7xl">
-                Fire Safety, Health &amp;&nbsp;Safety, and Digital Compliance Solutions
+
+              <h1 className="text-[clamp(2.4rem,5vw,3.75rem)] font-extrabold leading-[1.04] tracking-tight text-slate-900">
+                Run your entire<br />business from<br />
+                <GradientText>one platform.</GradientText>
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-200 sm:text-xl">
-                Practical, joined-up consultancy for residential, commercial, and
-                construction clients — assessed, advised, and digitised by one
-                accountable expert.
+
+              <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-500">
+                Websites, client enquiries, service workflows, documents and
+                reporting — all connected, all in one place.
               </p>
-              <p className="mt-3 text-sm text-ink-300">
-                Trusted by businesses, landlords, managing agents, and construction
-                clients across East London.{" "}
-                <span className="font-semibold text-white">
-                  Fixed fee confirmed same day.
-                </span>
-              </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <MagneticButton href="/contact">
-                  Book a consultation
-                  <span aria-hidden>→</span>
-                </MagneticButton>
-                <MagneticButton href="/services" variant="ghost">
-                  Our services
-                </MagneticButton>
+
+              <ul className="mt-6 space-y-2">
+                {CHECKS.map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-sm text-slate-600">
+                    <svg className="h-4 w-4 flex-shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden>
+                      <circle cx="8" cy="8" r="8" fill="rgba(14,165,160,0.12)" />
+                      <path d="M5 8.2l2 2 4-4" stroke="#0ea5a0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-10 flex flex-wrap gap-3">
+                <PrimaryBtn href="/contact" large>Start free trial</PrimaryBtn>
+                <Link
+                  href="/contact"
+                  className="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                >
+                  Book a demo
+                </Link>
               </div>
+              <p className="mt-4 text-xs text-slate-400">14-day free trial &middot; No credit card required</p>
             </div>
 
-            {/* Right: live product demo (static final-state card on mobile) */}
-            <div className="animate-fade-up">
-              <HeroDemo />
+            <div className="animate-fade-up" style={{ animationDelay: "0.12s" }}>
+              <MwsDashboardCard />
             </div>
-          </div>
-        </div>
-        {/* Scroll cue */}
-        <div
-          className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 lg:block"
-          aria-hidden
-        >
-          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/20 p-1.5">
-            <div className="h-2 w-[3px] animate-bounce rounded-full bg-brand-500" />
           </div>
         </div>
       </section>
 
-      <CredibilityMarquee />
-
-      {/* Positioning statement */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:py-24">
-          <Reveal>
-            <p className="font-display text-2xl font-medium leading-snug tracking-tight text-ink-950 sm:text-3xl">
-              {POSITIONING}
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <ServicesOverview />
-
-      <WhoWeHelp />
-
-      {/* The true cost of a cheap FRA — conversion comparison */}
-      <TrueCostSection />
-
-      {/* 2–3. Fire & H&S service sections with photos */}
-      {SERVICE_CATEGORIES.filter((c) => c.slug !== "digital-compliance").map(
-        (cat, i) => (
-          <ServiceSection key={cat.slug} cat={cat} index={i} />
-        ),
-      )}
-
-      {/* 4. Digital compliance — full-width animated product showcase
-          (replaces the static dashboard mock; keeps the #digital-compliance anchor) */}
-      <ComplianceShowcase />
-
-      {/* How we work */}
-      <ProcessTimeline />
-
-      <AssessorSection />
-
-      {/* StatsBand removed pending real figures — re-add when available. */}
-
-      {/* Why Choose Us */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <Reveal>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-700">
-              Why Choose Us
-            </p>
-            <h2 className="max-w-3xl text-3xl font-bold text-ink-950 sm:text-4xl">
-              Why Choose Lion Risk Management Solutions
-            </h2>
-          </Reveal>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_US.map((item, i) => (
-              <Reveal key={item.title} delay={i * 60}>
-                <div className="group h-full rounded-2xl border border-ink-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-lg">
-                  <div className="mb-4 h-1 w-10 rounded-full bg-brand-600 transition-all group-hover:w-16" />
-                  <h3 className="text-base font-semibold text-ink-950">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-600">{item.body}</p>
-                </div>
-              </Reveal>
+      {/* TRUST STRIP */}
+      <div className="border-y border-slate-100 bg-slate-50">
+        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+          <p className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+            Trusted across professional services
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16">
+            {TRUST_LABELS.map((l) => (
+              <span key={l} className="text-[12px] font-bold uppercase tracking-widest text-slate-300">{l}</span>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Testimonials removed pending consented client quotes — re-add when available. */}
+      <MwsBenefits />
+      <MwsModules />
+      <MwsHowItWorks />
+      <MwsOutcomes />
+      <MwsPlatformPreview />
+      <MwsFinalCta />
 
-      {/* FAQ */}
-      <FaqJsonLd />
-      <section className="bg-ink-50">
-        <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
-          <Reveal>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-700">
-              FAQ
-            </p>
-            <h2 className="text-3xl font-bold text-ink-950 sm:text-4xl">
-              Frequently asked questions
-            </h2>
-          </Reveal>
-          <div className="mt-10">
-            <FaqAccordion items={FAQS.slice(0, 6)} />
-          </div>
-          <div className="mt-6 text-center">
-            <Link href="/faq" className="text-sm font-semibold text-brand-700 hover:underline">
-              See all questions →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <ResourcesSection />
-
-      {/* Final CTA — photo background with slow Ken Burns zoom */}
-      <section className="relative isolate overflow-hidden bg-ink-950">
-        <div className="absolute inset-0 animate-kenburns" aria-hidden>
-          <Image
-            src={IMAGES.city}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(60% 80% at 50% 30%, rgba(249, 127, 17, 0.08), transparent 70%)," +
-                "linear-gradient(180deg, rgba(14, 12, 9, 0.86) 0%, rgba(14, 12, 9, 0.94) 100%)",
-            }}
-          />
-        </div>
-        <div className="relative mx-auto max-w-5xl px-4 py-28 text-center sm:px-6 lg:py-36">
-          <Reveal>
-            <h2 className="text-3xl font-bold text-white sm:text-5xl">
-              Ready to get started?
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-200 sm:text-lg">
-              Whether you need a fire risk assessment, health and safety support,
-              or a bespoke digital compliance platform, we are here to help.
-            </p>
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-ink-300">
-              The right assessment from £250 + VAT — the wrong one can cost you
-              thousands in unnecessary works or enforcement.
-            </p>
-            <div className="mt-9 flex justify-center">
-              <CtaButtons variant="final" />
-            </div>
-            <p className="mt-8 text-sm text-ink-300">
-              Prefer to talk?{" "}
-              <a href={SITE.phoneHref} className="font-semibold text-white underline">
-                {SITE.phone}
-              </a>{" "}
-              ·{" "}
-              <a href={SITE.emailHref} className="font-semibold text-white underline">
-                {SITE.email}
-              </a>
-            </p>
-          </Reveal>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

@@ -1,0 +1,9 @@
+@echo off
+echo Killing Node processes...
+taskkill /f /im node.exe 2>nul
+timeout /t 2 /nobreak >nul
+echo Deleting .next cache...
+if exist ".next" rmdir /s /q ".next"
+echo Starting dev server...
+start cmd /k "npm run dev -- --port 3003"
+echo Done! Server starting on http://localhost:3003

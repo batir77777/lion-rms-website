@@ -37,7 +37,7 @@ I will be following the consultation closely, and look forward to seeing how the
 
 ## How we support construction projects
 
-At Lion Risk Management Solutions we help developers, principal contractors and project teams manage fire safety through the construction phase — from **fire strategies** and **RAMS and construction phase plans** to practical, on-site fire safety arrangements that keep pace with the work. If you are planning or running a project in East London and want fire safety handled properly from the outset, please get in touch.`,
+At Lion Risk Management Solutions we help developers, principal contractors and project teams manage fire safety through the construction phase — from **fire strategies** and **RAMS and construction phase plans** to practical, on-site fire safety arrangements that keep pace with the work. If you are planning or running a project in London and want fire safety handled properly from the outset, please get in touch.`,
   },
 ];
 

@@ -7,7 +7,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Examples of fire safety, health & safety, and digital compliance work delivered by Lion Risk Management Solutions for clients across East London.",
+    "Examples of fire safety, health & safety, and digital compliance work delivered by Lion Risk Management Solutions for clients across London.",
 };
 
 const CASES = [
@@ -32,7 +32,7 @@ const CASES = [
   {
     sector: "Professional Services · Consultancy",
     title: "Digital compliance solution for a consultancy",
-    body: "A tailored compliance platform delivered for a consultancy firm, streamlining how assessments, records, and client deliverables are produced, tracked, and stored — improving consistency and turnaround while maintaining a clear audit trail.",
+    body: "A tailored compliance platform delivered for a consultancy firm, streamlining how assessments, records, and client deliverables are produced, tracked, and stored.",
     tags: ["Digital Compliance", "Consultancy", "Automation"],
   },
   {
@@ -55,27 +55,25 @@ export default function CaseStudiesPage() {
       <PhotoHero
         image={IMAGES.city}
         eyebrow="Case Studies"
-        title="Trusted by clients across East London"
-        body="A snapshot of the fire safety, health & safety, and digital compliance work we deliver. Client details are kept confidential; examples are representative of typical engagements."
+        title="Trusted by clients across London"
+        body="A snapshot of the fire safety, health & safety, and digital compliance work we deliver."
       />
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="grid gap-6 md:grid-cols-2">
             {CASES.map((c, i) => (
               <Reveal key={c.title} delay={i * 70}>
-                <article className="flex h-full flex-col rounded-2xl border border-ink-100 bg-white p-7 shadow-sm transition hover:border-brand-200 hover:shadow-md">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
+                <article className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-md">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                     {c.sector}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold text-ink-900">{c.title}</h2>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-600">
-                    {c.body}
-                  </p>
+                  <h2 className="mt-2 text-xl font-bold text-slate-900">{c.title}</h2>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{c.body}</p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {c.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-800"
+                        className="rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700"
                       >
                         {t}
                       </span>
@@ -85,11 +83,11 @@ export default function CaseStudiesPage() {
               </Reveal>
             ))}
           </div>
-
           <div className="mt-12 text-center">
             <Link
               href="/contact"
-              className="inline-block rounded-lg bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+              className="inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
             >
               Discuss your project
             </Link>

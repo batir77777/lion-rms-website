@@ -4,13 +4,13 @@ import { RESOURCES } from "@/lib/site";
 
 export default function ResourcesSection() {
   return (
-    <section className="bg-white">
+    <section className="bg-slate-50">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <Reveal>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-700">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
             Free resources
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-ink-950 sm:text-4xl">
+          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-4xl">
             Helpful tools, training, and community
           </h2>
         </Reveal>
@@ -22,20 +22,20 @@ export default function ResourcesSection() {
                   href={r.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-full flex-col rounded-2xl border border-ink-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-lg"
+                  className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-ink-950">{r.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-600">{r.body}</p>
-                  <span className="mt-4 text-sm font-semibold text-brand-700">Open →</span>
+                  <h3 className="text-lg font-semibold text-slate-900">{r.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
+                  <span className="mt-4 text-sm font-semibold text-teal-600">Open →</span>
                 </a>
               ) : (
                 <Link
                   href={r.href}
-                  className="flex h-full flex-col rounded-2xl border border-ink-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-lg"
+                  className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-ink-950">{r.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-600">{r.body}</p>
-                  <span className="mt-4 text-sm font-semibold text-brand-700">View →</span>
+                  <h3 className="text-lg font-semibold text-slate-900">{r.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
+                  <span className="mt-4 text-sm font-semibold text-teal-600">View →</span>
                 </Link>
               )}
             </Reveal>

@@ -7,7 +7,7 @@ export default function CtaButtons({ variant = "hero" }: { variant?: Variant }) 
     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       <Link
         href="/contact?service=fire-risk-assessment"
-        className="rounded-full bg-brand-600 px-7 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-brand-900/30 transition hover:bg-brand-500"
+        className="rounded-full bg-teal-600 px-7 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-teal-900/30 transition hover:bg-teal-500"
       >
         Book a Fire Risk Assessment
       </Link>

@@ -17,14 +17,14 @@ export default function Logo({
   if (failed) {
     return (
       <span className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-700 text-sm font-bold text-white">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-700 text-sm font-bold text-white">
           LR
         </span>
         <span className="leading-tight">
           <span className={`block text-sm font-bold ${dark ? "text-white" : "text-ink-900"}`}>
             Lion Risk Management
           </span>
-          <span className="block text-[11px] uppercase tracking-widest text-brand-500">
+          <span className="block text-[11px] uppercase tracking-widest text-teal-500">
             Solutions
           </span>
         </span>

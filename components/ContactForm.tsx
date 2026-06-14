@@ -81,13 +81,13 @@ export default function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Phone" name="phone" type="tel" />
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-ink-800">
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">
             Service of interest
           </label>
           <select
             name="service"
             defaultValue={preset && SERVICE_LABELS[preset] ? preset : ""}
-            className="w-full rounded-lg border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
           >
             <option value="">Select…</option>
             <option value="fire-risk-assessment">Fire Risk Assessment</option>
@@ -102,7 +102,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-sm font-medium text-ink-800">
+        <label className="mb-1.5 block text-sm font-medium text-slate-700">
           How can we help?
         </label>
         <textarea
@@ -110,7 +110,7 @@ export default function ContactForm() {
           rows={5}
           required
           placeholder="Tell us about your premises, project, or requirement…"
-          className="w-full rounded-lg border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
         />
       </div>
 
@@ -121,7 +121,8 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={state === "submitting" || !configured}
-        className="w-full rounded-lg bg-brand-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800 disabled:opacity-50 sm:w-auto"
+        className="w-full rounded-full px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 disabled:opacity-50 sm:w-auto"
+        style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
       >
         {state === "submitting" ? "Sending…" : "Send enquiry"}
       </button>
@@ -142,15 +143,15 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-ink-800">
+      <label className="mb-1.5 block text-sm font-medium text-slate-700">
         {label}
-        {required && <span className="text-brand-600"> *</span>}
+        {required && <span className="text-teal-600"> *</span>}
       </label>
       <input
         type={type}
         name={name}
         required={required}
-        className="w-full rounded-lg border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
       />
     </div>
   );

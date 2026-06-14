@@ -58,35 +58,41 @@ const SECTIONS = [
 export default function ChecklistPage() {
   return (
     <article className="bg-white">
-      {/* Dark page header — consistent with the fixed transparent site header. */}
-      <div className="bg-ink-950 print:bg-white">
-        <div className="mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 print:pt-8">
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-400 print:text-ink-500">
+      {/* White header matching site style */}
+      <div className="relative isolate overflow-hidden bg-white print:bg-white">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden print:hidden" aria-hidden>
+          <div
+            className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-30"
+            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.15) 0%, transparent 70%)" }}
+          />
+        </div>
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 sm:pt-44 print:pt-8">
+          <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600 print:hidden">
             Free resource
           </p>
-          <h1 className="mt-3 text-3xl font-bold text-white sm:text-4xl print:text-ink-950">
+          <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
             Fire Safety Checklist
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-ink-200 print:text-ink-700">
+          <p className="mt-4 text-base leading-relaxed text-slate-500 print:text-slate-600">
             A practical starting point for landlords and Responsible Persons. This
             is a self-check to help you spot obvious issues — it does{" "}
-            <strong className="text-white print:text-ink-950">not</strong> replace a
+            <strong className="text-slate-900">not</strong> replace a
             professional fire risk assessment, which is a legal requirement under the
             Fire Safety Order.
           </p>
         </div>
       </div>
+
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <PrintButton />
-
         <div className="mt-10 space-y-8">
           {SECTIONS.map((s) => (
             <section key={s.title}>
-              <h2 className="text-lg font-semibold text-ink-950">{s.title}</h2>
+              <h2 className="text-lg font-semibold text-slate-900">{s.title}</h2>
               <ul className="mt-3 space-y-2">
                 {s.items.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-ink-700">
-                    <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border border-ink-300 text-transparent">
+                  <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border border-slate-300 text-transparent">
                       ✓
                     </span>
                     {item}
@@ -97,16 +103,17 @@ export default function ChecklistPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-2xl bg-ink-50 p-6 text-center print:hidden">
-          <h2 className="text-xl font-bold text-ink-950">
+        <div className="mt-12 rounded-2xl border border-teal-100 bg-teal-50 p-6 text-center print:hidden">
+          <h2 className="text-xl font-bold text-slate-900">
             Want a professional assessment?
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-sm text-ink-600">
-            We carry out fully compliant fire risk assessments across East London. Call {SITE.phone} or request one online.
+          <p className="mx-auto mt-2 max-w-lg text-sm text-slate-500">
+            We carry out fully compliant fire risk assessments across London. Call {SITE.phone} or request one online.
           </p>
           <Link
             href="/contact?service=fire-risk-assessment"
-            className="mt-5 inline-block rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+            className="mt-5 inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
           >
             Book a Fire Risk Assessment
           </Link>

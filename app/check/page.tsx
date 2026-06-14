@@ -10,36 +10,37 @@ export const metadata: Metadata = {
 
 export default function CheckPage() {
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-ink-950">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(50% 60% at 20% 0%, rgba(46, 42, 36, 0.5) 0%, transparent 60%)," +
-            "radial-gradient(55% 45% at 85% 100%, rgba(194, 75, 8, 0.12) 0%, transparent 65%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-36 sm:px-6">
-        <Reveal>
-          <div className="mx-auto mb-12 max-w-2xl text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-400">
+    <div className="bg-white">
+      {/* White hero header — matches site style */}
+      <div className="relative isolate overflow-hidden bg-white">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div
+            className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-30"
+            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.15) 0%, transparent 70%)" }}
+          />
+        </div>
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 text-center sm:px-6 sm:pt-44">
+          <Reveal>
+            <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
               Free self-check
             </p>
-            <h1 className="text-3xl font-bold text-white sm:text-5xl">
+            <h1 className="text-3xl font-bold text-slate-900 sm:text-5xl">
               How exposed are you right now?
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-ink-300">
-              Ten honest yes/no questions across your fire and health &amp;
-              safety duties. Your score is shown instantly — no sign-up, no
-              email required.
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-500">
+              Ten honest yes/no questions across your fire and health &amp; safety
+              duties. Your score is shown instantly — no sign-up, no email required.
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* Compliance quiz widget */}
+      <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
         <Reveal delay={120}>
           <ComplianceCheck />
         </Reveal>
       </div>
-    </section>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import { AREAS } from "@/lib/areas";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-ink-100 bg-ink-950 text-ink-200">
+    <footer className="border-t border-white/10 bg-ink-950 text-ink-200">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
           <div className="mb-3">
@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <p className="text-sm leading-relaxed text-ink-300">
             Fire safety, health &amp; safety, and digital compliance consultancy
-            across East London.
+            across London.
           </p>
         </div>
 
@@ -45,8 +45,8 @@ export default function Footer() {
               </li>
             ))}
             <li>
-              <Link href="/areas" className="font-medium text-brand-300 transition hover:text-white">
-                All East London areas →
+              <Link href="/areas" className="font-medium text-teal-400 transition hover:text-white">
+                All London areas →
               </Link>
             </li>
           </ul>
@@ -70,10 +70,10 @@ export default function Footer() {
             <li>{SITE.location}</li>
           </ul>
           <div className="mt-4 space-y-1.5 text-sm">
-            <a href={SITE.community.training} target="_blank" rel="noopener noreferrer" className="block text-brand-300 transition hover:text-white">
+            <a href={SITE.community.training} target="_blank" rel="noopener noreferrer" className="block text-teal-400 transition hover:text-white">
               Free Fire &amp; Safety Training →
             </a>
-            <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer" className="block text-brand-300 transition hover:text-white">
+            <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer" className="block text-teal-400 transition hover:text-white">
               UK Fire &amp; Safety Community →
             </a>
           </div>

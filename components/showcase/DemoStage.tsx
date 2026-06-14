@@ -55,7 +55,7 @@ const ROW_DONE_DELAY = [0.6, 1.8, 3.0, 4.2];
 
 // Subtle affordance for navigational zones.
 const NAV_ZONE =
-  "block cursor-pointer rounded-2xl ring-brand-500/0 transition duration-200 hover:ring-2 hover:ring-brand-500/40";
+  "block cursor-pointer rounded-2xl ring-teal-500/0 transition duration-200 hover:ring-2 hover:ring-teal-500/40";
 
 function useTimeline(inView: boolean, reduced: boolean) {
   const [phase, setPhase] = useState<Phase>("report");
@@ -101,7 +101,7 @@ function ReportCard({
     >
       <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
         <div>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-brand-400">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-teal-400">
             Report
           </p>
           <h4 className="mt-0.5 font-display text-[13px] font-semibold text-white">
@@ -213,7 +213,7 @@ function Gauge({ phase, cycle }: { phase: Phase; cycle: number }) {
           />
           <defs>
             <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#ea6507" />
+              <stop offset="0%" stopColor="#0ea5a0" />
               <stop offset="100%" stopColor="#ff9d36" />
             </linearGradient>
           </defs>
@@ -387,14 +387,14 @@ function DashboardFrame({
     >
       {/* Sidebar */}
       <div className="hidden w-9 flex-col items-center gap-2.5 border-r border-white/5 bg-ink-950/60 py-3 sm:flex">
-        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-600 text-[8px] font-bold text-white">
+        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-teal-600 text-[8px] font-bold text-white">
           LR
         </span>
         {["▦", "✓", "⚠", "🗎", "⚙"].map((icon, i) => (
           <span
             key={i}
             className={`flex h-6 w-6 items-center justify-center rounded-md text-[10px] ${
-              i === 1 ? "bg-white/10 text-brand-400" : "text-ink-500"
+              i === 1 ? "bg-white/10 text-teal-400" : "text-ink-500"
             }`}
             aria-hidden
           >
@@ -430,7 +430,7 @@ function DashboardFrame({
                 />
               );
             })}
-            <span className="ml-1 h-5 w-5 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-center text-[8px] font-bold leading-5 text-white">
+            <span className="ml-1 h-5 w-5 rounded-full bg-gradient-to-br from-teal-500 to-teal-700 text-center text-[8px] font-bold leading-5 text-white">
               B
             </span>
           </div>
@@ -484,7 +484,7 @@ function DashboardFrame({
             : { duration: 0.2 }
         }
       >
-        <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/20 text-[10px]" aria-hidden>
+        <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-600/20 text-[10px]" aria-hidden>
           🔔
         </span>
         <div>
@@ -679,15 +679,15 @@ export default function DemoStage({
       {/* Discoverable nav row + disclaimer */}
       {navigational && (
         <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-2 text-[11px] font-medium">
-          <Link href="/services/fire-safety" className="text-ink-300 transition hover:text-brand-400">
+          <Link href="/services/fire-safety" className="text-ink-300 transition hover:text-teal-400">
             Fire Risk Assessments
           </Link>
           <span className="text-ink-600" aria-hidden>·</span>
-          <Link href="/services/health-safety" className="text-ink-300 transition hover:text-brand-400">
+          <Link href="/services/health-safety" className="text-ink-300 transition hover:text-teal-400">
             Health &amp; Safety
           </Link>
           <span className="text-ink-600" aria-hidden>·</span>
-          <Link href="/services/digital-compliance" className="text-ink-300 transition hover:text-brand-400">
+          <Link href="/services/digital-compliance" className="text-ink-300 transition hover:text-teal-400">
             Digital Compliance
           </Link>
         </div>

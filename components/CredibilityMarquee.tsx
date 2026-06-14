@@ -6,7 +6,7 @@ import { MEMBERSHIPS, STANDARDS_ROW } from "@/lib/site";
 
 function BadgeIcon() {
   return (
-    <svg className="h-4 w-4 text-brand-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+    <svg className="h-4 w-4 text-teal-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
       <path
         fillRule="evenodd"
         d="M10 1l2.4 1.7 2.9.1 1 2.8 2 2.1-1 2.8.4 2.9-2.4 1.7-1.2 2.7-2.9-.3L10 19l-2.2-1.7-2.9.3-1.2-2.7-2.4-1.7.4-2.9-1-2.8 2-2.1 1-2.8 2.9-.1L10 1zm-1 11.4l4.3-4.3-1.2-1.2L9 10l-1.6-1.6-1.2 1.2L9 12.4z"

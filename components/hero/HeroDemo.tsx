@@ -101,7 +101,7 @@ function StaticCard() {
 
         <Link
           href="#digital-compliance"
-          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-400 transition hover:text-brand-300"
+          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 transition hover:text-teal-300"
         >
           See how it works <span aria-hidden>→</span>
         </Link>

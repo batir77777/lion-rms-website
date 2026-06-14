@@ -257,7 +257,7 @@ export const FAQS = [
   },
   {
     q: "What areas do you cover?",
-    a: "We are based in East London and work across every East London borough for residential, commercial, and construction clients.",
+    a: "We are based in London and work across every London borough for residential, commercial, and construction clients.",
   },
 ];
 
@@ -295,7 +295,7 @@ export const STATS = [
   { value: 10, suffix: "+", label: "Years' experience across fire & safety" },
   { value: 500, suffix: "+", label: "Assessments & inspections completed" },
   { value: 3, suffix: "", label: "Sectors served — residential, commercial, construction" },
-  { value: 16, suffix: "", label: "East London areas covered" },
+  { value: 16, suffix: "", label: "London areas covered" },
 ];
 
 // Process timeline — first call to ongoing compliance.
@@ -343,7 +343,7 @@ export const TESTIMONIALS = [
     quote:
       "The assessment was thorough without being alarmist — every action came prioritised, costed in effort, and explained in plain English. Exactly what a Responsible Person needs.",
     name: "Portfolio Manager",
-    role: "Managing agent, East London",
+    role: "Managing agent, London",
   },
   {
     quote:

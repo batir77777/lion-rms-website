@@ -20,13 +20,12 @@ export async function generateMetadata({
   return { title: p.title, description: p.excerpt };
 }
 
-// Minimal markdown: "## " headings, **bold**, blank-line paragraphs.
 function render(body: string) {
   return body.split("\n\n").map((block, i) => {
     const t = block.trim();
     if (t.startsWith("## ")) {
       return (
-        <h2 key={i} className="mt-8 text-xl font-bold text-ink-950">
+        <h2 key={i} className="mt-8 text-xl font-bold text-slate-900">
           {t.slice(3)}
         </h2>
       );
@@ -39,7 +38,7 @@ function render(body: string) {
       ),
     );
     return (
-      <p key={i} className="mt-4 text-base leading-relaxed text-ink-700">
+      <p key={i} className="mt-4 text-base leading-relaxed text-slate-600">
         {parts}
       </p>
     );
@@ -73,19 +72,25 @@ export default async function PostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Dark article header — consistent with the fixed transparent header. */}
-      <div className="bg-ink-950">
-        <div className="mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6">
+      {/* White article header */}
+      <div className="relative isolate overflow-hidden bg-white">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div
+            className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-30"
+            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.15) 0%, transparent 70%)" }}
+          />
+        </div>
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 sm:pt-44">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">
+            <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
               {p.dateLabel} · Insights
             </p>
-            <h1 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl">
+            <h1 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
               {p.title}
             </h1>
             <div className="mt-4 flex flex-wrap gap-2">
               {p.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-medium text-ink-200">
+                <span key={tag} className="rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-600">
                   {tag}
                 </span>
               ))}
@@ -99,24 +104,25 @@ export default async function PostPage({
           <div>{render(p.body)}</div>
         </Reveal>
 
-        <div className="mt-12 rounded-2xl bg-brand-800 p-8 text-center">
+        <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
           <h2 className="text-2xl font-bold text-white">
             Discuss fire safety on your project
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-sm text-brand-100">
+          <p className="mx-auto mt-2 max-w-lg text-sm text-slate-300">
             Construction-phase fire safety, fire strategies, RAMS and more. Call{" "}
             {SITE.phone} or request a consultation.
           </p>
           <Link
             href="/contact"
-            className="mt-6 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-800 transition hover:bg-ink-100"
+            className="mt-6 inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
           >
             Get in touch
           </Link>
         </div>
 
-        <p className="mt-8 text-center text-sm text-ink-500">
-          <Link href="/insights" className="font-semibold text-brand-700 hover:underline">
+        <p className="mt-8 text-center text-sm text-slate-500">
+          <Link href="/insights" className="font-semibold text-teal-600 hover:underline">
             ← All insights
           </Link>
         </p>

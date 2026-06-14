@@ -54,7 +54,7 @@ export default async function AreaPage({
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
           <Reveal>
-            <div className="space-y-4 text-base leading-relaxed text-ink-700">
+            <div className="space-y-4 text-base leading-relaxed text-slate-600">
               <p>
                 Lion Risk Management Solutions provides fire risk assessments,
                 fire strategies, fire door inspections and health &amp; safety
@@ -72,24 +72,24 @@ export default async function AreaPage({
           </Reveal>
 
           <Reveal>
-            <h2 className="mt-10 text-xl font-bold text-ink-950">
+            <h2 className="mt-10 text-xl font-bold text-slate-900">
               Services in {a.name}
             </h2>
             <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
               {services.map((s) => (
-                <li key={s} className="flex items-start gap-2 text-sm text-ink-800">
-                  <span className="mt-0.5 text-brand-600">✓</span>
+                <li key={s} className="flex items-start gap-2 text-sm text-slate-700">
+                  <span className="mt-0.5 font-bold text-teal-500">✓</span>
                   <span className="font-medium">{s}</span>
                 </li>
               ))}
             </ul>
           </Reveal>
 
-          <div className="mt-12 rounded-2xl bg-brand-800 p-8 text-center">
+          <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
             <h2 className="text-2xl font-bold text-white">
               Book a fire risk assessment in {a.name}
             </h2>
-            <p className="mx-auto mt-2 max-w-lg text-sm text-brand-100">
+            <p className="mx-auto mt-2 max-w-lg text-sm text-slate-300">
               Tell us about your premises and we&apos;ll arrange a compliant
               assessment. Call {SITE.phone} or request one online.
             </p>
@@ -98,9 +98,9 @@ export default async function AreaPage({
             </div>
           </div>
 
-          <p className="mt-8 text-center text-sm text-ink-500">
-            <Link href="/areas" className="font-semibold text-brand-700 hover:underline">
-              ← All East London areas we cover
+          <p className="mt-8 text-center text-sm text-slate-500">
+            <Link href="/areas" className="font-semibold text-teal-600 hover:underline">
+              ← All London areas we cover
             </Link>
           </p>
         </div>

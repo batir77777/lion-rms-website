@@ -20,11 +20,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile menu on navigation.
   useEffect(() => setOpen(false), [pathname]);
 
-  // Active-section spy: sections can declare data-nav="/services" etc.; while
-  // one is in view the matching nav item lights up (e.g. home service sections).
   useEffect(() => {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>("[data-nav]"),
@@ -81,7 +78,7 @@ export default function Header() {
                 {active && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className="absolute -bottom-0.5 left-0 h-0.5 w-full rounded-full bg-brand-500"
+                    className="absolute -bottom-0.5 left-0 h-0.5 w-full rounded-full bg-teal-400"
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
@@ -99,7 +96,8 @@ export default function Header() {
           </a>
           <Link
             href="/contact"
-            className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-950/40 transition hover:bg-brand-500"
+            className="rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)", boxShadow: "0 4px 20px rgba(14,165,160,0.3)" }}
           >
             Request a Consultation
           </Link>
@@ -133,7 +131,7 @@ export default function Header() {
                   href={n.href}
                   onClick={() => setOpen(false)}
                   className={`border-b border-white/5 py-3 text-sm font-medium ${
-                    isActive(n.href) ? "text-brand-400" : "text-ink-200"
+                    isActive(n.href) ? "text-teal-400" : "text-ink-200"
                   }`}
                 >
                   {n.label}
@@ -146,7 +144,8 @@ export default function Header() {
                 <Link
                   href="/contact"
                   onClick={() => setOpen(false)}
-                  className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white"
+                  className="rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+                  style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
                 >
                   Request a Consultation
                 </Link>

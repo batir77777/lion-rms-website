@@ -77,7 +77,7 @@ export default function StatsBand() {
               transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="h-full bg-ink-950/70 p-7 text-center backdrop-blur sm:text-left"
             >
-              <div className="bg-gradient-to-r from-white to-brand-300 bg-clip-text font-display text-4xl font-bold text-transparent sm:text-5xl">
+              <div className="bg-gradient-to-r from-white to-teal-300 bg-clip-text font-display text-4xl font-bold text-transparent sm:text-5xl">
                 <Counter value={s.value} suffix={s.suffix} start={inView} />
               </div>
               <div className="mt-2 text-sm leading-snug text-ink-300">{s.label}</div>

@@ -17,56 +17,51 @@ export default function ContactPage() {
         image={IMAGES.city}
         eyebrow="Contact"
         title="Get in touch"
-        body="Whether you need a fire risk assessment, health and safety support, or a bespoke digital compliance platform, we're here to help. Tell us about your requirements and we'll be in touch."
+        body="Whether you need a fire risk assessment, health and safety support, or a bespoke digital compliance platform, we're here to help."
       />
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
-          {/* Details */}
           <div>
-            <h2 className="text-lg font-semibold text-ink-900">Speak to us directly</h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink-600">
-              Prefer to talk it through? Call or email and we&apos;ll respond
-              quickly.
+            <h2 className="text-lg font-semibold text-slate-900">Speak to us directly</h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-500">
+              Prefer to talk it through? Call or email and we&apos;ll respond quickly.
             </p>
             <dl className="mt-6 space-y-4 text-sm">
               <div>
-                <dt className="font-medium text-ink-500">Phone</dt>
+                <dt className="font-medium text-slate-400">Phone</dt>
                 <dd>
-                  <a href={SITE.phoneHref} className="font-semibold text-brand-700 hover:underline">
+                  <a href={SITE.phoneHref} className="font-semibold text-teal-600 hover:underline">
                     {SITE.phone}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-ink-500">Email</dt>
+                <dt className="font-medium text-slate-400">Email</dt>
                 <dd>
-                  <a href={SITE.emailHref} className="font-semibold text-brand-700 hover:underline">
+                  <a href={SITE.emailHref} className="font-semibold text-teal-600 hover:underline">
                     {SITE.email}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-ink-500">Coverage</dt>
-                <dd className="text-ink-800">Across East London</dd>
+                <dt className="font-medium text-slate-400">Coverage</dt>
+                <dd className="text-slate-700">Across London</dd>
               </div>
             </dl>
-
-            <div className="mt-8 rounded-2xl border border-ink-100 bg-ink-50 p-5">
-              <h3 className="text-sm font-semibold text-ink-900">Free resources</h3>
+            <div className="mt-8 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+              <h3 className="text-sm font-semibold text-slate-900">Free resources</h3>
               <div className="mt-3 space-y-2 text-sm">
-                <a href={SITE.community.training} target="_blank" rel="noopener noreferrer" className="block font-medium text-brand-700 hover:underline">
+                <a href={SITE.community.training} target="_blank" rel="noopener noreferrer" className="block font-medium text-teal-600 hover:underline">
                   Free Fire &amp; Health Safety Training →
                 </a>
-                <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer" className="block font-medium text-brand-700 hover:underline">
+                <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer" className="block font-medium text-teal-600 hover:underline">
                   UK Fire &amp; Safety Community →
                 </a>
               </div>
             </div>
           </div>
-
-          {/* Form */}
-          <div className="rounded-2xl border border-ink-100 bg-white p-7 shadow-sm">
-            <Suspense fallback={<p className="text-sm text-ink-500">Loading form…</p>}>
+          <div className="rounded-2xl border border-slate-100 bg-white p-7 shadow-sm">
+            <Suspense fallback={<p className="text-sm text-slate-400">Loading form…</p>}>
               <ContactForm />
             </Suspense>
           </div>

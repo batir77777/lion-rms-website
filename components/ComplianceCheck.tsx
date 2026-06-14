@@ -161,7 +161,7 @@ export default function ComplianceCheck() {
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-400"
+            className="h-full rounded-full bg-gradient-to-r from-teal-700 to-teal-400"
             animate={{ width: `${(answered / QUESTIONS.length) * 100}%` }}
             transition={{ duration: 0.3 }}
           />
@@ -178,7 +178,7 @@ export default function ComplianceCheck() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink-100">
-                  <span className="mr-2 font-display font-semibold text-brand-400">
+                  <span className="mr-2 font-display font-semibold text-teal-400">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {item.q}
@@ -235,7 +235,7 @@ export default function ComplianceCheck() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact"
-                  className="flex-1 rounded-full bg-brand-600 px-6 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-brand-950/40 transition hover:bg-brand-500"
+                  className="flex-1 rounded-full bg-teal-600 px-6 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-teal-950/40 transition hover:bg-teal-500"
                 >
                   Book a call
                 </Link>
@@ -264,7 +264,7 @@ export default function ComplianceCheck() {
                     type="email"
                     required
                     placeholder="Email me this result (optional)"
-                    className="flex-1 rounded-full border border-white/15 bg-ink-950/60 px-5 py-3 text-sm text-white placeholder:text-ink-500 focus:border-brand-500 focus:outline-none"
+                    className="flex-1 rounded-full border border-white/15 bg-ink-950/60 px-5 py-3 text-sm text-white placeholder:text-ink-500 focus:border-teal-500 focus:outline-none"
                   />
                   <button
                     type="submit"
@@ -275,7 +275,7 @@ export default function ComplianceCheck() {
                   </button>
                 </form>
               )}
-              {emailError && <p className="mt-2 text-sm text-brand-300">{emailError}</p>}
+              {emailError && <p className="mt-2 text-sm text-teal-300">{emailError}</p>}
             </div>
           </motion.div>
         )}

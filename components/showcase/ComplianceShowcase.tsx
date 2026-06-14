@@ -13,7 +13,7 @@ export default function ComplianceShowcase() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
               Digital Compliance
             </p>
             <h2 className="text-3xl font-bold text-ink-950 sm:text-5xl">
@@ -56,12 +56,12 @@ export default function ComplianceShowcase() {
           <div className="mt-10 text-center">
             <Link
               href="/contact?service=digital-compliance"
-              className="inline-flex items-center gap-2 rounded-full bg-ink-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-brand-600 hover:shadow-ember"
+              className="inline-flex items-center gap-2 rounded-full bg-ink-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-teal-600 hover:shadow-ember"
             >
               Discuss a digital compliance solution <span aria-hidden>→</span>
             </Link>
             <p className="mt-3 text-xs text-ink-500">
-              <Link href="/services/digital-compliance" className="font-semibold text-brand-700 hover:underline">
+              <Link href="/services/digital-compliance" className="font-semibold text-teal-700 hover:underline">
                 Explore Digital Compliance Solutions →
               </Link>
             </p>

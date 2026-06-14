@@ -1,0 +1,59 @@
+
+> lionrms-website@1.0.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use by process 35412, using available port 3003 instead.
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3003
+   - Network:      http://192.168.0.6:3003
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 8.8s (1482 modules)
+ GET / 200 in 10727ms
+ ⚠ Cross origin request detected from 192.168.0.6 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1422ms (830 modules)
+ GET /icon.svg?57bc87143d58831b 200 in 1721ms
+ ○ Compiling /services ...
+ ✓ Compiled /services in 1184ms (1528 modules)
+ GET /services 200 in 1519ms
+ GET /services 200 in 59ms
+ GET /services 200 in 65ms
+ ○ Compiling /about ...
+ ✓ Compiled /about in 620ms (1516 modules)
+ GET /about 200 in 752ms
+ ○ Compiling /case-studies ...
+ ✓ Compiled /case-studies in 620ms (1518 modules)
+ GET /case-studies 200 in 818ms
+ GET /case-studies 200 in 61ms
+ ○ Compiling /insights ...
+ ✓ Compiled /insights in 641ms (1521 modules)
+ GET /insights 200 in 794ms
+ ○ Compiling /faq ...
+ ✓ Compiled /faq in 1497ms (1513 modules)
+ GET /faq 200 in 1870ms
+ GET /faq 200 in 51ms
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 737ms (1521 modules)
+ GET /contact 200 in 921ms
+ GET /case-studies 200 in 79ms
+ GET /about 200 in 73ms
+ GET /services 200 in 68ms
+ GET / 200 in 152ms
+ ✓ Compiled in 2.1s (1519 modules)
+ GET / 200 in 387ms
+ ✓ Compiled in 1461ms (1519 modules)
+ GET / 200 in 345ms
+ ✓ Compiled in 5.1s (1519 modules)
+ GET / 200 in 623ms
+ GET /services 200 in 96ms
+ GET / 200 in 1181ms
+ GET / 200 in 472ms
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 986ms (866 modules)
+ GET /icon.svg?57bc87143d58831b 200 in 1309ms
+ GET / 200 in 1027ms
+ GET /icon.svg?57bc87143d58831b 200 in 16ms
