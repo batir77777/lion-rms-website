@@ -32,7 +32,7 @@ export default function InsightsPage() {
                   <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                     {p.dateLabel}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold text-slate-900">{p.title}</h2>
+                  <h2 className="mt-2 text-xl font-bold text-navy-900">{p.title}</h2>
                   <p className="mt-3 text-sm leading-relaxed text-slate-500">{p.excerpt}</p>
                   <span className="mt-4 inline-block text-sm font-semibold text-teal-600">
                     Read more →

@@ -2,12 +2,12 @@ import Reveal from "@/components/Reveal";
 import { Card, EyebrowPill, GradientText } from "./MwsUi";
 
 const BENEFITS = [
-  { icon: "⚡", stat: "10×", title: "Faster client onboarding", body: "From first enquiry to active client in minutes, not days." },
-  { icon: "🎯", stat: "100%", title: "Visibility across every job", body: "Know the status of every client, project and task in one view." },
-  { icon: "📂", stat: "Zero", title: "Paperwork left unsent", body: "Generate, store and deliver documents without leaving the platform." },
-  { icon: "🔄", stat: "–60%", title: "Admin time per client", body: "Workflows, reminders and templates handle the repetitive work for you." },
-  { icon: "🔒", stat: "UK", title: "Hosted & GDPR-compliant", body: "Every byte of your data hosted in the UK. Full compliance out of the box." },
-  { icon: "🚀", stat: "4 hr", title: "Average time to go live", body: "Onboarding wizard gets your site, services and workflows running fast." },
+  { icon: "⚡", stat: "10×", title: "Faster client onboarding", body: "From first enquiry to active client in minutes, not days.", navy: false },
+  { icon: "🎯", stat: "100%", title: "Visibility across every job", body: "Know the status of every client, project and task in one view.", navy: true },
+  { icon: "📂", stat: "Zero", title: "Paperwork left unsent", body: "Generate, store and deliver documents without leaving the platform.", navy: false },
+  { icon: "🔄", stat: "–60%", title: "Admin time per client", body: "Workflows, reminders and templates handle the repetitive work for you.", navy: true },
+  { icon: "🔒", stat: "UK", title: "Hosted & GDPR-compliant", body: "Every byte of your data hosted in the UK. Full compliance out of the box.", navy: false },
+  { icon: "🚀", stat: "4 hr", title: "Average time to go live", body: "Onboarding wizard gets your site, services and workflows running fast.", navy: true },
 ];
 
 export default function MwsBenefits() {
@@ -17,7 +17,7 @@ export default function MwsBenefits() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <EyebrowPill>Platform Benefits</EyebrowPill>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-navy-900 sm:text-4xl">
               Built to make your business <GradientText>move faster.</GradientText>
             </h2>
             <p className="mb-14 text-base text-slate-500">
@@ -33,8 +33,12 @@ export default function MwsBenefits() {
                 <div
                   className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-xl"
                   style={{
-                    background: "linear-gradient(135deg,rgba(14,165,160,0.1),rgba(16,185,129,0.1))",
-                    border: "1px solid rgba(14,165,160,0.15)",
+                    background: b.navy
+                      ? "linear-gradient(135deg,rgba(12,31,63,0.08),rgba(14,165,160,0.08))"
+                      : "linear-gradient(135deg,rgba(14,165,160,0.1),rgba(16,185,129,0.1))",
+                    border: b.navy
+                      ? "1px solid rgba(12,31,63,0.12)"
+                      : "1px solid rgba(14,165,160,0.15)",
                   }}
                 >
                   {b.icon}
@@ -42,7 +46,9 @@ export default function MwsBenefits() {
                 <p
                   className="mb-1 text-2xl font-extrabold"
                   style={{
-                    background: "linear-gradient(135deg,#0ea5a0,#10b981)",
+                    background: b.navy
+                      ? "linear-gradient(120deg,#0c1f3f,#0ea5a0)"
+                      : "linear-gradient(120deg,#0ea5a0,#10b981)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -50,7 +56,7 @@ export default function MwsBenefits() {
                 >
                   {b.stat}
                 </p>
-                <h3 className="mb-2 text-sm font-bold text-slate-900">{b.title}</h3>
+                <h3 className="mb-1 text-sm font-bold text-navy-900">{b.title}</h3>
                 <p className="text-sm leading-relaxed text-slate-500">{b.body}</p>
               </Card>
             </Reveal>

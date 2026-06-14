@@ -25,7 +25,7 @@ function render(body: string) {
     const t = block.trim();
     if (t.startsWith("## ")) {
       return (
-        <h2 key={i} className="mt-8 text-xl font-bold text-slate-900">
+        <h2 key={i} className="mt-8 text-xl font-bold text-navy-900">
           {t.slice(3)}
         </h2>
       );
@@ -85,7 +85,7 @@ export default async function PostPage({
             <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
               {p.dateLabel} · Insights
             </p>
-            <h1 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
+            <h1 className="text-3xl font-bold leading-tight text-navy-900 sm:text-4xl">
               {p.title}
             </h1>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -104,7 +104,7 @@ export default async function PostPage({
           <div>{render(p.body)}</div>
         </Reveal>
 
-        <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
+        <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
           <h2 className="text-2xl font-bold text-white">
             Discuss fire safety on your project
           </h2>

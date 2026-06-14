@@ -18,7 +18,7 @@ export default function ProcessTimeline() {
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-600">
           How we work
         </p>
-        <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-5xl">
+        <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-5xl">
           A clear, joined-up process from first call to ongoing compliance
         </h2>
 
@@ -49,7 +49,7 @@ export default function ProcessTimeline() {
                 <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-teal-200 bg-white font-display text-base font-bold text-teal-600 shadow-sm">
                   {s.n}
                 </div>
-                <h3 className="mt-5 font-display text-xl font-semibold text-slate-900">
+                <h3 className="mt-5 font-display text-xl font-semibold text-navy-900">
                   {s.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500">

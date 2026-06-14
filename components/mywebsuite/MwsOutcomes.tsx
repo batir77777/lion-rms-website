@@ -24,7 +24,7 @@ export default function MwsOutcomes() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <EyebrowPill>Business Outcomes</EyebrowPill>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-navy-900 sm:text-4xl">
               Results that matter to{" "}
               <GradientText>your bottom line.</GradientText>
             </h2>

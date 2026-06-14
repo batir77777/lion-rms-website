@@ -8,7 +8,7 @@ export default function MwsPlatformPreview() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <EyebrowPill>Platform Preview</EyebrowPill>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-navy-900 sm:text-4xl">
               See exactly what your team{" "}
               <GradientText>will be working in.</GradientText>
             </h2>

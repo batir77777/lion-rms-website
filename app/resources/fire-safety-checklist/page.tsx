@@ -70,7 +70,7 @@ export default function ChecklistPage() {
           <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600 print:hidden">
             Free resource
           </p>
-          <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h1 className="text-3xl font-bold text-navy-900 sm:text-4xl">
             Fire Safety Checklist
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-500 print:text-slate-600">
@@ -88,7 +88,7 @@ export default function ChecklistPage() {
         <div className="mt-10 space-y-8">
           {SECTIONS.map((s) => (
             <section key={s.title}>
-              <h2 className="text-lg font-semibold text-slate-900">{s.title}</h2>
+              <h2 className="text-lg font-semibold text-navy-900">{s.title}</h2>
               <ul className="mt-3 space-y-2">
                 {s.items.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
@@ -104,7 +104,7 @@ export default function ChecklistPage() {
         </div>
 
         <div className="mt-12 rounded-2xl border border-teal-100 bg-teal-50 p-6 text-center print:hidden">
-          <h2 className="text-xl font-bold text-slate-900">
+          <h2 className="text-xl font-bold text-navy-900">
             Want a professional assessment?
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm text-slate-500">

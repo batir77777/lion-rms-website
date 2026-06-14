@@ -9,14 +9,21 @@ export default function MwsFinalCta() {
           <div
             className="relative overflow-hidden rounded-3xl border px-8 py-20 text-center"
             style={{
-              background: "linear-gradient(135deg,#0f172a 0%,#0a2218 100%)",
+              background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 40%,#0a2a30 70%,#082218 100%)",
               borderColor: "rgba(14,165,160,0.22)",
-              boxShadow: "0 0 80px rgba(14,165,160,0.07)",
+              boxShadow: "0 0 80px rgba(14,165,160,0.08), inset 0 1px 0 rgba(255,255,255,0.04)",
             }}
           >
+            {/* Teal glow */}
             <div
-              className="pointer-events-none absolute left-1/2 top-0 h-64 w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80"
-              style={{ background: "radial-gradient(ellipse,rgba(14,165,160,0.14) 0%,transparent 70%)" }}
+              className="pointer-events-none absolute left-1/2 top-0 h-64 w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{ background: "radial-gradient(ellipse,rgba(14,165,160,0.18) 0%,transparent 70%)" }}
+              aria-hidden
+            />
+            {/* Navy glow bottom-right */}
+            <div
+              className="pointer-events-none absolute bottom-0 right-0 h-48 w-64 rounded-full"
+              style={{ background: "radial-gradient(ellipse,rgba(12,31,63,0.6) 0%,transparent 70%)" }}
               aria-hidden
             />
             <p

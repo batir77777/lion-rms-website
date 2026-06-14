@@ -31,7 +31,7 @@ export default function ServicesPage() {
                   <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                     {cat.eyebrow}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold text-slate-900">
+                  <h2 className="mt-2 text-xl font-bold text-navy-900">
                     {cat.title}
                   </h2>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">

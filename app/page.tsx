@@ -43,7 +43,7 @@ export default function HomePage() {
                 MyWebSuite — Now Live
               </p>
 
-              <h1 className="text-[clamp(2.4rem,5vw,3.75rem)] font-extrabold leading-[1.04] tracking-tight text-slate-900">
+              <h1 className="text-[clamp(2.4rem,5vw,3.75rem)] font-extrabold leading-[1.04] tracking-tight text-navy-900">
                 Run your entire<br />business from<br />
                 <GradientText>one platform.</GradientText>
               </h1>

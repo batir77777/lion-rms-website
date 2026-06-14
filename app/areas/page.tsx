@@ -29,7 +29,7 @@ export default function AreasPage() {
                   href={`/areas/${a.slug}`}
                   className="block rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-md"
                 >
-                  <h2 className="text-base font-semibold text-slate-900">
+                  <h2 className="text-base font-semibold text-navy-900">
                     Fire Risk Assessment in {a.name}
                   </h2>
                   <p className="mt-1 text-sm text-teal-600">View {a.name} →</p>

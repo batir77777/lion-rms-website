@@ -69,7 +69,7 @@ export default function ServicesOverview() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-600">
             What we do
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-5xl">
+          <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-5xl">
             One platform. Every angle of compliance covered.
           </h2>
         </Reveal>
@@ -94,7 +94,7 @@ export default function ServicesOverview() {
                     {c.icon}
                   </svg>
                 </span>
-                <h3 className="font-display text-lg font-semibold text-slate-900">
+                <h3 className="font-display text-lg font-semibold text-navy-900">
                   {c.title}
                 </h3>
                 <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-500">

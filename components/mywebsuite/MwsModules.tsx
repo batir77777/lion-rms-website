@@ -19,7 +19,7 @@ export default function MwsModules() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <EyebrowPill>Product Modules</EyebrowPill>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-navy-900 sm:text-4xl">
               Every tool your business needs,{" "}
               <GradientText>in one platform.</GradientText>
             </h2>
@@ -43,7 +43,7 @@ export default function MwsModules() {
                 >
                   {m.icon}
                 </div>
-                <h3 className="mb-1.5 text-sm font-bold text-slate-900">{m.module}</h3>
+                <h3 className="mb-1.5 text-sm font-bold text-navy-900">{m.module}</h3>
                 <p className="text-xs leading-relaxed text-slate-500">{m.desc}</p>
               </div>
             </Reveal>

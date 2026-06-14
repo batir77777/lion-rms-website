@@ -9,7 +9,7 @@ export default function WhoWeHelp() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
             Who we help
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-4xl">
             Tailored support for your sector
           </h2>
         </Reveal>
@@ -21,7 +21,7 @@ export default function WhoWeHelp() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">{a.title}</h3>
+                  <h3 className="text-lg font-semibold text-navy-900">{a.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-500">{a.body}</p>
                 </div>
               </div>

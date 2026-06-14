@@ -24,7 +24,7 @@ export default function FaqPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
           <FaqAccordion items={FAQS} />
-          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
+          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
             <h2 className="text-2xl font-bold text-white">Still have a question?</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-slate-300">
               Tell us about your premises or project and we&apos;ll point you in the right direction.

@@ -39,7 +39,7 @@ export default async function ServiceDetailPage({
             {cat.items.map((item, i) => (
               <Reveal key={item.name} delay={i * 50}>
                 <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <h2 className="text-base font-semibold text-slate-900">
+                  <h2 className="text-base font-semibold text-navy-900">
                     {item.name}
                   </h2>
                   <p className="mt-2 text-sm leading-relaxed text-slate-500">
@@ -64,7 +64,7 @@ export default async function ServiceDetailPage({
             </div>
           </div>
 
-          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
+          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
             <h2 className="text-2xl font-bold text-white">
               Discuss your {cat.eyebrow.toLowerCase()} requirements
             </h2>

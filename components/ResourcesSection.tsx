@@ -10,7 +10,7 @@ export default function ResourcesSection() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
             Free resources
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-4xl">
             Helpful tools, training, and community
           </h2>
         </Reveal>
@@ -24,7 +24,7 @@ export default function ResourcesSection() {
                   rel="noopener noreferrer"
                   className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900">{r.title}</h3>
+                  <h3 className="text-lg font-semibold text-navy-900">{r.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
                   <span className="mt-4 text-sm font-semibold text-teal-600">Open →</span>
                 </a>
@@ -33,7 +33,7 @@ export default function ResourcesSection() {
                   href={r.href}
                   className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900">{r.title}</h3>
+                  <h3 className="text-lg font-semibold text-navy-900">{r.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
                   <span className="mt-4 text-sm font-semibold text-teal-600">View →</span>
                 </Link>

@@ -57,14 +57,14 @@ export default function AboutPage() {
             {VALUES.map(([title, body], i) => (
               <Reveal key={title} delay={i * 60}>
                 <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <h3 className="text-base font-semibold text-slate-900">{title}</h3>
+                  <h3 className="text-base font-semibold text-navy-900">{title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-500">{body}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
+          <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
             <h2 className="text-2xl font-bold text-white">
               Let&apos;s discuss your requirements
             </h2>

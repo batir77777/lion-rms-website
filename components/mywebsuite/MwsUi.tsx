@@ -6,7 +6,7 @@ export function GradientText({ children }: { children: ReactNode }) {
   return (
     <span
       style={{
-        background: "linear-gradient(120deg,#0ea5a0 0%,#10b981 100%)",
+        background: "linear-gradient(120deg,#0c1f3f 0%,#0ea5a0 60%,#10b981 100%)",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         backgroundClip: "text",
@@ -17,8 +17,12 @@ export function GradientText({ children }: { children: ReactNode }) {
   );
 }
 
-export function EyebrowPill({ children }: { children: ReactNode }) {
-  return (
+export function EyebrowPill({ children, navy }: { children: ReactNode; navy?: boolean }) {
+  return navy ? (
+    <p className="mb-4 inline-block rounded-full border border-navy-200 bg-navy-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-navy-700">
+      {children}
+    </p>
+  ) : (
     <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-teal-600">
       {children}
     </p>
@@ -41,7 +45,7 @@ export function PrimaryBtn({
     <Link
       href={href}
       className={cls}
-      style={{ background: "linear-gradient(135deg,#0ea5a0,#10b981)" }}
+      style={{ background: "linear-gradient(135deg,#0c1f3f 0%,#0ea5a0 60%,#10b981 100%)" }}
     >
       {children}
     </Link>
@@ -72,7 +76,7 @@ export function Card({
 }) {
   return (
     <div
-      className={`h-full rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-teal-100 hover:shadow-md ${className}`}
+      className={`h-full rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-md ${className}`}
     >
       {children}
     </div>

@@ -67,7 +67,7 @@ export default function CaseStudiesPage() {
                   <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                     {c.sector}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold text-slate-900">{c.title}</h2>
+                  <h2 className="mt-2 text-xl font-bold text-navy-900">{c.title}</h2>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{c.body}</p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {c.tags.map((t) => (

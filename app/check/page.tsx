@@ -24,7 +24,7 @@ export default function CheckPage() {
             <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
               Free self-check
             </p>
-            <h1 className="text-3xl font-bold text-slate-900 sm:text-5xl">
+            <h1 className="text-3xl font-bold text-navy-900 sm:text-5xl">
               How exposed are you right now?
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-500">

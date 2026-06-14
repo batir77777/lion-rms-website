@@ -28,7 +28,7 @@ export default function PhotoHero({
             <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
               {eyebrow}
             </p>
-            <h1 className="text-4xl font-bold leading-[1.05] text-slate-900 sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold leading-[1.05] text-navy-900 sm:text-5xl lg:text-6xl">
               {title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">

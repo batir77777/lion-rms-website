@@ -15,7 +15,7 @@ export default function ProcessSection() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
             How we work
           </p>
-          <h2 className="max-w-2xl text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-4xl">
             A clear, joined-up process from first call to ongoing compliance
           </h2>
         </Reveal>
@@ -24,7 +24,7 @@ export default function ProcessSection() {
             <Reveal key={s.n} delay={i * 80}>
               <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-md">
                 <span className="font-display text-3xl font-bold text-teal-200">{s.n}</span>
-                <h3 className="mt-3 text-lg font-semibold text-slate-900">{s.title}</h3>
+                <h3 className="mt-3 text-lg font-semibold text-navy-900">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500">{s.body}</p>
               </div>
             </Reveal>

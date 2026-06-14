@@ -72,7 +72,7 @@ export default async function AreaPage({
           </Reveal>
 
           <Reveal>
-            <h2 className="mt-10 text-xl font-bold text-slate-900">
+            <h2 className="mt-10 text-xl font-bold text-navy-900">
               Services in {a.name}
             </h2>
             <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
@@ -85,7 +85,7 @@ export default async function AreaPage({
             </ul>
           </Reveal>
 
-          <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "#0f172a" }}>
+          <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
             <h2 className="text-2xl font-bold text-white">
               Book a fire risk assessment in {a.name}
             </h2>

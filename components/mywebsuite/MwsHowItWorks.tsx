@@ -24,12 +24,12 @@ const STEPS = [
 
 export default function MwsHowItWorks() {
   return (
-    <section className="bg-slate-50 py-24">
+    <section className="bg-navy-50 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
-            <EyebrowPill>How It Works</EyebrowPill>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <EyebrowPill navy>How It Works</EyebrowPill>
+            <h2 className="mb-4 text-3xl font-bold text-navy-900 sm:text-4xl">
               Live in hours, <GradientText>not weeks.</GradientText>
             </h2>
             <p className="mb-14 text-base text-slate-500">
@@ -40,7 +40,7 @@ export default function MwsHowItWorks() {
         <div className="relative grid gap-8 sm:grid-cols-3">
           <div
             className="absolute left-[16.7%] right-[16.7%] top-10 hidden h-px sm:block"
-            style={{ background: "linear-gradient(90deg,transparent,rgba(14,165,160,0.3),transparent)" }}
+            style={{ background: "linear-gradient(90deg,transparent,rgba(12,31,63,0.2),rgba(14,165,160,0.3),transparent)" }}
             aria-hidden
           />
           {STEPS.map((s, i) => (
@@ -50,15 +50,15 @@ export default function MwsHowItWorks() {
                   className="relative z-10 mb-6 flex h-20 w-20 items-center justify-center rounded-full text-2xl font-extrabold"
                   style={{
                     background: "white",
-                    border: "2px solid #0ea5a0",
-                    color: "#0ea5a0",
-                    boxShadow: "0 0 0 6px rgba(14,165,160,0.08)",
+                    border: "2px solid #0c1f3f",
+                    color: "#0c1f3f",
+                    boxShadow: "0 0 0 6px rgba(12,31,63,0.07)",
                   }}
                 >
                   {s.n}
                 </div>
                 <div className="mb-2 text-2xl">{s.icon}</div>
-                <h3 className="mb-2 text-base font-bold text-slate-900">{s.title}</h3>
+                <h3 className="mb-2 text-base font-bold text-navy-900">{s.title}</h3>
                 <p className="text-sm leading-relaxed text-slate-500">{s.body}</p>
               </div>
             </Reveal>

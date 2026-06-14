@@ -22,7 +22,7 @@ export default function ContactPage() {
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">Speak to us directly</h2>
+            <h2 className="text-lg font-semibold text-navy-900">Speak to us directly</h2>
             <p className="mt-2 text-sm leading-relaxed text-slate-500">
               Prefer to talk it through? Call or email and we&apos;ll respond quickly.
             </p>
@@ -49,7 +49,7 @@ export default function ContactPage() {
               </div>
             </dl>
             <div className="mt-8 rounded-2xl border border-slate-100 bg-slate-50 p-5">
-              <h3 className="text-sm font-semibold text-slate-900">Free resources</h3>
+              <h3 className="text-sm font-semibold text-navy-900">Free resources</h3>
               <div className="mt-3 space-y-2 text-sm">
                 <a href={SITE.community.training} target="_blank" rel="noopener noreferrer" className="block font-medium text-teal-600 hover:underline">
                   Free Fire &amp; Health Safety Training →

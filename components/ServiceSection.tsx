@@ -48,7 +48,7 @@ export default function ServiceSection({
                   {cat.eyebrow}
                 </span>
               </div>
-              <h2 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
+              <h2 className="text-3xl font-bold leading-tight text-navy-900 sm:text-4xl">
                 {cat.title}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-slate-500">
