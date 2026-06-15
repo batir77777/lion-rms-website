@@ -25,7 +25,7 @@ function render(body: string) {
     const t = block.trim();
     if (t.startsWith("## ")) {
       return (
-        <h2 key={i} className="mt-8 text-xl font-bold text-navy-900">
+        <h2 key={i} className="mt-10 text-2xl font-bold text-navy-900">
           {t.slice(3)}
         </h2>
       );
@@ -38,7 +38,7 @@ function render(body: string) {
       ),
     );
     return (
-      <p key={i} className="mt-4 text-base leading-relaxed text-slate-600">
+      <p key={i} className="mt-5 text-lg leading-relaxed text-slate-600">
         {parts}
       </p>
     );
@@ -72,25 +72,27 @@ export default async function PostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* White article header */}
+
+      {/* Article header */}
       <div className="relative isolate overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
           <div
-            className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-30"
-            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.15) 0%, transparent 70%)" }}
+            className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/3 rounded-full"
+            style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.09) 0%, transparent 65%)" }}
           />
         </div>
-        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 sm:pt-44">
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-40 sm:px-6">
           <Reveal>
-            <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
-              {p.dateLabel} · Insights
+            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
+              {p.dateLabel} &middot; Insights
             </p>
-            <h1 className="text-3xl font-bold leading-tight text-navy-900 sm:text-4xl">
+            <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-extrabold leading-[1.1] text-navy-900">
               {p.title}
             </h1>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               {p.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-600">
+                <span key={tag} className="rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">
                   {tag}
                 </span>
               ))}
@@ -99,29 +101,47 @@ export default async function PostPage({
         </div>
       </div>
 
+      {/* Article body */}
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <Reveal>
           <div>{render(p.body)}</div>
         </Reveal>
 
-        <div className="mt-12 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
-          <h2 className="text-2xl font-bold text-white">
-            Discuss fire safety on your project
-          </h2>
-          <p className="mx-auto mt-2 max-w-lg text-sm text-slate-300">
-            Construction-phase fire safety, fire strategies, RAMS and more. Call{" "}
-            {SITE.phone} or request a consultation.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #0ea5a0, #10b981)" }}
+        {/* CTA */}
+        <Reveal>
+          <div
+            className="mt-14 rounded-2xl border p-10 text-center"
+            style={{
+              background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)",
+              borderColor: "rgba(14,165,160,0.2)",
+            }}
           >
-            Get in touch
-          </Link>
-        </div>
+            <h2 className="mb-4 text-2xl font-extrabold text-white">
+              Need expert compliance support?
+            </h2>
+            <p className="mx-auto mb-7 max-w-lg text-base text-slate-400 leading-relaxed">
+              Call {SITE.phone} or book a free demo to see how the Lion RMS platform
+              can keep your portfolio audit-ready.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
+                style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
+              >
+                Book a Free Demo →
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+              >
+                Get in Touch
+              </Link>
+            </div>
+          </div>
+        </Reveal>
 
-        <p className="mt-8 text-center text-sm text-slate-500">
+        <p className="mt-8 text-center text-sm">
           <Link href="/insights" className="font-semibold text-teal-600 hover:underline">
             ← All insights
           </Link>

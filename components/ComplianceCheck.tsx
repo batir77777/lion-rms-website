@@ -153,7 +153,7 @@ export default function ComplianceCheck() {
     <div className="mx-auto w-full max-w-3xl">
       {/* Progress */}
       <div className="mb-8">
-        <div className="mb-2 flex items-center justify-between text-[11px] font-semibold uppercase tracking-widest text-ink-400">
+        <div className="mb-2 flex items-center justify-between text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           <span>
             {answered} of {QUESTIONS.length} answered
           </span>
@@ -173,17 +173,17 @@ export default function ComplianceCheck() {
         {QUESTIONS.map((item, i) => (
           <li
             key={item.q}
-            className="rounded-2xl border border-white/10 bg-ink-900/60 p-5"
+            className="rounded-2xl border border-white/10 bg-navy-900/60 p-5"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <p className="text-sm font-medium text-ink-100">
+                <p className="text-sm font-medium text-slate-100">
                   <span className="mr-2 font-display font-semibold text-teal-400">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {item.q}
                 </p>
-                <p className="mt-1.5 pl-7 text-xs leading-relaxed text-ink-400">
+                <p className="mt-1.5 pl-7 text-xs leading-relaxed text-slate-400">
                   {item.why}
                 </p>
               </div>
@@ -198,7 +198,7 @@ export default function ComplianceCheck() {
                         ? v
                           ? "border-emerald-500/60 bg-emerald-950/40 text-emerald-300"
                           : "border-red-500/60 bg-red-950/40 text-red-300"
-                        : "border-white/15 bg-white/[0.04] text-ink-300 hover:border-white/30"
+                        : "border-white/15 bg-white/[0.04] text-slate-300 hover:border-white/30"
                     }`}
                   >
                     {v ? "Yes" : "No"}
@@ -229,7 +229,7 @@ export default function ComplianceCheck() {
                 {result.title} · {yesCount}/10
               </h2>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-ink-200">{result.body}</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-200">{result.body}</p>
 
             {result.band !== "green" && (
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -251,7 +251,7 @@ export default function ComplianceCheck() {
             {/* Optional email capture — never required to see the score. */}
             <div className="mt-7 border-t border-white/10 pt-6">
               {emailSent ? (
-                <p className="text-sm text-ink-300">
+                <p className="text-sm text-slate-300">
                   Sent — check your inbox. Anything urgent:{" "}
                   <a href={SITE.phoneHref} className="font-semibold text-white underline">
                     {SITE.phone}
@@ -264,7 +264,7 @@ export default function ComplianceCheck() {
                     type="email"
                     required
                     placeholder="Email me this result (optional)"
-                    className="flex-1 rounded-full border border-white/15 bg-ink-950/60 px-5 py-3 text-sm text-white placeholder:text-ink-500 focus:border-teal-500 focus:outline-none"
+                    className="flex-1 rounded-full border border-white/15 bg-navy-950/60 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-500 focus:outline-none"
                   />
                   <button
                     type="submit"

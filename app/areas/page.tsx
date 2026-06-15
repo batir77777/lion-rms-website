@@ -3,7 +3,6 @@ import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import { AREAS } from "@/lib/areas";
-import { IMAGES } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Areas We Cover Across London",
@@ -15,7 +14,6 @@ export default function AreasPage() {
   return (
     <>
       <PhotoHero
-        image={IMAGES.city}
         eyebrow="Areas we cover"
         title="Fire & safety services across London"
         body="We provide fire risk assessments, fire strategies and health & safety support to clients across London. Find your area below."
@@ -27,12 +25,12 @@ export default function AreasPage() {
               <Reveal key={a.slug} delay={i * 40}>
                 <Link
                   href={`/areas/${a.slug}`}
-                  className="block rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-md"
+                  className="group block rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal-100 hover:shadow-lg"
                 >
-                  <h2 className="text-base font-semibold text-navy-900">
+                  <h2 className="text-base font-bold text-navy-900 group-hover:text-navy-700">
                     Fire Risk Assessment in {a.name}
                   </h2>
-                  <p className="mt-1 text-sm text-teal-600">View {a.name} →</p>
+                  <p className="mt-1.5 text-sm font-semibold text-teal-600">View details →</p>
                 </Link>
               </Reveal>
             ))}

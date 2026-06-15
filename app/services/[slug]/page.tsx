@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
-import CtaButtons from "@/components/CtaButtons";
 import { SERVICE_CATEGORIES, getCategory } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -32,50 +31,73 @@ export default async function ServiceDetailPage({
 
   return (
     <>
-      <PhotoHero image={cat.image} eyebrow={cat.eyebrow} title={cat.title} body={cat.intro} />
-      <section className="bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      <PhotoHero eyebrow={cat.eyebrow} title={cat.title} body={cat.intro} />
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+
+          {/* Service items grid */}
           <div className="grid gap-6 sm:grid-cols-2">
             {cat.items.map((item, i) => (
               <Reveal key={item.name} delay={i * 50}>
-                <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <h2 className="text-base font-semibold text-navy-900">
-                    {item.name}
-                  </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                    {item.desc}
-                  </p>
+                <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
+                  <h2 className="mb-2 text-lg font-bold text-navy-900">{item.name}</h2>
+                  <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-8">
-            <div className="flex gap-4 text-sm">
-              {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/services/${c.slug}`}
-                  className="font-medium text-teal-600 hover:underline"
-                >
-                  {c.title} →
-                </Link>
-              ))}
-            </div>
+          {/* Other services */}
+          <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+            <p className="text-sm font-medium text-slate-400">Also available:</p>
+            {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
+              <Link
+                key={c.slug}
+                href={`/services/${c.slug}`}
+                className="rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-sm font-semibold text-teal-700 transition hover:bg-teal-100"
+              >
+                {c.title}
+              </Link>
+            ))}
           </div>
 
-          <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)" }}>
-            <h2 className="text-2xl font-bold text-white">
-              Discuss your {cat.eyebrow.toLowerCase()} requirements
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-slate-300">
-              Tell us about your premises or project and we&apos;ll recommend a
-              proportionate, compliant way forward.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <CtaButtons variant="final" />
+          {/* Platform CTA */}
+          <Reveal>
+            <div
+              className="mt-10 rounded-2xl border p-10 text-center"
+              style={{
+                background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)",
+                borderColor: "rgba(14,165,160,0.2)",
+              }}
+            >
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-teal-400">
+                Compliance Platform
+              </p>
+              <h2 className="mb-4 text-2xl font-extrabold text-white">
+                Discuss your {cat.eyebrow.toLowerCase()} requirements
+              </h2>
+              <p className="mx-auto mb-7 max-w-xl text-base text-slate-400 leading-relaxed">
+                Tell us about your premises or project and we&apos;ll recommend a
+                proportionate, compliant way forward — backed by expert consultancy and
+                a live compliance platform.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
+                >
+                  Book a Free Demo →
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+                >
+                  Request a Consultation
+                </Link>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

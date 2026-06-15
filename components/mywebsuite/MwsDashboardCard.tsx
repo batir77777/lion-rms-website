@@ -1,106 +1,161 @@
 "use client";
 
-// Right-side hero platform preview card for MyWebSuite.
+// Compliance Dashboard Mockup — hero section right panel for Lion RMS.
+// Shows a realistic compliance platform UI: score, status bars, open actions.
 
-const rows = [
+const actions = [
   {
-    icon: "📋",
-    iconBg: "bg-mws-teal/10 text-mws-teal-light",
-    title: "Website Enquiry — Acme Ltd",
-    sub: "Received 2 minutes ago",
-    badge: "New",
-    badgeCls: "bg-mws-teal/10 text-mws-teal-light",
+    priority: "Critical",
+    color: "#ef4444",
+    bg: "rgba(239,68,68,0.08)",
+    text: "Replace FD30 fire door — Block A, Level 2",
+    due: "3 days",
   },
   {
-    icon: "✅",
-    iconBg: "bg-mws-green/10 text-mws-green",
-    title: "Client Workflow — Phase 2",
-    sub: "Smith & Co · Updated today",
-    badge: "Active",
-    badgeCls: "bg-mws-green/10 text-mws-green",
+    priority: "Medium",
+    color: "#f59e0b",
+    bg: "rgba(245,158,11,0.08)",
+    text: "Update fire safety log — Main Building",
+    due: "14 days",
   },
   {
-    icon: "🌐",
-    iconBg: "bg-teal-400/10 text-teal-400",
-    title: "Service Page — Published",
-    sub: "mywebsuite.co.uk · 3 edits today",
-    badge: "Review",
-    badgeCls: "bg-amber-400/10 text-amber-400",
+    priority: "Low",
+    color: "#10b981",
+    bg: "rgba(16,185,129,0.08)",
+    text: "Re-lamp emergency exit light — Basement",
+    due: "30 days",
   },
 ];
 
-export default function MwsDashboardCard() {
+const compliance = [
+  { label: "Fire Safety", pct: 94, color: "#0ea5a0", status: "Compliant" },
+  { label: "Health & Safety", pct: 76, color: "#f59e0b", status: "Actions due" },
+  { label: "Water Safety", pct: 89, color: "#10b981", status: "Compliant" },
+];
+
+export default function ComplianceDashboard() {
   return (
     <div
-      className="overflow-hidden rounded-2xl border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.5),0_0_60px_rgba(14,165,160,0.08)]"
+      className="relative w-full overflow-hidden rounded-2xl shadow-[0_24px_80px_rgba(12,31,63,0.22),0_0_0_1px_rgba(14,165,160,0.15)]"
+      style={{ background: "#0c1f3f" }}
     >
-      {/* Window chrome */}
-      <div className="flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.03] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-        <span className="ml-2 flex-1 rounded-md bg-white/[0.06] px-3 py-1 text-[10px] text-slate-400">
-          app.mywebsuite.co.uk/dashboard
+      {/* Browser chrome */}
+      <div
+        className="flex items-center gap-2 border-b px-4 py-3"
+        style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(6,14,31,0.6)" }}
+      >
+        <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+        <span
+          className="ml-2 flex-1 rounded-md px-3 py-1 text-[11px] text-slate-400"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        >
+          app.lionrms.uk/compliance
+        </span>
+        <span
+          className="rounded-full px-2.5 py-0.5 text-[10px] font-bold text-emerald-400"
+          style={{ background: "rgba(16,185,129,0.1)" }}
+        >
+          ● LIVE
         </span>
       </div>
 
-      {/* Body */}
-      <div className="p-5">
+      <div className="p-5 space-y-4">
         {/* Header row */}
-        <div className="mb-4 flex items-center justify-between">
-          <h4 className="text-sm font-semibold text-white">Business Dashboard</h4>
-          <span className="rounded-full bg-mws-teal/10 px-3 py-0.5 text-[10px] font-semibold text-mws-teal-light">
-            ● Live
-          </span>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+              Lion RMS Platform
+            </p>
+            <h4 className="text-sm font-bold text-white" style={{ letterSpacing: "-0.01em" }}>
+              Compliance Dashboard
+            </h4>
+          </div>
+          <div
+            className="flex items-center gap-1.5 rounded-full px-3 py-1"
+            style={{ background: "rgba(14,165,160,0.12)", border: "1px solid rgba(14,165,160,0.2)" }}
+          >
+            <span className="text-[10px] font-semibold text-teal-300">23 Open Actions</span>
+          </div>
         </div>
 
-        {/* Stats */}
-        <div className="mb-4 grid grid-cols-3 gap-2">
+        {/* Compliance score + stats */}
+        <div className="grid grid-cols-3 gap-2">
           {[
-            { num: "48", label: "Enquiries" },
-            { num: "12", label: "Active Jobs" },
-            { num: "£9.4k", label: "This Month" },
-          ].map(({ num, label }) => (
+            { num: "87%", label: "Overall Score", color: "#0ea5a0" },
+            { num: "4", label: "Due Reviews", color: "#f59e0b" },
+            { num: "3", label: "Critical Items", color: "#ef4444" },
+          ].map(({ num, label, color }) => (
             <div
               key={label}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.03] py-3 text-center"
+              className="rounded-xl py-3 text-center"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
             >
-              <p
-                className="text-xl font-bold"
-                style={{
-                  background: "linear-gradient(135deg,#14d9d3,#10b981)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
+              <p className="text-xl font-extrabold leading-none" style={{ color }}>
                 {num}
               </p>
-              <p className="mt-0.5 text-[10px] text-slate-400">{label}</p>
+              <p className="mt-0.5 text-[9px] font-medium text-slate-400">{label}</p>
             </div>
           ))}
         </div>
 
-        {/* Rows */}
-        <div className="flex flex-col gap-2">
-          {rows.map((r) => (
-            <div
-              key={r.title}
-              className="flex items-center justify-between rounded-xl border border-white/[0.05] bg-white/[0.025] px-3 py-2.5"
-            >
-              <div className="flex items-center gap-2.5">
-                <span
-                  className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg text-xs ${r.iconBg}`}
-                >
-                  {r.icon}
-                </span>
-                <div>
-                  <p className="text-xs font-medium text-slate-100">{r.title}</p>
-                  <p className="text-[10px] text-slate-400">{r.sub}</p>
+        {/* Compliance status bars */}
+        <div
+          className="rounded-xl p-4 space-y-3"
+          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-3">
+            Compliance Status
+          </p>
+          {compliance.map((c) => (
+            <div key={c.label}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-semibold text-slate-200">{c.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-slate-400">{c.pct}%</span>
+                  <span
+                    className="rounded-full px-2 py-0.5 text-[9px] font-bold"
+                    style={{
+                      color: c.color,
+                      background: `${c.color}15`,
+                    }}
+                  >
+                    {c.status}
+                  </span>
                 </div>
               </div>
-              <span className={`flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${r.badgeCls}`}>
-                {r.badge}
+              <div className="h-1.5 overflow-hidden rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+                <div
+                  className="h-full rounded-full transition-all"
+                  style={{ width: `${c.pct}%`, background: c.color }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Open actions */}
+        <div className="space-y-1.5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+            Open Actions
+          </p>
+          {actions.map((a) => (
+            <div
+              key={a.text}
+              className="flex items-center gap-2.5 rounded-lg px-3 py-2.5"
+              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+            >
+              <span
+                className="flex-shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold"
+                style={{ color: a.color, background: a.bg }}
+              >
+                {a.priority}
               </span>
+              <span className="flex-1 text-[11px] font-medium text-slate-200 leading-snug">
+                {a.text}
+              </span>
+              <span className="flex-shrink-0 text-[10px] text-slate-500">{a.due}</span>
             </div>
           ))}
         </div>

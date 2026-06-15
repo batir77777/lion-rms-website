@@ -5,7 +5,7 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import CtaButtons from "@/components/CtaButtons";
 import { AREAS, getArea } from "@/lib/areas";
-import { IMAGES, SERVICE_CATEGORIES, SITE } from "@/lib/site";
+import { SERVICE_CATEGORIES, SITE } from "@/lib/site";
 
 export function generateStaticParams() {
   return AREAS.map((a) => ({ slug: a.slug }));
@@ -43,7 +43,6 @@ export default async function AreaPage({
   return (
     <>
       <PhotoHero
-        image={IMAGES.city}
         eyebrow={`${a.name} · London`}
         title={`Fire Risk Assessment in ${a.name}`}
         body={`Fire risk assessments and fire & health & safety consultancy for ${a.name} — ${a.note}.`}

@@ -19,15 +19,16 @@ export default function CheckPage() {
             style={{ background: "radial-gradient(ellipse, rgba(14,165,160,0.15) 0%, transparent 70%)" }}
           />
         </div>
-        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 text-center sm:px-6 sm:pt-44">
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-40 text-center sm:px-6">
           <Reveal>
-            <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600">
+            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
               Free self-check
             </p>
-            <h1 className="text-3xl font-bold text-navy-900 sm:text-5xl">
+            <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-navy-900">
               How exposed are you right now?
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-500">
+            <p className="mx-auto mt-6 max-w-xl text-xl leading-relaxed text-slate-500">
               Ten honest yes/no questions across your fire and health &amp; safety
               duties. Your score is shown instantly — no sign-up, no email required.
             </p>
