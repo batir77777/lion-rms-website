@@ -4,7 +4,7 @@ import { BlocksIcon, PoundIcon, GiftIcon, ClockIcon, PinIcon } from "./MwsIcons"
 const ITEMS = [
   { Icon: BlocksIcon, title: "Consultancy + Software", sub: "Expert advice and a live platform, in one solution" },
   { Icon: PoundIcon, title: "From £250 + VAT", sub: "Fire Risk Assessment with a digital report & action plan" },
-  { Icon: GiftIcon, title: "3 Months Free", sub: "Lion RMS platform access for new clients" },
+  { Icon: GiftIcon, title: "2 Months Free", sub: "Lion RMS platform access for new clients" },
   { Icon: ClockIcon, title: "Fast Turnaround", sub: "Practical, commercial advice — without the wait" },
   { Icon: PinIcon, title: "London · UK-wide", sub: "Based in London, covering clients across the UK" },
 ];

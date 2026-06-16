@@ -67,7 +67,7 @@ export default function HomePage() {
                 </div>
                 <span className="hidden h-10 w-px bg-white/15 sm:block" aria-hidden />
                 <div>
-                  <p className="text-lg font-extrabold" style={{ color: "#5be3c0" }}>3 Months Free</p>
+                  <p className="text-lg font-extrabold" style={{ color: "#5be3c0" }}>2 Months Free</p>
                   <p className="text-xs font-medium uppercase tracking-wide text-blue-100/60">Lion RMS platform access</p>
                 </div>
               </div>

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         url: "/images/hero-banner.jpg",
         width: 1536,
         height: 1024,
-        alt: "Lion Risk Management Solutions — Fire Safety, Health & Safety & Digital Compliance. Fire Risk Assessment from £250 + VAT plus 3 months free platform access.",
+        alt: "Lion Risk Management Solutions — Fire Safety, Health & Safety & Digital Compliance. Fire Risk Assessment from £250 + VAT plus 2 months free platform access.",
       },
     ],
   },

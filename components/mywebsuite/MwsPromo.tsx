@@ -19,7 +19,7 @@ export default function MwsPromo() {
                   Fire Risk Assessment from <span className="whitespace-nowrap">£250 + VAT</span>
                 </h2>
                 <p className="mt-2 text-lg font-semibold text-teal-50">
-                  Plus 3 months’ free Lion RMS platform access.
+                  Plus 2 months’ free Lion RMS platform access.
                 </p>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/80">
                   For new clients booking a Fire Risk Assessment, Health &amp; Safety Audit or Fire
