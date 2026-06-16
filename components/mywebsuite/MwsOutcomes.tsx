@@ -1,19 +1,28 @@
 import Reveal from "@/components/Reveal";
 import { Card, SectionLabel, GradientText } from "./MwsUi";
 
-const STATS = [
-  { stat: "94%", label: "Average compliance score" },
-  { stat: "60%", label: "Reduction in admin time" },
-  { stat: "3×", label: "Faster action closure" },
-  { stat: "100%", label: "Audit-ready, always" },
+// Honest, guaranteed promises — no invented metrics.
+const PROMISES = [
+  {
+    title: "Audit-Ready Records",
+    sub: "Your fire safety log is kept up to date and ready for the fire service or an inspection.",
+  },
+  {
+    title: "No Missed Dates",
+    sub: "Automated reminders for reviews, remedial works and maintenance deadlines.",
+  },
+  {
+    title: "Direct Expert Access",
+    sub: "Advice from a chartered consultant — not a call centre or a faceless portal.",
+  },
 ];
 
 const OUTCOMES = [
   { icon: "🛡️", text: "Reduced regulatory risk" },
   { icon: "⚡", text: "Faster remedial action closure" },
   { icon: "👁️", text: "Portfolio-wide visibility" },
-  { icon: "📋", text: "Inspection records, always current" },
-  { icon: "🔔", text: "No missed review dates" },
+  { icon: "📋", text: "Inspection records kept current" },
+  { icon: "🔔", text: "Reminders before review dates" },
   { icon: "📊", text: "Boardroom-ready reporting" },
 ];
 
@@ -23,34 +32,24 @@ export default function MwsOutcomes() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
-            <SectionLabel>Business Outcomes</SectionLabel>
+            <SectionLabel>What You Get</SectionLabel>
             <h2 className="mb-5 text-4xl font-extrabold leading-tight text-navy-900 sm:text-5xl">
-              Compliance that proves<br />
-              <GradientText>its own value.</GradientText>
+              Compliance that keeps<br />
+              <GradientText>working for you.</GradientText>
             </h2>
             <p className="mb-16 text-lg text-slate-500 leading-relaxed">
-              Organisations using the Lion RMS platform see measurable improvements in
-              compliance performance and operational efficiency.
+              From the assessment onwards, your risks are tracked, your deadlines are managed
+              and your records stay ready — so nothing slips through the cracks.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((o, i) => (
-            <Reveal key={o.label} delay={i * 60}>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {PROMISES.map((p, i) => (
+            <Reveal key={p.title} delay={i * 60}>
               <Card className="p-8 text-center">
-                <p
-                  className="mb-2 text-5xl font-extrabold leading-none"
-                  style={{
-                    background: "linear-gradient(135deg,#0ea5a0,#10b981)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {o.stat}
-                </p>
-                <p className="text-sm font-medium leading-snug text-slate-500">{o.label}</p>
+                <p className="mb-3 text-xl font-extrabold leading-snug text-navy-900">{p.title}</p>
+                <p className="text-sm font-medium leading-relaxed text-slate-500">{p.sub}</p>
               </Card>
             </Reveal>
           ))}

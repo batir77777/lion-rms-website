@@ -21,12 +21,11 @@ const SITE_URL = "https://www.lionrms.uk";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Lion Risk Management Solutions | Fire Safety, Health & Safety & Digital Compliance Consultancy London",
+    default: "Fire Risk Assessment London | Digital Compliance & H&S — Lion RMS",
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "London-based consultancy for fire safety, health & safety, and digital compliance. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems for businesses, landlords, managing agents, and construction clients across London.",
+    "Expert fire risk assessments and health & safety consultancy in London, managed via a live digital compliance platform. BAFE SP205 registered, CMIOSH-led. Book a free demo.",
   keywords: [
     "fire risk assessment London",
     "fire safety consultant",
@@ -45,6 +44,20 @@ export const metadata: Metadata = {
     title: "Fire Safety, Health & Safety & Digital Compliance Consultancy | Lion RMS",
     description:
       "Practical fire safety, health & safety, and bespoke digital compliance solutions across London.",
+    images: [
+      {
+        url: "/images/hero-banner.jpg",
+        width: 1536,
+        height: 1024,
+        alt: "Lion Risk Management Solutions — Fire Safety, Health & Safety & Digital Compliance. Fire Risk Assessment from £250 + VAT plus 3 months free platform access.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fire Risk Assessment London | Digital Compliance & H&S — Lion RMS",
+    description: "Expert fire safety & H&S consultancy with a live compliance platform. From £250 + VAT.",
+    images: ["/images/hero-banner.jpg"],
   },
   robots: { index: true, follow: true },
 };
