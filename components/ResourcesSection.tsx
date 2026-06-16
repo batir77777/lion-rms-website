@@ -11,10 +11,10 @@ export default function ResourcesSection() {
             Free resources
           </p>
           <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-4xl">
-            Helpful tools, training, and community
+            Helpful tools and resources
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {RESOURCES.map((r, i) => (
             <Reveal key={r.title} delay={i * 70}>
               {r.external ? (

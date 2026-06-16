@@ -11,10 +11,6 @@ export const SITE = {
   logo: "/logo.png", // save your logo here: public/logo.png
   // Paste your Formspree form ID here (e.g. "xxxxbcde").
   formspreeId: "meewegnp",
-  community: {
-    training: "https://ignite-safe-hub.lovable.app/",
-    forum: "https://uk-fire-expert.lovable.app/",
-  },
 };
 
 export const IMAGES = {
@@ -267,18 +263,6 @@ export const RESOURCES = [
     body: "Ten yes/no questions across your fire and H&S duties — instant red/amber/green score, no sign-up needed.",
     href: "/check",
     external: false,
-  },
-  {
-    title: "Free Fire & Health Safety Training",
-    body: "Access our free training hub for practical fire and health & safety learning.",
-    href: "https://ignite-safe-hub.lovable.app/",
-    external: true,
-  },
-  {
-    title: "UK Fire & Safety Community",
-    body: "Join our community to ask questions and stay up to date with UK fire safety.",
-    href: "https://uk-fire-expert.lovable.app/",
-    external: true,
   },
   {
     title: "Fire Safety Checklist",

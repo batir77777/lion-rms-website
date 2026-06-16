@@ -23,7 +23,7 @@ export default function MwsComparison() {
           <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>The difference</SectionLabel>
             <h2 className="mb-5 text-4xl font-extrabold leading-tight text-navy-900 sm:text-5xl">
-              The old way vs <GradientText>the LRMS way.</GradientText>
+              The old way vs <GradientText>the Lion RMS way.</GradientText>
             </h2>
             <p className="mb-14 text-lg leading-relaxed text-slate-500">
               Most consultants hand over a PDF and move on. We turn the assessment into live,
@@ -53,7 +53,7 @@ export default function MwsComparison() {
               className="h-full rounded-2xl border border-teal-200 bg-white p-8 shadow-sm"
               style={{ borderLeftWidth: 4, borderLeftColor: "#0ea5a0" }}
             >
-              <p className="text-xs font-bold uppercase tracking-widest text-teal-600">The LRMS way</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-teal-600">The Lion RMS way</p>
               <p className="mt-4 text-lg font-bold text-navy-900">Live, managed compliance.</p>
               <ul className="mt-5 space-y-3 text-sm text-navy-900">
                 {LRMS_WAY.map((t) => (

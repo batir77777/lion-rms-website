@@ -9,8 +9,7 @@ git config user.name "Batir Turakulov"
 
 git add -A
 
-git commit -m "Design: full light-theme conversion across all pages"
-
+git commit -m "Content: Lion RMS way branding, coverage areas rebuild, training portal cleanup"
 git push origin main
 
 echo.

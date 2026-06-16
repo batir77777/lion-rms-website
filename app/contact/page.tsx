@@ -65,19 +65,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Free resources */}
+            {/* Training & competency support */}
             <div className="mt-5 rounded-2xl border border-teal-100 bg-teal-50 p-6">
-              <h3 className="mb-3 text-sm font-bold text-navy-900">Free resources</h3>
-              <div className="space-y-2 text-sm">
-                <a href={SITE.community.training} target="_blank" rel="noopener noreferrer"
-                  className="block font-semibold text-teal-600 hover:text-teal-700">
-                  Free Fire &amp; Health Safety Training →
-                </a>
-                <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer"
-                  className="block font-semibold text-teal-600 hover:text-teal-700">
-                  UK Fire &amp; Safety Community →
-                </a>
-              </div>
+              <h3 className="mb-2 text-sm font-bold text-navy-900">Training &amp; competency support</h3>
+              <p className="text-sm text-slate-600">
+                Fire warden, fire awareness and health &amp; safety training, plus Responsible Person
+                and competency support. Use the form to speak to us about training and competency
+                support for your team.
+              </p>
             </div>
           </div>
 

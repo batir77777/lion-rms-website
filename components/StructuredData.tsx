@@ -11,7 +11,10 @@ export default function StructuredData() {
     url: "https://www.lionrms.uk",
     telephone: "+447766317818",
     email: SITE.email,
-    areaServed: { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
+    areaServed: [
+      { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
+      { "@type": "Country", name: "United Kingdom" },
+    ],
     address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
     knowsAbout: [
       "Fire Risk Assessment",

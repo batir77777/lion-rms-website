@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { NAV, SITE, CREDENTIALS } from "@/lib/site";
-import { AREAS } from "@/lib/areas";
 
 export default function Footer() {
   return (
@@ -46,25 +45,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Areas */}
+          {/* Coverage */}
           <div>
             <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
-              Areas Covered
+              Coverage
             </h3>
-            <ul className="space-y-2.5 text-sm">
-              {AREAS.slice(0, 6).map((a) => (
-                <li key={a.slug}>
-                  <Link href={`/areas/${a.slug}`} className="text-slate-400 transition hover:text-white">
-                    {a.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/areas" className="font-semibold text-teal-400 transition hover:text-teal-300">
-                  All London areas →
-                </Link>
-              </li>
-            </ul>
+            <p className="text-sm text-slate-400">London based, with fire safety, health &amp; safety and digital compliance services delivered across the UK.</p>
+            <Link href="/areas" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
+              London &amp; UK-wide coverage →
+            </Link>
           </div>
 
           {/* Contact */}
@@ -85,14 +74,9 @@ export default function Footer() {
               </li>
               <li className="text-slate-500">{SITE.location}</li>
             </ul>
-            <div className="mt-5 space-y-2 text-sm">
-              <a href={SITE.community.training} target="_blank" rel="noopener noreferrer"
-                className="block text-teal-400 transition hover:text-teal-300">
-                Free Safety Training →
-              </a>
-              <a href={SITE.community.forum} target="_blank" rel="noopener noreferrer"
-                className="block text-teal-400 transition hover:text-teal-300">
-                UK Safety Community →
+            <div className="mt-5 text-sm">
+              <a href="/contact" className="block text-teal-400 transition hover:text-teal-300">
+                Speak to us about training &amp; competency support →
               </a>
             </div>
           </div>
