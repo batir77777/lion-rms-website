@@ -7,14 +7,14 @@ import { ASSESSOR, CREDENTIALS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions — UK compliance management platform backed by BAFE SP205 registered and CMIOSH chartered expertise in fire safety and health & safety.",
+    "Lion Risk Management Solutions — UK compliance management platform backed by CMIOSH chartered expertise in fire safety and health & safety.",
 };
 
 const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Assessments and advice grounded in current UK legislation, BAFE SP205 registration, and Chartered safety practitioner status.",
+    body: "Assessments and advice grounded in current UK legislation and Chartered safety practitioner (CMIOSH) status.",
   },
   {
     icon: "⚖️",
@@ -39,7 +39,7 @@ export default function AboutPage() {
       <PhotoHero
         eyebrow="About"
         title="Expert compliance, backed by purpose-built software"
-        body="Lion Risk Management Solutions combines BAFE SP205 registered fire safety expertise and chartered health & safety competence with a digital compliance platform — giving you professional assessments and the tools to manage them ongoing."
+        body="Lion Risk Management Solutions combines chartered fire safety and health & safety expertise (CMIOSH) with a digital compliance platform — giving you professional assessments and the tools to manage them ongoing."
       />
 
       <section className="bg-white py-20">

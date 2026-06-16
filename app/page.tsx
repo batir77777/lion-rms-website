@@ -35,7 +35,7 @@ export default function HomePage() {
             <div className="animate-fade-up">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00A67E" }} aria-hidden />
-                BAFE SP205 · CMIOSH Registered · London &amp; UK-wide
+                CMIOSH Chartered · DipFRA · London &amp; UK-wide
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">

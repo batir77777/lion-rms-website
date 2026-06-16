@@ -33,7 +33,7 @@ const COLUMNS = [
       "Suitable and sufficient to PAS 79 — evidence-based, building-specific",
       "Prioritised, proportionate actions in plain English",
       "Frequently costs less to implement than over-cautious reports demand",
-      "Defensible if ever challenged — and carried out personally by a BAFE SP205 registered assessor",
+      "Defensible if ever challenged — and carried out personally by a chartered safety practitioner (CMIOSH)",
     ],
   },
 ];

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "Expert fire risk assessments and health & safety consultancy in London, managed via a live digital compliance platform. BAFE SP205 registered, CMIOSH-led. Book a free demo.",
+    "Expert fire risk assessments and health & safety consultancy in London, managed via a live digital compliance platform. CMIOSH-led chartered expertise. Book a free demo.",
   keywords: [
     "fire risk assessment London",
     "fire safety consultant",

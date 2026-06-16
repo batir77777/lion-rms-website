@@ -88,7 +88,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
           </p>
           <p className="text-xs text-slate-700">
-            BAFE SP205 Registered &middot; CMIOSH Chartered &middot; UK Hosted &middot; GDPR Compliant
+            CMIOSH Chartered &middot; UK Hosted &middot; GDPR Compliant
           </p>
         </div>
       </div>
