@@ -245,9 +245,9 @@
     .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
     .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    /* Mobile menu — uses max-height transition (no display:none toggle = more reliable on Android) */
-    .mobile-menu { position:fixed; top:68px; left:0; right:0; background:rgba(8,18,34,.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.08); z-index:999; padding:0 0 0; max-height:0; overflow:hidden; opacity:0; transition:max-height .3s ease, opacity .25s ease, padding .3s ease; box-shadow:0 8px 32px rgba(0,0,0,.4); pointer-events:none; }
-    .mobile-menu.open { max-height:500px; opacity:1; padding:4px 0 16px; pointer-events:auto; }
+    /* Mobile menu — visibility+opacity approach, most reliable on Android */
+    .mobile-menu { position:fixed; top:68px; left:0; right:0; background:rgba(8,18,34,.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.08); z-index:9999; padding:4px 0 16px; visibility:hidden; opacity:0; transform:translateY(-8px); transition:opacity .25s ease, transform .25s ease, visibility 0s .25s; box-shadow:0 8px 32px rgba(0,0,0,.4); pointer-events:none; }
+    .mobile-menu.open { visibility:visible; opacity:1; transform:translateY(0); transition:opacity .25s ease, transform .25s ease, visibility 0s 0s; pointer-events:auto; }
     .mobile-menu ul { list-style:none; padding:0; margin:0 0 12px; }
     .mobile-menu ul li a { display:flex; align-items:center; padding:15px 24px; font-size:16px; font-weight:500; color:rgba(255,255,255,.75); border-bottom:1px solid rgba(255,255,255,.05); text-decoration:none; transition:color .15s,background .15s; }
     .mobile-menu ul li:last-child a { border-bottom:none; }
@@ -300,7 +300,7 @@
       <li><a href="lionrms_about_v2.html">About</a></li>
     </ul>
     <a href="lionrms_contact.html" class="nav-cta">Free Consultation</a>
-    <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -792,11 +792,4 @@
       el.style.opacity = ''; el.style.transform = '';
       io.observe(el);
     });
-    setTimeout(function(){ document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 3000);
-  });
-</script>
-
-<script>
-(function(){
-  var btn = document.getElementById('navHamburger');
-  var menu = document.getEl
+    setTimeout(function(){ document.querySelectorAll('.rev
