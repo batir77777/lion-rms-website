@@ -35,6 +35,27 @@
     .nav-links a.nav-highlight { color:var(--teal) !important; font-weight:700; }
     .nav-cta { background:var(--teal); color:var(--navy) !important; padding:9px 20px; border-radius:50px; font-size:14px; font-weight:700; transition:transform .2s,background .2s; }
     .nav-cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
+    /* ── Mobile nav ── */
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:none; background:none; }
+    .nav-hamburger span { display:block; width:22px; height:2.5px; background:#fff; border-radius:2px; transition:all .3s ease; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    .mobile-menu { position:fixed; top:110px; left:0; right:0; background:rgba(8,18,34,.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.08); z-index:99; padding:4px 0 16px; display:none; box-shadow:0 8px 32px rgba(0,0,0,.4); }
+    .mobile-menu.open { display:block; animation:slideDown .2s ease; }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+    .mobile-menu ul { list-style:none; padding:0; margin:0 0 12px; }
+    .mobile-menu ul li a { display:flex; align-items:center; gap:10px; padding:15px 24px; font-size:16px; font-weight:500; color:rgba(255,255,255,.75); border-bottom:1px solid rgba(255,255,255,.05); text-decoration:none; transition:color .15s,background .15s; }
+    .mobile-menu ul li:last-child a { border-bottom:none; }
+    .mobile-menu ul li a:hover, .mobile-menu ul li a.active { color:#00c9a7; background:rgba(0,201,167,.04); }
+    .mobile-menu ul li a.nav-hi { color:#00c9a7 !important; font-weight:700; }
+    .mobile-menu .mob-cta { display:block; background:#00c9a7; color:#0a1628 !important; text-align:center; padding:14px 24px; border-radius:50px; font-size:15px; font-weight:700; margin:0 24px; text-decoration:none; transition:background .2s; }
+    .mobile-menu .mob-cta:hover { background:#00a889; }
+    @media (max-width:768px) {
+      .nav-links { display:none !important; }
+      .nav-cta { display:none !important; }
+      .nav-hamburger { display:flex !important; }
+    }
 
     /* LAYOUT */
     .container { max-width:1160px; margin:0 auto; padding:0 24px; }
@@ -200,8 +221,19 @@
       <a href="lionrms_about.html">About</a>
     </div>
     <a href="lionrms_contact.html" class="nav-cta">Free Audit</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="lionrms_homepage_v2.html">Home</a></li>
+    <li><a href="lionrms_ai_solutions.html" class="nav-hi">⚡ AI &amp; Automation</a></li>
+    <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
+    <li><a href="lionrms_case_studies_v2.html">Case Studies</a></li>
+    <li><a href="lionrms_about_v2.html">About</a></li>
+  </ul>
+  <a href="lionrms_contact.html" class="mob-cta">Free Consultation</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -630,5 +662,29 @@
   });
 </script>
 
+<script>
+(function(){
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('mobileMenu');
+  if(!btn||!menu) return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  document.addEventListener('click',function(e){
+    if(!menu.contains(e.target)&&!btn.contains(e.target)){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    }
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    });
+  });
+})();
+</script>
 </body>
 </html>

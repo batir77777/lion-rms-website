@@ -164,6 +164,16 @@
     <li><a href="lionrms_contact.html" class="nav-cta">Free Consultation</a></li>
 </ul>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="lionrms_homepage_v2.html">Home</a></li>
+    <li><a href="lionrms_ai_solutions.html" class="nav-hi">⚡ AI &amp; Automation</a></li>
+    <li><a href="lionrms_fire_hs.html" class="active">Fire &amp; H&amp;S</a></li>
+    <li><a href="lionrms_case_studies_v2.html">Case Studies</a></li>
+    <li><a href="lionrms_about_v2.html">About</a></li>
+  </ul>
+  <a href="lionrms_contact.html" class="mob-cta">Free Consultation</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -559,6 +569,30 @@
     }, { threshold: 0.1 });
     obs.observe(el);
   });
+</script>
+<script>
+(function(){
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('mobileMenu');
+  if(!btn||!menu) return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  document.addEventListener('click',function(e){
+    if(!menu.contains(e.target)&&!btn.contains(e.target)){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    }
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    });
+  });
+})();
 </script>
 </body>
 </html>
