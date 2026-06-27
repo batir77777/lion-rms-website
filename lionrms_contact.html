@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact & Book Audit | Lion RMS</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628;
+    --teal: #00c9a7;
+    --teal-light: #00e5c0;
+    --light-bg: #f4f7fc;
+    --text: #2c3e50;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 44px; width: auto; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+  .nav-cta { background: var(--teal); color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700 !important; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #112244 60%, #0d3355 100%); color: #fff; padding: 5rem 2rem 4rem; text-align: center; }
+  .hero-badge { display: inline-block; background: rgba(0,201,167,0.15); border: 1px solid rgba(0,201,167,0.4); color: var(--teal); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.15; }
+  .hero h1 span { color: var(--teal); }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; }
+
+  /* MAIN LAYOUT */
+  .main-section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+
+  /* LEFT: INFO */
+  .contact-info h2 { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+  .contact-info .sub { font-size: 1rem; color: var(--text-light); margin-bottom: 2rem; }
+  .audit-includes { background: var(--light-bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .audit-includes h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .audit-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.75rem; }
+  .audit-item:last-child { margin-bottom: 0; }
+  .audit-item .check { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--navy); font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1rem; }
+  .audit-item p { font-size: 0.9rem; color: var(--text); }
+  .audit-item p strong { color: var(--navy); display: block; margin-bottom: 0.1rem; }
+
+  .direct-contact h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-method { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+  .contact-method:last-child { border-bottom: none; }
+  .contact-method .icon { font-size: 1.2rem; flex-shrink: 0; }
+  .contact-method a { color: var(--teal); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  .contact-method p { font-size: 0.85rem; color: var(--text-light); margin-top: 0.1rem; }
+
+  .service-split { margin-top: 2rem; }
+  .service-split h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .split-row { display: flex; gap: 1rem; }
+  .split-card { flex: 1; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+  .split-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+  .split-card p { font-size: 0.8rem; color: var(--text-light); }
+  .split-card .reach { font-size: 0.75rem; font-weight: 600; color: var(--teal); margin-top: 0.4rem; }
+
+  /* RIGHT: FORM */
+  .contact-form-wrap { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  .form-title { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+  .form-sub { font-size: 0.9rem; color: var(--text-light); margin-bottom: 2rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 0.95rem; color: var(--text); font-family: inherit; background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,201,167,0.15);
+  }
+  .form-group textarea { min-height: 110px; resize: vertical; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .checkbox-item { display: flex; align-items: center; gap: 0.5rem; }
+  .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; }
+  .checkbox-item label { font-size: 0.85rem; color: var(--text); font-weight: 400; margin-bottom: 0; }
+  .submit-btn { width: 100%; background: var(--teal); color: var(--navy); padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; font-family: inherit; }
+  .submit-btn:hover { background: var(--teal-light); transform: translateY(-1px); }
+  .form-note { font-size: 0.8rem; color: var(--text-light); text-align: center; margin-top: 0.75rem; }
+  .form-success { display: none; text-align: center; padding: 2rem; }
+  .form-success .tick { font-size: 3rem; margin-bottom: 1rem; }
+  .form-success h3 { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+  .form-success p { color: var(--text-light); font-size: 0.95rem; }
+
+  /* TRUST BAND */
+  .trust-band { background: var(--light-bg); padding: 3rem 2rem; border-top: 1px solid var(--border); }
+  .trust-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+  .trust-item .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .trust-item h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .trust-item p { font-size: 0.8rem; color: var(--text-light); }
+
+  /* FAQ */
+  .faq-section { padding: 4rem 2rem; background: #fff; }
+  .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+  .faq-item { padding: 1.5rem; border: 1px solid var(--border); border-radius: 10px; }
+  .faq-item h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .faq-item p { font-size: 0.875rem; color: var(--text-light); }
+  .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--navy); margin-bottom: 0.75rem; }
+
+  /* FOOTER */
+  footer { background: #060e1c; color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 0.85rem; }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  /* ANIMATIONS */
+  .reveal { opacity: 1; transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.hidden { opacity: 0; transform: translateY(20px); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .trust-inner { grid-template-columns: repeat(2, 1fr); }
+    .split-row { flex-direction: column; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="lionrms_homepage_v2.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+  <ul class="nav-links">
+    <li><a href="lionrms_homepage_v2.html">Home</a></li>
+    <li><a href="lionrms_ai_solutions.html" class="nav-highlight">⚡ AI &amp; Automation</a></li>
+    <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
+    <li><a href="lionrms_case_studies_v2.html">Case Studies</a></li>
+    <li><a href="lionrms_about_v2.html">About</a></li>
+    <li><a href="lionrms_contact.html" class="nav-cta active">Free Consultation</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🌍 Global · Remote-First · Any Sector</div>
+  <h1>Book a Free<br /><span>Workflow Audit</span></h1>
+  <p>A 60–90 minute remote session where we map your key processes, identify the highest-value AI automation opportunities, and give you an honest picture of what implementation looks like for your organisation.</p>
+</section>
+
+<section class="main-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT -->
+      <div class="contact-info reveal">
+        <h2>Book Your Free Workflow Audit</h2>
+        <p class="sub">A 60–90 minute remote session. We map your processes, quantify the time cost, and give you a clear, prioritised action plan — whether or not you proceed with us.</p>
+
+        <div class="audit-includes">
+          <h3>What's Included</h3>
+          <div class="audit-item">
+            <div class="check">✓</div>
+            <p><strong>Workflow Mapping</strong>We walk through your key processes and identify where the biggest time costs are hiding — documents, approvals, records, reporting.</p>
+          </div>
+          <div class="audit-item">
+            <div class="check">✓</div>
+            <p><strong>AI Opportunity Analysis</strong>For each workflow, we assess what AI can replace, accelerate, or automate — with realistic time estimates based on similar engagements.</p>
+          </div>
+          <div class="audit-item">
+            <div class="check">✓</div>
+            <p><strong>Written Summary</strong>You receive a written report with 3–5 prioritised automation opportunities and implementation notes — yours to keep regardless.</p>
+          </div>
+          <div class="audit-item">
+            <div class="check">✓</div>
+            <p><strong>No Obligation</strong>A straight conversation with an AI implementation specialist. No pressure, no sales pitch — just honest, expert advice.</p>
+          </div>
+        </div>
+
+        <div class="direct-contact">
+          <h3>Direct Contact</h3>
+          <div class="contact-method">
+            <span class="icon">✉️</span>
+            <div>
+              <a href="mailto:admin@lionrms.uk">admin@lionrms.uk</a>
+              <p>Response within 4 hours on business days</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <span class="icon">🌐</span>
+            <div>
+              <a href="https://www.lionrms.uk" target="_blank">www.lionrms.uk</a>
+              <p>Full service information online</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <span class="icon">🌍</span>
+            <div>
+              <p style="color:var(--text);font-weight:600;">Global — Remote-First Delivery</p>
+              <p>USA · UK · Europe · Middle East · Worldwide</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-split">
+          <h3>Service Reach</h3>
+          <div class="split-row">
+            <div class="split-card">
+              <h4>⚡ AI &amp; Automation</h4>
+              <p>Workflow automation, process digitisation, AI implementation</p>
+              <div class="reach">Worldwide · Any sector</div>
+            </div>
+            <div class="split-card">
+              <h4>🔥 Fire &amp; H&amp;S</h4>
+              <p>Fire risk assessment, Legionella, H&S consultancy</p>
+              <div class="reach">UK-wide + International</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="contact-form-wrap reveal">
+        <div id="contactForm">
+          <p class="form-title">Book Your Free Workflow Audit</p>
+          <p class="form-sub">Fill in the details below and we'll confirm a time within 4 hours. Works for any sector, any country.</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" placeholder="Your first name" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" placeholder="Your last name" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Business Email *</label>
+            <input type="email" id="email" placeholder="you@company.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company Name</label>
+            <input type="text" id="company" placeholder="Your organisation" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sector">Sector *</label>
+              <select id="sector" required>
+                <option value="">Select your sector</option>
+                <option>Legal / Law Firm</option>
+                <option>Healthcare / Life Sciences</option>
+                <option>Construction &amp; Engineering</option>
+                <option>Manufacturing</option>
+                <option>Finance &amp; Insurance</option>
+                <option>Property &amp; Real Estate</option>
+                <option>Hospitality</option>
+                <option>Professional Services / Consultancy</option>
+                <option>H&amp;S / Safety Consultancy</option>
+                <option>Education</option>
+                <option>Government / Public Sector</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <select id="country">
+                <option value="">Select country</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+                <option>UAE / Middle East</option>
+                <option>Germany</option>
+                <option>France</option>
+                <option>Other Europe</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>I'm interested in (tick all that apply)</label>
+            <div class="form-checkboxes">
+              <div class="checkbox-item"><input type="checkbox" id="cb1"><label for="cb1">AI Workflow Automation</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="cb2"><label for="cb2">Document &amp; Report Generation</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="cb3"><label for="cb3">Process Digitisation &amp; SOPs</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="cb4"><label for="cb4">AI Tool Integration</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="cb5"><label for="cb5">Fire Safety &amp; H&amp;S</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="cb6"><label for="cb6">Compliance Management System</label></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Tell us about your biggest admin bottleneck (optional)</label>
+            <textarea id="message" placeholder="e.g. Our team spends 3–4 hours writing the same type of report every week. We need to change this..."></textarea>
+          </div>
+
+          <button class="submit-btn" onclick="submitForm()">Book My Free Workflow Audit →</button>
+          <p class="form-note">🔒 Your details are never shared or sold. GDPR compliant.</p>
+        </div>
+
+        <div class="form-success" id="formSuccess">
+          <div class="tick">✅</div>
+          <h3>Request Received!</h3>
+          <p>We'll be in touch within 4 hours to confirm your audit call time.<br /><br />In the meantime, use the <a href="lionrms_roi_calculator.html" style="color:var(--teal);">ROI Calculator</a> to estimate your potential savings.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust-band">
+  <div class="trust-inner">
+    <div class="trust-item reveal">
+      <div class="icon">🎓</div>
+      <h4>CMIOSH</h4>
+      <p>Chartered Member of IOSH</p>
+    </div>
+    <div class="trust-item reveal">
+      <div class="icon">🔥</div>
+      <h4>DipFRA</h4>
+      <p>Diploma in Fire Risk Assessment</p>
+    </div>
+    <div class="trust-item reveal">
+      <div class="icon">🛡️</div>
+      <h4>PI Insured</h4>
+      <p>Professional Indemnity Insurance</p>
+    </div>
+    <div class="trust-item reveal">
+      <div class="icon">🔒</div>
+      <h4>GDPR Compliant</h4>
+      <p>Your data is always secure</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Common Questions</p>
+      <h2 class="section-title">Quick Answers</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <h3>How quickly can you carry out an assessment?</h3>
+        <p>For most premises we can be on-site within 5–10 working days. Urgent compliance cases (e.g. enforcement action, insurance deadlines) are prioritised — contact us directly.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3>Do you cover the whole of the UK?</h3>
+        <p>Yes. We cover all of the UK for on-site assessments and training. Digital and AI services are delivered remotely and available worldwide.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3>How much does a fire risk assessment cost?</h3>
+        <p>Pricing depends on the size and complexity of your premises. Most standard commercial FRAs start from £250. Contact us for a fixed-price quote — no hidden extras.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3>Can you help if we're already non-compliant?</h3>
+        <p>Absolutely. That's often when we're most useful. We'll carry out the assessment, issue the report, and help you close the action plan — quickly and defensibly.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3>What if I only need help with admin, not compliance?</h3>
+        <p>That's fine. Our AI admin and digital services are completely standalone. You don't need to be a compliance client to benefit from process automation.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3>Can you work with our existing H&S management system?</h3>
+        <p>Yes. We integrate with most existing systems or build a fresh workflow around your current tools. We don't force you to switch to something new unless it genuinely helps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 Lion RMS Ltd &mdash; Fire Risk Management &amp; Safety Consultancy</p>
+  <p style="margin-top:0.5rem;">
+    <a href="lionrms_homepage_redesign.html">Home</a> &nbsp;|&nbsp;
+    <a href="lionrms_digital_solutions.html">Digital &amp; AI</a> &nbsp;|&nbsp;
+    <a href="lionrms_fire_hs.html">Fire &amp; H&S</a> &nbsp;|&nbsp;
+    <a href="lionrms_about.html">About</a> &nbsp;|&nbsp;
+    <a href="lionrms_contact.html">Contact</a>
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('hidden');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.remove('hidden'); e.target.classList.add('revealed'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+
+  function submitForm() {
+    const email = document.getElementById('email').value;
+    const first = document.getElementById('firstName').value;
+    if (!email || !first) { alert('Please fill in your name and email to continue.'); return; }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>

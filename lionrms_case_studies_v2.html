@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Studies — Lion RMS AI Workflow Automation</title>
+  <meta name="description" content="Real results from AI workflow automation across sectors and countries. Law firms, manufacturing, healthcare, construction, H&S consultancy — hours saved, processes digitised, measurable ROI." />
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --navy:#0a1628; --navy2:#0f2040; --teal:#00c9a7; --teal-dark:#00a889; --teal-faint:rgba(0,201,167,.08);
+      --text:#1a2a3a; --muted:#64748b; --light:#f8fafc; --border:rgba(0,0,0,.08);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:var(--text); background:#fff; }
+    a { text-decoration:none; color:inherit; }
+    .container { max-width:1120px; margin:0 auto; padding:0 24px; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:50px; font-size:15px; font-weight:700; transition:all .2s; }
+    .btn-primary { background:var(--teal); color:var(--navy); }
+    .btn-primary:hover { background:var(--teal-dark); transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,201,167,.3); }
+    .btn-ghost { background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.15); }
+    .btn-ghost:hover { background:rgba(255,255,255,.12); }
+    .section-tag { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
+    h2.section-title { font-size:clamp(1.7rem,3vw,2.4rem); font-weight:900; margin-bottom:14px; }
+    .section-lead { font-size:1.05rem; color:var(--muted); line-height:1.75; max-width:680px; margin-bottom:48px; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,22,40,.95); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.07); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo img { height:44px; width:auto; }
+    .nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+    .nav-links a { font-size:14px; font-weight:500; color:rgba(255,255,255,.7); padding:8px 14px; border-radius:8px; transition:color .2s,background .2s; }
+    .nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .nav-links a.active { color:var(--teal); }
+    .nav-links a.nav-hi { color:var(--teal) !important; font-weight:700; }
+    .nav-cta { background:var(--teal); color:var(--navy) !important; padding:9px 22px; border-radius:50px; font-size:14px; font-weight:700; transition:all .2s; }
+    .nav-cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
+
+    /* HERO */
+    .hero { background:var(--navy); padding:140px 0 80px; position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 70% 40%, rgba(0,201,167,.08) 0%,transparent 60%); pointer-events:none; }
+    .hero h1 { font-size:clamp(2rem,4vw,3.2rem); font-weight:900; color:#fff; line-height:1.1; margin-bottom:20px; }
+    .hero h1 em { font-style:normal; color:var(--teal); }
+    .hero-lead { font-size:1.05rem; color:rgba(255,255,255,.7); line-height:1.75; max-width:720px; margin-bottom:36px; }
+    .hero-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:44px; }
+    .hero-stat { text-align:center; }
+    .hero-stat .n { font-size:2rem; font-weight:900; color:var(--teal); }
+    .hero-stat .l { font-size:13px; color:rgba(255,255,255,.5); margin-top:4px; }
+
+    /* FILTERS */
+    .filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:40px; }
+    .f-btn { font-size:13px; font-weight:700; padding:8px 18px; border-radius:50px; border:1px solid var(--border); background:#fff; color:var(--muted); cursor:pointer; transition:all .2s; }
+    .f-btn:hover, .f-btn.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+    /* CASE STUDY CARDS */
+    .section { padding:80px 0; }
+    .section-alt { background:var(--light); }
+    .cs-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
+    .cs-card { background:#fff; border:1px solid var(--border); border-radius:20px; overflow:hidden; transition:transform .2s,box-shadow .2s; display:flex; flex-direction:column; }
+    .cs-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.1); }
+    .cs-header { padding:28px 28px 20px; }
+    .cs-meta { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .cs-flag { font-size:1.4rem; }
+    .cs-sector { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--teal); background:var(--teal-faint); padding:4px 10px; border-radius:10px; }
+    .cs-card h3 { font-size:1.1rem; font-weight:800; margin-bottom:8px; line-height:1.3; }
+    .cs-desc { font-size:14px; color:var(--muted); line-height:1.65; }
+    .cs-body { padding:0 28px 28px; flex:1; }
+    .cs-challenge { margin-top:16px; }
+    .cs-challenge h4 { font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .cs-before-after { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+    .cs-before, .cs-after { border-radius:10px; padding:14px; }
+    .cs-before { background:#fef2f2; border:1px solid #fecaca; }
+    .cs-after { background:#f0fdf4; border:1px solid #a7f3d0; }
+    .cs-before h5, .cs-after h5 { font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; margin-bottom:8px; }
+    .cs-before h5 { color:#dc2626; }
+    .cs-after h5 { color:#059669; }
+    .cs-before ul, .cs-after ul { list-style:none; display:flex; flex-direction:column; gap:5px; }
+    .cs-before ul li, .cs-after ul li { font-size:12px; line-height:1.4; padding-left:14px; position:relative; }
+    .cs-before ul li::before { content:'✕'; position:absolute; left:0; color:#dc2626; font-size:9px; font-weight:900; top:1px; }
+    .cs-after ul li::before { content:'✓'; position:absolute; left:0; color:#059669; font-size:9px; font-weight:900; top:1px; }
+    .cs-results { background:var(--navy2); border-radius:12px; padding:16px; margin-top:16px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .cs-results .r { text-align:center; }
+    .cs-results .r-num { font-size:1.3rem; font-weight:900; color:var(--teal); line-height:1; }
+    .cs-results .r-lbl { font-size:11px; color:rgba(255,255,255,.5); margin-top:4px; line-height:1.3; }
+    .cs-quote { font-style:italic; font-size:13px; color:var(--muted); line-height:1.65; border-left:2px solid var(--teal); padding-left:14px; margin-top:16px; }
+
+    /* AGGREGATE RESULTS */
+    .agg-band { background:var(--navy); padding:72px 0; }
+    .agg-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:48px; }
+    .agg-item { text-align:center; }
+    .agg-num { font-size:2.4rem; font-weight:900; color:var(--teal); }
+    .agg-lbl { font-size:13px; color:rgba(255,255,255,.5); margin-top:6px; line-height:1.4; }
+
+    /* CTA */
+    .cta-section { background:var(--navy); padding:96px 0; text-align:center; }
+    .cta-section h2 { font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:900; color:#fff; margin-bottom:16px; }
+    .cta-section p { color:rgba(255,255,255,.7); font-size:1.05rem; max-width:560px; margin:0 auto 36px; line-height:1.7; }
+    .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+    footer { background:#060f1e; padding:28px 0; text-align:center; }
+    footer p { font-size:13px; color:rgba(255,255,255,.3); }
+
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}.d4{transition-delay:.26s}
+
+    @media(max-width:860px) { .cs-grid,.hero-stats,.agg-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:520px) { .cs-grid,.hero-stats,.agg-grid,.cs-before-after,.cs-results { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="lionrms_homepage_v2.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+    <ul class="nav-links">
+      <li><a href="lionrms_homepage_v2.html">Home</a></li>
+      <li><a href="lionrms_ai_solutions.html" class="nav-hi">⚡ AI &amp; Automation</a></li>
+      <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
+      <li><a href="lionrms_case_studies_v2.html" class="active">Case Studies</a></li>
+      <li><a href="lionrms_about_v2.html">About</a></li>
+    </ul>
+    <a href="lionrms_contact.html" class="nav-cta">Free Consultation</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container" style="position:relative;">
+    <p class="section-tag">CASE STUDIES</p>
+    <h1>Real Results. <em>Measured at Day 30.</em></h1>
+    <p class="hero-lead">Every engagement starts with a workflow audit. Every result is measured against baseline. These are representative examples of what AI workflow implementation delivers across sectors and countries.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="n">50%</div><div class="l">Avg admin reduction across engagements</div></div>
+      <div class="hero-stat"><div class="n">30 days</div><div class="l">To first measurable results</div></div>
+      <div class="hero-stat"><div class="n">6+ sectors</div><div class="l">Law, healthcare, manufacturing, construction, H&S, property</div></div>
+      <div class="hero-stat"><div class="n">4 continents</div><div class="l">USA, UK, Europe, Middle East</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">ALL CASE STUDIES</p>
+    <h2 class="section-title">Across Sectors. Across Countries.</h2>
+    <div class="filter-row">
+      <button class="f-btn active" onclick="filterCS('all',this)">All</button>
+      <button class="f-btn" onclick="filterCS('ai',this)">AI &amp; Automation</button>
+      <button class="f-btn" onclick="filterCS('fire',this)">Fire &amp; H&amp;S</button>
+      <button class="f-btn" onclick="filterCS('legal',this)">Legal</button>
+      <button class="f-btn" onclick="filterCS('manufacturing',this)">Manufacturing</button>
+      <button class="f-btn" onclick="filterCS('healthcare',this)">Healthcare</button>
+      <button class="f-btn" onclick="filterCS('construction',this)">Construction</button>
+    </div>
+    <div class="cs-grid" id="csGrid">
+
+      <!-- 1. US LAW FIRM -->
+      <div class="cs-card reveal d1" data-cat="ai legal">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇺🇸</span>
+            <span class="cs-sector">Legal · AI &amp; Automation</span>
+          </div>
+          <h3>Mid-Size US Law Firm — Matter Reports &amp; Client Proposals</h3>
+          <p class="cs-desc">A mid-size firm with 18 fee earners, spending 3–5 hours per lawyer per week drafting matter reports, status updates, and client-facing proposals. Same structure every time. Different data.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>Matter reports: 3–4 hrs each</li>
+                <li>No consistent template across team</li>
+                <li>Senior associates doing the drafting</li>
+                <li>Client proposals rewritten from scratch</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>Matter reports: 18–25 min</li>
+                <li>Consistent format, firm's brand and tone</li>
+                <li>Paralegal inputs, lawyer reviews &amp; signs off</li>
+                <li>Proposal templates with AI-assisted customisation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">40%</div><div class="r-lbl">More matters handled in Q1</div></div>
+            <div class="r"><div class="r-num">~55 hrs</div><div class="r-lbl">Reclaimed per week across team</div></div>
+            <div class="r"><div class="r-num">30 days</div><div class="r-lbl">To full adoption</div></div>
+          </div>
+          <p class="cs-quote">"We took on 40% more matters in the same quarter without adding headcount. The AI hasn't changed what we do — it's changed how long it takes."</p>
+        </div>
+      </div>
+
+      <!-- 2. GERMAN MANUFACTURER -->
+      <div class="cs-card reveal d2" data-cat="ai manufacturing">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇩🇪</span>
+            <span class="cs-sector">Manufacturing · Quality Management</span>
+          </div>
+          <h3>German Manufacturer — Quality Audit Reports &amp; NCR Documentation</h3>
+          <p class="cs-desc">Quality team of 4 producing audit reports, non-conformance records, and supplier assessments — all written manually in 4–6 hour sessions. Audit schedule running 3 weeks behind.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>Audit reports: 5–6 hours each</li>
+                <li>NCRs on paper, transcribed later</li>
+                <li>Supplier assessments: 3 hrs each</li>
+                <li>ISO audit prep: 2 days scrambling</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>Audit reports: 30–40 min</li>
+                <li>Digital NCR capture on mobile, instant records</li>
+                <li>Supplier assessments: 25 min</li>
+                <li>ISO audit pack: generated in 1 hour</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">85%</div><div class="r-lbl">Report writing time saved</div></div>
+            <div class="r"><div class="r-num">3 weeks</div><div class="r-lbl">Audit backlog cleared in 30 days</div></div>
+            <div class="r"><div class="r-num">ISO ready</div><div class="r-lbl">Always — not just before audits</div></div>
+          </div>
+          <p class="cs-quote">"We cleared our 3-week audit backlog in less than a month. The team is now running ahead of schedule for the first time in two years."</p>
+        </div>
+      </div>
+
+      <!-- 3. UK H&S CONSULTANT -->
+      <div class="cs-card reveal d1" data-cat="fire ai">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇬🇧</span>
+            <span class="cs-sector">H&amp;S Consultancy · Fire Safety</span>
+          </div>
+          <h3>Independent UK H&amp;S Consultant — Fire Risk Assessments &amp; Policy Writing</h3>
+          <p class="cs-desc">Solo consultant with 10 active clients, maxed out due to report writing. Fire risk assessment reports taking 5–6 hours each. Client policy documents taking 3–4 hours each. No capacity to grow.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>Fire risk assessment report: 5–6 hrs</li>
+                <li>H&S policies: 3–4 hrs each</li>
+                <li>Maxed at 10 clients</li>
+                <li>Weekend admin every week</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>Fire risk assessment report: 30–40 min</li>
+                <li>H&S policies: 20–25 min</li>
+                <li>16 active clients — 6 added in 6 weeks</li>
+                <li>Finishes by 4pm Monday–Friday</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">60%</div><div class="r-lbl">More clients without extra hours</div></div>
+            <div class="r"><div class="r-num">~22 hrs</div><div class="r-lbl">Weekly admin time saved</div></div>
+            <div class="r"><div class="r-num">3×</div><div class="r-lbl">Revenue growth in 3 months</div></div>
+          </div>
+          <p class="cs-quote">"I was turning away work. Now I have 6 more clients and I finish by 4pm. The AI tools paid for the engagement in the first fortnight."</p>
+        </div>
+      </div>
+
+      <!-- 4. UAE PROPERTY GROUP -->
+      <div class="cs-card reveal d2" data-cat="ai">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇦🇪</span>
+            <span class="cs-sector">Property &amp; Real Estate · AI Automation</span>
+          </div>
+          <h3>UAE Property Group — Portfolio Compliance &amp; Landlord Documentation</h3>
+          <p class="cs-desc">Property management company with 40+ units across three emirates. Compliance certificates, inspection records, and landlord documentation managed in spreadsheets and email. Two near-misses on expired certificates in 12 months.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>Certificate tracking: Excel — found by accident</li>
+                <li>Inspection reports: manually compiled</li>
+                <li>Landlord compliance docs: 2–3 hrs each</li>
+                <li>2 expired certificates in 12 months</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>Live compliance dashboard — all 40+ units visible</li>
+                <li>Auto-alerts 30/7/1 days before expiry</li>
+                <li>Inspection reports: AI-generated in 15 min</li>
+                <li>Zero missed renewals since implementation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">0</div><div class="r-lbl">Expired certificates since Day 30</div></div>
+            <div class="r"><div class="r-num">90%</div><div class="r-lbl">Compliance admin time saved</div></div>
+            <div class="r"><div class="r-num">Live</div><div class="r-lbl">Portfolio view across all units</div></div>
+          </div>
+          <p class="cs-quote">"We went from managing compliance by memory to having a live dashboard for every property. The near-misses stopped immediately."</p>
+        </div>
+      </div>
+
+      <!-- 5. UK HEALTHCARE -->
+      <div class="cs-card reveal d1" data-cat="healthcare fire">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇬🇧</span>
+            <span class="cs-sector">Healthcare · CQC Compliance</span>
+          </div>
+          <h3>UK Care Home Group — CQC Evidence Packs &amp; Fire Safety Documentation</h3>
+          <p class="cs-desc">Group of 3 care homes facing CQC inspection cycle. Manager spending 6+ hours per week on compliance documentation, fire safety records, Legionella logs, and staff training records. Previous inspection flagged documentation gaps.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>CQC evidence prep: 3–4 days before inspection</li>
+                <li>Fire safety records: paper-based, often incomplete</li>
+                <li>Staff training records: spreadsheet, always behind</li>
+                <li>Previous inspection: Requires Improvement</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>CQC evidence pack: auto-generated in 2 hours</li>
+                <li>Fire safety: digital records, real-time across 3 sites</li>
+                <li>Training records: auto-updated on completion</li>
+                <li>Next inspection result: Good</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">Good</div><div class="r-lbl">CQC rating — up from Requires Improvement</div></div>
+            <div class="r"><div class="r-num">8 hrs/wk</div><div class="r-lbl">Manager time saved on compliance</div></div>
+            <div class="r"><div class="r-num">3 sites</div><div class="r-lbl">Managed from one digital platform</div></div>
+          </div>
+          <p class="cs-quote">"We went from spending days preparing for inspections to having everything ready instantly. The CQC inspector commented specifically on how well-organised our records were."</p>
+        </div>
+      </div>
+
+      <!-- 6. UK CONSTRUCTION -->
+      <div class="cs-card reveal d2" data-cat="construction ai fire">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-flag">🇬🇧</span>
+            <span class="cs-sector">Construction · H&amp;S · CDM</span>
+          </div>
+          <h3>Regional Construction Company — RAMS, Method Statements &amp; CDM Documentation</h3>
+          <p class="cs-desc">Construction company with 12 active projects generating RAMS, method statements, and CDM documentation manually for each site. H&S manager producing 3–5 new documents per week. QS team also drowning in admin.</p>
+        </div>
+        <div class="cs-body">
+          <div class="cs-challenge"><h4>Challenge</h4></div>
+          <div class="cs-before-after">
+            <div class="cs-before">
+              <h5>Before</h5>
+              <ul>
+                <li>RAMS documents: 3–4 hrs each from scratch</li>
+                <li>Method statements: 2–3 hrs each</li>
+                <li>CDM principal contractor file: major admin burden</li>
+                <li>Near-miss reports: 45+ min per report</li>
+              </ul>
+            </div>
+            <div class="cs-after">
+              <h5>After</h5>
+              <ul>
+                <li>RAMS: 20–30 min with AI-assisted generation</li>
+                <li>Method statements: 12–18 min</li>
+                <li>CDM file: auto-maintained, always current</li>
+                <li>Near-miss reports: 6–8 min</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cs-results">
+            <div class="r"><div class="r-num">75%</div><div class="r-lbl">H&amp;S admin time saved</div></div>
+            <div class="r"><div class="r-num">4 extra</div><div class="r-lbl">Projects taken on same team</div></div>
+            <div class="r"><div class="r-num">Zero</div><div class="r-lbl">HSE documentation failures</div></div>
+          </div>
+          <p class="cs-quote">"The H&S manager now handles 4 more projects without working late. The documentation quality has also improved — the AI prompts catch things we used to miss."</p>
+        </div>
+      </div>
+
+    </div><!-- end cs-grid -->
+  </div>
+</section>
+
+<!-- AGGREGATE -->
+<section class="agg-band">
+  <div class="container">
+    <p class="section-tag" style="color:rgba(0,201,167,.8)">ACROSS ALL ENGAGEMENTS</p>
+    <h2 class="section-title" style="color:#fff; margin-bottom:12px;">The Numbers Add Up</h2>
+    <p style="color:rgba(255,255,255,.6); font-size:15px; max-width:620px; line-height:1.7; margin-bottom:0;">Measured at Day 30. Not projected — actual time savings versus pre-implementation baseline.</p>
+    <div class="agg-grid">
+      <div class="agg-item reveal d1">
+        <div class="agg-num">50%</div>
+        <div class="agg-lbl">Average admin time reduction in targeted workflows</div>
+      </div>
+      <div class="agg-item reveal d2">
+        <div class="agg-num">12–22 hrs</div>
+        <div class="agg-lbl">Weekly time recovered per person</div>
+      </div>
+      <div class="agg-item reveal d3">
+        <div class="agg-num">30 days</div>
+        <div class="agg-lbl">To measurable, confirmed results</div>
+      </div>
+      <div class="agg-item reveal d4">
+        <div class="agg-num">6 sectors</div>
+        <div class="agg-lbl">Legal, manufacturing, H&S, healthcare, construction, property</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Want to See What These Numbers Look Like For Your Business?</h2>
+    <p>Book a free workflow audit. We map your current processes, identify the highest-value automation opportunities, and give you a clear picture of the time savings available — specific to your team, your workflows, your sector.</p>
+    <div class="cta-btns">
+      <a href="lionrms_contact.html" class="btn btn-primary">Book a Free Workflow Audit</a>
+      <a href="lionrms_roi_calculator.html" class="btn btn-ghost">Calculate Your ROI →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Lion Risk Management Solutions · AI Workflow Automation &amp; Digital Solutions · admin@lionrms.uk</p>
+  </div>
+</footer>
+
+<script>
+  function filterCS(cat, btn) {
+    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cs-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat.includes(cat)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal').forEach(el => { el.style.opacity=''; el.style.transform=''; io.observe(el); });
+  });
+</script>
+</body>
+</html>

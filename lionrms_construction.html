@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Construction Safety & AI Admin | Lion RMS</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628;
+    --teal: #00c9a7;
+    --teal-light: #00e5c0;
+    --orange: #f39c12;
+    --light-bg: #f4f7fc;
+    --text: #2c3e50;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 44px; width: auto; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta { background: var(--teal); color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700 !important; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #0f1e38 50%, #0d2d45 100%); color: #fff; padding: 6rem 2rem 5rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(243,156,18,0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(0,201,167,0.08) 0%, transparent 60%); }
+  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+  .hero-badge { display: inline-block; background: rgba(243,156,18,0.15); border: 1px solid rgba(243,156,18,0.4); color: var(--orange); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1.2rem; line-height: 1.15; }
+  .hero h1 span { color: var(--teal); }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 2rem; max-width: 520px; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--teal); color: var(--navy); padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: all 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); }
+  .btn-secondary { border: 2px solid rgba(255,255,255,0.4); color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1rem; transition: all 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* HERO STAT CARD */
+  .hero-stat-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; }
+  .hero-stat-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+  .hero-stat { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .hero-stat strong { font-size: 2rem; font-weight: 800; color: #fff; min-width: 65px; }
+  .hero-stat p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .hero-stat-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 1.25rem 0; }
+
+  /* STATS BAR */
+  .stats-bar { background: var(--orange); padding: 1.5rem 2rem; }
+  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; }
+  .stat-item strong { display: block; font-size: 1.7rem; font-weight: 800; color: var(--navy); }
+  .stat-item span { font-size: 0.85rem; font-weight: 600; color: var(--navy); opacity: 0.85; }
+
+  /* GENERAL */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
+  .section-subtitle { font-size: 1.05rem; color: var(--text-light); max-width: 640px; }
+
+  /* PROBLEM CARDS */
+  .problem-section { background: var(--light-bg); }
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .problem-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid #e74c3c; }
+  .problem-card .prob-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .problem-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .problem-card p { font-size: 0.875rem; color: var(--text-light); }
+  .problem-card .time-cost { font-size: 0.8rem; font-weight: 700; color: #e74c3c; margin-top: 0.5rem; }
+
+  /* BEFORE / AFTER */
+  .compare-section { background: #fff; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .compare-col { border-radius: 12px; overflow: hidden; }
+  .compare-col-header { padding: 1rem 1.5rem; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.05em; }
+  .before-header { background: #fef2f2; color: #e74c3c; border: 1px solid #fecaca; }
+  .after-header { background: rgba(0,201,167,0.08); color: #008a74; border: 1px solid rgba(0,201,167,0.3); }
+  .compare-body { padding: 1.5rem; border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; }
+  .compare-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; font-size: 0.9rem; }
+  .compare-item:last-child { margin-bottom: 0; }
+  .compare-item .ci-icon { font-size: 1rem; flex-shrink: 0; }
+  .compare-item p { color: var(--text); }
+  .compare-item p strong { color: var(--navy); display: block; margin-bottom: 0.1rem; }
+
+  /* SERVICE CARDS */
+  .services-section { background: var(--light-bg); }
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .service-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+  .service-card .sc-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .service-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .service-card p { font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem; }
+  .service-card ul { list-style: none; }
+  .service-card ul li { font-size: 0.85rem; color: var(--text); padding: 0.3rem 0; display: flex; gap: 0.5rem; }
+  .service-card ul li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+  .service-tag { display: inline-block; background: rgba(0,201,167,0.1); color: #008a74; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; margin-top: 0.75rem; }
+  .service-tag.req { background: rgba(231,76,60,0.08); color: #e74c3c; }
+
+  /* ROI BAND */
+  .roi-band { background: var(--navy); padding: 5rem 2rem; color: #fff; }
+  .roi-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .roi-band .section-label { color: var(--teal); }
+  .roi-band .section-title { color: #fff; }
+  .roi-band .section-subtitle { color: rgba(255,255,255,0.7); }
+  .roi-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .roi-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1.25rem; text-align: center; }
+  .roi-stat strong { display: block; font-size: 2rem; font-weight: 800; color: var(--teal); }
+  .roi-stat span { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+  .roi-cta-card { background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.3); border-radius: 16px; padding: 2rem; }
+  .roi-cta-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; }
+  .roi-cta-card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+
+  /* TESTIMONIAL */
+  .testimonial-section { background: var(--light-bg); padding: 5rem 2rem; }
+  .test-card { max-width: 800px; margin: 3rem auto 0; background: #fff; border-radius: 16px; padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.06); text-align: center; }
+  .test-card p { font-size: 1.1rem; font-style: italic; color: var(--text); margin-bottom: 1.25rem; line-height: 1.7; }
+  .test-card .author { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+  .test-card .role { font-size: 0.8rem; color: var(--text-light); }
+  .stars { color: var(--orange); font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 1rem; }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, #0a1628, #112244); color: #fff; text-align: center; padding: 5rem 2rem; }
+  .cta-section h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; margin-bottom: 1rem; }
+  .cta-section p { color: rgba(255,255,255,0.8); font-size: 1.05rem; max-width: 560px; margin: 0 auto 2.5rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: #060e1c; color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 0.85rem; }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  /* ANIMATIONS */
+  .reveal { opacity: 1; transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.hidden { opacity: 0; transform: translateY(20px); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stat-card { display: none; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .roi-inner { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="lionrms_homepage_redesign.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+  <ul class="nav-links">
+    <li><a href="lionrms_homepage_redesign.html">Home</a></li>
+    <li><a href="lionrms_digital_solutions.html" class="nav-highlight">⚡ Digital &amp; AI</a></li>
+    <li><a href="lionrms_construction.html" class="active">Construction</a></li>
+    <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
+    <li><a href="lionrms_case_studies.html">Case Studies</a></li>
+    <li><a href="lionrms_about.html">About</a></li>
+    <li><a href="lionrms_contact.html" class="nav-cta">Free Audit</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🏗️ Construction Sector</div>
+      <h1>Cut the RAMS.<br />Keep the <span>Standards.</span></h1>
+      <p>Contractors and principal designers spend thousands of hours a year writing RAMS, site diaries and CDM documents by hand. We've automated the paperwork — without compromising a single compliance requirement.</p>
+      <div class="hero-ctas">
+        <a href="lionrms_contact.html" class="btn-primary">Book Free Audit</a>
+        <a href="lionrms_roi_calculator.html" class="btn-secondary">Calculate Your Savings</a>
+      </div>
+    </div>
+    <div class="hero-stat-card">
+      <h3>What Construction Clients Typically Save</h3>
+      <div class="hero-stat">
+        <strong>82%</strong>
+        <p>Reduction in time spent writing RAMS per project</p>
+      </div>
+      <hr class="hero-stat-divider" />
+      <div class="hero-stat">
+        <strong>£34k</strong>
+        <p>Average annual admin saving for a 40-person contractor</p>
+      </div>
+      <hr class="hero-stat-divider" />
+      <div class="hero-stat">
+        <strong>1 day</strong>
+        <p>Project start time (previously 3 days of CDM admin)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><strong>12–15 hrs</strong><span>Paperwork per site supervisor per week</span></div>
+    <div class="stat-item"><strong>3 days</strong><span>Average CDM admin before work starts</span></div>
+    <div class="stat-item"><strong>£180/hr</strong><span>True cost of senior manager admin time</span></div>
+    <div class="stat-item"><strong>80%+</strong><span>Of RAMS content is the same across projects</span></div>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="problem-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Construction Admin Problem</p>
+      <h2 class="section-title">Your Supervisors Are Buried in Paperwork</h2>
+      <p class="section-subtitle">These are the tasks that eat your team's time — every week, on every project, repeated from scratch.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="prob-icon">📋</div>
+        <h3>RAMS Writing</h3>
+        <p>Risk assessments and method statements written from scratch each time, despite 80% of the content being identical across projects.</p>
+        <div class="time-cost">⏱ 3–6 hours per document set</div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">📓</div>
+        <h3>Site Diaries</h3>
+        <p>Daily site diaries completed by hand — illegible, inconsistent, and usually done in a van at the end of a long day.</p>
+        <div class="time-cost">⏱ 45 minutes per supervisor per day</div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">📁</div>
+        <h3>CDM Documentation</h3>
+        <p>Construction Phase Plans, Pre-Construction Information Packs and H&S files built from scratch for every project.</p>
+        <div class="time-cost">⏱ 2–3 days per new project</div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">📝</div>
+        <h3>Toolbox Talks</h3>
+        <p>Paper-based toolbox talk records lost, unsigned, or never filed. Impossible to prove competency in an incident investigation.</p>
+        <div class="time-cost">⏱ Records missing when you need them</div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">👷</div>
+        <h3>Contractor Inductions</h3>
+        <p>Site supervisor pulled away from productive work every time a new contractor or visitor arrives on-site. 45–90 minutes each time.</p>
+        <div class="time-cost">⏱ 45–90 minutes per contractor</div>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">🔍</div>
+        <h3>Inspection Reports</h3>
+        <p>Scaffold inspections, plant checks, and safety inspections written up after the fact from handwritten notes — or not written up at all.</p>
+        <div class="time-cost">⏱ Lost or delayed — audit risk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Difference</p>
+      <h2 class="section-title">Old Way vs. New Way</h2>
+      <p class="section-subtitle">Same compliance requirements. Dramatically different time investment.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-col">
+        <div class="compare-col-header before-header">❌ Old Way — Manual</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="ci-icon">😤</span><p><strong>RAMS from scratch</strong>Supervisor writes a new RAMS for each project activity, reformatting the same hazard list they've written 50 times before.</p></div>
+          <div class="compare-item"><span class="ci-icon">📂</span><p><strong>Paper CDM file</strong>Physical folder on-site. Missing documents discovered during inspection. H&S file incomplete at handover.</p></div>
+          <div class="compare-item"><span class="ci-icon">📵</span><p><strong>Lost training records</strong>Toolbox talk sign-off sheets filed in a drawer — if they weren't lost in a van. Impossible to prove competency after an incident.</p></div>
+          <div class="compare-item"><span class="ci-icon">⏳</span><p><strong>3 days before work starts</strong>Project mobilisation delayed while CDM and H&S documentation is drafted, reviewed and approved.</p></div>
+        </div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-col-header after-header">✅ New Way — AI-Assisted</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="ci-icon">⚡</span><p><strong>RAMS in minutes</strong>Select the activity and site conditions — AI generates a complete, site-specific RAMS in under 10 minutes. Supervisor reviews and approves.</p></div>
+          <div class="compare-item"><span class="ci-icon">☁️</span><p><strong>Digital CDM file</strong>All documents in a central platform. Access from any device. Automatically version-controlled. H&S file complete at every stage.</p></div>
+          <div class="compare-item"><span class="ci-icon">✅</span><p><strong>Digital toolbox talks</strong>Worker scans QR code, reads briefing, signs digitally. Timestamped record in the system immediately. Fully auditable.</p></div>
+          <div class="compare-item"><span class="ci-icon">🚀</span><p><strong>Project starts same day</strong>CDM document pack generated from project details in under an hour. Reviewed and signed digitally before the first van leaves the yard.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">What We Deliver</p>
+      <h2 class="section-title">Construction Safety Services</h2>
+      <p class="section-subtitle">Compliance and automation working together — each service available separately or as a combined package.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card reveal">
+        <div class="sc-icon">📋</div>
+        <h3>AI RAMS Generator</h3>
+        <p>Bespoke AI system trained on your activity types, site conditions and risk library — generates compliant RAMS in minutes, not hours.</p>
+        <ul>
+          <li>Site-specific risk identification</li>
+          <li>Method statements with control measures</li>
+          <li>Activity and hazard library built for you</li>
+          <li>Supervisor review and digital sign-off</li>
+        </ul>
+        <span class="service-tag">AI & Digital</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-icon">📁</div>
+        <h3>CDM Principal Designer Support</h3>
+        <p>CMIOSH-qualified Principal Designer duties, pre-construction information packs and construction phase plan drafting.</p>
+        <ul>
+          <li>PD duties for notifiable projects</li>
+          <li>Pre-Construction Information Pack</li>
+          <li>Construction Phase Plan review & drafting</li>
+          <li>H&S file preparation and handover</li>
+        </ul>
+        <span class="service-tag req">Legally Required</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-icon">📓</div>
+        <h3>Digital Site Diary</h3>
+        <p>Replace paper site diaries with a mobile-first digital system. 4 minutes per day instead of 45. Searchable, auditable, timestamped.</p>
+        <ul>
+          <li>Photo and voice note capture</li>
+          <li>Weather, workforce and activity logging</li>
+          <li>Automatic progress summary generation</li>
+          <li>Accessible from any device, on or off-site</li>
+        </ul>
+        <span class="service-tag">AI & Digital</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-icon">🔍</div>
+        <h3>Health & Safety Audits</h3>
+        <p>Site safety inspections and H&S management system audits carried out by a CMIOSH-qualified professional, with digital reports.</p>
+        <ul>
+          <li>Site inspection against legal requirements</li>
+          <li>Near-miss and incident investigation</li>
+          <li>Written report within 24 hours</li>
+          <li>Corrective action tracking via dashboard</li>
+        </ul>
+        <span class="service-tag req">Compliance</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-icon">👷</div>
+        <h3>Digital Contractor Induction</h3>
+        <p>Online site induction with competency test — completed before arrival. Saves 45–90 minutes of supervisor time per contractor visit.</p>
+        <ul>
+          <li>Site-specific rules and hazard briefing</li>
+          <li>Digital competency assessment</li>
+          <li>Certificate issued on pass</li>
+          <li>Timestamped record — never lost</li>
+        </ul>
+        <span class="service-tag">AI & Digital</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-icon">📚</div>
+        <h3>Site-Specific Training</h3>
+        <p>Toolbox talks and competency training delivered on-site or remotely — digital sign-off and full attendance records provided.</p>
+        <ul>
+          <li>Working at height, LOLER, manual handling</li>
+          <li>COSHH and hazardous substances</li>
+          <li>Bespoke talks for your activities</li>
+          <li>Digital attendance and competency records</li>
+        </ul>
+        <span class="service-tag">Training</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI BAND -->
+<div class="roi-band">
+  <div class="roi-inner">
+    <div class="reveal">
+      <p class="section-label">The Numbers</p>
+      <h2 class="section-title">What Automation Means for a 50-Person Contractor</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.7);">Based on typical admin load. Use the calculator to get your own figures.</p>
+      <div class="roi-stats">
+        <div class="roi-stat"><strong>1,560</strong><span>Hours/year saved on RAMS writing</span></div>
+        <div class="roi-stat"><strong>£38k</strong><span>Annual admin cost recovered</span></div>
+        <div class="roi-stat"><strong>82%</strong><span>Reduction in document prep time</span></div>
+        <div class="roi-stat"><strong>0</strong><span>Missing or incomplete records</span></div>
+      </div>
+    </div>
+    <div class="roi-cta-card reveal">
+      <h3>Calculate Your Own Savings</h3>
+      <p>Input your employee count, admin hours and sector — the calculator gives you a detailed breakdown by task in under 60 seconds.</p>
+      <a href="lionrms_roi_calculator.html" class="btn-primary">Open ROI Calculator →</a>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <p class="section-label">Client Story</p>
+      <h2 class="section-title">From Buried in Paperwork to Building Faster</h2>
+    </div>
+    <div class="test-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Our supervisors used to dread Monday mornings. RAMS, site diaries, induction records — all by hand, all taking time away from actually running the job. Lion RMS built us an AI RAMS system in two weeks. The CDM file is digital, the toolbox talks are signed off on-site with a phone, and we start new projects the same day. We've saved at least 12 hours a week across the team."</p>
+      <div class="author">Operations Director</div>
+      <div class="role">Groundworks & Civils Contractor · 45 Sites · Midlands</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Cut Your Construction Admin?</h2>
+  <p>Book a free 30-minute audit. We'll identify exactly where your team is losing time and what it's costing you.</p>
+  <div class="cta-btns">
+    <a href="lionrms_contact.html" class="btn-primary">Book Free Audit</a>
+    <a href="lionrms_case_studies.html" class="btn-secondary">See More Case Studies</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 Lion RMS Ltd &mdash; Fire Risk Management &amp; Safety Consultancy</p>
+  <p style="margin-top:0.5rem;">
+    <a href="lionrms_homepage_redesign.html">Home</a> &nbsp;|&nbsp;
+    <a href="lionrms_digital_solutions.html">Digital &amp; AI</a> &nbsp;|&nbsp;
+    <a href="lionrms_fire_hs.html">Fire &amp; H&S</a> &nbsp;|&nbsp;
+    <a href="lionrms_case_studies.html">Case Studies</a> &nbsp;|&nbsp;
+    <a href="lionrms_about.html">About</a> &nbsp;|&nbsp;
+    <a href="lionrms_contact.html">Contact</a>
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('hidden');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.remove('hidden'); e.target.classList.add('revealed'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>

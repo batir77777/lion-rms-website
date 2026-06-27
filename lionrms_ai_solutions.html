@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Workflow Automation &amp; Digital Solutions — Lion RMS</title>
+  <meta name="description" content="We implement AI into your business workflows — cutting admin time by up to 50%, digitising processes, and building systems that scale. Any sector. Any country. Remote delivery." />
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --navy:#0a1628; --navy2:#0f2040; --teal:#00c9a7; --teal-dark:#00a889; --teal-faint:rgba(0,201,167,.08);
+      --text:#1a2a3a; --muted:#64748b; --light:#f8fafc; --border:rgba(0,0,0,.08);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:var(--text); background:#fff; }
+    a { text-decoration:none; color:inherit; }
+    .container { max-width:1120px; margin:0 auto; padding:0 24px; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:50px; font-size:15px; font-weight:700; transition:all .2s; cursor:pointer; }
+    .btn-primary { background:var(--teal); color:var(--navy); }
+    .btn-primary:hover { background:var(--teal-dark); transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,201,167,.3); }
+    .btn-ghost { background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.15); }
+    .btn-ghost:hover { background:rgba(255,255,255,.12); }
+    .section-tag { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
+    h2.section-title { font-size:clamp(1.7rem,3vw,2.4rem); font-weight:900; margin-bottom:14px; }
+    .section-lead { font-size:1.05rem; color:var(--muted); line-height:1.75; max-width:680px; margin-bottom:48px; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,22,40,.95); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.07); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo img { height:44px; width:auto; }
+    .nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+    .nav-links a { font-size:14px; font-weight:500; color:rgba(255,255,255,.7); padding:8px 14px; border-radius:8px; transition:color .2s,background .2s; }
+    .nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .nav-links a.active, .nav-links a.nav-hi { color:var(--teal) !important; font-weight:700; }
+    .nav-cta { background:var(--teal); color:var(--navy) !important; padding:9px 22px; border-radius:50px; font-size:14px; font-weight:700; transition:all .2s; }
+    .nav-cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
+
+    /* HERO */
+    .hero { background:var(--navy); padding:140px 0 90px; position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 70% 40%, rgba(0,201,167,.1) 0%,transparent 60%), radial-gradient(ellipse 50% 40% at 10% 80%, rgba(0,100,255,.05) 0%,transparent 50%); pointer-events:none; }
+    .hero-inner { display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:center; position:relative; }
+    .hero-eyebrow { font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--teal); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .hero h1 { font-size:clamp(2.2rem,4vw,3.2rem); font-weight:900; color:#fff; line-height:1.1; margin-bottom:20px; }
+    .hero h1 em { font-style:normal; color:var(--teal); }
+    .hero-lead { font-size:1.05rem; color:rgba(255,255,255,.7); line-height:1.75; margin-bottom:32px; }
+    .hero-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:36px; }
+    .h-tag { font-size:12px; font-weight:700; color:rgba(255,255,255,.6); background:rgba(255,255,255,.07); padding:5px 14px; border-radius:20px; border:1px solid rgba(255,255,255,.1); }
+    .h-tag.t { color:var(--teal); background:rgba(0,201,167,.09); border-color:rgba(0,201,167,.2); }
+
+    /* PROCESS CLOCK */
+    .clock-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:28px; }
+    .clock-card h3 { font-size:13px; font-weight:700; color:rgba(255,255,255,.5); letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+    .clock-row { display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.05); }
+    .clock-row:last-child { border:none; }
+    .clock-task { flex:1; font-size:13px; color:rgba(255,255,255,.7); }
+    .clock-before { font-size:13px; color:rgba(255,76,76,.7); text-decoration:line-through; min-width:56px; text-align:right; }
+    .clock-arrow { color:rgba(255,255,255,.2); font-size:11px; }
+    .clock-after { font-size:14px; font-weight:800; color:var(--teal); min-width:56px; text-align:left; }
+    .saved-row { margin-top:16px; background:rgba(0,201,167,.08); border:1px solid rgba(0,201,167,.15); border-radius:10px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; }
+    .saved-row .s-label { font-size:12px; color:rgba(255,255,255,.5); }
+    .saved-row .s-val { font-size:1.1rem; font-weight:900; color:var(--teal); }
+
+    /* WHAT WE DO */
+    .section { padding:92px 0; }
+    .section-alt { background:var(--light); }
+    .services-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:8px; }
+    .svc-big { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; transition:transform .2s,box-shadow .2s,border-color .2s; }
+    .svc-big:hover { transform:translateY(-4px); box-shadow:0 8px 32px rgba(0,0,0,.09); border-color:var(--teal); }
+    .svc-big .s-icon { font-size:2.2rem; margin-bottom:16px; }
+    .svc-big h3 { font-size:1.15rem; font-weight:800; margin-bottom:10px; }
+    .svc-big > p { font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:20px; }
+    .svc-big .what-included { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .svc-big .what-included li { font-size:13px; color:var(--text); padding-left:20px; position:relative; line-height:1.5; }
+    .svc-big .what-included li::before { content:'→'; position:absolute; left:0; color:var(--teal); font-weight:700; font-size:12px; }
+    .svc-big .result-line { margin-top:20px; padding-top:16px; border-top:1px solid var(--border); font-size:13px; font-weight:700; color:#16a37f; }
+
+    /* HOW WE WORK */
+    .stages { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:52px; counter-reset:stage; }
+    .stage { background:#fff; border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; overflow:hidden; }
+    .stage::before { counter-increment:stage; content:counter(stage); position:absolute; top:-8px; right:12px; font-size:5rem; font-weight:900; color:rgba(0,201,167,.07); line-height:1; }
+    .stage-icon { font-size:1.8rem; margin-bottom:14px; }
+    .stage h3 { font-size:15px; font-weight:800; margin-bottom:8px; }
+    .stage p { font-size:13px; color:var(--muted); line-height:1.65; }
+    .stage .timeline { font-size:12px; font-weight:700; color:var(--teal); margin-top:14px; padding-top:12px; border-top:1px solid var(--border); }
+
+    /* TOOLS WE USE */
+    .tools-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+    .tool-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:20px 22px; }
+    .tool-card h4 { font-size:14px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+    .tool-card p { font-size:13px; color:var(--muted); line-height:1.55; }
+    .tool-cat { font-size:10px; font-weight:700; color:var(--teal); background:var(--teal-faint); padding:3px 8px; border-radius:10px; margin-top:10px; display:inline-block; }
+
+    /* BEFORE / AFTER */
+    .ba-section { background:var(--navy2); padding:80px 0; }
+    .ba-grid { display:grid; grid-template-columns:1fr 60px 1fr; gap:0; align-items:start; margin-top:52px; }
+    .ba-col h3 { font-size:14px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin-bottom:20px; }
+    .ba-col.before h3 { color:rgba(255,76,76,.8); }
+    .ba-col.after h3 { color:var(--teal); }
+    .ba-item { display:flex; align-items:flex-start; gap:10px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+    .ba-item:last-child { border:none; }
+    .ba-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+    .before .ba-dot { background:rgba(255,76,76,.5); }
+    .after .ba-dot { background:var(--teal); }
+    .ba-text { font-size:14px; line-height:1.6; }
+    .before .ba-text { color:rgba(255,255,255,.6); }
+    .after .ba-text { color:rgba(255,255,255,.8); font-weight:500; }
+    .ba-divider { display:flex; align-items:center; justify-content:center; padding-top:44px; }
+    .ba-arrow { width:44px; height:44px; border-radius:50%; background:var(--teal); color:var(--navy); font-size:1.2rem; font-weight:900; display:flex; align-items:center; justify-content:center; }
+
+    /* SECTORS */
+    .sector-pills { display:flex; flex-wrap:wrap; gap:10px; margin-top:32px; }
+    .s-pill { background:#fff; border:1px solid var(--border); border-radius:50px; padding:9px 18px; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; transition:border-color .2s,transform .2s; }
+    .s-pill:hover { border-color:var(--teal); transform:translateY(-1px); }
+
+    /* ROI PROOF */
+    .proof-band { background:var(--navy); padding:72px 0; }
+    .proof-inner { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .proof-text h2 { font-size:2rem; font-weight:900; color:#fff; margin-bottom:16px; }
+    .proof-text p { color:rgba(255,255,255,.7); line-height:1.75; font-size:15px; }
+    .proof-numbers { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .proof-num { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:22px; text-align:center; }
+    .proof-num .n { font-size:2.2rem; font-weight:900; color:var(--teal); line-height:1; }
+    .proof-num .l { font-size:12px; color:rgba(255,255,255,.5); margin-top:6px; line-height:1.4; }
+
+    /* TESTIMONIALS */
+    .quote-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+    .quote { background:#fff; border:1px solid var(--border); border-radius:16px; padding:26px; }
+    .quote-text { font-size:14px; font-style:italic; line-height:1.75; margin-bottom:18px; }
+    .quote-meta { display:flex; align-items:center; gap:12px; }
+    .q-av { width:38px; height:38px; border-radius:50%; background:var(--navy); color:#fff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .q-name { font-size:14px; font-weight:700; }
+    .q-role { font-size:12px; color:var(--muted); }
+    .q-flag { margin-left:auto; font-size:16px; }
+
+    /* FAQ */
+    .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:44px; }
+    .faq-item { background:#fff; border:1px solid var(--border); border-radius:14px; padding:24px; }
+    .faq-item h4 { font-size:15px; font-weight:700; margin-bottom:10px; }
+    .faq-item p { font-size:14px; color:var(--muted); line-height:1.7; }
+
+    /* CTA */
+    .cta-section { background:var(--navy); padding:96px 0; text-align:center; }
+    .cta-section h2 { font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:900; color:#fff; margin-bottom:16px; }
+    .cta-section p { color:rgba(255,255,255,.7); font-size:1.05rem; max-width:560px; margin:0 auto 36px; line-height:1.7; }
+    .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .trust-row { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:36px; }
+    .tr-item { font-size:13px; color:rgba(255,255,255,.4); display:flex; align-items:center; gap:6px; }
+    .tr-item::before { content:'✓'; color:var(--teal); font-weight:700; }
+
+    footer { background:#060f1e; padding:28px 0; text-align:center; }
+    footer p { font-size:13px; color:rgba(255,255,255,.3); }
+
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}.d4{transition-delay:.26s}.d5{transition-delay:.33s}.d6{transition-delay:.4s}
+
+    @media(max-width:900px) {
+      .hero-inner,.proof-inner { grid-template-columns:1fr; }
+      .services-grid,.stages,.tools-grid,.quote-grid,.faq-grid { grid-template-columns:1fr 1fr; }
+      .ba-grid { grid-template-columns:1fr; }
+      .ba-divider { display:none; }
+      .after { margin-top:24px; }
+    }
+    @media(max-width:580px) { .services-grid,.stages,.tools-grid,.quote-grid,.faq-grid,.proof-numbers { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="lionrms_homepage_v2.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+    <ul class="nav-links">
+      <li><a href="lionrms_homepage_v2.html">Home</a></li>
+      <li><a href="lionrms_ai_solutions.html" class="active nav-hi">⚡ AI &amp; Automation</a></li>
+      <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
+      <li><a href="lionrms_case_studies_v2.html">Case Studies</a></li>
+      <li><a href="lionrms_about_v2.html">About</a></li>
+    </ul>
+    <a href="lionrms_contact.html" class="nav-cta">Free Consultation</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">⚡ AI &amp; Digital Solutions · Global</div>
+        <h1>Implement AI Into Your<br />Workflows. <em>Actually.</em></h1>
+        <p class="hero-lead">Not a chatbot. Not an off-the-shelf subscription. We map your specific workflows, identify what AI can replace or accelerate, build the automations, and train your team to use them. Measurable results in 30 days.</p>
+        <div class="hero-tags">
+          <span class="h-tag t">AI Workflow Automation</span>
+          <span class="h-tag t">Process Digitisation</span>
+          <span class="h-tag t">SOP Implementation</span>
+          <span class="h-tag">Any sector</span>
+          <span class="h-tag">Any country</span>
+          <span class="h-tag">Remote delivery</span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="lionrms_contact.html" class="btn btn-primary">Book a Free Workflow Audit</a>
+          <a href="lionrms_roi_calculator.html" class="btn btn-ghost">Calculate Your ROI →</a>
+        </div>
+      </div>
+      <div>
+        <div class="clock-card">
+          <h3>Time Reclaimed — Real Examples</h3>
+          <div class="clock-row">
+            <span class="clock-task">Monthly compliance report</span>
+            <span class="clock-before">6 hr</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">35 min</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-task">Client proposal / SOP document</span>
+            <span class="clock-before">4 hr</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">20 min</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-task">Audit / inspection report</span>
+            <span class="clock-before">90 min</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">8 min</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-task">Policy / procedure drafting</span>
+            <span class="clock-before">3 hr</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">18 min</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-task">Staff induction / onboarding pack</span>
+            <span class="clock-before">2 hr</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">12 min</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-task">Incident / near-miss writeup</span>
+            <span class="clock-before">45 min</span>
+            <span class="clock-arrow">→</span>
+            <span class="clock-after">6 min</span>
+          </div>
+          <div class="saved-row">
+            <span class="s-label">Typical weekly time recovered (per person)</span>
+            <span class="s-val">10–15 hrs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">SERVICES</p>
+    <h2 class="section-title">What We Actually Build For You</h2>
+    <p class="section-lead">Each engagement starts with a workflow audit. What we build is specific to your organisation — not a template, not a tool subscription, but AI embedded into the way your team actually works.</p>
+    <div class="services-grid">
+      <div class="svc-big reveal d1">
+        <div class="s-icon">⚡</div>
+        <h3>AI Workflow Automation</h3>
+        <p>We identify the manual, repetitive parts of your team's week and replace them with AI-assisted automations — connected to the tools you already use (Microsoft 365, Google Workspace, your CRM, your project management system).</p>
+        <ul class="what-included">
+          <li>Workflow mapping and bottleneck audit (Week 1)</li>
+          <li>AI automation design for 3–5 high-value workflows</li>
+          <li>Build, test, and deploy automations</li>
+          <li>Approval chains, notifications, and record creation — automated</li>
+          <li>Team training and adoption support</li>
+          <li>30-day measurement of hours saved</li>
+        </ul>
+        <div class="result-line">✓ Avg. 50% reduction in identified task time within 30 days</div>
+      </div>
+      <div class="svc-big reveal d2">
+        <div class="s-icon">📋</div>
+        <h3>AI Document &amp; Report Generation</h3>
+        <p>Your team inputs their findings, data, or structured notes. AI generates the complete professional document — in your format, your tone, your brand. The expert reviews, edits if needed, and signs off. Done in minutes, not hours.</p>
+        <ul class="what-included">
+          <li>Analysis of your most time-consuming document types</li>
+          <li>Custom AI prompts built around your specific format and standards</li>
+          <li>Integration with your existing document templates</li>
+          <li>Works for: reports, assessments, proposals, SOPs, policies, audits, meeting notes</li>
+          <li>Quality control framework so outputs are always professional</li>
+          <li>Training: your team learns to use and improve the prompts</li>
+        </ul>
+        <div class="result-line">✓ 80%+ reduction in document drafting time — quality maintained</div>
+      </div>
+      <div class="svc-big reveal d3">
+        <div class="s-icon">🔧</div>
+        <h3>Process Digitisation &amp; SOP Implementation</h3>
+        <p>Paper forms, email approvals, spreadsheet trackers — we move all of it into properly structured digital workflows. Every step is tracked. Every handoff is automatic. Every record is stored and searchable.</p>
+        <ul class="what-included">
+          <li>As-is process mapping across your key workflows</li>
+          <li>Digital SOP design — step-by-step, role-assigned, tracked</li>
+          <li>Implementation using Microsoft Power Automate, Notion, Airtable, or your preferred platform</li>
+          <li>Records management — automatic storage, retrieval, audit trail</li>
+          <li>Scales to any number of sites, teams, or countries</li>
+          <li>Inspection and audit ready at any time</li>
+        </ul>
+        <div class="result-line">✓ Zero process errors · Full audit trail · Scalable globally</div>
+      </div>
+      <div class="svc-big reveal d4">
+        <div class="s-icon">🤖</div>
+        <h3>AI Tool Integration &amp; Stack Design</h3>
+        <p>Most organisations have already bought AI tools that aren't being used properly — or are using 5 tools that don't connect. We design a coherent AI stack, integrate it properly, and make sure your team uses it consistently.</p>
+        <ul class="what-included">
+          <li>Current tech stack audit: what you have, what you're paying for, what's being used</li>
+          <li>AI tool recommendations based on your specific workflows (not general advice)</li>
+          <li>Integration work: tools connected to each other and to your existing systems</li>
+          <li>Custom prompt library built for your role types and document standards</li>
+          <li>Governance framework: who uses what, how outputs are reviewed, quality standards</li>
+          <li>Team training — practical, hands-on, not classroom theory</li>
+        </ul>
+        <div class="result-line">✓ Coherent AI stack, not a collection of browser tabs</div>
+      </div>
+      <div class="svc-big reveal d5">
+        <div class="s-icon">📊</div>
+        <h3>Compliance &amp; Quality Management Systems</h3>
+        <p>Digital systems for tracking what needs to be reviewed, when it's due, who's responsible, and whether it's been done — covering compliance requirements, quality standards, certifications, and internal frameworks. AI-assisted documentation throughout.</p>
+        <ul class="what-included">
+          <li>Compliance register and review calendar — digitised and automated</li>
+          <li>Certificate and document expiry tracking with automatic alerts</li>
+          <li>Works for ISO 9001, ISO 14001, ISO 45001, sector-specific, or bespoke frameworks</li>
+          <li>AI-generated evidence packs for audits and inspections</li>
+          <li>Multi-site dashboard for portfolio-level compliance view</li>
+          <li>Integration with fire &amp; H&amp;S compliance (our specialist area)</li>
+        </ul>
+        <div class="result-line">✓ Inspection-ready at any time · Zero missed reviews</div>
+      </div>
+      <div class="svc-big reveal d6">
+        <div class="s-icon">🎓</div>
+        <h3>AI Training &amp; Change Management</h3>
+        <p>The biggest barrier to AI adoption isn't the tools — it's getting the team to actually use them consistently. We run practical training and change management programmes that build AI habits that stick.</p>
+        <ul class="what-included">
+          <li>Team skills assessment: what AI knowledge already exists</li>
+          <li>Role-specific training — what the technology means for each person's specific job</li>
+          <li>Practical sessions: hands-on with the tools, not theory about AI in general</li>
+          <li>Prompt libraries per role type — ready to use from Day 1</li>
+          <li>30-day adoption support: questions answered, workflows refined</li>
+          <li>Delivered remotely — any time zone, any location</li>
+        </ul>
+        <div class="result-line">✓ Team confidence with AI within 30 days · Measurable adoption</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-tag">PROCESS</p>
+    <h2 class="section-title">From Audit to Automation in 4 Stages</h2>
+    <p class="section-lead">A structured methodology that works across sectors, countries, and team sizes. Everything is delivered remotely. Results are measured from Day 30.</p>
+    <div class="stages">
+      <div class="stage reveal d1">
+        <div class="stage-icon">🔍</div>
+        <h3>Stage 1 — Workflow Audit</h3>
+        <p>We map where your team's time actually goes. A structured 2–3 hour session (remote) where we document every key process, identify repetitive tasks, and quantify the time cost of each. Usually reveals 3–7 automation opportunities.</p>
+        <div class="timeline">⏱ Week 1</div>
+      </div>
+      <div class="stage reveal d2">
+        <div class="stage-icon">📐</div>
+        <h3>Stage 2 — Design</h3>
+        <p>For each priority workflow, we design the AI-assisted version — what gets automated, what tools are used, what the team does differently. You see the before/after clearly before anything is built. No surprises.</p>
+        <div class="timeline">⏱ Week 1–2</div>
+      </div>
+      <div class="stage reveal d3">
+        <div class="stage-icon">🔨</div>
+        <h3>Stage 3 — Build &amp; Test</h3>
+        <p>We build the automations, configure the AI tools, create the prompt libraries and templates, and connect everything together. Each automation is tested on real work — your documents, your data — before going live.</p>
+        <div class="timeline">⏱ Week 2–4</div>
+      </div>
+      <div class="stage reveal d4">
+        <div class="stage-icon">📈</div>
+        <h3>Stage 4 — Train &amp; Measure</h3>
+        <p>Practical team training — hands-on, role-specific, remote. Then 30 days of support while the team adopts the new system. At Day 30 we measure hours saved vs. baseline and optimise based on real results.</p>
+        <div class="timeline">⏱ Week 4 + 30-day support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">HOW WE DO IT</p>
+    <h2 class="section-title">The Tools We Use</h2>
+    <p class="section-lead">We work with the tools your organisation already has wherever possible — and only bring in new tools where they're clearly the right solution. No unnecessary subscriptions.</p>
+    <div class="tools-grid">
+      <div class="tool-card reveal d1">
+        <h4>🤖 AI Language Models</h4>
+        <p>GPT-4o, Claude, Microsoft Copilot — deployed as document generators, report writers, and workflow assistants with custom prompts built for your specific formats.</p>
+        <span class="tool-cat">Document generation</span>
+      </div>
+      <div class="tool-card reveal d2">
+        <h4>⚙️ Power Automate / Zapier / Make</h4>
+        <p>Workflow automation connectors that integrate your existing software — CRM, email, SharePoint, forms, databases — into automated processes that run without manual intervention.</p>
+        <span class="tool-cat">Process automation</span>
+      </div>
+      <div class="tool-card reveal d3">
+        <h4>📊 Airtable / Notion / SharePoint</h4>
+        <p>Structured databases and workspaces that replace spreadsheets and email threads — with proper records management, automated notifications, and role-based access.</p>
+        <span class="tool-cat">Records &amp; data management</span>
+      </div>
+      <div class="tool-card reveal d4">
+        <h4>📝 Microsoft 365 + Copilot</h4>
+        <p>AI embedded directly into Word, Excel, Outlook, and Teams — we configure Copilot for your specific document types and use cases so the team gets value from Day 1.</p>
+        <span class="tool-cat">Existing stack integration</span>
+      </div>
+      <div class="tool-card reveal d5">
+        <h4>📋 Digital Forms &amp; Inspection Tools</h4>
+        <p>Mobile-first digital inspection and data-capture tools that replace paper forms — with auto-generated reports and records created the moment a form is submitted.</p>
+        <span class="tool-cat">Data capture · Inspections</span>
+      </div>
+      <div class="tool-card reveal d6">
+        <h4>🔗 Custom Prompt Libraries</h4>
+        <p>A curated set of AI prompts built specifically for your role types and document standards — stored, shared, and continuously improved. The team's AI capability is organisational, not individual.</p>
+        <span class="tool-cat">AI standardisation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="ba-section">
+  <div class="container">
+    <p class="section-tag" style="color:rgba(0,201,167,.8)">THE DIFFERENCE</p>
+    <h2 class="section-title" style="color:#fff">Before AI Implementation vs. After</h2>
+    <div class="ba-grid" style="margin-top:52px;">
+      <div class="ba-col before">
+        <h3>❌ Before</h3>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Reports written from scratch every time — same structure, different data, 4+ hours each</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Approvals chased via email — no visibility on where things are, delays invisible</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Compliance certificates tracked in a spreadsheet — expiry dates found by accident</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Staff inductions done manually — stack of PDFs, no record of who read what</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">AI tools tried — but no one agrees on prompts, outputs vary widely, value unclear</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Audit prep takes 1–2 days of finding scattered documents across email, drives, and filing cabinets</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Senior staff spending 40%+ of their week on admin that anyone could do</div></div>
+      </div>
+      <div class="ba-divider"><div class="ba-arrow">→</div></div>
+      <div class="ba-col after">
+        <h3>✓ After</h3>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Reports generated in 8–35 minutes — AI drafts, expert reviews and signs off, consistent quality every time</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Approval workflows automated — requestor submits once, system routes, reminds, and records</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Compliance calendar managed digitally — alerts 30/7/1 days before expiry, everything searchable</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Digital inductions — staff complete on mobile, records auto-created, manager sees completion in real time</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Shared prompt library — team uses consistent, tested prompts, outputs are professional and on-brand</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Audit pack generated at the click of a button — all records in one place, always current</div></div>
+        <div class="ba-item"><div class="ba-dot"></div><div class="ba-text">Senior staff using their expertise — AI handles the admin, humans handle the decisions</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-tag">SECTORS</p>
+    <h2 class="section-title">Who This Works For</h2>
+    <p class="section-lead">The same manual processes exist across every professional sector. If your team writes documents, maintains records, or follows repeatable workflows — we can cut the time those take by half.</p>
+    <div class="sector-pills">
+      <span class="s-pill">⚖️ Legal &amp; Law Firms</span>
+      <span class="s-pill">🏥 Healthcare &amp; Life Sciences</span>
+      <span class="s-pill">🏗️ Construction &amp; Engineering</span>
+      <span class="s-pill">🏦 Finance &amp; Insurance</span>
+      <span class="s-pill">🏭 Manufacturing</span>
+      <span class="s-pill">🏨 Hospitality &amp; Leisure</span>
+      <span class="s-pill">🏢 Property &amp; Real Estate</span>
+      <span class="s-pill">🎓 Education</span>
+      <span class="s-pill">🔧 H&amp;S &amp; Environmental Consultancy</span>
+      <span class="s-pill">💻 Professional Services</span>
+      <span class="s-pill">🌍 Government &amp; Public Sector</span>
+      <span class="s-pill">🛒 Retail &amp; FMCG</span>
+    </div>
+    <p style="margin-top:24px; font-size:14px; color:var(--muted);">All services delivered remotely. Clients in the <strong>USA</strong>, <strong>United Kingdom</strong>, <strong>European Union</strong>, <strong>UAE</strong>, and beyond.</p>
+  </div>
+</section>
+
+<!-- PROOF NUMBERS -->
+<section class="proof-band">
+  <div class="container">
+    <div class="proof-inner">
+      <div class="proof-text">
+        <h2>The Results Are Measurable — We Measure Them</h2>
+        <p>We don't claim to save you time and then move on. At Day 30, we measure the hours your team spent on the same tasks before and after implementation. If the numbers don't support a 30–50% reduction in those specific tasks, we stay involved until they do.</p>
+        <p style="margin-top:16px;">This accountability is built into how we work — because the system was originally built in fire safety, where "good enough" isn't an option and everything must be defensible under scrutiny.</p>
+        <a href="lionrms_contact.html" class="btn btn-primary" style="margin-top:28px; display:inline-flex;">Start with a Free Audit →</a>
+      </div>
+      <div class="proof-numbers">
+        <div class="proof-num reveal d1"><div class="n">50%</div><div class="l">Admin time reduction in targeted workflows</div></div>
+        <div class="proof-num reveal d2"><div class="n">30 days</div><div class="l">To measurable results</div></div>
+        <div class="proof-num reveal d3"><div class="n">80%+</div><div class="l">Document drafting time saved</div></div>
+        <div class="proof-num reveal d4"><div class="n">3×</div><div class="l">Typical increase in client capacity (consultants)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">WHAT CLIENTS SAY</p>
+    <h2 class="section-title">Results Across Sectors and Countries</h2>
+    <div class="quote-grid">
+      <div class="quote reveal d1">
+        <p class="quote-text">"We were drowning in proposal writing. After AI implementation, our team turns around client proposals in under 30 minutes. The time we've reclaimed has gone directly into taking on more projects. Revenue up 35% in the quarter."</p>
+        <div class="quote-meta">
+          <div class="q-av">KP</div>
+          <div><div class="q-name">Director</div><div class="q-role">Management consultancy</div></div>
+          <span class="q-flag">🇺🇸</span>
+        </div>
+      </div>
+      <div class="quote reveal d2">
+        <p class="quote-text">"Our quality team was writing audit reports in six-hour sessions. Now it's under 40 minutes. The content is better because they're spending that saved time actually reviewing the results, not formatting a document."</p>
+        <div class="quote-meta">
+          <div class="q-av">TW</div>
+          <div><div class="q-name">Head of Quality</div><div class="q-role">Manufacturing, Germany</div></div>
+          <span class="q-flag">🇩🇪</span>
+        </div>
+      </div>
+      <div class="quote reveal d3">
+        <p class="quote-text">"I was limited to 10 clients as a solo consultant because the reporting was overwhelming. Six weeks after the AI workflow build, I have 16 clients and I finish by 4pm. I wish I'd done this two years ago."</p>
+        <div class="quote-meta">
+          <div class="q-av">SL</div>
+          <div><div class="q-name">Independent H&amp;S Consultant</div><div class="q-role">Solo practitioner, UK</div></div>
+          <span class="q-flag">🇬🇧</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-tag">QUESTIONS</p>
+    <h2 class="section-title">What People Ask Before Starting</h2>
+    <div class="faq-grid">
+      <div class="faq-item reveal d1">
+        <h4>Do we need to change our existing software?</h4>
+        <p>Usually not. We build around the tools you already have — Microsoft 365, Google Workspace, your CRM. We only recommend new tools when there's a genuine gap that your current stack can't fill, and we never push tool subscriptions we don't fully believe in.</p>
+      </div>
+      <div class="faq-item reveal d2">
+        <h4>We've already tried AI tools. Why would this be different?</h4>
+        <p>Because we implement AI into your specific workflows, rather than showing you a general tool and leaving you to figure it out. Most failed AI adoption comes from teams using generic prompts for professional work. We build custom prompts, proper processes, and accountability frameworks around your actual work.</p>
+      </div>
+      <div class="faq-item reveal d3">
+        <h4>How does remote delivery work if you need to understand our processes?</h4>
+        <p>All our engagements are remote-first by design. The workflow audit is done via video call with a structured framework — we've found it's as effective as being on-site, and it means we can work with clients in any country without travel costs. We've delivered for clients in the USA, UAE, Germany, and across the UK entirely remotely.</p>
+      </div>
+      <div class="faq-item reveal d4">
+        <h4>What sectors have you worked in?</h4>
+        <p>The methodology started in fire safety and H&amp;S consultancy — one of the most process-intensive sectors there is. We've since applied it to law firms, healthcare, construction, manufacturing, property management, professional services, and more. The workflow audit reveals what to automate regardless of sector.</p>
+      </div>
+      <div class="faq-item reveal d5">
+        <h4>What's the minimum size of team or organisation?</h4>
+        <p>There's no minimum. We've worked with solo practitioners (1 person) and organisations with large teams across multiple sites. For a solo consultant, even 5–6 hours a week of admin time saved has a significant revenue impact. For larger teams, the multiplier effect is substantial.</p>
+      </div>
+      <div class="faq-item reveal d6">
+        <h4>What does the free workflow audit involve?</h4>
+        <p>A 60–90 minute remote session where we map your key processes, identify where time is going, and give you an honest picture of what AI can and can't do for your specific situation. You get a written summary with 3–5 prioritised opportunities and time estimates — whether or not you choose to work with us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to See What AI Can Do For Your Workflows?</h2>
+    <p>The free workflow audit takes 60–90 minutes and gives you a clear, prioritised picture of where the biggest time savings are. No obligation. No sales pitch. Just an honest look at your processes.</p>
+    <div class="cta-btns">
+      <a href="lionrms_contact.html" class="btn btn-primary">Book Your Free Audit</a>
+      <a href="lionrms_roi_calculator.html" class="btn btn-ghost">Calculate ROI First →</a>
+    </div>
+    <div class="trust-row">
+      <span class="tr-item">Remote-first delivery</span>
+      <span class="tr-item">Any sector · Any country</span>
+      <span class="tr-item">Results measured at Day 30</span>
+      <span class="tr-item">CMIOSH qualified — process rigour built in</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Lion Risk Management Solutions · AI Workflow Automation &amp; Digital Solutions · admin@lionrms.uk</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal').forEach(el => { el.style.opacity=''; el.style.transform=''; io.observe(el); });
+  });
+</script>
+</body>
+</html>

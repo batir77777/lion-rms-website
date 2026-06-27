@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property &amp; Landlord Compliance — HMO, Fire Risk &amp; Legionella — Lion RMS</title>
+  <meta name="description" content="Fire risk assessments, Legionella risk assessments and HMO compliance for residential landlords, managing agents and property portfolios. Licence-ready documentation in 48 hours." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0a1628;
+      --navy2: #0f2040;
+      --teal: #00c9a7;
+      --teal-dark: #00a889;
+      --indigo: #4f46e5;
+      --indigo-light: rgba(79,70,229,.1);
+      --green: #27ae60;
+      --text: #1a2a3a;
+      --muted: #64748b;
+      --border: rgba(0,0,0,.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: #fff; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,22,40,.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.08); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; }
+    .nav-logo img { height:44px; width:auto; }
+    .nav-links { display:flex; align-items:center; gap:4px; }
+    .nav-links a { font-size:14px; font-weight:500; color:rgba(255,255,255,.75); padding:8px 14px; border-radius:8px; transition:color .2s,background .2s; }
+    .nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
+    .nav-links a.active { color:var(--teal); }
+    .nav-links a.nav-highlight { color:var(--teal) !important; font-weight:700; }
+    .nav-cta { background:var(--teal); color:var(--navy) !important; padding:9px 20px; border-radius:50px; font-size:14px; font-weight:700; transition:transform .2s,background .2s; }
+    .nav-cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
+
+    /* LAYOUT */
+    .container { max-width:1160px; margin:0 auto; padding:0 24px; }
+    .section { padding:96px 0; }
+    .section-alt { background:#f8fafc; }
+    .section-tag { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
+    h2.section-title { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:800; margin-bottom:12px; }
+    .section-lead { font-size:1.05rem; color:var(--muted); line-height:1.7; max-width:680px; }
+
+    /* HERO */
+    .hero { background:var(--navy); padding:148px 0 96px; overflow:hidden; position:relative; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 65% 35%, rgba(79,70,229,.12) 0%, rgba(0,201,167,.06) 50%, transparent 70%); pointer-events:none; }
+    .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; position:relative; }
+    .hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(79,70,229,.15); border:1px solid rgba(79,70,229,.3); border-radius:50px; padding:6px 16px; font-size:13px; font-weight:600; color:#a0a0ff; margin-bottom:20px; }
+    .hero h1 { font-size:clamp(2rem,4vw,3rem); font-weight:800; line-height:1.15; color:#fff; margin-bottom:20px; }
+    .hero h1 span { color:var(--teal); }
+    .hero-lead { font-size:1.1rem; color:rgba(255,255,255,.75); line-height:1.7; margin-bottom:32px; }
+    .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:50px; font-size:15px; font-weight:700; transition:all .2s; }
+    .btn-primary { background:var(--teal); color:var(--navy); }
+    .btn-primary:hover { background:var(--teal-dark); transform:translateY(-2px); }
+    .btn-outline { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.3); }
+    .btn-outline:hover { border-color:#fff; background:rgba(255,255,255,.08); }
+
+    /* CHECKLIST CARD */
+    .checklist-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:28px; }
+    .checklist-card h3 { color:#fff; font-size:1rem; font-weight:700; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,.1); }
+    .check-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+    .check-row:last-child { border:none; }
+    .check-label { font-size:13px; color:rgba(255,255,255,.8); }
+    .check-status { font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; }
+    .status-req { background:rgba(231,76,60,.2); color:#ff9080; }
+    .status-hmo { background:rgba(230,126,34,.2); color:#f0a060; }
+    .status-all { background:rgba(0,201,167,.15); color:var(--teal); }
+
+    /* STATS BAR */
+    .stats-bar { background:var(--teal); padding:24px 0; }
+    .stats-grid { display:grid; grid-template-columns:repeat(5,1fr); }
+    .stat-item { text-align:center; padding:0 20px; border-right:1px solid rgba(10,22,40,.15); }
+    .stat-item:last-child { border:none; }
+    .stat-num { font-size:1.8rem; font-weight:900; color:var(--navy); line-height:1; }
+    .stat-label { font-size:12px; font-weight:600; color:rgba(10,22,40,.7); margin-top:4px; }
+
+    /* LEGAL BAND */
+    .legal-band { background:var(--navy2); padding:64px 0; }
+    .legal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px; }
+    .legal-card { background:rgba(79,70,229,.1); border:1px solid rgba(79,70,229,.25); border-radius:14px; padding:24px; }
+    .legal-card .l-icon { font-size:1.6rem; margin-bottom:10px; }
+    .legal-card h4 { font-size:15px; font-weight:700; color:#fff; margin-bottom:8px; }
+    .legal-card p { font-size:13px; color:rgba(255,255,255,.7); line-height:1.6; }
+    .legal-card .applies { margin-top:12px; font-size:12px; font-weight:700; color:#a0a0ff; background:rgba(79,70,229,.15); padding:5px 10px; border-radius:8px; display:inline-block; }
+    .legal-card .penalty { margin-top:8px; font-size:12px; color:#ff9080; font-weight:600; }
+
+    /* SERVICES */
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px; }
+    .svc-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:28px; box-shadow:0 2px 16px rgba(0,0,0,.06); transition:transform .2s,box-shadow .2s; }
+    .svc-card:hover { transform:translateY(-4px); box-shadow:0 8px 32px rgba(0,0,0,.1); }
+    .svc-icon { font-size:2rem; margin-bottom:14px; }
+    .svc-card h3 { font-size:1.05rem; font-weight:700; margin-bottom:8px; }
+    .svc-card p { font-size:14px; color:var(--muted); line-height:1.6; margin-bottom:14px; }
+    .reg-tag { font-size:11px; font-weight:700; color:var(--teal); background:rgba(0,201,167,.08); padding:4px 10px; border-radius:20px; display:inline-block; }
+    .time-save { margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:13px; font-weight:600; color:var(--green); }
+
+    /* PORTFOLIO SECTION */
+    .portfolio-inner { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .portfolio-text h2 { font-size:2rem; font-weight:800; margin-bottom:16px; }
+    .portfolio-text p { font-size:1rem; color:var(--muted); line-height:1.7; margin-bottom:16px; }
+    .feature-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin-top:8px; }
+    .feature-list li { display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.5; }
+    .feature-list .tick { color:var(--teal); font-weight:700; flex-shrink:0; margin-top:2px; }
+    .portfolio-mock { background:var(--navy); border-radius:16px; padding:28px; }
+    .portfolio-mock h4 { color:#fff; font-size:14px; font-weight:700; margin-bottom:20px; }
+    .prop-row { display:grid; grid-template-columns:1fr auto auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); font-size:13px; }
+    .prop-row:last-child { border:none; }
+    .prop-name { color:rgba(255,255,255,.85); }
+    .prop-type { font-size:11px; color:rgba(255,255,255,.4); }
+    .prop-status { padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700; text-align:center; }
+    .ps-ok { background:rgba(0,201,167,.15); color:var(--teal); }
+    .ps-due { background:rgba(230,126,34,.15); color:#f0a060; }
+    .ps-act { background:rgba(231,76,60,.15); color:#ff9080; }
+
+    /* BEFORE/AFTER */
+    .ba-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+    .ba-col { border-radius:16px; padding:28px; }
+    .ba-col.before { background:#fdf2f2; border:1px solid #f5c6c6; }
+    .ba-col.after { background:#f0fdf8; border:1px solid #a7f3d0; }
+    .ba-col h3 { font-size:1rem; font-weight:700; margin-bottom:20px; }
+    .ba-col.before h3 { color:#c0392b; }
+    .ba-col.after h3 { color:var(--green); }
+    .ba-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; font-size:14px; line-height:1.5; }
+    .ba-item .dot { width:20px; height:20px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; margin-top:1px; }
+    .before .dot { background:#f5c6c6; color:#c0392b; }
+    .after .dot { background:#a7f3d0; color:var(--green); }
+
+    /* PROPERTY TYPES */
+    .ptypes-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:40px; }
+    .ptype-card { background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+    .ptype-card .p-icon { font-size:1.8rem; margin-bottom:8px; }
+    .ptype-card h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+    .ptype-card p { font-size:12px; color:var(--muted); line-height:1.5; }
+
+    /* ROI */
+    .roi-band { background:var(--navy); padding:72px 0; }
+    .roi-inner { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .roi-text h2 { font-size:2rem; font-weight:800; color:#fff; margin-bottom:16px; }
+    .roi-text p { color:rgba(255,255,255,.75); line-height:1.7; margin-bottom:28px; }
+    .roi-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .roi-stat { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:20px; text-align:center; }
+    .roi-stat .num { font-size:2rem; font-weight:900; color:var(--teal); }
+    .roi-stat .lbl { font-size:12px; color:rgba(255,255,255,.6); margin-top:4px; }
+    .roi-cta-card { background:rgba(0,201,167,.1); border:1px solid rgba(0,201,167,.25); border-radius:20px; padding:36px; text-align:center; }
+    .roi-cta-card h3 { color:#fff; font-size:1.2rem; font-weight:700; margin-bottom:8px; }
+    .roi-cta-card p { color:rgba(255,255,255,.7); margin-bottom:24px; font-size:14px; line-height:1.6; }
+
+    /* TESTIMONIALS */
+    .testimonials { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+    .quote-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:28px; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+    .quote-text { font-size:15px; font-style:italic; color:var(--text); line-height:1.7; margin-bottom:16px; }
+    .quote-meta { display:flex; align-items:center; gap:12px; }
+    .quote-avatar { width:44px; height:44px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; flex-shrink:0; }
+    .quote-name { font-size:14px; font-weight:700; }
+    .quote-role { font-size:12px; color:var(--muted); }
+
+    /* CTA */
+    .cta-section { background:var(--navy); padding:96px 0; text-align:center; }
+    .cta-section h2 { font-size:2.2rem; font-weight:800; color:#fff; margin-bottom:16px; }
+    .cta-section p { font-size:1.05rem; color:rgba(255,255,255,.75); margin-bottom:36px; }
+    .cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .trust-row { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; margin-top:40px; }
+    .trust-item { font-size:13px; color:rgba(255,255,255,.5); display:flex; align-items:center; gap:6px; }
+    .trust-item::before { content:'✓'; color:var(--teal); font-weight:700; }
+
+    footer { background:#060f1e; padding:32px 0; text-align:center; }
+    footer p { font-size:13px; color:rgba(255,255,255,.35); }
+
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s} .d5{transition-delay:.5s} .d6{transition-delay:.6s}
+
+    @media(max-width:900px) {
+      .hero-grid,.portfolio-inner,.roi-inner,.ba-grid { grid-template-columns:1fr; }
+      .services-grid,.legal-grid { grid-template-columns:1fr 1fr; }
+      .stats-grid,.ptypes-grid { grid-template-columns:repeat(2,1fr); }
+      .stat-item { border:none; border-bottom:1px solid rgba(10,22,40,.1); padding:12px; }
+    }
+    @media(max-width:600px) {
+      .services-grid,.legal-grid,.testimonials,.ptypes-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="lionrms_homepage_redesign.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+    <div class="nav-links">
+      <a href="lionrms_homepage_redesign.html">Home</a>
+      <a href="lionrms_digital_solutions.html" class="nav-highlight">⚡ Digital &amp; AI</a>
+      <a href="lionrms_construction.html">Construction</a>
+      <a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a>
+      <a href="lionrms_case_studies.html">Case Studies</a>
+      <a href="lionrms_about.html">About</a>
+    </div>
+    <a href="lionrms_contact.html" class="nav-cta">Free Audit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-tag">🏠 Landlords · HMOs · Managing Agents · Property Portfolios</div>
+        <h1>Landlord Compliance That <span>Protects Your Licence.</span></h1>
+        <p class="hero-lead">Fire risk assessments and Legionella risk assessments are legal requirements for rental properties — not optional. A missing assessment when a council inspector visits isn't just a fine. For an HMO, it can mean licence suspension and loss of rental income overnight. We deliver compliant documentation fast, and maintain it digitally across your entire portfolio.</p>
+        <div class="hero-ctas">
+          <a href="lionrms_contact.html" class="btn btn-primary">Get a Portfolio Quote</a>
+          <a href="lionrms_roi_calculator.html" class="btn btn-outline">Calculate Compliance Cost</a>
+        </div>
+      </div>
+      <div>
+        <div class="checklist-card">
+          <h3>What the Law Requires — At a Glance</h3>
+          <div class="check-row">
+            <span class="check-label">🔥 Fire Risk Assessment</span>
+            <span class="check-status status-hmo">Mandatory — HMOs</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">🔥 Fire Risk Assessment (blocks of flats)</span>
+            <span class="check-status status-req">Mandatory — RR(FS)O</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">💧 Legionella Risk Assessment</span>
+            <span class="check-status status-all">All rental properties</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">🏠 HMO Licence — Fire Safety Evidence</span>
+            <span class="check-status status-req">Mandatory — HMO Act</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">📋 Written H&amp;S Policy (employer)</span>
+            <span class="check-status status-req">Mandatory — HSWA 1974</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">🧯 Fire Detection &amp; Emergency Lighting</span>
+            <span class="check-status status-hmo">Mandatory — HMOs</span>
+          </div>
+          <div class="check-row">
+            <span class="check-label">📄 Safe Water Supply Evidence</span>
+            <span class="check-status status-all">All rental properties</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">48hr</div><div class="stat-label">Assessment delivery</div></div>
+      <div class="stat-item"><div class="stat-num">£30k</div><div class="stat-label">Max HMO licence penalty</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Digital audit trail</div></div>
+      <div class="stat-item"><div class="stat-num">1–50+</div><div class="stat-label">Properties managed</div></div>
+      <div class="stat-item"><div class="stat-num">Zero</div><div class="stat-label">Missed review dates</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGAL BAND -->
+<section class="legal-band">
+  <div class="container">
+    <p class="section-tag" style="color:var(--teal)">THE LEGAL LANDSCAPE</p>
+    <h2 class="section-title" style="color:#fff; margin-bottom:12px;">"I Didn't Know" Is Not a Defence When a Council Inspector Calls</h2>
+    <p class="section-lead" style="color:rgba(255,255,255,.7);">The obligations on landlords have increased significantly since the Housing Act 2004 and subsequent updates. Here is what applies to your properties.</p>
+    <div class="legal-grid">
+      <div class="legal-card reveal d1">
+        <div class="l-icon">🔥</div>
+        <h4>RR(FS)O 2005 — Fire Risk Assessment</h4>
+        <p>Blocks of flats, HMOs, and any property where the landlord controls common areas must have a written fire risk assessment carried out by a competent person. The assessment must be reviewed whenever there is reason to suspect it is no longer valid.</p>
+        <span class="applies">Applies to: HMOs · Blocks of flats · Mixed-use</span>
+        <div class="penalty">Penalty: unlimited fine · imprisonment up to 2 years</div>
+      </div>
+      <div class="legal-card reveal d2">
+        <div class="l-icon">💧</div>
+        <h4>HSE L8 ACoP — Legionella</h4>
+        <p>All landlords have a duty under the HSWA 1974 and COSHH Regulations to assess and control the risk of Legionella in their properties. For rental properties with hot and cold water systems, a written Legionella risk assessment is required.</p>
+        <span class="applies">Applies to: All rental properties</span>
+        <div class="penalty">Penalty: unlimited fine · prosecution · civil liability</div>
+      </div>
+      <div class="legal-card reveal d3">
+        <div class="l-icon">🏠</div>
+        <h4>Housing Act 2004 — HMO Licensing</h4>
+        <p>HMOs with 5 or more occupants in 2+ households require mandatory HMO licensing. The licence application requires evidence of satisfactory fire safety arrangements, including fire risk assessment and installation of appropriate detection systems.</p>
+        <span class="applies">Applies to: HMOs — 5+ occupants, 2+ households</span>
+        <div class="penalty">Penalty: up to £30,000 fine · rent repayment order</div>
+      </div>
+      <div class="legal-card reveal d4">
+        <div class="l-icon">📋</div>
+        <h4>HHSRS — Housing Health and Safety</h4>
+        <p>The Housing Health and Safety Rating System allows councils to inspect and rate hazards in rented properties. Fire and Legionella are Category 1 hazards — the most serious. A Category 1 hazard triggers mandatory enforcement action.</p>
+        <span class="applies">Applies to: All residential rental properties</span>
+        <div class="penalty">Penalty: improvement notice · prohibition order</div>
+      </div>
+      <div class="legal-card reveal d5">
+        <div class="l-icon">⚡</div>
+        <h4>Electrical Safety Standards 2020</h4>
+        <p>Landlords must have electrical installations inspected and tested every 5 years by a qualified engineer (EICR). The report must be provided to tenants within 28 days and to the local authority within 7 days of request.</p>
+        <span class="applies">Applies to: All private rented sector properties</span>
+        <div class="penalty">Penalty: up to £30,000 fine per property</div>
+      </div>
+      <div class="legal-card reveal d6">
+        <div class="l-icon">🏢</div>
+        <h4>Building Safety Act 2022 — Higher Risk</h4>
+        <p>Buildings over 18 metres or 7 storeys with residential units now face the Building Safety Regime — requiring a designated Principal Accountable Person, safety case report, and resident engagement strategy. Significant for portfolio landlords.</p>
+        <span class="applies">Applies to: Buildings 18m+ / 7+ storeys</span>
+        <div class="penalty">Penalty: unlimited fine · criminal liability</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">WHAT WE DELIVER</p>
+    <h2 class="section-title">Complete Landlord Compliance — Documented and Maintained</h2>
+    <p class="section-lead">Every assessment is delivered with a digital record and scheduled annual review. All documentation is stored online and accessible to you, your managing agent, and any authority that requests it.</p>
+    <div class="services-grid">
+      <div class="svc-card reveal d1">
+        <div class="svc-icon">🔥</div>
+        <h3>Fire Risk Assessment</h3>
+        <p>Written FRA for HMOs, blocks of flats, mixed-use properties, and any rental property with common areas. Covers means of escape, fire detection, emergency lighting, fire fighting equipment, tenant awareness, and staff/manager responsibilities.</p>
+        <span class="reg-tag">RR(FS)O 2005 · PAS 79</span>
+        <div class="time-save">✓ 48-hour delivery · Licence-ready documentation</div>
+      </div>
+      <div class="svc-card reveal d2">
+        <div class="svc-icon">💧</div>
+        <h3>Legionella Risk Assessment</h3>
+        <p>L8 ACoP-compliant assessment for all rental properties. Covers all water outlets, tank storage, showers, and any infrequently used outlets. Includes written control measures and, for HMOs, a monitoring log for ongoing management.</p>
+        <span class="reg-tag">L8 ACoP · HSWA 1974</span>
+        <div class="time-save">✓ Satisfies council and licensing authority requirements</div>
+      </div>
+      <div class="svc-card reveal d3">
+        <div class="svc-icon">🏠</div>
+        <h3>HMO Licence Support</h3>
+        <p>Full fire safety documentation package for HMO licence applications and renewals — FRA, Legionella assessment, fire detection schedule, emergency lighting log, and evidence of any remedial works completed. Accepted by all UK local authorities.</p>
+        <span class="reg-tag">Housing Act 2004 · HHSRS</span>
+        <div class="time-save">✓ All licence documentation in one digital package</div>
+      </div>
+      <div class="svc-card reveal d4">
+        <div class="svc-icon">📊</div>
+        <h3>Portfolio Compliance Dashboard</h3>
+        <p>All your properties in one live view. FRA, Legionella, EICR, gas safety, and EPC status displayed by property. Automatic alerts before any certificate expires. Share with your managing agent or solicitor for due diligence.</p>
+        <span class="reg-tag">Portfolio Management</span>
+        <div class="time-save">✓ Never miss an expiry across your entire portfolio</div>
+      </div>
+      <div class="svc-card reveal d5">
+        <div class="svc-icon">🔧</div>
+        <h3>Remedial Action Management</h3>
+        <p>Where the FRA identifies actions — fire doors, detection upgrades, escape route improvements — we provide a prioritised action plan, contractor specification, and digital sign-off record when works are complete. Closed loop compliance.</p>
+        <span class="reg-tag">RR(FS)O 2005</span>
+        <div class="time-save">✓ Digital evidence that actions have been resolved</div>
+      </div>
+      <div class="svc-card reveal d6">
+        <div class="svc-icon">📝</div>
+        <h3>Annual Review Programme</h3>
+        <p>Annual review of all FRAs and Legionella assessments included in our portfolio service. The law requires assessments to be reviewed when "there is reason to suspect they are no longer valid." Annual reviews satisfy this requirement — automatically scheduled and delivered.</p>
+        <span class="reg-tag">Ongoing Compliance</span>
+        <div class="time-save">✓ Automatic scheduling — never needs chasing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO SECTION -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="portfolio-inner">
+      <div class="portfolio-text">
+        <p class="section-tag">PORTFOLIO MANAGEMENT</p>
+        <h2 class="section-title">From 1 Property to 50+ — One Dashboard Shows Everything</h2>
+        <p>Most landlords with more than 5 properties are managing compliance across a spreadsheet, a filing cabinet, and a calendar reminder system that was set up years ago and hasn't been reviewed since.</p>
+        <p>Our compliance dashboard replaces all of that with a single live view. Every property, every certificate, every upcoming expiry. Green means you're covered. Amber means action needed this month. Red means escalate now.</p>
+        <ul class="feature-list">
+          <li><span class="tick">✓</span> Live status for FRA, Legionella, EICR, gas safety, and EPC across all properties</li>
+          <li><span class="tick">✓</span> Automatic alerts 30 days before any certificate expires</li>
+          <li><span class="tick">✓</span> Sharable link for managing agents, solicitors, or council officers</li>
+          <li><span class="tick">✓</span> New acquisitions added to the system within 24 hours</li>
+          <li><span class="tick">✓</span> All historical records stored permanently — available for any future sale or audit</li>
+          <li><span class="tick">✓</span> Complete due diligence package for any property in your portfolio on demand</li>
+        </ul>
+        <a href="lionrms_contact.html" class="btn btn-primary" style="margin-top:24px;">Get Portfolio Pricing →</a>
+      </div>
+      <div class="portfolio-mock">
+        <h4>🏠 Residential Portfolio — Live Compliance</h4>
+        <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:10px;margin-bottom:6px;">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);">Property</span>
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);text-align:center;">FRA</span>
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);text-align:center;">Leg.</span>
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);text-align:center;">EICR</span>
+        </div>
+        <div class="prop-row">
+          <div><div class="prop-name">14 Park Road, Leeds</div><div class="prop-type">HMO · 6 bed</div></div>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+        </div>
+        <div class="prop-row">
+          <div><div class="prop-name">Flat 3, Mill Lane, Leeds</div><div class="prop-type">Studio · BTL</div></div>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-due">30d</span>
+          <span class="prop-status ps-ok">✓</span>
+        </div>
+        <div class="prop-row">
+          <div><div class="prop-name">22 Church St, Bradford</div><div class="prop-type">HMO · 4 bed</div></div>
+          <span class="prop-status ps-due">14d</span>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+        </div>
+        <div class="prop-row">
+          <div><div class="prop-name">Block — 8 Victoria Rd</div><div class="prop-type">Block of flats · 12 units</div></div>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-act">⚠ Act</span>
+        </div>
+        <div class="prop-row">
+          <div><div class="prop-name">9 Maple Ave, Wakefield</div><div class="prop-type">3 bed · BTL</div></div>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+          <span class="prop-status ps-ok">✓</span>
+        </div>
+        <div style="margin-top:16px; padding:12px; background:rgba(0,201,167,.1); border-radius:8px; font-size:12px; color:rgba(255,255,255,.7);">
+          ⚡ 2 alerts active · Church St FRA due in 14 days · EICR renewal booked at Victoria Rd
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">THE DIFFERENCE</p>
+    <h2 class="section-title">How Landlord Compliance Changes With a Digital Approach</h2>
+    <div class="ba-grid">
+      <div class="ba-col before">
+        <h3>❌ Most Landlords Today</h3>
+        <div class="ba-item"><span class="dot">✗</span><span>Fire risk assessments somewhere in a folder — last reviewed "a few years ago"</span></div>
+        <div class="ba-item"><span class="dot">✗</span><span>Legionella risk assessment for a rental property? "Do I need one of those?"</span></div>
+        <div class="ba-item"><span class="dot">✗</span><span>HMO licence renewal coming up — panic search for all the documents</span></div>
+        <div class="ba-item"><span class="dot">✗</span><span>Council inspection arrives — can't find evidence of when the FRA was done</span></div>
+        <div class="ba-item"><span class="dot">✗</span><span>Tenant reports a concern about the fire alarm — no record of last test</span></div>
+        <div class="ba-item"><span class="dot">✗</span><span>Property sale: solicitor asks for compliance history — "I'll have to look for that"</span></div>
+      </div>
+      <div class="ba-col after">
+        <h3>✅ With Lion RMS</h3>
+        <div class="ba-item"><span class="dot">✓</span><span>Live FRA on the dashboard — auto-reviewed annually, accessible anytime</span></div>
+        <div class="ba-item"><span class="dot">✓</span><span>Legionella assessment for every rental property — legally compliant from day one</span></div>
+        <div class="ba-item"><span class="dot">✓</span><span>HMO licence renewal: pull up the digital compliance package — done in minutes</span></div>
+        <div class="ba-item"><span class="dot">✓</span><span>Council inspection: show the dashboard on a phone — everything timestamped and current</span></div>
+        <div class="ba-item"><span class="dot">✓</span><span>Digital fire alarm test log — last test date visible instantly with evidence attached</span></div>
+        <div class="ba-item"><span class="dot">✓</span><span>Property sale: complete compliance history pack generated in one click</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTY TYPES -->
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-tag">PROPERTY TYPES WE COVER</p>
+    <h2 class="section-title">Every Type of Residential Property</h2>
+    <div class="ptypes-grid">
+      <div class="ptype-card reveal d1">
+        <div class="p-icon">🏠</div>
+        <h4>HMOs</h4>
+        <p>Full fire risk assessment, Legionella, and HMO licence documentation for all HMO types</p>
+      </div>
+      <div class="ptype-card reveal d2">
+        <div class="p-icon">🏢</div>
+        <h4>Blocks of Flats</h4>
+        <p>Common area FRA, Legionella for shared water systems, emergency lighting inspection</p>
+      </div>
+      <div class="ptype-card reveal d3">
+        <div class="p-icon">🏡</div>
+        <h4>Buy-to-Let (Single)</h4>
+        <p>Legionella risk assessment and basic fire safety check — all rental properties need this</p>
+      </div>
+      <div class="ptype-card reveal d4">
+        <div class="p-icon">🏘️</div>
+        <h4>Portfolio (2–50+ Properties)</h4>
+        <p>Portfolio compliance dashboard with volume pricing and annual review programme</p>
+      </div>
+      <div class="ptype-card reveal d5">
+        <div class="p-icon">🏰</div>
+        <h4>Listed Buildings</h4>
+        <p>Specialist FRA advice for listed residential properties where fire safety measures require Listed Building Consent</p>
+      </div>
+      <div class="ptype-card reveal d6">
+        <div class="p-icon">🏗️</div>
+        <h4>New Builds &amp; Conversions</h4>
+        <p>Pre-occupation FRA for newly converted HMOs, flat conversions, and change-of-use properties</p>
+      </div>
+      <div class="ptype-card reveal d1">
+        <div class="p-icon">🏬</div>
+        <h4>Mixed-Use Buildings</h4>
+        <p>FRA covering both residential upper floors and commercial ground floor — single assessment, complete coverage</p>
+      </div>
+      <div class="ptype-card reveal d2">
+        <div class="p-icon">🌍</div>
+        <h4>Overseas Landlords</h4>
+        <p>UK compliance managed and maintained digitally for non-resident landlords — no UK presence required</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="roi-band">
+  <div class="container">
+    <div class="roi-inner">
+      <div class="roi-text">
+        <h2>The Cost of Getting It Wrong Is Far Higher Than the Cost of Getting It Right</h2>
+        <p>An HMO operating without a licence can face a fine of up to £30,000 per property — plus a Rent Repayment Order requiring repayment of up to 12 months' rent to tenants. A single enforcement action typically costs more than a 10-year compliance programme.</p>
+        <p>A Legionella case linked to your property exposes you to civil liability claims with no ceiling. A fire in an HMO with inadequate means of escape can result in prosecution under the RR(FS)O with unlimited fines and up to two years' imprisonment.</p>
+        <div class="roi-stats">
+          <div class="roi-stat"><div class="num">£30k</div><div class="lbl">Maximum HMO licence fine (per property)</div></div>
+          <div class="roi-stat"><div class="num">12 mo</div><div class="lbl">Rent repayment order exposure</div></div>
+          <div class="roi-stat"><div class="num">2 yrs</div><div class="lbl">Max imprisonment — RR(FS)O breach</div></div>
+          <div class="roi-stat"><div class="num">48 hr</div><div class="lbl">Our FRA turnaround — from instruction to document</div></div>
+        </div>
+      </div>
+      <div class="roi-cta-card">
+        <h3>Get Covered — Starting Today</h3>
+        <p>Tell us your property types and locations. We'll give you a fixed-fee quote for assessments and a portfolio compliance programme — usually within the same working day.</p>
+        <a href="lionrms_contact.html" class="btn btn-primary">Get a Fixed-Fee Quote →</a>
+        <p style="margin-top:16px; font-size:12px; color:rgba(255,255,255,.5);">Volume discounts for portfolios of 5+ properties.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">WHAT LANDLORDS SAY</p>
+    <h2 class="section-title">Property Investors Who Trust Us</h2>
+    <div class="testimonials">
+      <div class="quote-card reveal d1">
+        <p class="quote-text">"My HMO licence was coming up for renewal and the council had flagged concerns about fire safety documentation. Lion RMS assessed three of my properties within a week, produced all the required documentation, and I submitted the licence application with a complete digital compliance pack. Licence renewed without any issues."</p>
+        <div class="quote-meta">
+          <div class="quote-avatar">DK</div>
+          <div>
+            <div class="quote-name">Portfolio Landlord</div>
+            <div class="quote-role">8 HMOs · Yorkshire</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal d2">
+        <p class="quote-text">"I had no idea a Legionella risk assessment was legally required for rental properties. A tenant mentioned it in a maintenance message. Lion RMS assessed all 12 of my properties and set up a digital monitoring system. Everything is on the dashboard and I get alerts before anything needs reviewing. Complete peace of mind."</p>
+        <div class="quote-meta">
+          <div class="quote-avatar">FS</div>
+          <div>
+            <div class="quote-name">Buy-to-Let Investor</div>
+            <div class="quote-role">12 residential properties · South East England</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal d3">
+        <p class="quote-text">"When I was selling one of my blocks, the buyer's solicitor requested the full compliance history. I logged into the dashboard and sent them a link. They had 10 years of FRAs, Legionella records, and remedial work sign-offs in one place. The conveyancer said she'd never seen compliance documentation that well organised."</p>
+        <div class="quote-meta">
+          <div class="quote-avatar">RH</div>
+          <div>
+            <div class="quote-name">Property Developer</div>
+            <div class="quote-role">Residential block portfolio · Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal d4">
+        <p class="quote-text">"I'm based in Dubai and manage a portfolio of UK properties. Having a digital compliance platform means I can see the status of every property in real time. My managing agent in the UK coordinates with Lion RMS for the assessments and I get notified when anything needs attention. It works perfectly remotely."</p>
+        <div class="quote-meta">
+          <div class="quote-avatar">NA</div>
+          <div>
+            <div class="quote-name">Non-Resident Landlord</div>
+            <div class="quote-role">14 UK properties · Based in Dubai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Is Your Portfolio Fully Compliant?</h2>
+    <p>Most landlords have at least one gap. Book a free compliance review — we'll check what assessments you have in place, identify anything missing, and give you a fixed-fee quote to close the gaps.</p>
+    <div class="cta-btns">
+      <a href="lionrms_contact.html" class="btn btn-primary">Book Your Free Compliance Review</a>
+      <a href="lionrms_roi_calculator.html" class="btn btn-outline">Calculate Portfolio Compliance Cost</a>
+    </div>
+    <div class="trust-row">
+      <span class="trust-item">CMIOSH qualified</span>
+      <span class="trust-item">DipFRA certified</span>
+      <span class="trust-item">48-hour delivery</span>
+      <span class="trust-item">HMO licence specialists</span>
+      <span class="trust-item">Professionally indemnified</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Lion Risk Management Solutions · Landlord Fire Safety &amp; Legionella Compliance · admin@lionrms.uk</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => { r.classList.add('hidden'); io.observe(r); });
+  document.addEventListener('DOMContentLoaded', () => {
+    reveals.forEach(r => { r.style.opacity = '1'; r.style.transform = 'none'; });
+    const o2 = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); o2.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => { r.style.opacity = ''; r.style.transform = ''; o2.observe(r); });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fire & Health Safety Services | Lion RMS</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2040;
+    --teal: #00c9a7;
+    --teal-light: #00e5c0;
+    --white: #ffffff;
+    --light-bg: #f4f7fc;
+    --text: #2c3e50;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --green: #27ae60;
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+
+  /* ── NAV ── */
+  nav { background: var(--navy); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 44px; width: auto; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+  .nav-cta { background: var(--teal); color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700 !important; }
+
+  /* ── HERO ── */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #112244 60%, #0d3355 100%); color: #fff; padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(0,201,167,0.08) 0%, transparent 70%); }
+  .hero-badge { display: inline-block; background: rgba(0,201,167,0.15); border: 1px solid rgba(0,201,167,0.4); color: var(--teal); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 1.2rem; line-height: 1.15; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .hero h1 span { color: var(--teal); }
+  .hero p { font-size: 1.15rem; color: rgba(255,255,255,0.8); max-width: 640px; margin: 0 auto 2.5rem; }
+  .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--teal); color: var(--navy); padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: all 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); }
+  .btn-secondary { border: 2px solid rgba(255,255,255,0.4); color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1rem; transition: all 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .hero-credentials { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .cred-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+  .cred-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+  /* ── STATS BAR ── */
+  .stats-bar { background: var(--teal); padding: 1.5rem 2rem; }
+  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; }
+  .stat-item strong { display: block; font-size: 1.8rem; font-weight: 800; color: var(--navy); }
+  .stat-item span { font-size: 0.85rem; font-weight: 600; color: var(--navy); opacity: 0.8; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
+  .section-subtitle { font-size: 1.05rem; color: var(--text-light); max-width: 640px; }
+
+  /* ── SERVICE CARDS ── */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .service-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .service-card-header { padding: 1.5rem; display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--border); }
+  .service-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .icon-fire { background: rgba(231,76,60,0.1); }
+  .icon-health { background: rgba(39,174,96,0.1); }
+  .icon-water { background: rgba(41,128,185,0.1); }
+  .icon-env { background: rgba(155,89,182,0.1); }
+  .icon-training { background: rgba(243,156,18,0.1); }
+  .icon-digital { background: rgba(0,201,167,0.1); }
+  .service-card-title { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .service-card-sub { font-size: 0.8rem; color: var(--text-light); }
+  .service-card-body { padding: 1.5rem; }
+  .service-card-body p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1rem; }
+  .service-deliverables { list-style: none; }
+  .service-deliverables li { padding: 0.35rem 0; font-size: 0.9rem; color: var(--text); display: flex; align-items: flex-start; gap: 0.6rem; }
+  .service-deliverables li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
+  .service-tag { display: inline-block; background: var(--light-bg); color: var(--text-light); font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 4px; margin-top: 1rem; }
+  .service-tag.reg { background: rgba(231,76,60,0.08); color: var(--red); }
+
+  /* ── COMPLIANCE REQUIREMENT BAND ── */
+  .compliance-band { background: var(--navy); color: #fff; padding: 4rem 2rem; }
+  .compliance-inner { max-width: 1100px; margin: 0 auto; }
+  .compliance-band .section-label { color: var(--teal); }
+  .compliance-band .section-title { color: #fff; }
+  .compliance-band .section-subtitle { color: rgba(255,255,255,0.7); }
+  .compliance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .compliance-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1.5rem; }
+  .compliance-card h3 { font-size: 1rem; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; }
+  .compliance-card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 0.75rem; }
+  .compliance-card .law-tag { font-size: 0.75rem; background: rgba(0,201,167,0.15); color: var(--teal); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; }
+
+  /* ── PROCESS STEPS ── */
+  .process-section { background: var(--light-bg); }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 3rem; position: relative; }
+  .process-step { padding: 2rem 1.5rem; text-align: center; position: relative; }
+  .process-step:not(:last-child)::after { content: '→'; position: absolute; right: -0.5rem; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--teal); opacity: 0.5; }
+  .step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--teal); color: var(--navy); font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .process-step h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .process-step p { font-size: 0.875rem; color: var(--text-light); }
+
+  /* ── AI + COMPLIANCE COMBO ── */
+  .combo-section { background: #fff; }
+  .combo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem; }
+  .combo-list { list-style: none; }
+  .combo-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: flex-start; }
+  .combo-list li:last-child { border-bottom: none; }
+  .combo-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .combo-list h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .combo-list p { font-size: 0.85rem; color: var(--text-light); }
+  .combo-highlight { background: var(--navy); border-radius: 16px; padding: 2.5rem; color: #fff; }
+  .combo-highlight h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--teal); }
+  .highlight-stat { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 8px; }
+  .highlight-stat strong { font-size: 1.5rem; font-weight: 800; color: var(--teal); min-width: 60px; }
+  .highlight-stat span { font-size: 0.875rem; color: rgba(255,255,255,0.75); }
+
+  /* ── SECTORS ── */
+  .sectors-section { background: var(--light-bg); }
+  .sectors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .sector-item { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; }
+  .sector-item .s-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .sector-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+  .sector-item p { font-size: 0.8rem; color: var(--text-light); }
+
+  /* ── CTA ── */
+  .cta-section { background: linear-gradient(135deg, var(--navy), #112244); color: #fff; text-align: center; padding: 5rem 2rem; }
+  .cta-section h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; margin-bottom: 1rem; }
+  .cta-section p { color: rgba(255,255,255,0.8); font-size: 1.1rem; max-width: 580px; margin: 0 auto 2.5rem; }
+  .cta-options { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .cta-note { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+  /* ── FOOTER ── */
+  footer { background: #060e1c; color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 0.85rem; }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  .reveal { opacity: 1; transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.hidden { opacity: 0; transform: translateY(20px); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .combo-grid { grid-template-columns: 1fr; }
+    .process-step:not(:last-child)::after { display: none; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="lionrms_homepage_v2.html" class="nav-logo"><img src="logo.png" alt="Lion RMS" /></a>
+  <ul class="nav-links">
+    <li><a href="lionrms_homepage_v2.html">Home</a></li>
+    <li><a href="lionrms_ai_solutions.html" class="nav-highlight">⚡ AI &amp; Automation</a></li>
+    <li><a href="lionrms_fire_hs.html" class="active">Fire &amp; H&amp;S</a></li>
+    <li><a href="lionrms_case_studies_v2.html">Case Studies</a></li>
+    <li><a href="lionrms_about_v2.html">About</a></li>
+    <li><a href="lionrms_contact.html" class="nav-cta">Free Consultation</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">🔥 Fire & Health Safety Services</div>
+    <h1>Expert Compliance,<br /><span>Delivered Digitally</span></h1>
+    <p>Fire risk assessments, health & safety consultancy, Legionella management and environmental compliance — practitioner-led, documentation-backed, AI-enhanced.</p>
+    <div class="hero-ctas">
+      <a href="lionrms_contact.html" class="btn-primary">Book a Free Consultation</a>
+      <a href="lionrms_roi_calculator.html" class="btn-secondary">Calculate Your Savings</a>
+    </div>
+    <div class="hero-credentials">
+      <div class="cred-item"><span class="cred-dot"></span>CMIOSH — Chartered Member IOSH</div>
+      <div class="cred-item"><span class="cred-dot"></span>DipFRA — Diploma in Fire Risk Assessment</div>
+      <div class="cred-item"><span class="cred-dot"></span>NEBOSH Qualified</div>
+      <div class="cred-item"><span class="cred-dot"></span>Professionally Indemnity Insured</div>
+      <div class="cred-item"><span class="cred-dot"></span>GDPR Compliant</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><strong>500+</strong><span>Assessments Completed</span></div>
+    <div class="stat-item"><strong>100%</strong><span>Legally Compliant Reports</span></div>
+    <div class="stat-item"><strong>48hr</strong><span>Typical Report Turnaround</span></div>
+    <div class="stat-item"><strong>UK-Wide</strong><span>Remote & On-Site Delivery</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Our Services</p>
+      <h2 class="section-title">Comprehensive Fire & Safety Coverage</h2>
+      <p class="section-subtitle">Every service delivered by a qualified practitioner, with clear written documentation and legally defensible recommendations.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-fire">🔥</div>
+          <div>
+            <div class="service-card-title">Fire Risk Assessment</div>
+            <div class="service-card-sub">Regulatory Reform (Fire Safety) Order 2005</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Thorough, site-specific fire risk assessments carried out to the PAS 79 standard, with graded action plans and digital documentation.</p>
+          <ul class="service-deliverables">
+            <li>Full premises inspection &amp; hazard identification</li>
+            <li>Means of escape and detection adequacy</li>
+            <li>Graded action plan — Immediate / Short-term / Advisory</li>
+            <li>Digital FRA report within 48 hours</li>
+            <li>Suitable for insurance and enforcement purposes</li>
+            <li>Annual review reminders included</li>
+          </ul>
+          <span class="service-tag reg">Legally Required</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-health">🦺</div>
+          <div>
+            <div class="service-card-title">Health & Safety Consultancy</div>
+            <div class="service-card-sub">Health and Safety at Work Act 1974</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Retained or project-based H&S consultancy for businesses that need competent person support without the cost of a full-time safety manager.</p>
+          <ul class="service-deliverables">
+            <li>Gap analysis and compliance audit</li>
+            <li>Risk assessment creation and review</li>
+            <li>Health & Safety policy development</li>
+            <li>RIDDOR and incident investigation support</li>
+            <li>Management system implementation (ISO 45001)</li>
+            <li>Retained monthly advisor service available</li>
+          </ul>
+          <span class="service-tag">Retained or One-Off</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-water">💧</div>
+          <div>
+            <div class="service-card-title">Legionella Risk Assessment</div>
+            <div class="service-card-sub">L8 ACoP / HSG 274 Compliance</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Legionella and water hygiene risk assessments in line with the HSE's L8 Approved Code of Practice, for all premises types.</p>
+          <ul class="service-deliverables">
+            <li>Full water system survey and risk assessment</li>
+            <li>Identification of risk populations and control measures</li>
+            <li>Written Legionella Management Scheme</li>
+            <li>Temperature monitoring scheme documentation</li>
+            <li>Schematic drawings of water systems</li>
+            <li>Review and update service (3-year cycle)</li>
+          </ul>
+          <span class="service-tag reg">Legally Required</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-env">🌿</div>
+          <div>
+            <div class="service-card-title">Environmental Compliance</div>
+            <div class="service-card-sub">Environment Act 2021 / EPR Regulations</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Environmental risk assessments and compliance support for businesses operating under UK environmental legislation.</p>
+          <ul class="service-deliverables">
+            <li>Environmental aspects &amp; impacts register</li>
+            <li>Waste management compliance review</li>
+            <li>Carbon &amp; emissions baseline assessments</li>
+            <li>Environmental management system support (ISO 14001)</li>
+            <li>Spill control and COSHH alignment</li>
+            <li>Duty of care documentation</li>
+          </ul>
+          <span class="service-tag">Compliance &amp; Advisory</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-training">📚</div>
+          <div>
+            <div class="service-card-title">Training & Toolbox Talks</div>
+            <div class="service-card-sub">Staff Competency & Awareness</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Practical, engaging training delivered on-site or remotely. We cover the topics your team actually needs — not generic slides.</p>
+          <ul class="service-deliverables">
+            <li>Fire warden / marshal training</li>
+            <li>Manual handling and DSE awareness</li>
+            <li>COSHH and hazardous substances</li>
+            <li>Working at height awareness</li>
+            <li>Bespoke toolbox talks for your sector</li>
+            <li>Attendance records and certificates provided</li>
+          </ul>
+          <span class="service-tag">On-Site or Remote</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-card-header">
+          <div class="service-icon icon-digital">⚡</div>
+          <div>
+            <div class="service-card-title">CDM & Construction Safety</div>
+            <div class="service-card-sub">CDM Regulations 2015</div>
+          </div>
+        </div>
+        <div class="service-card-body">
+          <p>Principal Designer support, construction phase plans, and RAMS review for projects requiring CDM compliance.</p>
+          <ul class="service-deliverables">
+            <li>Principal Designer duties support</li>
+            <li>Pre-construction information pack</li>
+            <li>Construction Phase Plan review &amp; drafting</li>
+            <li>RAMS (risk assessment &amp; method statement) review</li>
+            <li>H&S file preparation and handover</li>
+            <li>Competency checks for duty holders</li>
+          </ul>
+          <span class="service-tag reg">Legally Required</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL COMPLIANCE BAND -->
+<div class="compliance-band">
+  <div class="compliance-inner">
+    <p class="section-label">Legal Framework</p>
+    <h2 class="section-title">What the Law Requires</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.7);">Ignorance is not a defence. Here is what UK law actually mandates for your business.</p>
+    <div class="compliance-grid">
+      <div class="compliance-card">
+        <h3>Fire Safety</h3>
+        <p>Every non-domestic premises must have a suitable and sufficient fire risk assessment carried out by a "competent person" — and kept up to date.</p>
+        <span class="law-tag">RR(FS)O 2005</span>
+      </div>
+      <div class="compliance-card">
+        <h3>Health & Safety</h3>
+        <p>Employers with five or more employees must have a written health and safety policy and carry out suitable risk assessments for all significant hazards.</p>
+        <span class="law-tag">HSWA 1974 / MHSWR 1999</span>
+      </div>
+      <div class="compliance-card">
+        <h3>Legionella / Water</h3>
+        <p>Duty holders must identify and manage Legionella risks in water systems. This requires a written risk assessment and a documented control scheme.</p>
+        <span class="law-tag">L8 ACoP / HSG 274</span>
+      </div>
+      <div class="compliance-card">
+        <h3>Construction (CDM)</h3>
+        <p>Projects with more than one contractor require a Principal Designer and a written Construction Phase Plan before work begins on site.</p>
+        <span class="law-tag">CDM Regulations 2015</span>
+      </div>
+      <div class="compliance-card">
+        <h3>Environmental</h3>
+        <p>Businesses that produce, handle or dispose of waste have legal duties of care. Certain activities require permits under the Environmental Permitting Regulations.</p>
+        <span class="law-tag">Environment Act 2021 / EPR</span>
+      </div>
+      <div class="compliance-card">
+        <h3>Enforcement</h3>
+        <p>The HSE and local fire authorities carry out unannounced inspections. Non-compliance can result in prohibition notices, improvement notices, prosecution and unlimited fines.</p>
+        <span class="law-tag">Enforcement Action</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELIVERY PROCESS -->
+<section class="process-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title">Simple, Efficient Delivery</h2>
+      <p class="section-subtitle">Most assessments can be completed with a single site visit. Complex multi-site clients managed via our digital platform.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">1</div>
+        <h3>Initial Scoping</h3>
+        <p>Free 30-minute call to understand your premises, sector and compliance gaps. No pressure, just clarity.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">2</div>
+        <h3>Site Visit / Survey</h3>
+        <p>Thorough on-site inspection by a qualified assessor. We gather everything in one visit where possible.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">3</div>
+        <h3>Report &amp; Action Plan</h3>
+        <p>Clear, jargon-free report within 48 hours. Graded action plan tells you exactly what to do and when.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">4</div>
+        <h3>Ongoing Support</h3>
+        <p>Review reminders, retained support available, and digital compliance tracking for multi-site clients.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI + COMPLIANCE COMBO -->
+<section class="combo-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Where AI Helps</p>
+      <h2 class="section-title">Traditional Expertise,<br />AI-Enhanced Delivery</h2>
+      <p class="section-subtitle">AI doesn't replace the assessor — it eliminates the paperwork burden so you get faster reports, lower costs, and zero admin errors.</p>
+    </div>
+    <div class="combo-grid">
+      <ul class="combo-list reveal">
+        <li>
+          <span class="combo-icon">📋</span>
+          <div>
+            <h4>Instant Report Generation</h4>
+            <p>Assessment findings converted to a complete, formatted report within hours of the site visit — not days.</p>
+          </div>
+        </li>
+        <li>
+          <span class="combo-icon">📅</span>
+          <div>
+            <h4>Automated Review Reminders</h4>
+            <p>Your FRA, Legionella assessment and H&S policy renewal dates tracked automatically. You're notified before they expire.</p>
+          </div>
+        </li>
+        <li>
+          <span class="combo-icon">📊</span>
+          <div>
+            <h4>Digital Compliance Dashboard</h4>
+            <p>Multi-site clients see real-time compliance status across all premises from a single dashboard.</p>
+          </div>
+        </li>
+        <li>
+          <span class="combo-icon">📁</span>
+          <div>
+            <h4>Centralised Document Store</h4>
+            <p>All certificates, assessments and action logs stored securely online — ready for audit or enforcement visits instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="combo-icon">🔍</span>
+          <div>
+            <h4>The Bit AI Can't Do</h4>
+            <p>Walk the building. Spot the hidden hazards. Make the professional judgement call. That's what a chartered practitioner is for.</p>
+          </div>
+        </li>
+      </ul>
+      <div class="combo-highlight reveal">
+        <h3>Time Saved Per Assessment</h3>
+        <div class="highlight-stat"><strong>75%</strong><span>Reduction in report writing time using AI-assisted documentation</span></div>
+        <div class="highlight-stat"><strong>48hr</strong><span>Average report turnaround vs industry standard 5–10 days</span></div>
+        <div class="highlight-stat"><strong>Zero</strong><span>Missed renewal dates for clients on our compliance platform</span></div>
+        <div class="highlight-stat"><strong>100%</strong><span>Compliance with legal documentation requirements, every report</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section class="sectors-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Sectors We Serve</p>
+      <h2 class="section-title">Sector Experience</h2>
+      <p class="section-subtitle">Every sector has different risk profiles. We know yours.</p>
+    </div>
+    <div class="sectors-grid">
+      <div class="sector-item reveal">
+        <div class="s-icon">🏗️</div>
+        <h4>Construction</h4>
+        <p>CDM compliance, RAMS review, site H&S support</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏥</div>
+        <h4>Healthcare</h4>
+        <p>Clinical settings, CQC alignment, Legionella in complex water systems</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏨</div>
+        <h4>Hospitality</h4>
+        <p>Hotels, restaurants, Legionella (cooling towers, spa pools), fire safety</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏢</div>
+        <h4>Commercial Offices</h4>
+        <p>Fire risk, DSE, lone working, multi-floor evacuation planning</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏭</div>
+        <h4>Manufacturing</h4>
+        <p>COSHH, machinery guarding, DSEAR, permit to work systems</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏫</div>
+        <h4>Education</h4>
+        <p>Schools, colleges, children's settings — fire and H&S compliance</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🏠</div>
+        <h4>Residential & HMO</h4>
+        <p>Landlord FRA duties, HMO licensing compliance, communal areas</p>
+      </div>
+      <div class="sector-item reveal">
+        <div class="s-icon">🌍</div>
+        <h4>International</h4>
+        <p>Digital-first services available worldwide — UK standards applied globally</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Sort Your Compliance?</h2>
+  <p>Book a free scoping call. We'll confirm exactly what you need, what the law requires, and how quickly we can deliver it.</p>
+  <div class="cta-options">
+    <a href="lionrms_contact.html" class="btn-primary">Book Free Consultation</a>
+    <a href="lionrms_digital_solutions.html" class="btn-secondary">See How We Use AI</a>
+  </div>
+  <p class="cta-note">No obligation. No jargon. Just straight answers from a qualified practitioner.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Lion Risk Management Solutions &mdash; AI Workflow Automation &amp; Fire Safety Services · admin@lionrms.uk</p>
+  <p style="margin-top:0.5rem;">
+    <a href="lionrms_homepage_v2.html">Home</a> &nbsp;|&nbsp;
+    <a href="lionrms_ai_solutions.html">AI &amp; Automation</a> &nbsp;|&nbsp;
+    <a href="lionrms_fire_hs.html">Fire &amp; H&S</a> &nbsp;|&nbsp;
+    <a href="lionrms_about_v2.html">About</a> &nbsp;|&nbsp;
+    <a href="lionrms_contact.html">Contact</a>
+  </p>
+</footer>
+
+<script>
+  // Fail-safe scroll animation
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('hidden');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.remove('hidden'); e.target.classList.add('revealed'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
