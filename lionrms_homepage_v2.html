@@ -24,43 +24,7 @@
     .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
     /* NAV */ to{opacity:1;transform:translateY(0)} }
-    @media (max-width:768px) {
-      /* Hero */
-      .hero { padding:100px 0 60px; min-height:auto; }
-      .hero-grid { grid-template-columns:1fr; gap:36px; }
-      .metrics-card { display:none; }
-      .hero h1 { font-size:2rem; }
-      .hero-lead { font-size:1rem; }
-      /* Stats bar */
-      .stats-grid { grid-template-columns:repeat(2,1fr); gap:0; }
-      .stat-cell { border-right:none; border-bottom:1px solid rgba(10,22,40,.12); padding:16px 12px; }
-      .stat-cell:nth-child(odd){ border-right:1px solid rgba(10,22,40,.12); }
-      .stat-cell:last-child{ border-bottom:none; }
-      /* Problem cards */
-      .problem-cards { grid-template-columns:1fr; gap:14px; }
-      /* Services grid */
-      .services-grid { grid-template-columns:1fr; gap:16px; }
-      /* Offer grid — the main fix */
-      .offer-grid { grid-template-columns:1fr; gap:20px; }
-      .offer-card { padding:24px; }
-      /* Process steps */
-      .steps-grid, .process-grid { grid-template-columns:1fr; gap:16px; }
-      /* Sectors */
-      .sectors-grid, .industry-grid { grid-template-columns:1fr 1fr; gap:12px; }
-      /* Timeline */
-      .timeline { flex-direction:column; gap:16px; }
-      /* Trust bar */
-      .trust-inner { flex-direction:column; gap:10px; }
-      .trust-items { gap:12px; flex-wrap:wrap; }
-      /* CTA buttons */
-      .cta-btns { flex-direction:column; align-items:stretch; }
-      .cta-btns .btn { text-align:center; justify-content:center; }
-      /* Trust row */
-      .trust-row { flex-direction:column; gap:8px; align-items:center; }
-      /* Section padding */
-      .section { padding:60px 0; }
-      .offer-section { padding:52px 0; }
-    }
+
 
     /* HERO */
     .hero { background:var(--navy); min-height:100vh; display:flex; align-items:center; padding:110px 0 80px; position:relative; overflow:hidden; }
@@ -225,7 +189,6 @@
       .steps-grid::before { display:none; }
       .stats-grid,.sectors-grid { grid-template-columns:repeat(2,1fr); }
       .stat-cell { border:none; border-bottom:1px solid rgba(10,22,40,.12); padding:12px; }
-
     }
     @media(max-width:600px) {
       .problem-cards,.services-grid,.sectors-grid,.strip-services,.origin-proof,.roi-numbers { grid-template-columns:1fr; }
@@ -292,7 +255,30 @@
     .mobile-menu ul li a.nav-hi { color:#00c9a7 !important; font-weight:700; }
     .mobile-menu .mob-cta { display:block; background:#00c9a7; color:#0a1628 !important; text-align:center; padding:14px 24px; border-radius:50px; font-size:15px; font-weight:700; margin:0 24px; text-decoration:none; }
     .mobile-menu .mob-cta:hover { background:#00a889; }
-    @media (max-width:768px) { .nav-links,.nav-cta { display:none !important; } .nav-hamburger { display:flex !important; } }
+    /* ── RESPONSIVE — placed after all base styles so overrides work correctly ── */
+    @media(max-width:960px) {
+      .offer-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .hero { padding:90px 0 50px; min-height:auto; }
+      .hero-grid { grid-template-columns:1fr; gap:28px; }
+      .metrics-card { display:none; }
+      .hero h1 { font-size:1.9rem; }
+      .hero-lead { font-size:.95rem; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .stat-cell { border:none; border-bottom:1px solid rgba(10,22,40,.12); padding:12px; }
+      .problem-cards { grid-template-columns:1fr; }
+      .services-grid { grid-template-columns:1fr; }
+      .offer-grid { grid-template-columns:1fr; gap:16px; }
+      .offer-card { padding:22px; }
+      .cta-btns { flex-direction:column; align-items:stretch; }
+      .cta-btns .btn { text-align:center; justify-content:center; }
+      .trust-row { flex-direction:column; gap:8px; align-items:center; text-align:center; }
+      .section { padding:52px 0; }
+      .offer-section { padding:44px 0; }
+      .nav-links,.nav-cta { display:none !important; }
+      .nav-hamburger { display:flex !important; }
+    }
     </style>
 </head>
 <body>
@@ -774,4 +760,46 @@
       <a href="lionrms_contact.html" class="btn btn-primary">🎁 Get Your Free Gap Analysis</a>
       <a href="lionrms_roi_calculator.html" class="btn btn-ghost">Calculate Your ROI First →</a>
     </div>
-    <d
+    <div class="trust-row">
+      <span class="tr-item">Free gap analysis — worth £250</span>
+      <span class="tr-item">20% off first implementation</span>
+      <span class="tr-item">CMIOSH qualified</span>
+      <span class="tr-item">Results confirmed at Day 30</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Lion Risk Management Solutions · AI Workflow Automation &amp; Digital Solutions · admin@lionrms.uk</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  }, {threshold:0.05, rootMargin:'0px 0px -20px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.style.opacity = ''; el.style.transform = '';
+      io.observe(el);
+    });
+    setTimeout(function(){ document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 3000);
+  });
+</script>
+
+<script>
+(function(){
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('mobileMenu');
+  if(!btn||!menu) return;
+  btn.addEventListener('click',function(e){e.stopPropagation();btn.classList.toggle('open');menu.classList.toggle('open');});
+  document.addEventListener('click',function(e){if(!menu.contains(e.target)&&!btn.contains(e.target)){btn.classList.remove('open');menu.classList.remove('open');}});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');menu.classList.remove('open');});});
+})();
+</script>
+</body>
+</html>
