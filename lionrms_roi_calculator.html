@@ -147,7 +147,13 @@
 
       <!-- Inputs -->
       <div class="calc-card">
-        <h2>📊 Your Business Details</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+          <h2 style="margin:0">📊 Your Business Details</h2>
+          <div style="display:flex;align-items:center;gap:8px;background:#f4f7fc;border-radius:50px;padding:4px">
+            <button id="btnGBP" onclick="setCurrency('GBP')" style="background:#0a1628;color:#fff;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s">£ GBP</button>
+            <button id="btnUSD" onclick="setCurrency('USD')" style="background:transparent;color:#64748b;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s">$ USD</button>
+          </div>
+        </div>
 
         <div class="field">
           <label>Number of employees</label>
@@ -158,7 +164,7 @@
         </div>
 
         <div class="field">
-          <label>Average hourly wage (£)</label>
+          <label id="wageLabel">Average hourly wage (£)</label>
           <div class="field-row">
             <input type="range" id="wage" min="10" max="80" value="18" />
             <span class="field-val" id="wageVal">£18</span>
@@ -303,49 +309,23 @@
     menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');menu.classList.remove('open');});});
   }
 
-  // Calculator logic
-  function fmt(n){return'£'+Math.round(n).toLocaleString('en-GB')}
-  function update(){
-    var emp=+document.getElementById('employees').value;
-    var wage=+document.getElementById('wage').value;
-    var admin=+document.getElementById('adminHours').value;
-    var reports=+document.getElementById('reports').value;
-    var rt=+document.getElementById('reportTime').value/60;
-    var rate=+document.getElementById('sector').value;
+  // Currency
+  var currency='GBP';
+  var symbols={GBP:'£',USD:'$'};
+  var wageDefaults={GBP:18,USD:23};
+  var wageMax={GBP:80,USD:100};
 
-    document.getElementById('empVal').textContent=emp;
-    document.getElementById('wageVal').textContent='£'+wage;
-    document.getElementById('adminVal').textContent=admin+' hrs';
-    document.getElementById('reportVal').textContent=reports;
-    document.getElementById('rtVal').textContent=Math.round(rt*60)+' min';
-
-    // Update range gradient
-    document.querySelectorAll('input[type=range]').forEach(function(r){
-      var pct=(r.value-r.min)/(r.max-r.min)*100;
-      r.style.setProperty('--pct',pct+'%');
-    });
-
-    var adminSaved=emp*admin*rate;
-    var reportSaved=reports*rt*rate;
-    var totalWeekly=adminSaved+reportSaved;
-    var annualHours=totalWeekly*52;
-    var annualCost=annualHours*wage;
-    var wasteCost=emp*admin*52*wage+(reports*rt*52*wage);
-    var paybackMonths=Math.round(2000/((annualCost)/12));
-
-    document.getElementById('hoursWeek').textContent=adminSaved.toFixed(1)+' hrs';
-    document.getElementById('reportHours').textContent=reportSaved.toFixed(1)+' hrs';
-    document.getElementById('totalHours').textContent=totalWeekly.toFixed(1)+' hrs';
-    document.getElementById('annualSaving').textContent=fmt(annualCost);
-    document.getElementById('wasteCost').textContent=fmt(wasteCost);
-    document.getElementById('payback').textContent=paybackMonths<=3?'Under 3 months':paybackMonths+' months';
+  function setCurrency(c){
+    currency=c;
+    var sym=symbols[c];
+    document.getElementById('wageLabel').textContent='Average hourly wage ('+sym+')';
+    var wageSlider=document.getElementById('wage');
+    wageSlider.max=wageMax[c];
+    wageSlider.value=wageDefaults[c];
+    document.getElementById('btnGBP').style.cssText=c==='GBP'?'background:#0a1628;color:#fff;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s':'background:transparent;color:#64748b;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s';
+    document.getElementById('btnUSD').style.cssText=c==='USD'?'background:#0a1628;color:#fff;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s':'background:transparent;color:#64748b;border:none;border-radius:50px;padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s';
+    update();
   }
+  window.setCurrency=setCurrency;
 
-  document.querySelectorAll('input[type=range],select').forEach(function(el){
-    el.addEventListener('input',update);
-  });
-  update();
-})();
-</script>
-</body>
-</html>
+  // Calcul

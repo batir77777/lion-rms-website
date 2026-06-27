@@ -407,7 +407,7 @@
 <section class="problem-band">
   <div class="container">
     <div class="problem-heading">
-      <h2>Most Businesses Are Running 2026 Work on 2010 Processes</h2>
+      <h2>Most Businesses Are Running Today's Work on 2010 Processes</h2>
       <p>The tools exist. The knowledge exists. The bottleneck is implementation — knowing which AI tools to use, how to connect them, and how to get your team to actually adopt them.</p>
     </div>
     <div class="problem-cards">
@@ -757,7 +757,7 @@
 <script>
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
-  }, {threshold:0.1});
+  }, {threshold:0.05, rootMargin:'0px 0px -20px 0px'});
   document.querySelectorAll('.reveal').forEach(el => {
     el.style.opacity = '1'; el.style.transform = 'none';
   });
@@ -766,6 +766,8 @@
       el.style.opacity = ''; el.style.transform = '';
       io.observe(el);
     });
+    // Failsafe: ensure all cards are visible after 3s regardless of scroll speed
+    setTimeout(function(){ document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 3000);
   });
 </script>
 
@@ -775,9 +777,4 @@
   var menu=document.getElementById('mobileMenu');
   if(!btn||!menu) return;
   btn.addEventListener('click',function(e){e.stopPropagation();btn.classList.toggle('open');menu.classList.toggle('open');});
-  document.addEventListener('click',function(e){if(!menu.contains(e.target)&&!btn.contains(e.target)){btn.classList.remove('open');menu.classList.remove('open');}});
-  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');menu.classList.remove('open');});});
-})();
-</script>
-</body>
-</html>
+  document.addEventListener('click',function(e){if(!menu.contains(e.target)&&!btn.contains(e.target)){btn.classList
