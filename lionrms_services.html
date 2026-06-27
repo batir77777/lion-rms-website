@@ -3,150 +3,147 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Contact & Book Audit | Lion RMS</title>
+<title>Services &amp; How We Work | Lion RMS</title>
+<meta name="description" content="AI workflow automation and fire & health & safety consultancy. See our service packages, how our process works, and what to expect as a client." />
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --navy: #0a1628;
-    --teal: #00c9a7;
-    --teal-light: #00e5c0;
-    --light-bg: #f4f7fc;
-    --text: #2c3e50;
-    --text-light: #64748b;
-    --border: #e2e8f0;
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#0a1628;--navy-mid:#0f2040;--teal:#00c9a7;--teal-dark:#00a889;
+    --white:#fff;--light:#f4f7fc;--border:#e2e8f0;--text:#2c3e50;--muted:#64748b;
   }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:var(--white)}
+  a{text-decoration:none;color:inherit}
+  .container{max-width:1120px;margin:0 auto;padding:0 24px}
 
-  /* NAV */
+  /* ── Navigation ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,22,40,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07)}
+  .nav-inner{max-width:1160px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{display:flex;align-items:center;text-decoration:none}
+  .nav-logo img{height:44px;width:auto}
+  .nav-links{display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0}
+  .nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);padding:8px 14px;border-radius:8px;text-decoration:none;transition:color .2s,background .2s}
+  .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .nav-links a.active{color:#00c9a7}
+  .nav-links a.nav-hi{color:#00c9a7!important;font-weight:700}
+  .nav-cta{background:#00c9a7;color:#0a1628!important;padding:9px 22px;border-radius:50px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s}
+  .nav-cta:hover{background:#00a889;transform:translateY(-1px)}
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;margin-left:8px}
+  .nav-hamburger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px;transition:all .3s ease}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-menu{position:fixed;top:68px;left:0;right:0;background:rgba(8,18,34,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);z-index:99;padding:4px 0 16px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+  .mobile-menu.open{display:block;animation:navSlide .2s ease}
+  @keyframes navSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  .mobile-menu ul{list-style:none;padding:0;margin:0 0 12px}
+  .mobile-menu ul li a{display:flex;align-items:center;padding:15px 24px;font-size:16px;font-weight:500;color:rgba(255,255,255,.75);border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;transition:color .15s,background .15s}
+  .mobile-menu ul li:last-child a{border-bottom:none}
+  .mobile-menu ul li a:hover,.mobile-menu ul li a.active{color:#00c9a7;background:rgba(0,201,167,.04)}
+  .mobile-menu ul li a.nav-hi{color:#00c9a7!important;font-weight:700}
+  .mobile-menu .mob-cta{display:block;background:#00c9a7;color:#0a1628!important;text-align:center;padding:14px 24px;border-radius:50px;font-size:15px;font-weight:700;margin:0 24px;text-decoration:none}
+  .mobile-menu .mob-cta:hover{background:#00a889}
+  @media(max-width:768px){.nav-links,.nav-cta{display:none!important}.nav-hamburger{display:flex!important}}
 
-  /* HERO */
-  .hero { background: linear-gradient(135deg, var(--navy) 0%, #112244 60%, #0d3355 100%); color: #fff; padding: 5rem 2rem 4rem; text-align: center; }
-  .hero-badge { display: inline-block; background: rgba(0,201,167,0.15); border: 1px solid rgba(0,201,167,0.4); color: var(--teal); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; }
-  .hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.15; }
-  .hero h1 span { color: var(--teal); }
-  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; }
+  /* ── Hero ── */
+  .hero{background:var(--navy);padding:120px 0 80px;text-align:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,201,167,.12);color:var(--teal);border:1px solid rgba(0,201,167,.3);border-radius:50px;padding:6px 18px;font-size:13px;font-weight:600;margin-bottom:24px}
+  .hero h1{font-size:clamp(2rem,4vw,2.9rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:20px}
+  .hero h1 span{color:var(--teal)}
+  .hero p{font-size:1.1rem;color:rgba(255,255,255,.7);max-width:600px;margin:0 auto 36px;line-height:1.7}
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary{display:inline-block;background:var(--teal);color:var(--navy)!important;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:800;transition:all .2s}
+  .btn-primary:hover{background:#fff;transform:translateY(-2px)}
+  .btn-outline{display:inline-block;border:2px solid rgba(255,255,255,.3);color:#fff!important;padding:13px 32px;border-radius:50px;font-size:15px;font-weight:700;transition:all .2s}
+  .btn-outline:hover{border-color:var(--teal);color:var(--teal)!important}
 
-  /* MAIN LAYOUT */
-  .main-section { padding: 5rem 2rem; }
-  .container { max-width: 1100px; margin: 0 auto; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+  /* ── Section shared ── */
+  .section{padding:80px 0}
+  .section-alt{background:var(--light)}
+  .section-tag{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+  .section-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;color:var(--navy);margin-bottom:16px;line-height:1.2}
+  .section-lead{color:var(--muted);font-size:1.05rem;max-width:600px;line-height:1.7;margin-bottom:48px}
 
-  /* LEFT: INFO */
-  .contact-info h2 { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
-  .contact-info .sub { font-size: 1rem; color: var(--text-light); margin-bottom: 2rem; }
-  .audit-includes { background: var(--light-bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
-  .audit-includes h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
-  .audit-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.75rem; }
-  .audit-item:last-child { margin-bottom: 0; }
-  .audit-item .check { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--navy); font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1rem; }
-  .audit-item p { font-size: 0.9rem; color: var(--text); }
-  .audit-item p strong { color: var(--navy); display: block; margin-bottom: 0.1rem; }
+  /* ── Service tabs ── */
+  .tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+  .tab-btn{padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--muted);transition:all .2s}
+  .tab-btn.active,.tab-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
 
-  .direct-contact h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
-  .contact-method { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
-  .contact-method:last-child { border-bottom: none; }
-  .contact-method .icon { font-size: 1.2rem; flex-shrink: 0; }
-  .contact-method a { color: var(--teal); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-  .contact-method p { font-size: 0.85rem; color: var(--text-light); margin-top: 0.1rem; }
+  /* ── Service cards ── */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.svc-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.svc-grid{grid-template-columns:1fr}}
+  .svc-card{background:#fff;border-radius:18px;padding:30px;border:1px solid var(--border);transition:all .25s;position:relative;overflow:hidden}
+  .svc-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08);border-color:var(--teal)}
+  .svc-icon{font-size:2rem;margin-bottom:14px}
+  .svc-card h3{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:10px}
+  .svc-card p{font-size:14px;color:var(--muted);line-height:1.65}
+  .svc-tag{display:inline-block;margin-top:14px;font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em}
 
-  .service-split { margin-top: 2rem; }
-  .service-split h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
-  .split-row { display: flex; gap: 1rem; }
-  .split-card { flex: 1; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
-  .split-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
-  .split-card p { font-size: 0.8rem; color: var(--text-light); }
-  .split-card .reach { font-size: 0.75rem; font-weight: 600; color: var(--teal); margin-top: 0.4rem; }
+  /* ── How we work / process ── */
+  .process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:48px}
+  @media(max-width:768px){.process-steps{grid-template-columns:1fr;gap:0}}
+  .process-steps::before{content:'';position:absolute;top:36px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--teal),#00a889);z-index:0}
+  @media(max-width:768px){.process-steps::before{display:none}}
+  .step{text-align:center;padding:0 16px;position:relative;z-index:1}
+  .step-num{width:72px;height:72px;border-radius:50%;background:var(--navy);color:var(--teal);font-size:1.4rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px solid var(--teal)}
+  .step h3{font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .step p{font-size:13px;color:var(--muted);line-height:1.6}
+  .step-duration{display:inline-block;margin-top:10px;font-size:11px;font-weight:700;color:var(--teal);background:rgba(0,201,167,.1);padding:3px 10px;border-radius:20px}
 
-  /* RIGHT: FORM */
-  .contact-form-wrap { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
-  .form-title { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
-  .form-sub { font-size: 0.9rem; color: var(--text-light); margin-bottom: 2rem; }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px;
-    font-size: 0.95rem; color: var(--text); font-family: inherit; background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,201,167,0.15);
-  }
-  .form-group textarea { min-height: 110px; resize: vertical; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .form-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-  .checkbox-item { display: flex; align-items: center; gap: 0.5rem; }
-  .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; }
-  .checkbox-item label { font-size: 0.85rem; color: var(--text); font-weight: 400; margin-bottom: 0; }
-  .submit-btn { width: 100%; background: var(--teal); color: var(--navy); padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; font-family: inherit; }
-  .submit-btn:hover { background: var(--teal-light); transform: translateY(-1px); }
-  .form-note { font-size: 0.8rem; color: var(--text-light); text-align: center; margin-top: 0.75rem; }
-  .form-success { display: none; text-align: center; padding: 2rem; }
-  .form-success .tick { font-size: 3rem; margin-bottom: 1rem; }
-  .form-success h3 { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
-  .form-success p { color: var(--text-light); font-size: 0.95rem; }
+  /* ── Pricing ── */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+  @media(max-width:900px){.pricing-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.pricing-grid{grid-template-columns:1fr}}
+  .price-card{background:#fff;border-radius:20px;padding:36px 28px;border:2px solid var(--border);position:relative;transition:all .2s}
+  .price-card.featured{border-color:var(--teal);background:var(--navy);transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.15)}
+  .price-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--navy);font-size:11px;font-weight:800;padding:4px 16px;border-radius:20px;letter-spacing:.05em;white-space:nowrap}
+  .price-card h3{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+  .price-card.featured h3{color:#fff}
+  .price-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+  .price-card.featured .price-sub{color:rgba(255,255,255,.55)}
+  .price-amount{font-size:2rem;font-weight:900;color:var(--navy);margin-bottom:4px}
+  .price-card.featured .price-amount{color:var(--teal)}
+  .price-note{font-size:12px;color:var(--muted);margin-bottom:24px}
+  .price-card.featured .price-note{color:rgba(255,255,255,.4)}
+  .price-features{list-style:none;margin-bottom:28px}
+  .price-features li{font-size:14px;padding:8px 0;border-bottom:1px solid var(--border);color:var(--text);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+  .price-card.featured .price-features li{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.08)}
+  .price-features li::before{content:'✓';color:var(--teal);font-weight:900;flex-shrink:0;margin-top:1px}
+  .price-btn{display:block;text-align:center;padding:13px 24px;border-radius:50px;font-size:14px;font-weight:800;transition:all .2s}
+  .price-btn-outline{border:2px solid var(--border);color:var(--navy)}
+  .price-btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+  .price-btn-solid{background:var(--teal);color:var(--navy)!important}
+  .price-btn-solid:hover{background:#fff}
 
-  /* TRUST BAND */
-  .trust-band { background: var(--light-bg); padding: 3rem 2rem; border-top: 1px solid var(--border); }
-  .trust-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
-  .trust-item .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
-  .trust-item h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
-  .trust-item p { font-size: 0.8rem; color: var(--text-light); }
+  /* ── What's included ── */
+  .included-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
+  @media(max-width:768px){.included-grid{grid-template-columns:1fr}}
+  .included-block h3{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--teal)}
+  .check-list{list-style:none}
+  .check-list li{padding:10px 0;font-size:14px;color:var(--text);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+  .check-list li::before{content:'✓';color:var(--teal);font-weight:900;flex-shrink:0;margin-top:1px}
 
-  /* FAQ */
-  .faq-section { padding: 4rem 2rem; background: #fff; }
-  .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
-  .faq-item { padding: 1.5rem; border: 1px solid var(--border); border-radius: 10px; }
-  .faq-item h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
-  .faq-item p { font-size: 0.875rem; color: var(--text-light); }
-  .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
-  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--navy); margin-bottom: 0.75rem; }
+  /* ── FAQ ── */
+  .faq-list{margin-top:40px;display:flex;flex-direction:column;gap:12px}
+  .faq-item{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden}
+  .faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;font-size:15px;font-weight:700;color:var(--navy);cursor:pointer;gap:16px}
+  .faq-q::after{content:'+';font-size:1.4rem;color:var(--teal);flex-shrink:0;transition:transform .2s}
+  .faq-item.open .faq-q::after{transform:rotate(45deg)}
+  .faq-a{display:none;padding:0 24px 18px;font-size:14px;color:var(--muted);line-height:1.7}
+  .faq-item.open .faq-a{display:block}
 
-  /* FOOTER */
-  footer { background: #060e1c; color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 0.85rem; }
-  footer a { color: var(--teal); text-decoration: none; }
+  /* ── CTA ── */
+  .cta-section{background:var(--navy);padding:80px 0;text-align:center}
+  .cta-section h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;color:#fff;margin-bottom:16px}
+  .cta-section p{color:rgba(255,255,255,.7);margin-bottom:36px;font-size:1.05rem;max-width:540px;margin-left:auto;margin-right:auto}
+  .cta-section p{margin-bottom:36px}
 
-  /* ANIMATIONS */
-  .reveal { opacity: 1; transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.hidden { opacity: 0; transform: translateY(20px); }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 860px) {
-    .contact-grid { grid-template-columns: 1fr; }
-    .trust-inner { grid-template-columns: repeat(2, 1fr); }
-    .split-row { flex-direction: column; }
-    .form-row { grid-template-columns: 1fr; }
-  }
-    /* ── Navigation ── */
-    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,22,40,.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.07); }
-    .nav-inner { max-width:1160px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; }
-    .nav-logo { display:flex; align-items:center; text-decoration:none; }
-    .nav-logo img { height:44px; width:auto; }
-    .nav-links { display:flex; align-items:center; gap:4px; list-style:none; margin:0; padding:0; }
-    .nav-links a { font-size:14px; font-weight:500; color:rgba(255,255,255,.7); padding:8px 14px; border-radius:8px; text-decoration:none; transition:color .2s,background .2s; }
-    .nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
-    .nav-links a.active { color:#00c9a7; }
-    .nav-links a.nav-hi { color:#00c9a7 !important; font-weight:700; }
-    .nav-cta { background:#00c9a7; color:#0a1628 !important; padding:9px 22px; border-radius:50px; font-size:14px; font-weight:700; text-decoration:none; transition:all .2s; }
-    .nav-cta:hover { background:#00a889; transform:translateY(-1px); }
-    /* Hamburger */
-    .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:none; background:none; margin-left:8px; }
-    .nav-hamburger span { display:block; width:22px; height:2.5px; background:#fff; border-radius:2px; transition:all .3s ease; }
-    .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
-    .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    /* Mobile menu */
-    .mobile-menu { position:fixed; top:68px; left:0; right:0; background:rgba(8,18,34,.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.08); z-index:99; padding:4px 0 16px; display:none; box-shadow:0 8px 32px rgba(0,0,0,.4); }
-    .mobile-menu.open { display:block; animation:navSlideDown .2s ease; }
-    @keyframes navSlideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-    .mobile-menu ul { list-style:none; padding:0; margin:0 0 12px; }
-    .mobile-menu ul li a { display:flex; align-items:center; padding:15px 24px; font-size:16px; font-weight:500; color:rgba(255,255,255,.75); border-bottom:1px solid rgba(255,255,255,.05); text-decoration:none; transition:color .15s,background .15s; }
-    .mobile-menu ul li:last-child a { border-bottom:none; }
-    .mobile-menu ul li a:hover,.mobile-menu ul li a.active { color:#00c9a7; background:rgba(0,201,167,.04); }
-    .mobile-menu ul li a.nav-hi { color:#00c9a7 !important; font-weight:700; }
-    .mobile-menu .mob-cta { display:block; background:#00c9a7; color:#0a1628 !important; text-align:center; padding:14px 24px; border-radius:50px; font-size:15px; font-weight:700; margin:0 24px; text-decoration:none; }
-    .mobile-menu .mob-cta:hover { background:#00a889; }
-    @media (max-width:768px) { .nav-links,.nav-cta { display:none !important; } .nav-hamburger { display:flex !important; } }
-    </style>
+  footer{background:#060e1e;padding:32px 24px;text-align:center;color:rgba(255,255,255,.35);font-size:13px}
+  footer a{color:rgba(255,255,255,.5)}
+</style>
 </head>
 <body>
 
@@ -157,7 +154,7 @@
       <li><a href="lionrms_homepage_v2.html">Home</a></li>
       <li><a href="lionrms_ai_solutions.html" class="nav-hi">⚡ AI &amp; Automation</a></li>
       <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
-      <li><a href="lionrms_services.html">Services</a></li>
+      <li><a href="lionrms_services.html" class="active">Services</a></li>
       <li><a href="lionrms_about_v2.html">About</a></li>
     </ul>
     <a href="lionrms_contact.html" class="nav-cta">Free Consultation</a>
@@ -169,250 +166,325 @@
     <li><a href="lionrms_homepage_v2.html">Home</a></li>
     <li><a href="lionrms_ai_solutions.html" class="nav-hi">⚡ AI &amp; Automation</a></li>
     <li><a href="lionrms_fire_hs.html">Fire &amp; H&amp;S</a></li>
-    <li><a href="lionrms_services.html">Services</a></li>
+    <li><a href="lionrms_services.html" class="active">Services</a></li>
     <li><a href="lionrms_about_v2.html">About</a></li>
   </ul>
   <a href="lionrms_contact.html" class="mob-cta">Free Consultation</a>
 </div>
 
-
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">🌍 Global · Remote-First · Any Sector</div>
-  <h1>Book a Free<br /><span>Workflow Audit</span></h1>
-  <p>A 60–90 minute remote session where we map your key processes, identify the highest-value AI automation opportunities, and give you an honest picture of what implementation looks like for your organisation.</p>
-</section>
-
-<section class="main-section">
   <div class="container">
-    <div class="contact-grid">
-
-      <!-- LEFT -->
-      <div class="contact-info reveal">
-        <h2>Book Your Free Workflow Audit</h2>
-        <p class="sub">A 60–90 minute remote session. We map your processes, quantify the time cost, and give you a clear, prioritised action plan — whether or not you proceed with us.</p>
-
-        <div class="audit-includes">
-          <h3>What's Included</h3>
-          <div class="audit-item">
-            <div class="check">✓</div>
-            <p><strong>Workflow Mapping</strong>We walk through your key processes and identify where the biggest time costs are hiding — documents, approvals, records, reporting.</p>
-          </div>
-          <div class="audit-item">
-            <div class="check">✓</div>
-            <p><strong>AI Opportunity Analysis</strong>For each workflow, we assess what AI can replace, accelerate, or automate — with realistic time estimates based on similar engagements.</p>
-          </div>
-          <div class="audit-item">
-            <div class="check">✓</div>
-            <p><strong>Written Summary</strong>You receive a written report with 3–5 prioritised automation opportunities and implementation notes — yours to keep regardless.</p>
-          </div>
-          <div class="audit-item">
-            <div class="check">✓</div>
-            <p><strong>No Obligation</strong>A straight conversation with an AI implementation specialist. No pressure, no sales pitch — just honest, expert advice.</p>
-          </div>
-        </div>
-
-        <div class="direct-contact">
-          <h3>Direct Contact</h3>
-          <div class="contact-method">
-            <span class="icon">✉️</span>
-            <div>
-              <a href="mailto:admin@lionrms.uk">admin@lionrms.uk</a>
-              <p>Response within 4 hours on business days</p>
-            </div>
-          </div>
-          <div class="contact-method">
-            <span class="icon">🌐</span>
-            <div>
-              <a href="https://www.lionrms.uk" target="_blank">www.lionrms.uk</a>
-              <p>Full service information online</p>
-            </div>
-          </div>
-          <div class="contact-method">
-            <span class="icon">🌍</span>
-            <div>
-              <p style="color:var(--text);font-weight:600;">Global — Remote-First Delivery</p>
-              <p>USA · UK · Europe · Middle East · Worldwide</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="service-split">
-          <h3>Service Reach</h3>
-          <div class="split-row">
-            <div class="split-card">
-              <h4>⚡ AI &amp; Automation</h4>
-              <p>Workflow automation, process digitisation, AI implementation</p>
-              <div class="reach">Worldwide · Any sector</div>
-            </div>
-            <div class="split-card">
-              <h4>🔥 Fire &amp; H&amp;S</h4>
-              <p>Fire risk assessment, Legionella, H&S consultancy</p>
-              <div class="reach">UK-wide + International</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: FORM -->
-      <div class="contact-form-wrap reveal">
-        <div id="contactForm">
-          <p class="form-title">Book Your Free Workflow Audit</p>
-          <p class="form-sub">Fill in the details below and we'll confirm a time within 4 hours. Works for any sector, any country.</p>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" placeholder="Your first name" required />
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" placeholder="Your last name" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Business Email *</label>
-            <input type="email" id="email" placeholder="you@company.com" required />
-          </div>
-
-          <div class="form-group">
-            <label for="company">Company Name</label>
-            <input type="text" id="company" placeholder="Your organisation" />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="sector">Sector *</label>
-              <select id="sector" required>
-                <option value="">Select your sector</option>
-                <option>Legal / Law Firm</option>
-                <option>Healthcare / Life Sciences</option>
-                <option>Construction &amp; Engineering</option>
-                <option>Manufacturing</option>
-                <option>Finance &amp; Insurance</option>
-                <option>Property &amp; Real Estate</option>
-                <option>Hospitality</option>
-                <option>Professional Services / Consultancy</option>
-                <option>H&amp;S / Safety Consultancy</option>
-                <option>Education</option>
-                <option>Government / Public Sector</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="country">Country</label>
-              <select id="country">
-                <option value="">Select country</option>
-                <option>United Kingdom</option>
-                <option>United States</option>
-                <option>UAE / Middle East</option>
-                <option>Germany</option>
-                <option>France</option>
-                <option>Other Europe</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>I'm interested in (tick all that apply)</label>
-            <div class="form-checkboxes">
-              <div class="checkbox-item"><input type="checkbox" id="cb1"><label for="cb1">AI Workflow Automation</label></div>
-              <div class="checkbox-item"><input type="checkbox" id="cb2"><label for="cb2">Document &amp; Report Generation</label></div>
-              <div class="checkbox-item"><input type="checkbox" id="cb3"><label for="cb3">Process Digitisation &amp; SOPs</label></div>
-              <div class="checkbox-item"><input type="checkbox" id="cb4"><label for="cb4">AI Tool Integration</label></div>
-              <div class="checkbox-item"><input type="checkbox" id="cb5"><label for="cb5">Fire Safety &amp; H&amp;S</label></div>
-              <div class="checkbox-item"><input type="checkbox" id="cb6"><label for="cb6">Compliance Management System</label></div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Tell us about your biggest admin bottleneck (optional)</label>
-            <textarea id="message" placeholder="e.g. Our team spends 3–4 hours writing the same type of report every week. We need to change this..."></textarea>
-          </div>
-
-          <button class="submit-btn" onclick="submitForm()">Book My Free Workflow Audit →</button>
-          <p class="form-note">🔒 Your details are never shared or sold. GDPR compliant.</p>
-        </div>
-
-        <div class="form-success" id="formSuccess">
-          <div class="tick">✅</div>
-          <h3>Request Received!</h3>
-          <p>We'll be in touch within 4 hours to confirm your audit call time.<br /><br />In the meantime, use the <a href="lionrms_roi_calculator.html" style="color:var(--teal);">ROI Calculator</a> to estimate your potential savings.</p>
-        </div>
-      </div>
-
+    <div class="hero-badge">🛠️ Services &amp; How We Work</div>
+    <h1>Clear Services.<br /><span>Simple Process.</span> Real Results.</h1>
+    <p>Whether you need AI automation to cut your admin by half, or a compliant fire &amp; health and safety framework, here is exactly what we do and how we do it.</p>
+    <div class="hero-btns">
+      <a href="lionrms_contact.html" class="btn-primary">Book Free Consultation</a>
+      <a href="#process" class="btn-outline">See How It Works</a>
     </div>
   </div>
 </section>
 
-<!-- TRUST -->
-<div class="trust-band">
-  <div class="trust-inner">
-    <div class="trust-item reveal">
-      <div class="icon">🎓</div>
-      <h4>CMIOSH</h4>
-      <p>Chartered Member of IOSH</p>
+<!-- SERVICES TABS -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">What We Do</p>
+    <h2 class="section-title">Two Core Service Areas</h2>
+    <p class="section-lead">We specialise in two things and do both properly. Most clients come for AI automation — many also have fire &amp; H&amp;S needs we can cover in the same engagement.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('ai')">⚡ AI &amp; Workflow Automation</button>
+      <button class="tab-btn" onclick="switchTab('hs')">🔥 Fire &amp; Health &amp; Safety</button>
     </div>
-    <div class="trust-item reveal">
-      <div class="icon">🔥</div>
-      <h4>DipFRA</h4>
-      <p>Diploma in Fire Risk Assessment</p>
+
+    <!-- AI Tab -->
+    <div class="tab-panel active" id="tab-ai">
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-icon">🗺️</div>
+          <h3>Workflow Gap Analysis</h3>
+          <p>We map your 3–5 most time-costly workflows, identify which are good automation candidates, and produce a written report with realistic ROI estimates. Free in July.</p>
+          <span class="svc-tag">Starting point</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🤖</div>
+          <h3>AI Automation Build</h3>
+          <p>We design and implement AI workflows for your business — report generation, data processing, email drafting, scheduling, compliance checks — using tools your team already has.</p>
+          <span class="svc-tag">Core service</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📝</div>
+          <h3>Custom Prompt Library</h3>
+          <p>A library of tested, role-specific AI prompts built for your team's exact tasks. No generic templates — each prompt is tuned to your documents, tone, and outputs.</p>
+          <span class="svc-tag">Included in builds</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🔗</div>
+          <h3>Systems Integration</h3>
+          <p>We connect your existing tools — CRM, project management, email, document storage — so data flows automatically without manual re-keying between platforms.</p>
+          <span class="svc-tag">Add-on</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🎓</div>
+          <h3>Team Training &amp; Adoption</h3>
+          <p>30 days of hands-on support to make sure your team actually uses the new workflows. We track adoption and adjust until the time savings are visible in practice.</p>
+          <span class="svc-tag">Included in builds</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📊</div>
+          <h3>Ongoing Optimisation</h3>
+          <p>Monthly review of your automation performance. We refine prompts, add new workflows as your business grows, and keep your AI stack current as tools evolve.</p>
+          <span class="svc-tag">Retainer option</span>
+        </div>
+      </div>
     </div>
-    <div class="trust-item reveal">
-      <div class="icon">🛡️</div>
-      <h4>PI Insured</h4>
-      <p>Professional Indemnity Insurance</p>
-    </div>
-    <div class="trust-item reveal">
-      <div class="icon">🔒</div>
-      <h4>GDPR Compliant</h4>
-      <p>Your data is always secure</p>
+
+    <!-- H&S Tab -->
+    <div class="tab-panel" id="tab-hs">
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-icon">🔥</div>
+          <h3>Fire Risk Assessment</h3>
+          <p>Fully compliant FRA carried out to PAS 79 standards. Covers all premises types — commercial, residential blocks, HMOs, care homes, and mixed-use buildings.</p>
+          <span class="svc-tag">Regulatory requirement</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🛡️</div>
+          <h3>Health &amp; Safety Assessment</h3>
+          <p>Workplace risk assessment, H&amp;S policy review, and gap analysis against current legislation. Suitable for any business with employees or contractors on site.</p>
+          <span class="svc-tag">Core service</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📋</div>
+          <h3>Compliance Documentation</h3>
+          <p>Fire safety logbooks, emergency plans, safe systems of work, COSHH assessments, and all supporting documents prepared and formatted for audit.</p>
+          <span class="svc-tag">Included in assessments</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🏗️</div>
+          <h3>Construction Safety (CDM)</h3>
+          <p>CDM 2015 Principal Designer support, pre-construction health and safety files, and site-specific risk assessment packages for contractors and developers.</p>
+          <span class="svc-tag">Specialist</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🏥</div>
+          <h3>Care Sector Compliance</h3>
+          <p>CQC-ready fire and H&amp;S documentation for care homes, domiciliary care providers, and supported living. Designed to meet CQC inspection standards.</p>
+          <span class="svc-tag">Specialist</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🔄</div>
+          <h3>Annual Review Programme</h3>
+          <p>Scheduled annual re-assessment to keep your compliance current. Includes update of all documentation and a written action plan for any new findings.</p>
+          <span class="svc-tag">Retainer option</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="section section-alt" id="process">
+  <div class="container">
+    <p class="section-tag">Our Process</p>
+    <h2 class="section-title">How We Work</h2>
+    <p class="section-lead">Every engagement follows the same four-step process — whether it's AI automation, fire safety, or both.</p>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Discovery Call</h3>
+        <p>A 30-minute call to understand your business, biggest time drains, and compliance situation. No sales pitch — just questions.</p>
+        <span class="step-duration">30 mins · Free</span>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Audit &amp; Analysis</h3>
+        <p>We review your current workflows, documents, and systems. You receive a written report with specific findings and prioritised recommendations.</p>
+        <span class="step-duration">1–2 weeks</span>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Build &amp; Implement</h3>
+        <p>We build the automations, complete the assessments, and produce all required documentation — with you involved at every stage.</p>
+        <span class="step-duration">2–6 weeks</span>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Train &amp; Handover</h3>
+        <p>Your team is trained, systems are handed over, and we stay available for 30 days to make sure everything is embedded in practice.</p>
+        <span class="step-duration">30-day support</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="section">
+  <div class="container">
+    <p class="section-tag">What You Get</p>
+    <h2 class="section-title">No Hidden Extras</h2>
+    <p class="section-lead">Every engagement includes the things that actually make a difference — not just the deliverable, but the support to make it work in practice.</p>
+    <div class="included-grid">
+      <div class="included-block">
+        <h3>⚡ AI &amp; Automation Engagement</h3>
+        <ul class="check-list">
+          <li>Initial workflow gap analysis (written report)</li>
+          <li>AI automation build for your top 2–3 workflows</li>
+          <li>Custom prompt library for your team's roles</li>
+          <li>Tool setup and configuration (no new subscriptions required)</li>
+          <li>Team training sessions (remote, recorded)</li>
+          <li>30-day adoption support via email and video call</li>
+          <li>Performance review at 30 days with refinements</li>
+          <li>All documentation and guides in your hands at handover</li>
+        </ul>
+      </div>
+      <div class="included-block">
+        <h3>🔥 Fire &amp; H&amp;S Engagement</h3>
+        <ul class="check-list">
+          <li>On-site or remote assessment (depending on premises type)</li>
+          <li>Full written risk assessment report to current standards</li>
+          <li>Action plan with prioritised recommendations</li>
+          <li>All supporting compliance documentation</li>
+          <li>Digital copies in your preferred format (PDF, Word)</li>
+          <li>Explanation of findings in plain English</li>
+          <li>Answer to any follow-up questions within 5 working days</li>
+          <li>Optional annual review programme at reduced rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-tag">Investment</p>
+    <h2 class="section-title">Straightforward Pricing</h2>
+    <p class="section-lead">Transparent fixed fees — no day rates, no surprise invoices. All engagements start with a free discovery call.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <p class="price-sub">Ideal for solo consultants and small teams</p>
+        <div class="price-amount">From £495</div>
+        <p class="price-note">One-off project fee</p>
+        <ul class="price-features">
+          <li>Workflow gap analysis</li>
+          <li>1 automated workflow built</li>
+          <li>Prompt library (10 prompts)</li>
+          <li>2-week delivery</li>
+          <li>Email support for 30 days</li>
+        </ul>
+        <a href="lionrms_contact.html" class="price-btn price-btn-outline">Book Discovery Call</a>
+      </div>
+      <div class="price-card featured">
+        <span class="price-badge">MOST POPULAR</span>
+        <h3>Growth</h3>
+        <p class="price-sub">For businesses ready to scale without hiring</p>
+        <div class="price-amount">From £1,200</div>
+        <p class="price-note">One-off project fee</p>
+        <ul class="price-features">
+          <li>Full workflow audit</li>
+          <li>3 automated workflows built</li>
+          <li>Full prompt library (30+ prompts)</li>
+          <li>Systems integration</li>
+          <li>Team training (2 sessions)</li>
+          <li>30-day adoption support</li>
+        </ul>
+        <a href="lionrms_contact.html" class="price-btn price-btn-solid">Book Discovery Call</a>
+      </div>
+      <div class="price-card">
+        <h3>Ongoing Partner</h3>
+        <p class="price-sub">Continuous optimisation as your business grows</p>
+        <div class="price-amount">From £350/mo</div>
+        <p class="price-note">Monthly retainer</p>
+        <ul class="price-features">
+          <li>Growth package included</li>
+          <li>Monthly workflow reviews</li>
+          <li>Unlimited prompt updates</li>
+          <li>Priority support</li>
+          <li>New automations as needed</li>
+        </ul>
+        <a href="lionrms_contact.html" class="price-btn price-btn-outline">Book Discovery Call</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:24px;color:var(--muted);font-size:13px;">Fire &amp; H&amp;S assessments priced per premises type. <a href="lionrms_contact.html" style="color:var(--teal);">Contact us for a quote →</a></p>
+  </div>
+</section>
 
 <!-- FAQ -->
-<section class="faq-section">
+<section class="section">
   <div class="container">
-    <div class="reveal">
-      <p class="section-label">Common Questions</p>
-      <h2 class="section-title">Quick Answers</h2>
-    </div>
-    <div class="faq-grid">
-      <div class="faq-item reveal">
-        <h3>How quickly can you carry out an assessment?</h3>
-        <p>For most premises we can be on-site within 5–10 working days. Urgent compliance cases (e.g. enforcement action, insurance deadlines) are prioritised — contact us directly.</p>
+    <p class="section-tag">Common Questions</p>
+    <h2 class="section-title">What People Ask Before Starting</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Do I need to buy any new software?</div>
+        <div class="faq-a">In most cases, no. We build automations around tools you already use — Microsoft 365, Google Workspace, your existing CRM or project management software. If a new tool would genuinely save you money, we'll recommend it, but we never make it a requirement.</div>
       </div>
-      <div class="faq-item reveal">
-        <h3>Do you cover the whole of the UK?</h3>
-        <p>Yes. We cover all of the UK for on-site assessments and training. Digital and AI services are delivered remotely and available worldwide.</p>
+      <div class="faq-item">
+        <div class="faq-q">How long before I see results?</div>
+        <div class="faq-a">Most clients see measurable time savings within the first two weeks of using the new workflows. The full picture — including team adoption — typically takes 4–6 weeks. We stay with you through that period to make sure it sticks.</div>
       </div>
-      <div class="faq-item reveal">
-        <h3>How much does a fire risk assessment cost?</h3>
-        <p>Pricing depends on the size and complexity of your premises. Most standard commercial FRAs start from £250. Contact us for a fixed-price quote — no hidden extras.</p>
+      <div class="faq-item">
+        <div class="faq-q">Do you work with businesses outside the UK?</div>
+        <div class="faq-a">Yes. Our AI and workflow automation service is delivered fully remotely and is available to businesses anywhere. Our fire &amp; H&amp;S service is UK-based, operating under UK legislation.</div>
       </div>
-      <div class="faq-item reveal">
-        <h3>Can you help if we're already non-compliant?</h3>
-        <p>Absolutely. That's often when we're most useful. We'll carry out the assessment, issue the report, and help you close the action plan — quickly and defensibly.</p>
+      <div class="faq-item">
+        <div class="faq-q">What if AI doesn't work for my type of business?</div>
+        <div class="faq-a">We'll tell you in the gap analysis if automation isn't the right fit for a particular workflow. We'd rather lose a project than oversell what AI can do. If the numbers don't work for you, we say so upfront — before you spend anything.</div>
       </div>
-      <div class="faq-item reveal">
-        <h3>What if I only need help with admin, not compliance?</h3>
-        <p>That's fine. Our AI admin and digital services are completely standalone. You don't need to be a compliance client to benefit from process automation.</p>
+      <div class="faq-item">
+        <div class="faq-q">Are your fire risk assessments legally compliant?</div>
+        <div class="faq-a">Yes. All fire risk assessments are carried out to PAS 79 standards and comply with the Regulatory Reform (Fire Safety) Order 2005. We maintain professional indemnity insurance and all assessors are qualified and regularly CPD-trained.</div>
       </div>
-      <div class="faq-item reveal">
-        <h3>Can you work with our existing H&S management system?</h3>
-        <p>Yes. We integrate with most existing systems or build a fresh workflow around your current tools. We don't force you to switch to something new unless it genuinely helps.</p>
+      <div class="faq-item">
+        <div class="faq-q">Can you combine AI automation and fire &amp; H&amp;S in one engagement?</div>
+        <div class="faq-a">Absolutely — and many clients do. We often automate the compliance documentation process as part of a fire &amp; H&amp;S engagement, which saves significant time on report writing, log maintenance, and action tracking.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Start With a Free Discovery Call</h2>
+    <p>30 minutes. No commitment. We'll tell you honestly whether we can help and what it would look like.</p>
+    <a href="lionrms_contact.html" class="btn-primary">Book Your Free Call</a>
   </div>
 </section>
 
 <footer>
-  <p>&copy; 2024 Lion RMS Ltd &mdash; Fire Risk Management &amp; Safety Consultancy</p>
-  <p style="margin-top:0.5rem;">
-    <a href="lionrms_homepage_v2.html">Home</a> &nbsp;|&nbsp;
-    <a href="lionrms_digital_solutions.html">Digital &amp; AI</a> &nbsp;|&nbsp;
-    <a href="lionrms_fire_hs.html">Fire &amp; H&S</a> &nbsp;|&nbsp;
-    <a href="lionrms_about.html">About</a> &nbsp;|&nbsp;
-    <a
+  <p>&copy; 2025 Lion Risk Management Solutions Ltd &nbsp;|&nbsp; <a href="lionrms_homepage_v2.html">Home</a> &nbsp;|&nbsp; <a href="lionrms_contact.html">Contact</a></p>
+</footer>
+
+<script>
+(function(){
+  // Nav
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('mobileMenu');
+  if(btn&&menu){
+    btn.addEventListener('click',function(e){e.stopPropagation();btn.classList.toggle('open');menu.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(!menu.contains(e.target)&&!btn.contains(e.target)){btn.classList.remove('open');menu.classList.remove('open');}});
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');menu.classList.remove('open');});});
+  }
+  // Tabs
+  window.switchTab = function(id){
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('tab-'+id).classList.add('active');
+    event.target.classList.add('active');
+  };
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement;
+      var isOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>
