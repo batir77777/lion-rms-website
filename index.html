@@ -25,6 +25,41 @@
 
     /* NAV */ to{opacity:1;transform:translateY(0)} }
     @media (max-width:768px) {
+      /* Hero */
+      .hero { padding:100px 0 60px; min-height:auto; }
+      .hero-grid { grid-template-columns:1fr; gap:36px; }
+      .metrics-card { display:none; }
+      .hero h1 { font-size:2rem; }
+      .hero-lead { font-size:1rem; }
+      /* Stats bar */
+      .stats-grid { grid-template-columns:repeat(2,1fr); gap:0; }
+      .stat-cell { border-right:none; border-bottom:1px solid rgba(10,22,40,.12); padding:16px 12px; }
+      .stat-cell:nth-child(odd){ border-right:1px solid rgba(10,22,40,.12); }
+      .stat-cell:last-child{ border-bottom:none; }
+      /* Problem cards */
+      .problem-cards { grid-template-columns:1fr; gap:14px; }
+      /* Services grid */
+      .services-grid { grid-template-columns:1fr; gap:16px; }
+      /* Offer grid — the main fix */
+      .offer-grid { grid-template-columns:1fr; gap:20px; }
+      .offer-card { padding:24px; }
+      /* Process steps */
+      .steps-grid, .process-grid { grid-template-columns:1fr; gap:16px; }
+      /* Sectors */
+      .sectors-grid, .industry-grid { grid-template-columns:1fr 1fr; gap:12px; }
+      /* Timeline */
+      .timeline { flex-direction:column; gap:16px; }
+      /* Trust bar */
+      .trust-inner { flex-direction:column; gap:10px; }
+      .trust-items { gap:12px; flex-wrap:wrap; }
+      /* CTA buttons */
+      .cta-btns { flex-direction:column; align-items:stretch; }
+      .cta-btns .btn { text-align:center; justify-content:center; }
+      /* Trust row */
+      .trust-row { flex-direction:column; gap:8px; align-items:center; }
+      /* Section padding */
+      .section { padding:60px 0; }
+      .offer-section { padding:52px 0; }
     }
 
     /* HERO */
