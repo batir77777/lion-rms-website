@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Workflow Automation — Lion Risk Management Solutions</title>
-<meta name="description" content="Practical AI workflow automation for businesses. Reduce admin time with AI-powered email, document, report and process automation. Built from real consultancy experience." />
+<title>Business AI Automation — Lion Risk Management Solutions</title>
+<meta name="description" content="Business AI automation for SMEs. Eliminate repetitive admin, cut report time by 80% and improve productivity with practical AI workflows. Built from real operational experience." />
 <style>
   :root {
     --navy: #0a1628;
@@ -259,6 +259,54 @@
   }
   @media (max-width: 480px) { .steps-row { grid-template-columns: 1fr; } }
 
+  /* ── BEFORE/AFTER ── */
+  .ba-section { background: var(--navy); }
+  .ba-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: start; }
+  .ba-col { border-radius: 14px; padding: 28px; }
+  .ba-before { background: rgba(255,60,60,.05); border: 1px solid rgba(255,80,80,.15); }
+  .ba-after  { background: var(--teal-faint); border: 1px solid rgba(0,201,167,.2); }
+  .ba-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .ba-before .ba-label { color: rgba(255,120,120,.85); }
+  .ba-after  .ba-label { color: var(--teal); }
+  .ba-step {
+    display: flex; align-items: center; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06); font-size: .875rem;
+  }
+  .ba-step:last-child { border-bottom: none; }
+  .ba-step-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
+  .ba-before .ba-step-icon { background: rgba(255,80,80,.12); }
+  .ba-after  .ba-step-icon { background: rgba(0,201,167,.12); }
+  .ba-step-text { color: rgba(255,255,255,.8); }
+  .ba-step-time { margin-left: auto; font-size: .75rem; font-weight: 700; white-space: nowrap; padding-left: 8px; }
+  .ba-before .ba-step-time { color: rgba(255,120,120,.7); }
+  .ba-after  .ba-step-time { color: var(--teal); }
+  .ba-total {
+    margin-top: 16px; padding: 12px 14px; border-radius: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .875rem; font-weight: 700;
+  }
+  .ba-before .ba-total { background: rgba(255,80,80,.1); color: rgba(255,120,120,.9); }
+  .ba-after  .ba-total { background: rgba(0,201,167,.15); color: var(--teal); }
+  .ba-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: var(--teal); padding-top: 60px;
+  }
+  .ba-saving {
+    margin-top: 32px; text-align: center;
+    background: linear-gradient(135deg, rgba(0,201,167,.1), transparent);
+    border: 1px solid rgba(0,201,167,.2); border-radius: 12px;
+    padding: 24px 32px;
+  }
+  .ba-saving-num { font-size: 3rem; font-weight: 800; color: var(--teal); line-height: 1; }
+  .ba-saving p { font-size: .9rem; color: rgba(255,255,255,.6); margin-top: 6px; }
+  @media (max-width: 768px) {
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-arrow { padding-top: 0; transform: rotate(90deg); }
+  }
+
   /* ── OUTCOMES ── */
   .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
   .outcome-card {
@@ -374,11 +422,11 @@
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-badge">⚡ New Service Area</div>
-        <h1>Less Admin.<br /><span>More Business.</span></h1>
-        <p>We help businesses reduce admin time by building practical AI workflows for emails, reports, documents, client communication, research, quality checks and internal processes.</p>
+        <div class="hero-badge">⚡ Business AI Automation</div>
+        <h1>Eliminate<br /><span>Repetitive Work.</span></h1>
+        <p>Helping businesses eliminate repetitive work, reduce admin and improve productivity with practical AI workflows — built from real operational experience, not theory.</p>
         <div class="hero-actions">
-          <a href="lionrms_contact.html" class="btn-primary">Book a Free AI Audit →</a>
+          <a href="lionrms_contact.html" class="btn-primary">Get Your Free AI Assessment →</a>
           <a href="#services" class="btn-ghost">See What We Automate</a>
         </div>
       </div>
@@ -447,6 +495,100 @@
   </div>
 </div>
 
+<!-- BEFORE / AFTER -->
+<section class="ba-section">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="section-tag">See the Difference</div>
+      <h2 class="section-heading">Before AI workflows. <span>After AI workflows.</span></h2>
+      <p class="section-sub">A real example from a professional services business handling new client enquiries — the same task, transformed.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-col ba-before">
+        <div class="ba-label">⏳ Before — Manual Process</div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📧</div>
+          <div class="ba-step-text">Receive enquiry, read email</div>
+          <div class="ba-step-time">5 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📁</div>
+          <div class="ba-step-text">Create client folder manually</div>
+          <div class="ba-step-time">8 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">✍️</div>
+          <div class="ba-step-text">Write and send initial reply</div>
+          <div class="ba-step-time">15 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📄</div>
+          <div class="ba-step-text">Generate proposal document</div>
+          <div class="ba-step-time">40 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📊</div>
+          <div class="ba-step-text">Update spreadsheet / CRM</div>
+          <div class="ba-step-time">10 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">✅</div>
+          <div class="ba-step-text">Create follow-up task list</div>
+          <div class="ba-step-time">7 min</div>
+        </div>
+        <div class="ba-total">
+          <span>Total time per enquiry</span>
+          <span>~85 minutes</span>
+        </div>
+      </div>
+
+      <div class="ba-arrow">→</div>
+
+      <div class="ba-col ba-after">
+        <div class="ba-label">⚡ After — AI-Assisted Workflow</div>
+        <div class="ba-step">
+          <div class="ba-step-icon">🤖</div>
+          <div class="ba-step-text">AI reads enquiry, classifies intent</div>
+          <div class="ba-step-time">instant</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📁</div>
+          <div class="ba-step-text">Client folder created automatically</div>
+          <div class="ba-step-time">instant</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">✉️</div>
+          <div class="ba-step-text">Draft reply ready for your review</div>
+          <div class="ba-step-time">30 sec</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📄</div>
+          <div class="ba-step-text">First-draft proposal generated</div>
+          <div class="ba-step-time">2 min</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">📊</div>
+          <div class="ba-step-text">CRM updated automatically</div>
+          <div class="ba-step-time">instant</div>
+        </div>
+        <div class="ba-step">
+          <div class="ba-step-icon">✅</div>
+          <div class="ba-step-text">You review, approve and send</div>
+          <div class="ba-step-time">10 min</div>
+        </div>
+        <div class="ba-total">
+          <span>Total time per enquiry</span>
+          <span>~12 minutes</span>
+        </div>
+      </div>
+    </div>
+    <div class="ba-saving">
+      <div class="ba-saving-num">85% less time</div>
+      <p>That's over 1 hour saved per enquiry. For a business handling 10 enquiries a week, that's more than 500 hours a year returned to productive work.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ORIGIN STORY -->
 <div class="origin">
   <div class="container">
@@ -471,7 +613,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">What We Do</div>
-      <h2 class="section-heading">Eight ways we reduce <span>your admin burden</span></h2>
+      <h2 class="section-heading">Eight ways we <span>transform your productivity</span></h2>
       <p class="section-sub">Each service is delivered with a practical, hands-on approach — we map your actual workflows and build AI solutions around the way your business already operates.</p>
     </div>
     <div class="services-grid">
@@ -691,10 +833,10 @@
 <!-- CTA -->
 <div class="cta-strip">
   <div class="container">
-    <h2>Ready to reclaim your time?</h2>
-    <p>Book a free AI workflow audit and find out where AI can have the biggest impact on your business — with no jargon and no obligation.</p>
+    <h2>Ready to eliminate repetitive work?</h2>
+    <p>Book a free AI productivity assessment and find out exactly how much time and money your business could save — with no jargon and no obligation.</p>
     <div class="cta-actions">
-      <a href="lionrms_contact.html" class="btn-primary">Book Your Free Audit →</a>
+      <a href="lionrms_contact.html" class="btn-primary">Get Your Free AI Assessment →</a>
       <a href="lionrms_services.html" class="btn-ghost">All Services</a>
     </div>
   </div>
