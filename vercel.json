@@ -1,7 +1,14 @@
 {
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "framework": null,
-  "cleanUrls": false,
-  "trailingSlash": false
+  "redirects": [
+    {
+      "source": "/lionrms_about.html",
+      "destination": "/lionrms_about_v2.html",
+      "permanent": true
+    },
+    {
+      "source": "/lionrms_homepage_v2.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
 }
