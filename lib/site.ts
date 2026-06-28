@@ -37,6 +37,7 @@ export const NAV = [
   { label: "Case Studies", href: "/case-studies" },
   { label: "Insights", href: "/insights" },
   { label: "FAQ", href: "/faq" },
+  { label: "⚡ AI Automation", href: "/ai-automation" },
   { label: "Contact", href: "/contact" },
 ];
 
