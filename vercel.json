@@ -1,14 +1,11 @@
 {
   "redirects": [
-    {
-      "source": "/lionrms_about.html",
-      "destination": "/lionrms_about_v2.html",
-      "permanent": true
-    },
-    {
-      "source": "/lionrms_homepage_v2.html",
-      "destination": "/",
-      "permanent": true
-    }
+    { "source": "/lionrms_about.html", "destination": "/about", "permanent": true },
+    { "source": "/lionrms_about_v2.html", "destination": "/about", "permanent": true },
+    { "source": "/lionrms_homepage_v2.html", "destination": "/", "permanent": true },
+    { "source": "/lionrms_services.html", "destination": "/services", "permanent": true },
+    { "source": "/lionrms_fire_hs.html", "destination": "/services", "permanent": true },
+    { "source": "/lionrms_contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/lionrms_ai_solutions.html", "destination": "/services", "permanent": true }
   ]
 }
