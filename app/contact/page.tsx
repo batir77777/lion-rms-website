@@ -7,7 +7,7 @@ import { SITE, CREDENTIALS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a free compliance demo or contact Lion RMS to discuss fire risk assessments, health & safety support, or a bespoke digital compliance platform for your portfolio.",
+    "Book a free 30-minute call to explore AI automation for your business, or get in touch about a fire risk assessment, H&S audit, or compliance system. One call covers both.",
 };
 
 export default function ContactPage() {
@@ -15,8 +15,8 @@ export default function ContactPage() {
     <>
       <PhotoHero
         eyebrow="Contact"
-        title="Book a free compliance demo"
-        body="See how the Lion RMS platform connects your assessments, actions, and reporting — or get in touch to discuss a fire risk assessment, H&S audit, or compliance system for your portfolio."
+        title="Let's Talk — AI Automation or Fire & H&S"
+        body="Book a free 30-minute call to explore AI automation for your business, or get in touch about a fire risk assessment, H&S audit, or compliance system. One call covers both."
       />
 
       <section className="bg-white">
