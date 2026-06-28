@@ -14,8 +14,7 @@ export default function Footer() {
               <Logo className="h-12 w-auto" dark />
             </div>
             <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Compliance management software and expert consultancy for fire safety
-              and health &amp; safety professionals across London.
+              Business AI automation and expert fire safety &amp; health &amp; safety consultancy across the UK.
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
@@ -32,7 +31,7 @@ export default function Footer() {
           {/* Pages */}
           <div>
             <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
-              Platform
+              Pages
             </h3>
             <ul className="space-y-2.5 text-sm">
               {NAV.map((n) => (
@@ -50,9 +49,9 @@ export default function Footer() {
             <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
               Coverage
             </h3>
-            <p className="text-sm text-slate-400">London based, with fire safety, health &amp; safety and digital compliance services delivered across the UK.</p>
+            <p className="text-sm text-slate-400">Fire &amp; H&amp;S: London and UK-wide. AI Automation: remote delivery, any location.</p>
             <Link href="/areas" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
-              London &amp; UK-wide coverage →
+              Coverage areas →
             </Link>
           </div>
 
@@ -75,9 +74,9 @@ export default function Footer() {
               <li className="text-slate-500">{SITE.location}</li>
             </ul>
             <div className="mt-5 text-sm">
-              <a href="/contact" className="block text-teal-400 transition hover:text-teal-300">
-                Speak to us about training &amp; competency support →
-              </a>
+              <Link href="/contact" className="block text-teal-400 transition hover:text-teal-300">
+                Book a free call →
+              </Link>
             </div>
           </div>
         </div>
@@ -87,9 +86,15 @@ export default function Footer() {
           <p className="text-xs text-slate-600">
             © {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
           </p>
-          <p className="text-xs text-slate-700">
-            CMIOSH Chartered &middot; UK Hosted &middot; GDPR Compliant
-          </p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="text-xs text-slate-600 transition hover:text-slate-400">
+              Privacy Policy
+            </Link>
+            <span className="text-slate-800" aria-hidden>·</span>
+            <p className="text-xs text-slate-700">
+              CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
+            </p>
+          </div>
         </div>
       </div>
     </footer>
