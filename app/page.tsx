@@ -5,12 +5,12 @@ import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS } from "@/
 export const metadata: Metadata = {
   title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
   description:
-    "Expert fire risk assessments, fire strategies, and health & safety consultancy across London and the UK. Led by Batir Turakulov, CMIOSH. Book a consultation.",
+    "Expert fire risk assessments and health & safety consultancy across London and the UK. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
 };
 
 const SERVICES_FS = [
   { icon: "🔥", title: "Fire Risk Assessments", desc: "PAS 79-compliant assessments for residential and commercial premises — clear, prioritised, and proportionate." },
-  { icon: "📐", title: "Fire Strategies", desc: "Bespoke fire strategies for new developments, change-of-use, and complex buildings." },
+  { icon: "📐", title: "Fire Safety Consultancy", desc: "Specialist fire safety advice for new developments, change-of-use, complex buildings, and ongoing compliance support." },
   { icon: "🏗️", title: "Health & Safety Audits", desc: "Risk assessments, audits, RAMS, policies, and competent person support." },
   { icon: "📋", title: "Compliance Management", desc: "Actions tracked, reviews scheduled, documentation audit-ready — one consultancy from assessment to ongoing compliance." },
 ];
@@ -40,7 +40,7 @@ export default function HomePage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                CMIOSH &middot; L4 DipFRA &middot; L5 Fire Engineering &middot; London &amp; UK-wide
+                CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; Level 5 Diploma in Fire Engineering Design &bull; London &amp; UK-wide
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
@@ -51,7 +51,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                From fire risk assessments and fire strategies to health &amp; safety support and compliance management —
+                From fire risk assessments and fire safety consultancy to health &amp; safety support and compliance management —
                 clear, proportionate advice for landlords, managing agents, businesses, and developers across London and the UK.
               </p>
 
@@ -72,7 +72,7 @@ export default function HomePage() {
               </div>
 
               <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.45)" }}>
-                Led by Batir Turakulov — CMIOSH Chartered, L4 DipFRA &amp; L5 Fire Engineering Design.
+                Led by Batir Turakulov, Chartered Health &amp; Safety Practitioner (CMIOSH) and Fire Safety Specialist, holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
               </p>
             </div>
 
@@ -80,22 +80,28 @@ export default function HomePage() {
             <div className="hidden lg:grid grid-cols-1 gap-4">
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.08)" }}>
                 <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Safety</p>
-                <p className="text-white font-semibold text-lg">Fire risk assessments &amp; strategies</p>
+                <p className="text-white font-semibold text-lg">Fire Risk Assessments &amp; Fire Safety Consultancy</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>PAS 79-compliant assessments, fire strategies, door inspections, compartmentation reviews, and training.</p>
-                <p className="mt-4 text-lg font-bold text-white">From <span style={{ color: "#00c9a7" }}>&pound;250 + VAT</span></p>
-              </div>
+                              </div>
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(255,255,255,0.04)" }}>
                 <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety</p>
                 <p className="text-white font-semibold text-lg">H&amp;S consultancy &amp; compliance</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS, policies, and competent person support — practical and proportionate.</p>
-                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>CMIOSH Chartered &middot; Fire Safety Specialist</p>
+                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>CMIOSH Chartered &middot; Fire Risk Assessment &amp; Fire Safety Specialist</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── CREDENTIALS STRIP ── */}
+      {/* ── TRUST STATEMENT ── */}
+<div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
+  <p className="text-sm text-slate-500">
+    Trusted by landlords, managing agents, commercial organisations and developers across London and the UK.
+  </p>
+</div>
+
+{/* ── CREDENTIALS STRIP ── */}
       <div className="border-y border-slate-100 bg-slate-50">
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
           <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
@@ -252,7 +258,7 @@ export default function HomePage() {
             </Link>
           </div>
           <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.4)" }}>
-            Batir Turakulov CMIOSH &middot; L4 DipFRA &middot; L5 Fire Engineering &middot; Lion Risk Management Solutions
+            Batir Turakulov, CMIOSH &bull; Level 4 DipFRA &bull; Level 5 Fire Engineering Design &bull; Lion Risk Management Solutions
           </p>
         </div>
       </section>
