@@ -7,14 +7,14 @@ import { ASSESSOR, CREDENTIALS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions — expert fire safety and health & safety consultancy, led by CMIOSH Chartered safety practitioner Batir Turakulov.",
+    "Lion Risk Management Solutions — specialist fire safety and health & safety consultancy led by Batir Turakulov, CMIOSH, DipFRA, and Level 5 Fire Engineering Design.",
 };
 
 const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Assessments and advice grounded in current UK legislation and Chartered safety practitioner (CMIOSH) status.",
+    body: "Assessments grounded in UK legislation, CMIOSH Chartered status, Level 4 DipFRA, and Level 5 Fire Engineering Design — depth of expertise few UK consultancies can match.",
   },
   {
     icon: "⚖️",
@@ -39,7 +39,7 @@ export default function AboutPage() {
       <PhotoHero
         eyebrow="About"
         title="Expert fire safety and health & safety consultancy"
-        body="Lion Risk Management Solutions provides practical, proportionate fire safety and health & safety consultancy — led by Batir Turakulov, CMIOSH Chartered safety practitioner and experienced fire risk assessor."
+        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy — led by Batir Turakulov, CMIOSH. Holding the Level 4 Diploma in Fire Risk Assessment (DipFRA) and Level 5 Diploma in Fire Engineering Design, Batir brings fire engineering expertise that few UK consultancies can match."
       />
 
       <section className="bg-white py-20">
