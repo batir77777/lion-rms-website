@@ -7,7 +7,7 @@ import { ASSESSOR, CREDENTIALS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions — UK compliance management platform backed by CMIOSH chartered expertise in fire safety and health & safety.",
+    "Lion Risk Management Solutions — expert fire safety and health & safety consultancy, led by CMIOSH Chartered safety practitioner Batir Turakulov.",
 };
 
 const VALUES = [
@@ -22,14 +22,14 @@ const VALUES = [
     body: "Recommendations matched to real risk — never gold-plated, never cutting corners. Clear priorities, plain-English reports.",
   },
   {
-    icon: "📊",
-    title: "Digital by default",
-    body: "Every assessment feeds a live compliance dashboard — so your records, actions, and reviews are always current and audit-ready.",
+    icon: "📋",
+    title: "Audit-ready",
+    body: "Every assessment feeds into clear, organised records — actions tracked, reviews scheduled, documentation kept audit-ready.",
   },
   {
     icon: "🔗",
     title: "Continuity",
-    body: "One consultancy across fire, health & safety, and digital compliance — no gaps, no handoffs, no repeated briefings.",
+    body: "Fire and health & safety through one consultancy — no gaps, no handoffs, no repeated briefings.",
   },
 ];
 
@@ -38,8 +38,8 @@ export default function AboutPage() {
     <>
       <PhotoHero
         eyebrow="About"
-        title="Expert compliance, backed by purpose-built software"
-        body="Lion Risk Management Solutions combines chartered fire safety and health & safety expertise (CMIOSH) with a digital compliance platform — giving you professional assessments and the tools to manage them ongoing."
+        title="Expert fire safety and health & safety consultancy"
+        body="Lion Risk Management Solutions provides practical, proportionate fire safety and health & safety consultancy — led by Batir Turakulov, CMIOSH Chartered safety practitioner and experienced fire risk assessor."
       />
 
       <section className="bg-white py-20">
@@ -49,11 +49,10 @@ export default function AboutPage() {
           <Reveal>
             <div className="mb-12 space-y-5 text-lg leading-relaxed text-slate-600">
               <p>
-                Lion Risk Management Solutions provides fire safety, health &amp;
-                safety, and digital compliance management to residential, commercial,
-                and construction clients across London. We work with landlords,
-                managing agents, property developers, contractors, and businesses
-                of all sizes.
+                Lion Risk Management Solutions provides fire safety and health &amp;
+                safety consultancy to residential, commercial, and construction clients
+                across London. We work with landlords, managing agents, property
+                developers, contractors, and businesses of all sizes.
               </p>
               <p>
                 Our work is grounded in UK fire safety legislation — including the
@@ -63,10 +62,9 @@ export default function AboutPage() {
                 premises and operations.
               </p>
               <p>
-                Alongside our consultancy work, our digital compliance platform
-                helps clients centralise records, track remedial actions, and
-                maintain audit-ready documentation — built around how each
-                organisation actually operates.
+                From the initial assessment through to ongoing compliance management,
+                we provide a consistent, professional service — with clear priorities,
+                plain-English reports, and reliable follow-through.
               </p>
             </div>
           </Reveal>
@@ -125,23 +123,15 @@ export default function AboutPage() {
               </h2>
               <p className="mx-auto mb-7 max-w-xl text-base text-slate-400 leading-relaxed">
                 Tell us about your premises or project and we&apos;ll recommend a
-                proportionate, compliant way forward — with or without the platform.
+                proportionate, compliant way forward — with a clear, fixed-fee quote.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
-                  style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
-                >
-                  Book a Free Demo →
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
-                >
-                  Request a Consultation
-                </Link>
-              </div>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
+                style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
+              >
+                Book a Consultation &rarr;
+              </Link>
             </div>
           </Reveal>
         </div>
