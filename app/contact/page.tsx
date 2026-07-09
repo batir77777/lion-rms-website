@@ -7,7 +7,7 @@ import { SITE, CREDENTIALS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a free 30-minute call to explore AI automation for your business, or get in touch about a fire risk assessment, H&S audit, or compliance system. One call covers both.",
+    "Get in touch about a fire risk assessment, health & safety audit, fire strategy, or compliance support. We respond the same day.",
 };
 
 export default function ContactPage() {
@@ -15,8 +15,8 @@ export default function ContactPage() {
     <>
       <PhotoHero
         eyebrow="Contact"
-        title="Let's Talk — AI Automation or Fire & H&S"
-        body="Book a free 30-minute call to explore AI automation for your business, or get in touch about a fire risk assessment, H&S audit, or compliance system. One call covers both."
+        title="Get in Touch"
+        body="Get in touch about a fire risk assessment, health & safety audit, fire strategy, or compliance support. We respond the same day and can usually book within the week."
       />
 
       <section className="bg-white">
@@ -46,7 +46,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <dt className="text-xs font-bold uppercase tracking-widest text-slate-400">Coverage</dt>
-                <dd className="mt-1 text-slate-700">Across London and surrounding areas</dd>
+                <dd className="mt-1 text-slate-700">London and UK-wide</dd>
               </div>
             </dl>
 
