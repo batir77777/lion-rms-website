@@ -7,7 +7,7 @@ import { SERVICE_CATEGORIES } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Fire risk assessments, health & safety support, and digital compliance management from Lion RMS — expert consultancy backed by a purpose-built compliance platform.",
+    "Fire risk assessments, health & safety consultancy, and compliance management from Lion RMS — practical, proportionate advice backed by CMIOSH chartered expertise.",
 };
 
 export default function ServicesPage() {
@@ -15,8 +15,8 @@ export default function ServicesPage() {
     <>
       <PhotoHero
         eyebrow="Services"
-        title="Compliance expertise, backed by software"
-        body="Expert fire safety and health & safety consultancy — connected to a digital compliance platform that keeps your records current, your actions tracked, and your portfolio audit-ready."
+        title="Expert fire safety and health & safety services"
+        body="From fire risk assessments and fire strategies to health & safety support and compliance management — practical, proportionate advice for landlords, managing agents, businesses, and developers."
       />
 
       <section className="bg-white py-20">
@@ -49,7 +49,7 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          {/* Platform CTA */}
+          {/* Compliance CTA */}
           <Reveal>
             <div
               className="mt-16 rounded-2xl border p-8 text-center"
@@ -59,22 +59,22 @@ export default function ServicesPage() {
               }}
             >
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-teal-400">
-                Compliance Platform
+                Ongoing Compliance
               </p>
               <h3 className="mb-4 text-2xl font-extrabold text-white">
-                Every assessment feeds your live compliance dashboard
+                Assessment to ongoing compliance — one consultancy
               </h3>
               <p className="mx-auto mb-6 max-w-xl text-base text-slate-400 leading-relaxed">
-                When you work with Lion RMS, your assessment findings flow directly into
-                your compliance platform — actions prioritised, reviews scheduled,
-                documentation stored and audit-ready.
+                Every assessment we deliver feeds into ongoing compliance management:
+                actions tracked to completion, review dates scheduled, and your
+                documentation kept audit-ready. No gaps, no handoffs.
               </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                 style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
               >
-                Book a Free Demo →
+                Book a Consultation &rarr;
               </Link>
             </div>
           </Reveal>
