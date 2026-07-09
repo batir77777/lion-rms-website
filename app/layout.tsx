@@ -8,7 +8,6 @@ import FloatingContact from "@/components/FloatingContact";
 import ScrollProgress from "@/components/ScrollProgress";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-// Sharp grotesque display face for headlines — precise, engineered.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
@@ -21,11 +20,11 @@ const SITE_URL = "https://www.lionrms.uk";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Fire Risk Assessment London | Digital Compliance & H&S — Lion RMS",
+    default: "Fire Risk Assessment London | H&S Consultancy — Lion RMS",
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "Expert fire risk assessments and health & safety consultancy in London, managed via a live digital compliance platform. CMIOSH-led chartered expertise. Book a free demo.",
+    "Expert fire risk assessments, fire strategies, and health & safety consultancy across London. CMIOSH-led chartered expertise. Book a consultation.",
   keywords: [
     "fire risk assessment London",
     "fire safety consultant",
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
     "fire strategy",
     "fire door inspection",
     "RAMS",
-    "digital compliance",
+    "compliance management",
   ],
   authors: [{ name: "Lion Risk Management Solutions" }],
   alternates: { canonical: SITE_URL },
@@ -41,22 +40,22 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Lion Risk Management Solutions",
-    title: "Fire Safety, Health & Safety & Digital Compliance Consultancy | Lion RMS",
+    title: "Fire Safety & Health and Safety Consultancy | Lion RMS",
     description:
-      "Practical fire safety, health & safety, and bespoke digital compliance solutions across London.",
+      "Practical fire safety and health & safety consultancy across London. CMIOSH-led expertise.",
     images: [
       {
         url: "/images/hero-banner.jpg",
         width: 1536,
         height: 1024,
-        alt: "Lion Risk Management Solutions — Fire Safety, Health & Safety & Digital Compliance. Fire Risk Assessment from £250 + VAT plus 2 months free platform access.",
+        alt: "Lion Risk Management Solutions — Fire Safety and Health & Safety Consultancy in London.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fire Risk Assessment London | Digital Compliance & H&S — Lion RMS",
-    description: "Expert fire safety & H&S consultancy with a live compliance platform. From £250 + VAT.",
+    title: "Fire Risk Assessment London | H&S Consultancy — Lion RMS",
+    description: "Expert fire safety & health & safety consultancy in London. From £250 + VAT.",
     images: ["/images/hero-banner.jpg"],
   },
   robots: { index: true, follow: true },
