@@ -14,7 +14,7 @@ export default function Footer() {
               <Logo className="h-12 w-auto" dark />
             </div>
             <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Business AI automation and expert fire safety &amp; health &amp; safety consultancy across the UK.
+              Expert fire safety and health &amp; safety consultancy across London and the UK.
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
@@ -49,9 +49,9 @@ export default function Footer() {
             <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
               Coverage
             </h3>
-            <p className="text-sm text-slate-400">Fire &amp; H&amp;S: London and UK-wide. AI Automation: remote delivery, any location.</p>
+            <p className="text-sm text-slate-400">London and UK-wide.</p>
             <Link href="/areas" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
-              Coverage areas →
+              Coverage areas &rarr;
             </Link>
           </div>
 
@@ -75,22 +75,35 @@ export default function Footer() {
             </ul>
             <div className="mt-5 text-sm">
               <Link href="/contact" className="block text-teal-400 transition hover:text-teal-300">
-                Book a free call →
+                Book a free call &rarr;
               </Link>
             </div>
           </div>
         </div>
 
+        {/* Lion Digital crosslink */}
+        <div className="mb-8 rounded-lg border border-slate-800 bg-slate-900/50 px-5 py-4 text-sm text-slate-400">
+          Looking for AI, software or digital solutions?{" "}
+          <a
+            href="https://www.liondigital.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-teal-400 transition hover:text-teal-300"
+          >
+            Visit Lion Digital &rarr;
+          </a>
+        </div>
+
         {/* Bottom bar */}
         <div className="flex flex-col items-start justify-between gap-3 border-t border-slate-800 pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-slate-600">
-            © {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
+            &copy; {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="text-xs text-slate-600 transition hover:text-slate-400">
               Privacy Policy
             </Link>
-            <span className="text-slate-800" aria-hidden>·</span>
+            <span className="text-slate-800" aria-hidden>&middot;</span>
             <p className="text-xs text-slate-700">
               CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
             </p>
