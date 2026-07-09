@@ -6,7 +6,6 @@ import { SITE } from "@/lib/site";
 
 const SERVICE_LABELS: Record<string, string> = {
   "fire-risk-assessment": "Book a Fire Risk Assessment",
-  "digital-compliance": "Digital Compliance Solution",
 };
 
 type State = "idle" | "submitting" | "success" | "error";
@@ -95,7 +94,6 @@ export default function ContactForm() {
             <option value="fire-door-inspection">Fire Door Inspection</option>
             <option value="fire-training">Fire Safety Training</option>
             <option value="health-safety">Health &amp; Safety Support</option>
-            <option value="digital-compliance">Digital Compliance Solution</option>
             <option value="other">Other</option>
           </select>
         </div>
