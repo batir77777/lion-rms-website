@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
-import { SERVICE_CATEGORIES, getCategory } from "@/lib/site";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory } from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -33,8 +34,37 @@ export default async function ServiceDetailPage({
   const cat = getCategory(slug);
   if (!cat) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: cat.title,
+    description: cat.intro,
+    serviceType: cat.eyebrow,
+    url: `${SITE_URL}/services/${cat.slug}`,
+    provider: {
+      "@type": "ProfessionalService",
+      name: SITE.name,
+      url: SITE_URL,
+    },
+    areaServed: [
+      { "@type": "City", name: "London" },
+      { "@type": "Country", name: "United Kingdom" },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+          { name: cat.title },
+        ]}
+      />
       <PhotoHero eyebrow={cat.eyebrow} title={cat.title} body={cat.intro} />
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Coverage — London Based, UK Wide",
@@ -24,6 +25,7 @@ const SECTORS = [
 export default function AreasPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Coverage" }]} />
       <PhotoHero
         eyebrow="Coverage"
         title="London Based. UK Wide Coverage."

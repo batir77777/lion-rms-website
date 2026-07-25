@@ -1,5 +1,7 @@
 // Central site data — edit here to update content across the whole site.
 
+export const SITE_URL = "https://www.lionrms.uk";
+
 export const SITE = {
   name: "Lion Risk Management Solutions",
   shortName: "Lion RMS",

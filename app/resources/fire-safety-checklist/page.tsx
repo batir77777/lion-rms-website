@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE } from "@/lib/site";
 import PrintButton from "@/components/PrintButton";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Fire Safety Checklist for Landlords & Responsible Persons",
@@ -59,6 +60,9 @@ const SECTIONS = [
 export default function ChecklistPage() {
   return (
     <article className="bg-white">
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "Fire Safety Checklist" }]}
+      />
       {/* White header matching site style */}
       <div className="relative isolate overflow-hidden bg-white print:bg-white">
         <div className="pointer-events-none absolute inset-0 overflow-hidden print:hidden" aria-hidden>

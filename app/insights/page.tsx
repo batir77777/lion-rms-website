@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { POSTS } from "@/lib/insights";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function InsightsPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Insights" }]} />
       <PhotoHero
         eyebrow="Insights"
         title="Fire & safety insights"
