@@ -8,7 +8,8 @@ import { FAQS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about fire risk assessments, health & safety compliance, and the Lion RMS compliance management platform.",
+    "Answers to common questions about fire risk assessments, health & safety compliance, and Lion RMS's compliance management service.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {
@@ -18,7 +19,7 @@ export default function FaqPage() {
       <PhotoHero
         eyebrow="FAQ"
         title="Compliance questions, answered"
-        body="Straightforward answers to the questions landlords, managing agents, and businesses ask us most about fire safety, health & safety, and the Lion RMS platform."
+        body="Straightforward answers to the questions landlords, managing agents, and businesses ask us most about fire safety, health & safety, and our compliance management service."
       />
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
@@ -43,7 +44,7 @@ export default function FaqPage() {
                 href="/contact"
                 className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
               >
-                Book a Demo
+                Get a Quote
               </Link>
             </div>
           </div>

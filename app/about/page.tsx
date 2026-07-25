@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import { ASSESSOR, CREDENTIALS } from "@/lib/site";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Lion Risk Management Solutions — specialist fire safety and health & safety consultancy led by Batir Turakulov, CMIOSH, DipFRA, and Level 5 Fire Engineering Design.",
+  alternates: { canonical: "/about" },
 };
 
 const VALUES = [
@@ -85,11 +87,16 @@ export default function AboutPage() {
           {/* Assessor credentials */}
           <Reveal>
             <div className="mb-12 flex flex-col gap-6 rounded-2xl border border-slate-100 bg-slate-50 p-8 sm:flex-row sm:items-start">
-              <div
-                className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl text-xl font-bold text-white"
-                style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
-              >
-                {ASSESSOR.name.split(" ").map((n) => n[0]).join("")}
+              <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-40 sm:w-40">
+                <Image
+                  src={ASSESSOR.photo}
+                  alt={`${ASSESSOR.name}, ${ASSESSOR.role} at Lion Risk Management Solutions`}
+                  width={320}
+                  height={320}
+                  className="h-full w-full object-cover"
+                  sizes="(min-width: 640px) 160px, 128px"
+                  quality={85}
+                />
               </div>
               <div>
                 <p className="text-lg font-bold text-navy-900">{ASSESSOR.name}</p>

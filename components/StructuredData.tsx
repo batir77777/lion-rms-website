@@ -7,7 +7,7 @@ export default function StructuredData() {
     "@type": "ProfessionalService",
     name: SITE.name,
     description:
-      "Fire safety, health & safety, and digital compliance consultancy serving London and the surrounding boroughs. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and bespoke compliance systems.",
+      "Fire safety, health & safety, and compliance management consultancy serving London and the surrounding boroughs. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and ongoing compliance support.",
     url: "https://www.lionrms.uk",
     telephone: "+447766317818",
     email: SITE.email,
@@ -23,13 +23,13 @@ export default function StructuredData() {
       "Health and Safety",
       "RAMS",
       "Regulatory Reform (Fire Safety) Order 2005",
-      "Compliance Management Software",
+      "Compliance Management",
     ],
     serviceType: [
       "Fire Risk Assessment",
       "Fire Safety Consultancy",
       "Health & Safety Consultancy",
-      "Digital Compliance Solutions",
+      "Compliance Management Support",
     ],
   };
   return (

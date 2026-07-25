@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How Lion Risk Management Solutions collects, uses, and protects your personal data under UK GDPR.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/privacy" },
 };
 
 const LAST_UPDATED = "27 June 2026";

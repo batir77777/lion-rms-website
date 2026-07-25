@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch about a fire risk assessment, health & safety audit, fire strategy, or compliance support. We respond the same day.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

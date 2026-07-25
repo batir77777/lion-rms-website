@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Free Compliance Self-Check — Fire & Health & Safety",
   description:
     "Ten yes/no questions covering your fire safety and health & safety duties. Get a red/amber/green score with a plain-English explanation of where you stand — free, no sign-up needed.",
+  alternates: { canonical: "/check" },
 };
 
 export default function CheckPage() {

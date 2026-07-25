@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Fire Safety Checklist for Landlords & Responsible Persons",
   description:
     "A free fire safety self-check for landlords and Responsible Persons — a starting point before your professional fire risk assessment.",
+  alternates: { canonical: "/resources/fire-safety-checklist" },
 };
 
 const SECTIONS = [

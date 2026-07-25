@@ -17,7 +17,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const cat = getCategory(slug);
   if (!cat) return { title: "Service" };
-  return { title: cat.title, description: cat.intro };
+  return {
+    title: cat.title,
+    description: cat.intro,
+    alternates: { canonical: `/services/${slug}` },
+  };
 }
 
 export default async function ServiceDetailPage({
@@ -61,7 +65,7 @@ export default async function ServiceDetailPage({
             ))}
           </div>
 
-          {/* Platform CTA */}
+          {/* Consultation CTA */}
           <Reveal>
             <div
               className="mt-10 rounded-2xl border p-10 text-center"
@@ -71,7 +75,7 @@ export default async function ServiceDetailPage({
               }}
             >
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-teal-400">
-                Compliance Platform
+                Ongoing Compliance Support
               </p>
               <h2 className="mb-4 text-2xl font-extrabold text-white">
                 Discuss your {cat.eyebrow.toLowerCase()} requirements
@@ -79,7 +83,7 @@ export default async function ServiceDetailPage({
               <p className="mx-auto mb-7 max-w-xl text-base text-slate-400 leading-relaxed">
                 Tell us about your premises or project and we&apos;ll recommend a
                 proportionate, compliant way forward — backed by expert consultancy and
-                a live compliance platform.
+                ongoing compliance support.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
@@ -87,7 +91,7 @@ export default async function ServiceDetailPage({
                   className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                   style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
                 >
-                  Book a Free Demo →
+                  Get a Quote →
                 </Link>
                 <Link
                   href="/contact"

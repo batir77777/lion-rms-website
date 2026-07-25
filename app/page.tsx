@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import AssessorSection from "@/components/AssessorSection";
 import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
   description:
     "Expert fire risk assessments and health & safety consultancy across London and the UK. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
+  alternates: { canonical: "/" },
 };
 
 const SERVICES_FS = [
@@ -163,6 +165,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── ABOUT THE FOUNDER ── */}
+      <AssessorSection />
 
       {/* ── WHO WE HELP ── */}
       <section className="py-20 border-b border-slate-100">

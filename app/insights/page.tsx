@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Insights",
   description:
     "Fire safety and health & safety insights, standards updates, and compliance guidance from Lion RMS.",
+  alternates: { canonical: "/insights" },
 };
 
 export default function InsightsPage() {
