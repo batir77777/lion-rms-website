@@ -3,7 +3,8 @@ import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { SERVICE_CATEGORIES } from "@/lib/site";
+import ServiceCheckCTA from "@/components/ServiceCheckCTA";
+import { SERVICE_CATEGORIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -52,10 +53,15 @@ export default function ServicesPage() {
             ))}
           </div>
 
+          {/* Compliance Check promo */}
+          <div className="mt-16">
+            <ServiceCheckCTA />
+          </div>
+
           {/* Compliance CTA */}
           <Reveal>
             <div
-              className="mt-16 rounded-2xl border p-8 text-center"
+              className="mt-8 rounded-2xl border p-8 text-center"
               style={{
                 background: "linear-gradient(135deg,#060e1f 0%,#0c1f3f 50%,#082218 100%)",
                 borderColor: "rgba(14,165,160,0.2)",
@@ -72,13 +78,21 @@ export default function ServicesPage() {
                 actions tracked to completion, review dates scheduled, and your
                 documentation kept audit-ready. No gaps, no handoffs.
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
-              >
-                Book a Consultation &rarr;
-              </Link>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
+                >
+                  {CTA_PRIMARY_LABEL} &rarr;
+                </Link>
+                <Link
+                  href={CTA_SECONDARY_HREF}
+                  className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+                >
+                  {CTA_SECONDARY_LABEL}
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>
