@@ -118,10 +118,10 @@ export const CREDENTIALS = [
 
 export const ASSESSOR = {
   name: "Batir Turakulov",
-  role: "Fire, Health & Safety, Water & Environmental Consultant",
+  role: "Fire Risk Assessor & Health and Safety Consultant",
   photo: "/assessor.jpg",
-  bio: "An experienced fire risk assessor and validator and Chartered safety practitioner (CMIOSH), I deliver expert risk assessments, compliance strategies, and safety solutions across fire safety, health & safety, water management (Legionella), and environmental protection. I carry out every assessment personally — identifying and mitigating hazards, ensuring regulatory compliance, and supporting sustainable practice — with clear, proportionate recommendations grounded in current UK legislation.",
-  credentials: ["CMIOSH", "MIIRSM", "MIFSM", "AIFireE", "AIEMA", "DipNCRQ", "DipFRA Advanced (NAFRAR)"],
+  bio: "An experienced fire risk assessor and validator and Chartered safety practitioner (CMIOSH), I deliver expert risk assessments, compliance strategies, and safety solutions across fire safety and health & safety. I carry out every assessment personally — identifying and mitigating hazards and ensuring regulatory compliance — with clear, proportionate recommendations grounded in current UK legislation.",
+  credentials: CREDENTIALS,
 };
 
 export const WHO_WE_HELP = [
