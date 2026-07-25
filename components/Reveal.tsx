@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import useRevealGuard from "./useRevealGuard";
 
@@ -15,10 +15,26 @@ export default function Reveal({
   className?: string;
   delay?: number;
 }) {
-  const reduced = useReducedMotion();
+  // framer-motion's useReducedMotion() reads the OS preference synchronously
+  // on the client's first render, but the server always renders assuming
+  // "not reduced" (it has no window to check). Branching the JSX directly on
+  // that hook's return value made every reduced-motion visitor hit a
+  // server/client mismatch on every Reveal instance — which React does not
+  // patch up, and could leave the section's real content unrendered.
+  //
+  // Fix: keep the first client render identical to the server render (start
+  // `reduced` at false always), then flip it in an effect, which only runs
+  // after hydration has already committed. Non-reduced-motion users are
+  // completely unaffected — this only changes how the reduced branch is reached.
+  const prefersReducedMotion = useReducedMotion();
+  const [reduced, setReduced] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [seen, setSeen] = useState(false);
   const forced = useRevealGuard(ref, seen);
+
+  useEffect(() => {
+    if (prefersReducedMotion) setReduced(true);
+  }, [prefersReducedMotion]);
 
   if (reduced) {
     return <div className={className}>{children}</div>;
