@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ComplianceCheck from "@/components/ComplianceCheck";
 import Reveal from "@/components/Reveal";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Free Compliance Self-Check — Fire & Health & Safety",
@@ -12,6 +13,9 @@ export const metadata: Metadata = {
 export default function CheckPage() {
   return (
     <div className="bg-white">
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "Compliance Self-Check" }]}
+      />
       {/* White hero header — matches site style */}
       <div className="relative isolate overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>

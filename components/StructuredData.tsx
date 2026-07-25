@@ -1,4 +1,4 @@
-import { SITE } from "@/lib/site";
+import { ASSESSOR, SITE, SITE_URL } from "@/lib/site";
 
 // LocalBusiness JSON-LD — helps Google show the business for local searches.
 export default function StructuredData() {
@@ -8,9 +8,15 @@ export default function StructuredData() {
     name: SITE.name,
     description:
       "Fire safety, health & safety, and compliance management consultancy serving London and the surrounding boroughs. Fire risk assessments, fire strategies, fire door inspections, H&S audits, RAMS, and ongoing compliance support.",
-    url: "https://www.lionrms.uk",
+    url: SITE_URL,
     telephone: "+447766317818",
     email: SITE.email,
+    founder: {
+      "@type": "Person",
+      name: ASSESSOR.name,
+      jobTitle: ASSESSOR.role,
+      url: `${SITE_URL}/about`,
+    },
     areaServed: [
       { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
       { "@type": "Country", name: "United Kingdom" },

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { POSTS, getPost } from "@/lib/insights";
-import { SITE } from "@/lib/site";
+import { SITE, SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return POSTS.map((p) => ({ slug: p.slug }));
@@ -58,16 +59,23 @@ export default async function PostPage({
   const p = getPost(slug);
   if (!p) notFound();
 
+  const canonicalUrl = `${SITE_URL}/insights/${p.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: p.title,
     datePublished: p.date,
     dateModified: p.date,
-    author: { "@type": "Person", name: "Batir Turakulov" },
-    publisher: { "@type": "Organization", name: SITE.name },
+    author: { "@type": "Person", name: "Batir Turakulov", url: `${SITE_URL}/about` },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}${SITE.logo}` },
+    },
     description: p.excerpt,
-    url: `https://www.lionrms.uk/insights/${p.slug}`,
+    image: `${SITE_URL}/images/hero-banner.jpg`,
+    url: canonicalUrl,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   };
 
   return (
@@ -75,6 +83,13 @@ export default async function PostPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Insights", path: "/insights" },
+          { name: p.title },
+        ]}
       />
 
       {/* Article header */}

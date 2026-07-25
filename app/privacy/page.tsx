@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ const LAST_UPDATED = "27 June 2026";
 export default function PrivacyPage() {
   return (
     <div className="bg-white text-slate-800">
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Privacy Policy" }]} />
 
       {/* Header */}
       <section

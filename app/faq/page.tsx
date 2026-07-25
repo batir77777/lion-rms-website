@@ -3,6 +3,7 @@ import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import FaqAccordion from "@/components/FaqAccordion";
 import FaqJsonLd from "@/components/FaqJsonLd";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { FAQS } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function FaqPage() {
   return (
     <>
       <FaqJsonLd />
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "FAQ" }]} />
       <PhotoHero
         eyebrow="FAQ"
         title="Compliance questions, answered"

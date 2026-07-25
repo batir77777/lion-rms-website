@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -52,6 +53,7 @@ const CASES = [
 export default function CaseStudiesPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Case Studies" }]} />
       <PhotoHero
         eyebrow="Case Studies"
         title="Trusted by clients across London"

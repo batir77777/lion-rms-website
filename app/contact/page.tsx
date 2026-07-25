@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import PhotoHero from "@/components/PhotoHero";
 import ContactForm from "@/components/ContactForm";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { SITE, CREDENTIALS } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Contact" }]} />
       <PhotoHero
         eyebrow="Contact"
         title="Get in Touch"

@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
+import PersonJsonLd from "@/components/PersonJsonLd";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { ASSESSOR, CREDENTIALS } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -38,6 +40,8 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <>
+      <PersonJsonLd />
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "About" }]} />
       <PhotoHero
         eyebrow="About"
         title="Expert fire safety and health & safety consultancy"
