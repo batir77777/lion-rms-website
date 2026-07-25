@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "@/components/Logo";
-import { NAV, SITE } from "@/lib/site";
+import { NAV, SITE, CTA_PRIMARY_LABEL } from "@/lib/site";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -106,7 +106,7 @@ export default function Header() {
               boxShadow: "0 4px 20px rgba(14,165,160,0.28)",
             }}
           >
-            Get a Quote
+            {CTA_PRIMARY_LABEL}
           </Link>
         </div>
 
@@ -172,7 +172,7 @@ export default function Header() {
                   className="rounded-full px-5 py-2.5 text-sm font-semibold text-white"
                   style={{ background: "linear-gradient(135deg, #0c1f3f, #0ea5a0)" }}
                 >
-                  Get a Quote
+                  {CTA_PRIMARY_LABEL}
                 </Link>
               </div>
             </nav>
