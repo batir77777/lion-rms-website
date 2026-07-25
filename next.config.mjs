@@ -10,6 +10,7 @@ const nextConfig = {
       { protocol: "https", hostname: "images.pexels.com" },
       { protocol: "https", hostname: "images.squarespace-cdn.com" },
     ],
+    qualities: [75, 85],
   },
   async redirects() {
     return [

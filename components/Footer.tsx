@@ -81,19 +81,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Lion Digital crosslink */}
-        <div className="mb-8 rounded-lg border border-slate-800 bg-slate-900/50 px-5 py-4 text-sm text-slate-400">
-          Looking for AI, software or digital solutions?{" "}
-          <a
-            href="https://www.liondigital.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-teal-400 transition hover:text-teal-300"
-          >
-            Visit Lion Digital &rarr;
-          </a>
-        </div>
-
         {/* Bottom bar */}
         <div className="flex flex-col items-start justify-between gap-3 border-t border-slate-800 pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-slate-600">
