@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory } from "@/lib/site";
+import ServiceCheckCTA from "@/components/ServiceCheckCTA";
+import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -95,6 +96,11 @@ export default async function ServiceDetailPage({
             ))}
           </div>
 
+          {/* Compliance Check promo */}
+          <div className="mt-12">
+            <ServiceCheckCTA />
+          </div>
+
           {/* Consultation CTA */}
           <Reveal>
             <div
@@ -121,13 +127,13 @@ export default async function ServiceDetailPage({
                   className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                   style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
                 >
-                  Get a Quote →
+                  {CTA_PRIMARY_LABEL} &rarr;
                 </Link>
                 <Link
-                  href="/contact"
+                  href={CTA_SECONDARY_HREF}
                   className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
                 >
-                  Request a Consultation
+                  {CTA_SECONDARY_LABEL}
                 </Link>
               </div>
             </div>
