@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import AssessorSection from "@/components/AssessorSection";
 import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -164,6 +165,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── ABOUT THE FOUNDER ── */}
+      <AssessorSection />
 
       {/* ── WHO WE HELP ── */}
       <section className="py-20 border-b border-slate-100">

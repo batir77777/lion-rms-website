@@ -119,7 +119,7 @@ export const CREDENTIALS = [
 export const ASSESSOR = {
   name: "Batir Turakulov",
   role: "Fire Risk Assessor & Health and Safety Consultant",
-  photo: "/assessor.jpg",
+  photo: "/batir-turakulov.jpg",
   bio: "An experienced fire risk assessor and validator and Chartered safety practitioner (CMIOSH), I deliver expert risk assessments, compliance strategies, and safety solutions across fire safety and health & safety. I carry out every assessment personally — identifying and mitigating hazards and ensuring regulatory compliance — with clear, proportionate recommendations grounded in current UK legislation.",
   credentials: CREDENTIALS,
 };
