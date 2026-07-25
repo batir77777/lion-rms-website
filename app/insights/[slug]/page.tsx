@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { POSTS, getPost } from "@/lib/insights";
-import { SITE, SITE_URL } from "@/lib/site";
+import { SITE, SITE_URL, getCategory, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export function generateStaticParams() {
   return POSTS.map((p) => ({ slug: p.slug }));
@@ -126,6 +126,17 @@ export default async function PostPage({
           <div>{render(p.body)}</div>
         </Reveal>
 
+        {p.relatedService && getCategory(p.relatedService) && (
+          <p className="mt-6 text-sm">
+            <Link
+              href={`/services/${p.relatedService}`}
+              className="font-semibold text-teal-600 hover:underline"
+            >
+              More about our {getCategory(p.relatedService)!.title} &rarr;
+            </Link>
+          </p>
+        )}
+
         {/* CTA */}
         <Reveal>
           <div
@@ -148,13 +159,13 @@ export default async function PostPage({
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                 style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
               >
-                Get a Quote →
+                {CTA_PRIMARY_LABEL} &rarr;
               </Link>
               <Link
-                href="/contact"
+                href={CTA_SECONDARY_HREF}
                 className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
               >
-                Get in Touch
+                {CTA_SECONDARY_LABEL}
               </Link>
             </div>
           </div>
