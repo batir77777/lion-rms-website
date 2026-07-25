@@ -64,7 +64,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((n) => {
             const active = isActive(n.href);
             return (
@@ -91,7 +91,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop right */}
-        <div className="hidden items-center gap-5 md:flex">
+        <div className="hidden items-center gap-5 lg:flex">
           <a
             href={SITE.phoneHref}
             className="text-[15px] font-semibold text-slate-700 transition hover:text-teal-600"
@@ -115,7 +115,7 @@ export default function Header() {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-100 md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-100 lg:hidden"
         >
           <svg
             width="22"
@@ -142,7 +142,7 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-slate-100 bg-white md:hidden"
+            className="overflow-hidden border-t border-slate-100 bg-white lg:hidden"
           >
             <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 sm:px-6">
               {NAV.map((n) => (
