@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Fire risk assessments, health & safety consultancy, and compliance management from Lion RMS — practical, proportionate advice backed by CMIOSH chartered expertise.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {

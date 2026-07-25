@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Coverage — London Based, UK Wide",
   description:
     "Lion Risk Management Solutions provides fire risk assessments, fire strategies, health & safety consultancy and digital compliance solutions across London and throughout the UK.",
+  alternates: { canonical: "/areas" },
 };
 
 const SECTORS = [

@@ -17,7 +17,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const p = getPost(slug);
   if (!p) return { title: "Insights" };
-  return { title: p.title, description: p.excerpt };
+  return {
+    title: p.title,
+    description: p.excerpt,
+    alternates: { canonical: `/insights/${slug}` },
+  };
 }
 
 function render(body: string) {

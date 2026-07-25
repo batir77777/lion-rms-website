@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
   description:
     "Expert fire risk assessments and health & safety consultancy across London and the UK. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
+  alternates: { canonical: "/" },
 };
 
 const SERVICES_FS = [

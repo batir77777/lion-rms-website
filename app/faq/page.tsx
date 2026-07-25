@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Answers to common questions about fire risk assessments, health & safety compliance, and the Lion RMS compliance management platform.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {

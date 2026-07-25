@@ -17,7 +17,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const cat = getCategory(slug);
   if (!cat) return { title: "Service" };
-  return { title: cat.title, description: cat.intro };
+  return {
+    title: cat.title,
+    description: cat.intro,
+    alternates: { canonical: `/services/${slug}` },
+  };
 }
 
 export default async function ServiceDetailPage({

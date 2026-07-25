@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Lion Risk Management Solutions — specialist fire safety and health & safety consultancy led by Batir Turakulov, CMIOSH, DipFRA, and Level 5 Fire Engineering Design.",
+  alternates: { canonical: "/about" },
 };
 
 const VALUES = [

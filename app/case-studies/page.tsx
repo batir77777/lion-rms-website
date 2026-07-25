@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Case Studies",
   description:
     "Examples of fire safety, health & safety, and compliance platform work delivered by Lion RMS for clients across London.",
+  alternates: { canonical: "/case-studies" },
 };
 
 const CASES = [
