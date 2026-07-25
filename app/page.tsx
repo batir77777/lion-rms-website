@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AssessorSection from "@/components/AssessorSection";
-import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS } from "@/lib/site";
+import ComplianceCheckBand from "@/components/ComplianceCheckBand";
+import RecentProjects from "@/components/RecentProjects";
+import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
@@ -69,7 +71,7 @@ export default function HomePage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur transition hover:bg-white/10"
                 >
-                  Get a Quote
+                  {CTA_PRIMARY_LABEL}
                 </Link>
               </div>
 
@@ -95,6 +97,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── COMPLIANCE CHECK PROMO ── */}
+      <ComplianceCheckBand />
 
       {/* ── TRUST STATEMENT ── */}
 <div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
@@ -189,6 +194,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── RECENT PROJECTS ── */}
+      <RecentProjects />
+
       {/* ── HOW IT WORKS ── */}
       <section className="py-20 bg-slate-50 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
@@ -253,7 +261,7 @@ export default function HomePage() {
               className="inline-flex items-center rounded-full px-10 py-4 text-lg font-bold text-white shadow-xl transition hover:-translate-y-0.5"
               style={{ background: "linear-gradient(135deg, #00c9a7, #00a889)", boxShadow: "0 4px 24px rgba(0,201,167,0.35)" }}
             >
-              Get a Quote &rarr;
+              {CTA_PRIMARY_LABEL} &rarr;
             </Link>
             <Link
               href="/services"
@@ -262,6 +270,11 @@ export default function HomePage() {
               View Services
             </Link>
           </div>
+          <p className="mt-5 text-sm">
+            <Link href={CTA_SECONDARY_HREF} className="font-semibold underline decoration-teal-400/50 underline-offset-4" style={{ color: "#5be3c0" }}>
+              Not sure yet? Take our {CTA_SECONDARY_LABEL.toLowerCase()} &rarr;
+            </Link>
+          </p>
           <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.4)" }}>
             Batir Turakulov, CMIOSH &bull; Level 4 DipFRA &bull; Level 5 Fire Engineering Design &bull; Lion Risk Management Solutions
           </p>
