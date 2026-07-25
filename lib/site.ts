@@ -26,12 +26,19 @@ export const IMAGES = {
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Free Check", href: "/check" },
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Insights", href: "/insights" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
+
+// Standardised CTA wording (Phase 4A) — primary drives enquiries, secondary
+// promotes the free compliance self-check tool as a lower-commitment step.
+export const CTA_PRIMARY_LABEL = "Request a Quote";
+export const CTA_SECONDARY_LABEL = "Free Compliance Check";
+export const CTA_SECONDARY_HREF = "/check";
 
 export const POSITIONING =
   "From fire risk assessments and fire strategies to health and safety support and compliance management, Lion Risk Management Solutions provides practical, joined-up consultancy for organisations that need clear, compliant, and efficient solutions.";
@@ -134,13 +141,13 @@ export const WHO_WE_HELP = [
 ];
 
 export const FAQS = [
-  { q: "How often do I need a fire risk assessment?", a: "There is no fixed legal interval, but the Fire Safety Order requires your assessment to be kept up to date. As a rule of thumb, review it annually and carry out a fresh assessment every 1–2 years, or sooner after significant changes to the building, its use, or its occupants." },
-  { q: "Is a fire risk assessment a legal requirement?", a: "Yes. Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person for almost any non-domestic premises — and the common parts of residential blocks — must carry out and maintain a suitable and sufficient fire risk assessment." },
-  { q: "What is the difference between a Type 1 and Type 4 fire risk assessment?", a: "The types refer to how far the assessment looks into a building. Type 1 is the most common, non-destructive review of common parts. Types 2–4 go progressively further, including destructive inspection and sampling of individual flats, and are used where there is reason to look deeper." },
-  { q: "Do I need a fire strategy as well as a fire risk assessment?", a: "Not always. A fire risk assessment evaluates an existing building in use. A fire strategy is a design document for new builds, change-of-use, or complex buildings, setting out the fire safety principles to support planning and Building Regulations. We can advise which you need." },
+  { q: "How often do I need a fire risk assessment?", a: "There is no fixed legal interval, but the Fire Safety Order requires your assessment to be kept up to date. As a rule of thumb, review it annually and carry out a fresh assessment every 1–2 years, or sooner after significant changes to the building, its use, or its occupants.", relatedService: "fire-safety" },
+  { q: "Is a fire risk assessment a legal requirement?", a: "Yes. Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person for almost any non-domestic premises — and the common parts of residential blocks — must carry out and maintain a suitable and sufficient fire risk assessment.", relatedService: "fire-safety" },
+  { q: "What is the difference between a Type 1 and Type 4 fire risk assessment?", a: "The types refer to how far the assessment looks into a building. Type 1 is the most common, non-destructive review of common parts. Types 2–4 go progressively further, including destructive inspection and sampling of individual flats, and are used where there is reason to look deeper.", relatedService: "fire-safety" },
+  { q: "Do I need a fire strategy as well as a fire risk assessment?", a: "Not always. A fire risk assessment evaluates an existing building in use. A fire strategy is a design document for new builds, change-of-use, or complex buildings, setting out the fire safety principles to support planning and Building Regulations. We can advise which you need.", relatedService: "fire-safety" },
   { q: "Who is the 'Responsible Person'?", a: "It is whoever has control of the premises — typically the employer, building owner, landlord, or managing agent. The Responsible Person carries the legal duty to manage fire safety and act on the assessment's findings." },
   { q: "How quickly can you carry out an assessment?", a: "We aim to be responsive and will agree a timescale with you up front, prioritising urgent or enforcement-driven work. Get in touch with your requirements and we'll confirm availability." },
-  { q: "Do you cover health & safety as well as fire?", a: "Yes. Alongside fire safety we provide general health & safety risk assessments, audits, RAMS, policies, and competent person support — so you can manage both through one consultancy." },
+  { q: "Do you cover health & safety as well as fire?", a: "Yes. Alongside fire safety we provide general health & safety risk assessments, audits, RAMS, policies, and competent person support — so you can manage both through one consultancy.", relatedService: "health-safety" },
   { q: "What areas do you cover?", a: "We are based in London and work across every London borough for residential, commercial, and construction clients." },
 ];
 
@@ -167,6 +174,26 @@ export const MEMBERSHIPS = ["CMIOSH", "DipFRA", "MIIRSM", "AIEMA", "AIFireE"];
 export const STANDARDS_ROW = [
   "PAS 79", "BS 9999", "Approved Document B", "RRO (Fire Safety) Order 2005",
   "BS 9991", "Health & Safety at Work Act 1974", "CDM 2015", "HSG274 (Legionella)",
+];
+
+// Anonymised recent-work highlights for the homepage "Recent Projects"
+// section — condensed versions of entries also shown in full on /case-studies.
+export const RECENT_PROJECTS = [
+  {
+    sector: "Residential · Managing Agent",
+    title: "Portfolio fire risk assessments, London-wide",
+    body: "A programme of Type 1 and Type 3 assessments across a residential block portfolio, feeding straight into an ongoing, prioritised action schedule.",
+  },
+  {
+    sector: "Construction · Principal Contractor",
+    title: "RAMS & construction phase plans",
+    body: "Risk assessments and construction phase plans developed alongside the project team to support a compliant, well-documented site setup.",
+  },
+  {
+    sector: "Mixed-use · Developer",
+    title: "Fire strategy for a change-of-use scheme",
+    body: "A bespoke fire strategy setting out evacuation principles and construction details, unlocking planning approval without further queries.",
+  },
 ];
 
 export const TESTIMONIALS = [

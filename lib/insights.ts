@@ -7,6 +7,7 @@ export interface Post {
   excerpt: string;
   tags: string[];
   body: string; // simple markdown: blank line = paragraph, "## " = heading, **bold**
+  relatedService?: string; // slug into SERVICE_CATEGORIES, for internal linking
 }
 
 export const POSTS: Post[] = [
@@ -19,6 +20,7 @@ export const POSTS: Post[] = [
     excerpt:
       "Construction sites are among the hardest environments in which to manage fire risk. We shared practical, site-based feedback on two new BSI standards — PAS 9970-1 and PAS 9970-2 — shaping how fire safety is managed during the construction phase.",
     tags: ["Construction fire safety", "PAS 9970", "Standards", "Fire strategy"],
+    relatedService: "fire-safety",
     body: `Construction sites are among the most challenging environments in which to manage fire risk — so the new **PAS 9970** standards are a welcome step towards managing it more consistently. I was pleased to contribute comments to the BSI public consultation on **PAS 9970-1** and **PAS 9970-2**, drawing directly on what I see on live projects.
 
 ## What PAS 9970 sets out to do
