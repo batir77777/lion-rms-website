@@ -6,40 +6,40 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Examples of fire safety, health & safety, and compliance platform work delivered by Lion RMS for clients across London.",
+    "Examples of fire safety, health & safety, and compliance management work delivered by Lion RMS for clients across London.",
   alternates: { canonical: "/case-studies" },
 };
 
 const CASES = [
   {
     sector: "Residential · Managing Agent",
-    title: "Portfolio fire risk assessments with live action dashboard",
-    body: "Programme of Type 1 and Type 3 fire risk assessments across a residential block portfolio — findings fed directly into the Lion RMS platform, giving the client a live prioritised action schedule and audit-ready records.",
-    tags: ["Fire Risk Assessment", "RRO 2005", "Action Tracking", "Dashboard"],
+    title: "Portfolio fire risk assessments with ongoing action tracking",
+    body: "Programme of Type 1 and Type 3 fire risk assessments across a residential block portfolio — findings fed directly into an ongoing compliance record, giving the client a prioritised action schedule and audit-ready documentation.",
+    tags: ["Fire Risk Assessment", "RRO 2005", "Action Tracking", "Audit-Ready Records"],
   },
   {
     sector: "Construction · Principal Contractor",
     title: "RAMS & construction phase plans",
-    body: "Risk assessments, method statements, and construction phase plans developed alongside the project team to support a compliant, well-documented site setup — all stored and version-controlled in the compliance platform.",
+    body: "Risk assessments, method statements, and construction phase plans developed alongside the project team to support a compliant, well-documented site setup — all properly recorded and version-controlled.",
     tags: ["RAMS", "CDM", "H&S", "Document Control"],
   },
   {
     sector: "Property Management · Managing Agent",
-    title: "Compliance platform for a property management company",
-    body: "A bespoke digital compliance platform built for a property management company, centralising fire and health & safety inspections, certificates, and remedial actions into a single, auditable view across their managed portfolio.",
-    tags: ["Digital Compliance", "Property Management", "Platform"],
+    title: "Ongoing compliance management for a property management company",
+    body: "A bespoke compliance management service for a property management company, centralising fire and health & safety inspections, certificates, and remedial actions into a single, auditable record across their managed portfolio.",
+    tags: ["Compliance Management", "Property Management", "Portfolio Oversight"],
   },
   {
     sector: "Professional Services · Consultancy",
-    title: "Digital compliance solution for a consultancy firm",
-    body: "A tailored compliance platform streamlining how assessments, records, and client deliverables are produced, tracked, and stored — reducing admin time and improving audit readiness.",
-    tags: ["Digital Compliance", "Consultancy", "Automation"],
+    title: "Compliance management support for a consultancy firm",
+    body: "A tailored compliance management service streamlining how assessments, records, and client deliverables are produced, tracked, and stored — reducing admin time and improving audit readiness.",
+    tags: ["Compliance Management", "Consultancy", "Process Improvement"],
   },
   {
     sector: "Commercial · Multi-site Business",
-    title: "Bespoke compliance dashboard for multi-site portfolio",
-    body: "A tailored digital portal centralising inspections, actions, and records across all sites — giving the client real-time visibility of fire and health & safety compliance with automated review reminders.",
-    tags: ["Digital Compliance", "Dashboard", "Automation"],
+    title: "Bespoke compliance management for a multi-site portfolio",
+    body: "A tailored compliance management service centralising inspections, actions, and records across all sites — giving the client clear visibility of fire and health & safety compliance, with scheduled review reminders.",
+    tags: ["Compliance Management", "Multi-site Portfolio", "Review Scheduling"],
   },
   {
     sector: "Mixed-use · Developer",
@@ -55,7 +55,7 @@ export default function CaseStudiesPage() {
       <PhotoHero
         eyebrow="Case Studies"
         title="Trusted by clients across London"
-        body="A snapshot of the fire safety, health & safety, and digital compliance work we deliver — from individual assessments to full compliance platform deployments."
+        body="A snapshot of the fire safety, health & safety, and compliance management work we deliver — from individual assessments to full ongoing compliance support."
       />
       <section className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -96,7 +96,7 @@ export default function CaseStudiesPage() {
                 Ready to manage your compliance better?
               </h2>
               <p className="mx-auto mb-7 max-w-xl text-base text-slate-400 leading-relaxed">
-                Book a free demo to see how the Lion RMS platform can work for your portfolio.
+                Get in touch to discuss how we can support compliance across your portfolio.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
@@ -104,7 +104,7 @@ export default function CaseStudiesPage() {
                   className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                   style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
                 >
-                  Book a Free Demo →
+                  Get a Quote →
                 </Link>
                 <Link
                   href="/contact"

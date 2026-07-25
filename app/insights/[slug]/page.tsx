@@ -124,8 +124,8 @@ export default async function PostPage({
               Need expert compliance support?
             </h2>
             <p className="mx-auto mb-7 max-w-lg text-base text-slate-400 leading-relaxed">
-              Call {SITE.phone} or book a free demo to see how the Lion RMS platform
-              can keep your portfolio audit-ready.
+              Call {SITE.phone} or get in touch to discuss how we can keep your
+              portfolio compliant and audit-ready.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
@@ -133,7 +133,7 @@ export default async function PostPage({
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                 style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
               >
-                Book a Free Demo →
+                Get a Quote →
               </Link>
               <Link
                 href="/contact"

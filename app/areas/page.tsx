@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Coverage — London Based, UK Wide",
   description:
-    "Lion Risk Management Solutions provides fire risk assessments, fire strategies, health & safety consultancy and digital compliance solutions across London and throughout the UK.",
+    "Lion Risk Management Solutions provides fire risk assessments, fire strategies, health & safety consultancy and compliance management support across London and throughout the UK.",
   alternates: { canonical: "/areas" },
 };
 
@@ -27,7 +27,7 @@ export default function AreasPage() {
       <PhotoHero
         eyebrow="Coverage"
         title="London Based. UK Wide Coverage."
-        body="Lion Risk Management Solutions provides fire risk assessments, fire strategies, health & safety consultancy and digital compliance solutions across London and throughout the UK."
+        body="Lion Risk Management Solutions provides fire risk assessments, fire strategies, health & safety consultancy and compliance management support across London and throughout the UK."
       />
       <section className="bg-white">
         <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
