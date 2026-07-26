@@ -15,6 +15,7 @@ export default function StructuredData() {
       "@type": "Person",
       name: ASSESSOR.name,
       jobTitle: ASSESSOR.role,
+      description: ASSESSOR.bio,
       url: `${SITE_URL}/about`,
     },
     areaServed: [

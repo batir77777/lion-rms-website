@@ -127,9 +127,9 @@ export const CREDENTIALS = [
 
 export const ASSESSOR = {
   name: "Batir Turakulov",
-  role: "Fire Engineer & Fire Safety Consultant",
+  role: "Fire Engineer & Chartered Health & Safety Professional (CMIOSH)",
   photo: "/batir-turakulov.jpg",
-  bio: "I am a Fire Engineer and Fire Safety Consultant with extensive experience in fire risk assessment, building fire safety and regulatory compliance. A Chartered safety practitioner (CMIOSH), I deliver expert risk assessments, compliance strategies, and safety solutions across fire safety and health & safety — carrying out every assessment personally, identifying and mitigating hazards, and providing clear, proportionate recommendations grounded in current UK legislation.",
+  bio: "Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) with extensive experience in fire engineering, fire risk assessment, health & safety, building safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate fire safety and health & safety consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };
 
