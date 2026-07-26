@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
+import CaseStudyCard from "@/components/CaseStudyCard";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { CASE_STUDIES, OTHER_CASES } from "@/lib/case-studies";
+import { CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -12,48 +14,24 @@ export const metadata: Metadata = {
   alternates: { canonical: "/case-studies" },
 };
 
-const CASES = [
-  {
-    sector: "Residential · Managing Agent",
-    title: "Portfolio fire risk assessments with ongoing action tracking",
-    body: "Programme of Type 1 and Type 3 fire risk assessments across a residential block portfolio — findings fed directly into an ongoing compliance record, giving the client a prioritised action schedule and audit-ready documentation.",
-    tags: ["Fire Risk Assessment", "RRO 2005", "Action Tracking", "Audit-Ready Records"],
-  },
-  {
-    sector: "Construction · Principal Contractor",
-    title: "RAMS & construction phase plans",
-    body: "Risk assessments, method statements, and construction phase plans developed alongside the project team to support a compliant, well-documented site setup — all properly recorded and version-controlled.",
-    tags: ["RAMS", "CDM", "H&S", "Document Control"],
-  },
-  {
-    sector: "Property Management · Managing Agent",
-    title: "Ongoing compliance management for a property management company",
-    body: "A bespoke compliance management service for a property management company, centralising fire and health & safety inspections, certificates, and remedial actions into a single, auditable record across their managed portfolio.",
-    tags: ["Compliance Management", "Property Management", "Portfolio Oversight"],
-  },
-  {
-    sector: "Professional Services · Consultancy",
-    title: "Compliance management support for a consultancy firm",
-    body: "A tailored compliance management service streamlining how assessments, records, and client deliverables are produced, tracked, and stored — reducing admin time and improving audit readiness.",
-    tags: ["Compliance Management", "Consultancy", "Process Improvement"],
-  },
-  {
-    sector: "Commercial · Multi-site Business",
-    title: "Bespoke compliance management for a multi-site portfolio",
-    body: "A tailored compliance management service centralising inspections, actions, and records across all sites — giving the client clear visibility of fire and health & safety compliance, with scheduled review reminders.",
-    tags: ["Compliance Management", "Multi-site Portfolio", "Review Scheduling"],
-  },
-  {
-    sector: "Mixed-use · Developer",
-    title: "Fire strategy for change of use",
-    body: "A bespoke fire strategy supporting a change-of-use planning application, setting out evacuation principles and construction details for Building Regulations compliance — unlocking planning approval without further queries.",
-    tags: ["Fire Strategy", "Building Regs", "Planning"],
-  },
-];
-
 export default function CaseStudiesPage() {
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: CASE_STUDIES.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/case-studies/${c.slug}`,
+      name: c.title,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Case Studies" }]} />
       <PhotoHero
         eyebrow="Case Studies"
@@ -63,27 +41,26 @@ export default function CaseStudiesPage() {
       <section className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-7 md:grid-cols-2">
-            {CASES.map((c, i) => (
-              <Reveal key={c.title} delay={i * 60}>
-                <article className="flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal-100 hover:shadow-xl">
-                  <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-600">
-                    <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
-                    {c.sector}
-                  </p>
-                  <h2 className="mb-4 text-xl font-bold text-navy-900 leading-snug">{c.title}</h2>
-                  <p className="flex-1 text-base leading-relaxed text-slate-500">{c.body}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {c.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              </Reveal>
+            {CASE_STUDIES.map((c, i) => (
+              <CaseStudyCard
+                key={c.slug}
+                href={`/case-studies/${c.slug}`}
+                sectorLabel={c.sectorLabel}
+                title={c.title}
+                body={c.excerpt}
+                tags={c.tags}
+                delay={i * 60}
+              />
+            ))}
+            {OTHER_CASES.map((c, i) => (
+              <CaseStudyCard
+                key={c.title}
+                sectorLabel={c.sector}
+                title={c.title}
+                body={c.body}
+                tags={c.tags}
+                delay={(CASE_STUDIES.length + i) * 60}
+              />
             ))}
           </div>
 
