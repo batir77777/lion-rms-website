@@ -5,7 +5,10 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
+import RelatedContent from "@/components/RelatedContent";
 import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { getCaseStudiesForService } from "@/lib/case-studies";
+import { getPostsForService } from "@/lib/insights";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -34,6 +37,9 @@ export default async function ServiceDetailPage({
   const { slug } = await params;
   const cat = getCategory(slug);
   if (!cat) notFound();
+
+  const relatedCaseStudies = getCaseStudiesForService(slug);
+  const relatedPosts = getPostsForService(slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -84,7 +90,7 @@ export default async function ServiceDetailPage({
 
           {/* Other services */}
           <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
-            <p className="text-sm font-medium text-slate-400">Also available:</p>
+            <p className="text-sm font-medium text-slate-500">Also available:</p>
             {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
               <Link
                 key={c.slug}
@@ -95,6 +101,19 @@ export default async function ServiceDetailPage({
               </Link>
             ))}
           </div>
+
+          <RelatedContent
+            groups={[
+              {
+                heading: "Related case studies",
+                items: relatedCaseStudies.map((c) => ({ label: c.title, href: `/case-studies/${c.slug}` })),
+              },
+              {
+                heading: "Related insights",
+                items: relatedPosts.map((p) => ({ label: p.title, href: `/insights/${p.slug}` })),
+              },
+            ]}
+          />
 
           {/* Compliance Check promo */}
           <div className="mt-12">

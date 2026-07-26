@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { POSTS, getPost } from "@/lib/insights";
+import RelatedContent from "@/components/RelatedContent";
+import { POSTS, getPost, getInsightCategory } from "@/lib/insights";
 import { SITE, SITE_URL, getCategory, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { getCaseStudy } from "@/lib/case-studies";
 
 export function generateStaticParams() {
   return POSTS.map((p) => ({ slug: p.slug }));
@@ -59,6 +61,9 @@ export default async function PostPage({
   const p = getPost(slug);
   if (!p) notFound();
 
+  const relatedService = p.relatedService ? getCategory(p.relatedService) : undefined;
+  const relatedCaseStudy = p.relatedCaseStudySlug ? getCaseStudy(p.relatedCaseStudySlug) : undefined;
+
   const canonicalUrl = `${SITE_URL}/insights/${p.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -75,6 +80,7 @@ export default async function PostPage({
     description: p.excerpt,
     image: `${SITE_URL}/images/hero-banner.jpg`,
     url: canonicalUrl,
+    articleSection: getInsightCategory(p.category)?.label,
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   };
 
@@ -104,7 +110,7 @@ export default async function PostPage({
           <Reveal>
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
-              {p.dateLabel} &middot; Insights
+              {p.dateLabel} &middot; {getInsightCategory(p.category)?.label ?? "Insights"}
             </p>
             <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-extrabold leading-[1.1] text-navy-900">
               {p.title}
@@ -126,16 +132,20 @@ export default async function PostPage({
           <div>{render(p.body)}</div>
         </Reveal>
 
-        {p.relatedService && getCategory(p.relatedService) && (
-          <p className="mt-6 text-sm">
-            <Link
-              href={`/services/${p.relatedService}`}
-              className="font-semibold text-teal-600 hover:underline"
-            >
-              More about our {getCategory(p.relatedService)!.title} &rarr;
-            </Link>
-          </p>
-        )}
+        <RelatedContent
+          groups={[
+            {
+              heading: "Related service",
+              items: relatedService ? [{ label: relatedService.title, href: `/services/${relatedService.slug}` }] : [],
+            },
+            {
+              heading: "Related case study",
+              items: relatedCaseStudy
+                ? [{ label: relatedCaseStudy.title, href: `/case-studies/${relatedCaseStudy.slug}` }]
+                : [],
+            },
+          ]}
+        />
 
         {/* CTA */}
         <Reveal>
@@ -172,7 +182,7 @@ export default async function PostPage({
         </Reveal>
 
         <p className="mt-8 text-center text-sm">
-          <Link href="/insights" className="font-semibold text-teal-600 hover:underline">
+          <Link href="/insights" className="font-semibold text-teal-700 hover:underline">
             ← All insights
           </Link>
         </p>

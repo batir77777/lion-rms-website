@@ -6,6 +6,7 @@ import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import ProcessTimeline from "@/components/ProcessTimeline";
+import RelatedContent from "@/components/RelatedContent";
 import {
   SECTORS,
   SITE,
@@ -17,6 +18,8 @@ import {
   CTA_SECONDARY_LABEL,
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
+import { getCaseStudiesForSector } from "@/lib/case-studies";
+import { getPostsForSector } from "@/lib/insights";
 
 export function generateStaticParams() {
   return SECTORS.filter((s) => s.hasPage).map((s) => ({ slug: s.slug }));
@@ -49,6 +52,9 @@ export default async function SectorDetailPage({
   const relatedCategories = (sector.relatedServices ?? [])
     .map((s) => getCategory(s))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+  const relatedCaseStudies = getCaseStudiesForSector(slug);
+  const relatedPosts = getPostsForSector(slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -110,7 +116,7 @@ export default async function SectorDetailPage({
           {/* Related services */}
           {relatedCategories.length > 0 && (
             <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
-              <p className="text-sm font-medium text-slate-400">Relevant services:</p>
+              <p className="text-sm font-medium text-slate-500">Relevant services:</p>
               {relatedCategories.map((c) => (
                 <Link
                   key={c.slug}
@@ -122,6 +128,19 @@ export default async function SectorDetailPage({
               ))}
             </div>
           )}
+
+          <RelatedContent
+            groups={[
+              {
+                heading: "Related case studies",
+                items: relatedCaseStudies.map((c) => ({ label: c.title, href: `/case-studies/${c.slug}` })),
+              },
+              {
+                heading: "Related insights",
+                items: relatedPosts.map((p) => ({ label: p.title, href: `/insights/${p.slug}` })),
+              },
+            ]}
+          />
 
           {/* Compliance Check promo */}
           <div className="mt-12">
