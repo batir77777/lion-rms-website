@@ -76,7 +76,7 @@ export default function HomePage() {
               </div>
 
               <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.45)" }}>
-                Led by Batir Turakulov, Fire Engineer &amp; Fire Safety Consultant and Chartered Health &amp; Safety Practitioner (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
+                Led by Batir Turakulov, Fire Engineer &amp; Chartered Health &amp; Safety Professional (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
               </p>
             </div>
 
@@ -91,7 +91,7 @@ export default function HomePage() {
                 <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety</p>
                 <p className="text-white font-semibold text-lg">H&amp;S consultancy &amp; compliance</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS, policies, and competent person support — practical and proportionate.</p>
-                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>CMIOSH Chartered &middot; Fire Engineer &amp; Fire Safety Consultant</p>
+                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>Fire Engineer &amp; Chartered Health &amp; Safety Professional (CMIOSH)</p>
               </div>
             </div>
           </div>
