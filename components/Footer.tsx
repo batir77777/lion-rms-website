@@ -20,7 +20,7 @@ export default function Footer() {
               {CREDENTIALS.slice(0, 4).map((c) => (
                 <span
                   key={c}
-                  className="rounded-full border border-slate-700 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-slate-500"
+                  className="rounded-full border border-slate-700 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-slate-400"
                 >
                   {c}
                 </span>
@@ -30,7 +30,7 @@ export default function Footer() {
 
           {/* Pages */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Pages
             </h3>
             <ul className="space-y-2.5 text-sm">
@@ -46,7 +46,7 @@ export default function Footer() {
 
           {/* Coverage */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Coverage
             </h3>
             <p className="text-sm leading-relaxed text-slate-400">{COVERAGE_FULL}</p>
@@ -57,7 +57,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Contact
             </h3>
             <ul className="space-y-3 text-sm">
@@ -71,7 +71,7 @@ export default function Footer() {
                   {SITE.email}
                 </a>
               </li>
-              <li className="text-slate-500">{SITE.location}</li>
+              <li className="text-slate-400">{SITE.location}</li>
             </ul>
             <div className="mt-5 space-y-2.5 text-sm">
               <Link href="/contact" className="block font-semibold text-teal-400 transition hover:text-teal-300">
@@ -86,15 +86,15 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-start justify-between gap-3 border-t border-slate-800 pt-8 sm:flex-row sm:items-center">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-400">
             &copy; {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs text-slate-600 transition hover:text-slate-400">
+            <Link href="/privacy" className="text-xs text-slate-400 transition hover:text-white">
               Privacy Policy
             </Link>
-            <span className="text-slate-800" aria-hidden>&middot;</span>
-            <p className="text-xs text-slate-700">
+            <span className="text-slate-700" aria-hidden>&middot;</span>
+            <p className="text-xs text-slate-400">
               CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
             </p>
           </div>
