@@ -1,4 +1,4 @@
-import { ASSESSOR, CREDENTIALS, SITE, SITE_URL } from "@/lib/site";
+import { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, SITE, SITE_URL } from "@/lib/site";
 
 // Person JSON-LD for Batir Turakulov — every field below is sourced directly
 // from lib/site.ts (the same data already rendered on the homepage and About
@@ -19,10 +19,18 @@ export default function PersonJsonLd() {
       name: SITE.name,
       url: SITE_URL,
     },
-    hasCredential: CREDENTIALS.map((c) => ({
-      "@type": "EducationalOccupationalCredential",
-      name: c,
-    })),
+    hasCredential: [
+      ...MEMBERSHIPS.map((m) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional Membership",
+        name: m.fullName,
+      })),
+      ...QUALIFICATIONS.map((q) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Qualification",
+        name: q.name,
+      })),
+    ],
   };
   return (
     <script

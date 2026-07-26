@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { NAV, SITE, CREDENTIALS, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
               <Logo className="h-12 w-auto" dark />
             </div>
             <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Expert fire safety and health &amp; safety consultancy across London and the UK.
+              Expert fire safety and health &amp; safety consultancy across London and the Home Counties.
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
@@ -49,9 +49,9 @@ export default function Footer() {
             <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
               Coverage
             </h3>
-            <p className="text-sm text-slate-400">London and UK-wide.</p>
-            <Link href="/areas" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
-              Coverage areas &rarr;
+            <p className="text-sm leading-relaxed text-slate-400">{COVERAGE_FULL}</p>
+            <Link href="/sectors" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
+              Sectors we serve &rarr;
             </Link>
           </div>
 
