@@ -4,6 +4,7 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
+import ProcessTimeline from "@/components/ProcessTimeline";
 import { SERVICE_CATEGORIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -97,6 +98,9 @@ export default function ServicesPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Assessment Process — reused, unmodified component */}
+      <ProcessTimeline />
     </>
   );
 }
