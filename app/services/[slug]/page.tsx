@@ -5,7 +5,7 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
-import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -49,7 +49,7 @@ export default async function ServiceDetailPage({
     },
     areaServed: [
       { "@type": "City", name: "London" },
-      { "@type": "Country", name: "United Kingdom" },
+      ...COVERAGE_COUNTIES.map((c) => ({ "@type": "AdministrativeArea", name: c })),
     ],
   };
 
