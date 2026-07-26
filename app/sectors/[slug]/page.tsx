@@ -5,10 +5,21 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
-import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import ProcessTimeline from "@/components/ProcessTimeline";
+import {
+  SECTORS,
+  SITE,
+  SITE_URL,
+  getSector,
+  getCategory,
+  COVERAGE_COUNTIES,
+  CTA_PRIMARY_LABEL,
+  CTA_SECONDARY_LABEL,
+  CTA_SECONDARY_HREF,
+} from "@/lib/site";
 
 export function generateStaticParams() {
-  return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
+  return SECTORS.filter((s) => s.hasPage).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -17,31 +28,35 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const cat = getCategory(slug);
-  if (!cat) return { title: "Service" };
+  const sector = getSector(slug);
+  if (!sector || !sector.hasPage) return { title: "Sector" };
   return {
-    title: cat.title,
-    description: cat.intro,
-    alternates: { canonical: `/services/${slug}` },
+    title: sector.title,
+    description: sector.body ?? sector.summary,
+    alternates: { canonical: `/sectors/${slug}` },
   };
 }
 
-export default async function ServiceDetailPage({
+export default async function SectorDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const cat = getCategory(slug);
-  if (!cat) notFound();
+  const sector = getSector(slug);
+  if (!sector || !sector.hasPage) notFound();
+
+  const relatedCategories = (sector.relatedServices ?? [])
+    .map((s) => getCategory(s))
+    .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: cat.title,
-    description: cat.intro,
-    serviceType: cat.eyebrow,
-    url: `${SITE_URL}/services/${cat.slug}`,
+    name: `${sector.title} — Fire & Health & Safety Consultancy`,
+    description: sector.body ?? sector.summary,
+    serviceType: relatedCategories.map((c) => c.title),
+    url: `${SITE_URL}/sectors/${sector.slug}`,
     provider: {
       "@type": "ProfessionalService",
       name: SITE.name,
@@ -62,39 +77,51 @@ export default async function ServiceDetailPage({
       <BreadcrumbJsonLd
         items={[
           { name: "Home", path: "/" },
-          { name: "Services", path: "/services" },
-          { name: cat.title },
+          { name: "Sectors", path: "/sectors" },
+          { name: sector.title },
         ]}
       />
-      <PhotoHero eyebrow={cat.eyebrow} title={cat.title} body={cat.intro} />
+      <PhotoHero eyebrow={sector.title} title={sector.title} body={sector.body ?? sector.summary} />
+
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
-          {/* Service items grid */}
-          <div className="grid gap-6 sm:grid-cols-2">
-            {cat.items.map((item, i) => (
-              <Reveal key={item.name} delay={i * 50}>
-                <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
-                  <h2 className="mb-2 text-lg font-bold text-navy-900">{item.name}</h2>
-                  <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
-                </div>
+          {/* Key considerations */}
+          {sector.considerations && sector.considerations.length > 0 && (
+            <>
+              <Reveal>
+                <h2 className="mb-6 text-xl font-bold text-navy-900">Key considerations</h2>
               </Reveal>
-            ))}
-          </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                {sector.considerations.map((c, i) => (
+                  <Reveal key={c} delay={i * 50}>
+                    <div className="flex h-full items-start gap-3 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-50 text-xs font-bold text-teal-600">
+                        {i + 1}
+                      </span>
+                      <p className="text-sm leading-relaxed text-slate-600">{c}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </>
+          )}
 
-          {/* Other services */}
-          <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
-            <p className="text-sm font-medium text-slate-400">Also available:</p>
-            {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/services/${c.slug}`}
-                className="rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-sm font-semibold text-teal-700 transition hover:bg-teal-100"
-              >
-                {c.title}
-              </Link>
-            ))}
-          </div>
+          {/* Related services */}
+          {relatedCategories.length > 0 && (
+            <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+              <p className="text-sm font-medium text-slate-400">Relevant services:</p>
+              {relatedCategories.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/services/${c.slug}`}
+                  className="rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-sm font-semibold text-teal-700 transition hover:bg-teal-100"
+                >
+                  {c.title}
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* Compliance Check promo */}
           <div className="mt-12">
@@ -114,7 +141,7 @@ export default async function ServiceDetailPage({
                 Ongoing Compliance Support
               </p>
               <h2 className="mb-4 text-2xl font-extrabold text-white">
-                Discuss your {cat.eyebrow.toLowerCase()} requirements
+                Discuss your {sector.title.toLowerCase()} requirements
               </h2>
               <p className="mx-auto mb-7 max-w-xl text-base text-slate-400 leading-relaxed">
                 Tell us about your premises or project and we&apos;ll recommend a
@@ -140,6 +167,9 @@ export default async function ServiceDetailPage({
           </Reveal>
         </div>
       </section>
+
+      {/* Assessment Process — reused, unmodified component */}
+      <ProcessTimeline />
     </>
   );
 }

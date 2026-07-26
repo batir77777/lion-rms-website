@@ -26,12 +26,28 @@ export const IMAGES = {
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Sectors", href: "/sectors" },
   { label: "Free Check", href: "/check" },
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Insights", href: "/insights" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
+];
+
+// Geographic coverage — accurate, non-overclaiming wording (Phase 4B PR 1).
+// Use COVERAGE_FULL where there's room for a full sentence, COVERAGE_SHORT in
+// compact badges/strips. Wider UK coverage is by arrangement, not unrestricted.
+export const COVERAGE_FULL =
+  "London and the Home Counties, with wider UK coverage available by arrangement.";
+export const COVERAGE_SHORT = "London & Home Counties";
+export const COVERAGE_COUNTIES = [
+  "Hertfordshire",
+  "Essex",
+  "Kent",
+  "Surrey",
+  "Buckinghamshire",
+  "Berkshire",
 ];
 
 // Standardised CTA wording (Phase 4A) — primary drives enquiries, secondary
@@ -116,13 +132,144 @@ export function getCategory(slug: string): ServiceCategory | undefined {
   return SERVICE_CATEGORIES.find((c) => c.slug === slug);
 }
 
-export const CREDENTIALS = [
-  "CMIOSH — Chartered",
-  "AIFireE (IFE)",
-  "MIFSM",
-  "DipFRA Advanced",
-  "ISO 45001",
-  "PI Insured",
+// The nine approved sectors (Phase 4B PR 1). Three have dedicated pages
+// (`hasPage: true`); the remaining six are represented on the homepage and
+// the /sectors index without a dedicated page yet — deferred to a later PR.
+export interface Sector {
+  slug: string;
+  title: string;
+  summary: string;
+  body?: string;
+  considerations?: string[];
+  relatedServices?: string[]; // slugs into SERVICE_CATEGORIES
+  hasPage: boolean;
+}
+
+export const SECTORS: Sector[] = [
+  {
+    slug: "residential-blocks-hmos",
+    title: "Residential Blocks & HMOs",
+    summary: "Fire risk assessments and ongoing compliance support for residential blocks, purpose-built flats, and HMOs.",
+    body: "Fire risk assessments and ongoing compliance support for residential blocks, purpose-built flats, and HMOs — meeting your duties under the Fire Safety Order for the common parts, with clear, prioritised action plans landlords and managing agents can work through.",
+    considerations: [
+      "Common-parts duties under the Regulatory Reform (Fire Safety) Order 2005",
+      "Coordination with managing agents across a portfolio",
+      "HMO licensing overlap",
+      "External wall and compartmentation considerations where relevant",
+    ],
+    relatedServices: ["fire-safety"],
+    hasPage: true,
+  },
+  {
+    slug: "offices-commercial-workplaces",
+    title: "Offices & Commercial Workplaces",
+    summary: "Practical fire safety and health & safety support for offices and commercial workplaces.",
+    body: "Practical fire safety and health & safety support for offices and commercial workplaces — general fire precautions, evacuation planning, and day-to-day health & safety risk assessment, delivered with minimal disruption to your business.",
+    considerations: [
+      "General fire precautions and evacuation planning",
+      "Multi-tenant building coordination",
+      "Workplace health & safety risk assessment alongside fire",
+      "Scheduling around business hours, with minimal disruption",
+    ],
+    relatedServices: ["fire-safety", "health-safety"],
+    hasPage: true,
+  },
+  {
+    slug: "education",
+    title: "Education",
+    summary: "Fire risk assessments and health & safety support for schools, colleges, and other education settings.",
+    body: "Fire risk assessments and health & safety support for education settings, carried out with the scheduling and site awareness that schools and colleges need — clear, prioritised recommendations that account for higher-occupancy, vulnerable-occupant environments.",
+    considerations: [
+      "Higher-occupancy and vulnerable-occupant risk profile",
+      "Phased and assisted evacuation planning",
+      "Scheduling around term time",
+    ],
+    relatedServices: ["fire-safety", "health-safety"],
+    hasPage: true,
+  },
+  {
+    slug: "property-management",
+    title: "Property Management",
+    summary: "Portfolio-wide fire risk assessments and compliance management for managing agents.",
+    hasPage: false,
+  },
+  {
+    slug: "construction-developers",
+    title: "Construction & Developers",
+    summary: "Fire strategies, RAMS, and construction phase plans for new developments and change-of-use projects.",
+    hasPage: false,
+  },
+  {
+    slug: "retail-hospitality",
+    title: "Retail & Hospitality",
+    summary: "Fire safety and health & safety support for retail units, restaurants, and hospitality venues.",
+    hasPage: false,
+  },
+  {
+    slug: "healthcare",
+    title: "Healthcare",
+    summary: "Fire risk assessment and health & safety support for healthcare and care settings.",
+    hasPage: false,
+  },
+  {
+    slug: "industrial-warehousing",
+    title: "Industrial & Warehousing",
+    summary: "Fire safety and health & safety support for industrial units, warehouses, and logistics sites.",
+    hasPage: false,
+  },
+  {
+    slug: "mixed-use-developments",
+    title: "Mixed-Use & Change of Use Developments",
+    summary: "Fire strategies and compliance support for mixed-use schemes and change-of-use developments.",
+    hasPage: false,
+  },
+];
+
+export function getSector(slug: string): Sector | undefined {
+  return SECTORS.find((s) => s.slug === slug);
+}
+
+// Professional memberships, qualifications and assurance items — single
+// source of truth (Phase 4B PR 1). Previously split across two inconsistent
+// lists (`CREDENTIALS`, `MEMBERSHIPS`); reconciled here with every membership
+// grade stated explicitly so badges can never misrepresent chartership status.
+export interface Membership {
+  abbr: string;
+  /** Short grade word used in compact badges — always shown, never omitted. */
+  grade: string;
+  /** Full, formal name — used in structured data and any full-text listing. */
+  fullName: string;
+}
+export const MEMBERSHIPS: Membership[] = [
+  { abbr: "CMIOSH", grade: "Chartered", fullName: "Chartered Member of the Institution of Occupational Safety and Health (IOSH)" },
+  { abbr: "MIIRSM", grade: "Member", fullName: "Member of the International Institute of Risk and Safety Management (IIRSM)" },
+  { abbr: "AIEMA", grade: "Associate", fullName: "Associate Member of the Institute of Environmental Management and Assessment (IEMA)" },
+  { abbr: "AIFireE", grade: "Associate", fullName: "Associate Member of the Institution of Fire Engineers (IFE)" },
+  { abbr: "MIFSM", grade: "Member", fullName: "Member of the Institute of Fire Safety Managers (IFSM)" },
+];
+
+export interface Qualification {
+  name: string;
+}
+export const QUALIFICATIONS: Qualification[] = [
+  { name: "DipFRA Advanced" },
+  { name: "Level 5 Diploma in Fire Engineering Design" },
+];
+
+export interface Assurance {
+  name: string;
+}
+// ISO 45001 intentionally omitted — basis/evidence not yet confirmed (Phase 4B PR 1).
+export const ASSURANCES: Assurance[] = [
+  { name: "PI Insured" },
+];
+
+// Derived, not hand-maintained — feeds the existing badge strips (About,
+// Contact, homepage, Footer) and PersonJsonLd without changing their shape.
+export const CREDENTIALS: string[] = [
+  ...MEMBERSHIPS.map((m) => `${m.abbr} — ${m.grade}`),
+  ...QUALIFICATIONS.map((q) => q.name),
+  ...ASSURANCES.map((a) => a.name),
 ];
 
 export const ASSESSOR = {
@@ -148,7 +295,7 @@ export const FAQS = [
   { q: "Who is the 'Responsible Person'?", a: "It is whoever has control of the premises — typically the employer, building owner, landlord, or managing agent. The Responsible Person carries the legal duty to manage fire safety and act on the assessment's findings." },
   { q: "How quickly can you carry out an assessment?", a: "We aim to be responsive and will agree a timescale with you up front, prioritising urgent or enforcement-driven work. Get in touch with your requirements and we'll confirm availability." },
   { q: "Do you cover health & safety as well as fire?", a: "Yes. Alongside fire safety we provide general health & safety risk assessments, audits, RAMS, policies, and competent person support — so you can manage both through one consultancy.", relatedService: "health-safety" },
-  { q: "What areas do you cover?", a: "We are based in London and work across every London borough for residential, commercial, and construction clients." },
+  { q: "What areas do you cover?", a: "We are based in London and cover London and the Home Counties (Hertfordshire, Essex, Kent, Surrey, Buckinghamshire and Berkshire) as standard, with wider UK coverage available by arrangement for larger projects and portfolios." },
 ];
 
 export const RESOURCES = [
@@ -159,7 +306,7 @@ export const RESOURCES = [
 export const STATS = [
   { value: 10, suffix: "+", label: "Years' experience across fire & safety" },
   { value: 500, suffix: "+", label: "Assessments & inspections completed" },
-  { value: 3, suffix: "", label: "Sectors served — residential, commercial, construction" },
+  { value: 9, suffix: "", label: "Sectors served — see our sector experience" },
   { value: 16, suffix: "", label: "London areas covered" },
 ];
 
@@ -170,7 +317,17 @@ export const PROCESS_STEPS = [
   { n: "04", title: "Ongoing support", body: "Action tracking, reviews, reminders, and compliance records that keep your compliance current — not a report left in a drawer." },
 ];
 
-export const MEMBERSHIPS = ["CMIOSH", "DipFRA", "MIIRSM", "AIEMA", "AIFireE"];
+// "What Clients Receive" section (Phase 4B PR 1) — tangible deliverables,
+// distinct from PROCESS_STEPS above (which describes the steps, not the outputs).
+export const WHAT_CLIENTS_RECEIVE = [
+  { title: "A clear, prioritised report", body: "Written in plain English — what matters, why, and in what order to act." },
+  { title: "A fixed fee, agreed up front", body: "Confirmed before any work begins, so there are no surprises." },
+  { title: "A named point of contact", body: "The same assessor throughout, not a call centre." },
+  { title: "Actions tracked to completion", body: "A live record, not a report left in a drawer." },
+  { title: "Review dates scheduled automatically", body: "So nothing lapses without your knowledge." },
+  { title: "Audit-ready documentation", body: "Stored and accessible whenever you need it, for inspection or enforcement." },
+];
+
 export const STANDARDS_ROW = [
   "PAS 79", "BS 9999", "Approved Document B", "RRO (Fire Safety) Order 2005",
   "BS 9991", "Health & Safety at Work Act 1974", "CDM 2015", "HSG274 (Legionella)",

@@ -19,6 +19,11 @@ const nextConfig = {
         destination: "https://www.liondigital.org",
         permanent: true,
       },
+      {
+        source: "/areas",
+        destination: "/sectors",
+        permanent: true,
+      },
     ];
   },
 };

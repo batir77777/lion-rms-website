@@ -1,4 +1,4 @@
-import { ASSESSOR, SITE, SITE_URL } from "@/lib/site";
+import { ASSESSOR, SITE, SITE_URL, COVERAGE_COUNTIES } from "@/lib/site";
 
 // LocalBusiness JSON-LD — helps Google show the business for local searches.
 export default function StructuredData() {
@@ -20,7 +20,7 @@ export default function StructuredData() {
     },
     areaServed: [
       { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
-      { "@type": "Country", name: "United Kingdom" },
+      ...COVERAGE_COUNTIES.map((c) => ({ "@type": "AdministrativeArea", name: c })),
     ],
     address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
     knowsAbout: [

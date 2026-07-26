@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import PhotoHero from "@/components/PhotoHero";
 import ContactForm from "@/components/ContactForm";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { SITE, CREDENTIALS } from "@/lib/site";
+import { SITE, CREDENTIALS, COVERAGE_FULL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -49,7 +49,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <dt className="text-xs font-bold uppercase tracking-widest text-slate-400">Coverage</dt>
-                <dd className="mt-1 text-slate-700">London and UK-wide</dd>
+                <dd className="mt-1 text-slate-700">{COVERAGE_FULL}</dd>
               </div>
             </dl>
 
