@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "@/components/Logo";
 import { NAV, SITE, CTA_PRIMARY_LABEL } from "@/lib/site";
@@ -12,6 +12,8 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [spy, setSpy] = useState<string | null>(null);
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -21,6 +23,38 @@ export default function Header() {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // Close the mobile menu on Escape and return focus to the toggle button.
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  // Keep keyboard focus within the mobile menu while it's open: if focus
+  // tabs past the last link inside it, wrap back to the toggle button
+  // rather than letting focus fall through into the page content behind it.
+  useEffect(() => {
+    if (!open) return;
+    function onFocusOut(e: FocusEvent) {
+      const next = e.relatedTarget as Node | null;
+      if (!next) return;
+      const withinMenu = mobileNavRef.current?.contains(next);
+      const isToggle = toggleRef.current?.contains(next);
+      if (!withinMenu && !isToggle) {
+        toggleRef.current?.focus();
+      }
+    }
+    const nav = mobileNavRef.current;
+    nav?.addEventListener("focusout", onFocusOut);
+    return () => nav?.removeEventListener("focusout", onFocusOut);
+  }, [open]);
 
   useEffect(() => {
     const sections = Array.from(
@@ -112,8 +146,10 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
+          ref={toggleRef}
           aria-label="Toggle menu"
           aria-expanded={open}
+          aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
           className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-100 xl:hidden"
         >
@@ -138,13 +174,15 @@ export default function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-nav"
+            ref={mobileNavRef}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-slate-100 bg-white xl:hidden"
           >
-            <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 sm:px-6">
+            <nav aria-label="Mobile" className="mx-auto flex max-w-7xl flex-col px-4 py-2 sm:px-6">
               {NAV.map((n) => (
                 <Link
                   key={n.href}
