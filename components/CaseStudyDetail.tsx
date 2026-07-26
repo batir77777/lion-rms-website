@@ -48,10 +48,14 @@ function ListSection({ title, items }: { title: string; items: string[] }) {
 }
 
 export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
+  // Only sectors with a live page (`hasPage: true`) get a href — the rest
+  // still show as plain text (see RelatedContent) rather than linking to a
+  // sector route that doesn't exist yet. Mirrors the same hasPage guard
+  // already used for the sector grid on the homepage and /sectors index.
   const relatedSectorItems = study.relatedSectors
     .map((slug) => getSector(slug))
     .filter((s): s is NonNullable<typeof s> => Boolean(s))
-    .map((s) => ({ label: s.title, href: `/sectors/${s.slug}` }));
+    .map((s) => ({ label: s.title, href: s.hasPage ? `/sectors/${s.slug}` : undefined }));
 
   const relatedServiceItems = study.relatedServices
     .map((slug) => getCategory(slug))
