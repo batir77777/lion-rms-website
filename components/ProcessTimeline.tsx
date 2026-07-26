@@ -15,7 +15,7 @@ export default function ProcessTimeline() {
   return (
     <section className="bg-slate-50">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-600">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
           How we work
         </p>
         <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-5xl">
@@ -46,7 +46,7 @@ export default function ProcessTimeline() {
                 }}
                 className="relative"
               >
-                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-teal-200 bg-white font-display text-base font-bold text-teal-600 shadow-sm">
+                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-teal-200 bg-white font-display text-base font-bold text-teal-700 shadow-sm">
                   {s.n}
                 </div>
                 <h3 className="mt-5 font-display text-xl font-semibold text-navy-900">
