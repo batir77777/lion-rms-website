@@ -1,4 +1,9 @@
 /node_modules
+# Velite compiles TS config files through esbuild and caches the compiled
+# output in a node_modules/ directory next to whichever config file it's
+# building — including nested ones like tests/fixtures-config/node_modules,
+# which the root-only /node_modules rule above doesn't cover.
+node_modules
 /.next
 /out
 /build
@@ -9,3 +14,9 @@ npm-debug.log*
 .vercel
 next-env.d.ts
 /tsconfig.tsbuildinfo
+
+# Velite content-collection build output (Phase 5A) — generated from
+# content/**/*.mdx by `velite build`, analogous to /.next; not source.
+/.velite
+/.velite-test-output
+/tests/fixtures-config/.velite-test-output
