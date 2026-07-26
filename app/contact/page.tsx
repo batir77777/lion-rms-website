@@ -86,6 +86,13 @@ export default function ContactPage() {
             <Suspense fallback={<p className="text-sm text-slate-400">Loading form…</p>}>
               <ContactForm />
             </Suspense>
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-5 text-xs font-semibold text-slate-400">
+              <span>CMIOSH Chartered</span>
+              <span aria-hidden>&middot;</span>
+              <span>PI Insured</span>
+              <span aria-hidden>&middot;</span>
+              <span>Usually respond the same day</span>
+            </div>
           </div>
         </div>
       </section>

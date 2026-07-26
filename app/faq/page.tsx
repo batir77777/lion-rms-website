@@ -4,7 +4,7 @@ import PhotoHero from "@/components/PhotoHero";
 import FaqAccordion from "@/components/FaqAccordion";
 import FaqJsonLd from "@/components/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { FAQS } from "@/lib/site";
+import { FAQS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -40,13 +40,13 @@ export default function FaqPage() {
                 className="inline-flex items-center rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                 style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
               >
-                Get in Touch
+                {CTA_PRIMARY_LABEL}
               </Link>
               <Link
-                href="/contact"
+                href={CTA_SECONDARY_HREF}
                 className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
               >
-                Get a Quote
+                {CTA_SECONDARY_LABEL}
               </Link>
             </div>
           </div>

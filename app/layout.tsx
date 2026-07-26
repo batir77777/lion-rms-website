@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fire Risk Assessment London | H&S Consultancy — Lion RMS",
-    description: "Expert fire safety & health & safety consultancy in London. From £250 + VAT.",
+    description: "Expert fire safety & health & safety consultancy in London. CMIOSH-led chartered expertise. Book a consultation.",
     images: ["/images/hero-banner.jpg"],
   },
   robots: { index: true, follow: true },

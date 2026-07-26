@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CREDENTIALS } from "@/lib/site";
+import { NAV, SITE, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -73,9 +73,12 @@ export default function Footer() {
               </li>
               <li className="text-slate-500">{SITE.location}</li>
             </ul>
-            <div className="mt-5 text-sm">
-              <Link href="/contact" className="block text-teal-400 transition hover:text-teal-300">
-                Book a free call &rarr;
+            <div className="mt-5 space-y-2.5 text-sm">
+              <Link href="/contact" className="block font-semibold text-teal-400 transition hover:text-teal-300">
+                {CTA_PRIMARY_LABEL} &rarr;
+              </Link>
+              <Link href={CTA_SECONDARY_HREF} className="block text-slate-400 transition hover:text-white">
+                {CTA_SECONDARY_LABEL} &rarr;
               </Link>
             </div>
           </div>

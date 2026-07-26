@@ -5,7 +5,7 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import PersonJsonLd from "@/components/PersonJsonLd";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { ASSESSOR, CREDENTIALS } from "@/lib/site";
+import { ASSESSOR, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -45,7 +45,7 @@ export default function AboutPage() {
       <PhotoHero
         eyebrow="About"
         title="Expert fire safety and health & safety consultancy"
-        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy — led by Batir Turakulov, CMIOSH. Holding the Level 4 Diploma in Fire Risk Assessment (DipFRA) and Level 5 Diploma in Fire Engineering Design, Batir brings fire engineering expertise that few UK consultancies can match."
+        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy led by Batir Turakulov. Batir Turakulov is a Fire Engineer and Fire Safety Consultant with extensive experience in fire risk assessment, building fire safety and regulatory compliance, holding CMIOSH Chartered status, the Level 4 Diploma in Fire Risk Assessment (DipFRA), and the Level 5 Diploma in Fire Engineering Design."
       />
 
       <section className="bg-white py-20">
@@ -136,13 +136,21 @@ export default function AboutPage() {
                 Tell us about your premises or project and we&apos;ll recommend a
                 proportionate, compliant way forward — with a clear, fixed-fee quote.
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
-              >
-                Book a Consultation &rarr;
-              </Link>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
+                >
+                  {CTA_PRIMARY_LABEL} &rarr;
+                </Link>
+                <Link
+                  href={CTA_SECONDARY_HREF}
+                  className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+                >
+                  {CTA_SECONDARY_LABEL}
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { getCategory } from "@/lib/site";
 
 export default function FaqAccordion({
   items,
 }: {
-  items: { q: string; a: string }[];
+  items: { q: string; a: string; relatedService?: string }[];
 }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
@@ -31,7 +33,15 @@ export default function FaqAccordion({
             </button>
             {isOpen && (
               <div className="px-5 pb-5 text-sm leading-relaxed text-slate-600">
-                {item.a}
+                <p>{item.a}</p>
+                {item.relatedService && getCategory(item.relatedService) && (
+                  <Link
+                    href={`/services/${item.relatedService}`}
+                    className="mt-3 flex w-fit items-center gap-1 text-sm font-semibold text-teal-600 hover:underline"
+                  >
+                    More about {getCategory(item.relatedService)!.title} &rarr;
+                  </Link>
+                )}
               </div>
             )}
           </div>
