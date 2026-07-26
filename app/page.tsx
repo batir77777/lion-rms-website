@@ -3,12 +3,12 @@ import Link from "next/link";
 import AssessorSection from "@/components/AssessorSection";
 import ComplianceCheckBand from "@/components/ComplianceCheckBand";
 import RecentProjects from "@/components/RecentProjects";
-import { CREDENTIALS, TESTIMONIALS, STATS, WHO_WE_HELP, PROCESS_STEPS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
   description:
-    "Expert fire risk assessments and health & safety consultancy across London and the UK. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
+    "Expert fire risk assessments and health & safety consultancy across London and the Home Counties. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
   alternates: { canonical: "/" },
 };
 
@@ -44,7 +44,7 @@ export default function HomePage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; Level 5 Diploma in Fire Engineering Design &bull; London &amp; UK-wide
+                CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; Level 5 Diploma in Fire Engineering Design &bull; {COVERAGE_SHORT}
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
@@ -56,7 +56,7 @@ export default function HomePage() {
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
                 From fire risk assessments and fire safety consultancy to health &amp; safety support and compliance management —
-                clear, proportionate advice for landlords, managing agents, businesses, and developers across London and the UK.
+                clear, proportionate advice for landlords, managing agents, businesses, and developers across London and the Home Counties.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -104,7 +104,7 @@ export default function HomePage() {
       {/* ── TRUST STATEMENT ── */}
 <div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
   <p className="text-sm text-slate-500">
-    Trusted by landlords, managing agents, commercial organisations and developers across London and the UK.
+    Trusted by landlords, managing agents, commercial organisations and developers across London and the Home Counties.
   </p>
 </div>
 
@@ -174,17 +174,66 @@ export default function HomePage() {
       {/* ── ABOUT THE FOUNDER ── */}
       <AssessorSection />
 
-      {/* ── WHO WE HELP ── */}
+      {/* ── SECTORS WE SERVE ── */}
       <section className="py-20 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Who We Help</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Sectors We Serve</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
-              We Work With
+              Trusted Across Nine Sectors
+            </h2>
+            <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
+              Dedicated guidance for the sectors we&rsquo;re asked about most, and broad experience beyond them.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {SECTORS.map((s) =>
+              s.hasPage ? (
+                <Link
+                  key={s.slug}
+                  href={`/sectors/${s.slug}`}
+                  className="group flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-100 hover:shadow-md"
+                >
+                  <h3 className="text-sm font-bold text-slate-800 group-hover:text-navy-800">{s.title}</h3>
+                  <p className="mt-2 flex-1 text-xs text-slate-500 leading-relaxed">{s.summary}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600">
+                    View details &rarr;
+                  </span>
+                </Link>
+              ) : (
+                <div key={s.slug} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                  <h3 className="text-sm font-bold text-slate-800">{s.title}</h3>
+                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">{s.summary}</p>
+                </div>
+              ),
+            )}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              href="/sectors"
+              className="inline-flex items-center rounded-full px-8 py-4 text-base font-bold text-white shadow-lg transition hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(135deg, #0c1f3f, #0ea5a0)" }}
+            >
+              View All Sectors &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── RECENT PROJECTS ── */}
+      <RecentProjects />
+
+      {/* ── WHAT CLIENTS RECEIVE ── */}
+      <section className="py-20 border-b border-slate-100 bg-white">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
+          <div className="text-center mb-12">
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">What Clients Receive</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
+              Practical Deliverables, Not Just a Report
             </h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {WHO_WE_HELP.map((w) => (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {WHAT_CLIENTS_RECEIVE.map((w) => (
               <div key={w.title} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
                 <h3 className="text-sm font-bold text-slate-800">{w.title}</h3>
                 <p className="mt-2 text-xs text-slate-500 leading-relaxed">{w.body}</p>
@@ -193,9 +242,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── RECENT PROJECTS ── */}
-      <RecentProjects />
 
       {/* ── HOW IT WORKS ── */}
       <section className="py-20 bg-slate-50 border-b border-slate-100">
