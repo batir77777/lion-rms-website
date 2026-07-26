@@ -47,7 +47,7 @@ export default function AssessorSection() {
                 About the Founder
               </p>
               <h2 className="text-2xl font-extrabold text-slate-800 sm:text-3xl">
-                Led by {ASSESSOR.name}
+                Meet {ASSESSOR.name}
               </h2>
               <p className="mt-1 text-sm font-medium text-teal-700">{ASSESSOR.role}</p>
               <p className="mt-4 text-base leading-relaxed text-slate-500">{ASSESSOR.bio}</p>
