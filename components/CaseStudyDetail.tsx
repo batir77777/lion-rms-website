@@ -50,7 +50,7 @@ function ListSection({ title, items }: { title: string; items: string[] }) {
 export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
   const relatedSectorItems = study.relatedSectors
     .map((slug) => getSector(slug))
-    .filter((s): s is NonNullable<typeof s> => Boolean(s) && s.hasPage)
+    .filter((s): s is NonNullable<typeof s> => Boolean(s?.hasPage))
     .map((s) => ({ label: s.title, href: `/sectors/${s.slug}` }));
 
   const relatedServiceItems = study.relatedServices
