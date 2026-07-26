@@ -45,7 +45,7 @@ export default function AboutPage() {
       <PhotoHero
         eyebrow="About"
         title="Expert fire safety and health & safety consultancy"
-        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy led by Batir Turakulov. Batir Turakulov is a Fire Engineer and Fire Safety Consultant with extensive experience in fire risk assessment, building fire safety and regulatory compliance, holding CMIOSH Chartered status, the Level 4 Diploma in Fire Risk Assessment (DipFRA), and the Level 5 Diploma in Fire Engineering Design."
+        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy, led by Batir Turakulov. Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH), with expertise spanning both fire engineering and health & safety across commercial, residential and complex premises. Holding the Level 4 Diploma in Fire Risk Assessment (DipFRA) and the Level 5 Diploma in Fire Engineering Design, he provides practical, proportionate advice and personally delivered consultancy that supports regulatory compliance."
       />
 
       <section className="bg-white py-20">
