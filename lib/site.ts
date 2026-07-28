@@ -56,8 +56,14 @@ export const CTA_PRIMARY_LABEL = "Request a Quote";
 export const CTA_SECONDARY_LABEL = "Free Compliance Check";
 export const CTA_SECONDARY_HREF = "/check";
 
+// Company positioning — Lion RMS is presented across three co-equal
+// disciplines: Fire Engineering, Health & Safety, and Fire Risk Assessment.
+// Fire risk assessment is deliberately kept prominent rather than subordinate:
+// it is both a core discipline and the highest-intent search term for the
+// business. Coverage wording stays "London, the Home Counties, and the wider
+// UK by arrangement" — never an unrestricted UK-wide claim (see COVERAGE_FULL).
 export const POSITIONING =
-  "From fire risk assessments and fire strategies to health and safety support and compliance management, Lion Risk Management Solutions provides practical, joined-up consultancy for organisations that need clear, compliant, and efficient solutions.";
+  "Lion Risk Management Solutions is a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy, providing fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation assessments, health & safety consultancy, compliance auditing and professional training across London, the Home Counties, and the wider UK by arrangement.";
 
 export interface ServiceItem {
   name: string;
@@ -79,15 +85,20 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "fire-safety",
     image: IMAGES.fireSafety,
     imageAlt: "Protected escape corridor with fire doors, emergency lighting and illuminated exit signage",
-    eyebrow: "Fire Safety",
-    title: "Fire Safety Services",
-    short: "Fire risk assessments, fire strategies, fire door inspections, compartmentation support, and fire safety training.",
-    intro: "We help duty holders meet their obligations under the Regulatory Reform (Fire Safety) Order 2005, with clear, prioritised, and proportionate fire safety advice for residential, commercial, and construction premises.",
+    eyebrow: "Fire Engineering",
+    title: "Fire Engineering & Fire Safety Services",
+    short: "Fire engineering, fire safety consultancy, fire risk assessments, fire strategies, fire door inspections, compartmentation, and fire safety training.",
+    intro: "Fire engineering led, from design-stage advice through to buildings in use. We help duty holders and project teams meet their obligations under the Regulatory Reform (Fire Safety) Order 2005 and the Building Regulations, with clear, prioritised, and proportionate fire safety advice for residential, commercial, and complex premises.",
+    // Ordered to the approved service hierarchy: fire engineering first, with
+    // fire risk assessment positioned as one service within the broader
+    // offering rather than the headline discipline.
     items: [
-      { name: "Fire Risk Assessments", desc: "Thorough assessments that identify fire hazards, evaluate risk to occupants, and provide clear, prioritised recommendations in line with PAS 79 and the RRO 2005." },
+      { name: "Fire Engineering", desc: "Applied fire engineering across building fire safety — means of escape, passive and active fire protection, compartmentation strategy, and fire safety design review for new build, refurbishment and change-of-use projects." },
+      { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, project teams and building owners — from design-stage input and regulatory interpretation through to remedial strategy and ongoing compliance support." },
+      { name: "Fire Risk Assessments", desc: "Thorough assessments that identify fire hazards, evaluate risk to occupants, and provide clear, prioritised recommendations informed by relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction." },
       { name: "Fire Strategies", desc: "Bespoke fire strategies for new developments, change-of-use projects, and complex buildings — supporting planning and Building Regulations compliance." },
       { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
-      { name: "Compartmentation Reviews", desc: "Review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
+      { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
       { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
       { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
     ],
@@ -97,7 +108,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     image: IMAGES.healthSafety,
     imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
     eyebrow: "Health & Safety",
-    title: "Health & Safety Services",
+    title: "Health & Safety Consultancy",
     short: "Risk assessments, audits, inspections, RAMS, policies, competent person support, and compliance advice.",
     intro: "Practical health and safety support that helps businesses, landlords, and contractors meet their obligations under the Health and Safety at Work etc. Act 1974 and associated regulations — without unnecessary complexity.",
     items: [
@@ -106,7 +117,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       { name: "RAMS and Construction Phase Plans", desc: "Risk assessments, method statements, and construction phase plans developed alongside your project team." },
       { name: "Policies and Procedures", desc: "Health and safety policies and documented procedures written in plain English and fit for your organisation." },
       { name: "Competent Person Support", desc: "Ongoing competent-person support, giving you access to qualified advice whenever you need it." },
-      { name: "Training and Compliance Advice", desc: "Training and day-to-day guidance to keep your team informed and your obligations met." },
+      { name: "Training and Compliance Services", desc: "Training and day-to-day guidance to keep your team informed and your obligations met." },
     ],
   },
   {
@@ -276,7 +287,7 @@ export const ASSESSOR = {
   name: "Batir Turakulov",
   role: "Fire Engineer & Chartered Health & Safety Professional (CMIOSH)",
   photo: "/batir-turakulov.jpg",
-  bio: "Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) with extensive experience in fire engineering, fire risk assessment, health & safety, building safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate fire safety and health & safety consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
+  bio: "Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and an Advanced Diploma in Fire Risk Assessment, and is an Associate Member of the Institution of Fire Engineers. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };
 
@@ -330,7 +341,7 @@ export const WHAT_CLIENTS_RECEIVE = [
 
 export const STANDARDS_ROW = [
   "PAS 79", "BS 9999", "Approved Document B", "RRO (Fire Safety) Order 2005",
-  "BS 9991", "Health & Safety at Work Act 1974", "CDM 2015", "HSG274 (Legionella)",
+  "BS 9991", "Health & Safety at Work Act 1974", "CDM 2015",
 ];
 
 // Anonymised recent-work highlights for the homepage "Recent Projects"
