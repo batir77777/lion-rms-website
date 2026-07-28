@@ -14,7 +14,7 @@ export default function Footer() {
               <Logo className="h-12 w-auto" dark />
             </div>
             <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Expert fire safety and health &amp; safety consultancy across London and the Home Counties.
+              Fire engineering, health &amp; safety and fire risk assessment consultancy across London and the Home Counties.
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
