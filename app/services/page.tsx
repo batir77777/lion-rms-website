@@ -10,7 +10,7 @@ import { SERVICE_CATEGORIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDA
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Fire risk assessments, health & safety consultancy, and compliance management from Lion RMS — practical, proportionate advice backed by CMIOSH chartered expertise.",
+    "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
   alternates: { canonical: "/services" },
 };
 
@@ -20,8 +20,8 @@ export default function ServicesPage() {
       <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Services" }]} />
       <PhotoHero
         eyebrow="Services"
-        title="Expert fire safety and health & safety services"
-        body="From fire risk assessments and fire strategies to health & safety support and compliance management — practical, proportionate advice for landlords, managing agents, businesses, and developers."
+        title="Fire engineering, health & safety and fire risk assessment services"
+        body="Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training — practical, proportionate advice for landlords, managing agents, businesses, and developers."
       />
 
       <section className="bg-white py-20">
