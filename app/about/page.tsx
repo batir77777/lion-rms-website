@@ -10,7 +10,7 @@ import { ASSESSOR, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECO
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions — specialist fire safety and health & safety consultancy led by Batir Turakulov, CMIOSH, DipFRA, and Level 5 Fire Engineering Design.",
+    "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer and Chartered Health & Safety Professional (CMIOSH).",
   alternates: { canonical: "/about" },
 };
 
@@ -18,7 +18,7 @@ const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Assessments grounded in UK legislation, CMIOSH Chartered status, Level 4 DipFRA, and Level 5 Fire Engineering Design — depth of expertise few UK consultancies can match.",
+    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, Institution of Fire Engineers membership, an Advanced Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
   },
   {
     icon: "⚖️",
@@ -44,8 +44,8 @@ export default function AboutPage() {
       <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "About" }]} />
       <PhotoHero
         eyebrow="About"
-        title="Expert fire safety and health & safety consultancy"
-        body="Lion Risk Management Solutions provides specialist fire safety and health & safety consultancy, led by Batir Turakulov. Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) with extensive experience spanning fire engineering, fire risk assessment, health & safety, building safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate consultancy that helps organisations manage risk, achieve compliance and protect people, property and business continuity, with every assessment personally undertaken to current UK legislation and recognised industry standards."
+        title="Fire engineering, health & safety and fire risk assessment"
+        body="Lion Risk Management Solutions is a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy, led by Batir Turakulov. Batir is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate consultancy that helps organisations manage risk, achieve compliance and protect people, property and business continuity, with every assessment personally undertaken to current UK legislation and recognised industry standards."
       />
 
       <section className="bg-white py-20">
@@ -55,22 +55,44 @@ export default function AboutPage() {
           <Reveal>
             <div className="mb-12 space-y-5 text-lg leading-relaxed text-slate-600">
               <p>
-                Lion Risk Management Solutions provides fire safety and health &amp;
-                safety consultancy to residential, commercial, and construction clients
-                across London. We work with landlords, managing agents, property
-                developers, contractors, and businesses of all sizes.
+                Lion Risk Management Solutions is a fire engineering, health &amp;
+                safety and fire risk assessment consultancy serving residential,
+                commercial, and construction clients across London. We work with
+                landlords, managing agents, property developers, contractors, and
+                businesses of all sizes.
+              </p>
+              <p>
+                Our fire engineering work covers building fire safety in use and at
+                design stage — means of escape, passive and active fire protection,
+                compartmentation strategy, fire safety compliance, and fire safety
+                design review for new build, refurbishment and change-of-use schemes.
+                Batir holds a Level 5 Diploma in Fire Engineering Design and is an
+                Associate Member of the Institution of Fire Engineers.
+              </p>
+              <p>
+                Fire risk assessment is a core discipline of the consultancy and
+                represents a substantial part of its work. Assessments are undertaken
+                with reference to relevant recognised guidance, including PAS 79 where
+                appropriate, and the applicable fire safety legislation for the premises
+                and jurisdiction. They are informed by the same engineering
+                understanding of how a building is designed to perform in fire — which
+                is what allows recommendations to be proportionate, addressing the
+                things that genuinely affect life safety rather than defaulting to a
+                checklist. Batir holds an Advanced Diploma in Fire Risk Assessment
+                alongside his fire engineering qualifications.
               </p>
               <p>
                 Our work is grounded in UK fire safety legislation — including the
-                Regulatory Reform (Fire Safety) Order 2005 — and health and safety
-                law under the Health and Safety at Work etc. Act 1974. Every
-                recommendation is tailored to the specific circumstances of your
-                premises and operations.
+                Regulatory Reform (Fire Safety) Order 2005 and the Building
+                Regulations — and health and safety law under the Health and Safety at
+                Work etc. Act 1974. Every recommendation is tailored to the specific
+                circumstances of your premises and operations.
               </p>
               <p>
-                From the initial assessment through to ongoing compliance management,
-                we provide a consistent, professional service — with clear priorities,
-                plain-English reports, and reliable follow-through.
+                From design-stage fire engineering advice and initial assessment through
+                to ongoing compliance management, we provide a consistent, professional
+                service — with clear priorities, plain-English reports, and reliable
+                follow-through.
               </p>
             </div>
           </Reveal>
