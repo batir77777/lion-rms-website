@@ -30,7 +30,7 @@ const COLUMNS = [
     title: "The professional FRA",
     tone: "ember",
     points: [
-      "Suitable and sufficient to PAS 79 — evidence-based, building-specific",
+      "Suitable and sufficient, evidence-based and building-specific, with reference to recognised guidance including PAS 79 where appropriate",
       "Prioritised, proportionate actions in plain English",
       "Frequently costs less to implement than over-cautious reports demand",
       "Defensible if ever challenged — and carried out personally by a chartered safety practitioner (CMIOSH)",

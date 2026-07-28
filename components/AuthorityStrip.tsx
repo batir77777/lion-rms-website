@@ -4,7 +4,6 @@ const STANDARDS = [
   "BS 9999 · BS 9991",
   "Health & Safety at Work Act 1974",
   "CDM 2015",
-  "HSG274 (Legionella)",
 ];
 
 export default function AuthorityStrip() {

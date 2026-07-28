@@ -6,17 +6,17 @@ import RecentProjects from "@/components/RecentProjects";
 import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Fire Risk Assessment & H&S Consultancy London — Lion RMS",
+  title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
   description:
-    "Expert fire risk assessments and health & safety consultancy across London and the Home Counties. Led by Batir Turakulov, CMIOSH, Level 4 DipFRA, Level 5 Fire Engineering Design. Book a consultation.",
+    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
   alternates: { canonical: "/" },
 };
 
 const SERVICES_FS = [
-  { icon: "🔥", title: "Fire Risk Assessments", desc: "PAS 79-compliant assessments for residential and commercial premises — clear, prioritised, and proportionate." },
-  { icon: "📐", title: "Fire Safety Consultancy", desc: "Specialist fire safety advice for new developments, change-of-use, complex buildings, and ongoing compliance support." },
-  { icon: "🏗️", title: "Health & Safety Audits", desc: "Risk assessments, audits, RAMS, policies, and competent person support." },
-  { icon: "📋", title: "Compliance Management", desc: "Actions tracked, reviews scheduled, documentation audit-ready — one consultancy from assessment to ongoing compliance." },
+  { icon: "📐", title: "Fire Engineering", desc: "Building fire safety, means of escape, passive and active fire protection, and fire safety design review across new build, refurbishment and change-of-use." },
+  { icon: "🔥", title: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders and project teams — regulatory interpretation, fire strategies, remedial strategy, and ongoing compliance support." },
+  { icon: "📄", title: "Fire Risk Assessments", desc: "Fire risk assessments informed by recognised guidance, including PAS 79 where appropriate, for residential and commercial premises — clear, prioritised, and proportionate." },
+  { icon: "🏗️", title: "Health & Safety Consultancy", desc: "Risk assessments, audits, RAMS, policies, and competent person support." },
 ];
 
 export default function HomePage() {
@@ -44,18 +44,18 @@ export default function HomePage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; Level 5 Diploma in Fire Engineering Design &bull; {COVERAGE_SHORT}
+                Level 5 Diploma in Fire Engineering Design &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
-                Expert Fire Safety &amp;{" "}
+                Fire Engineering, Health &amp; Safety and{" "}
                 <span style={{ background: "linear-gradient(100deg,#00c9a7 0%,#5be3c0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Health &amp; Safety Consultancy.
+                  Fire Risk Assessment Consultancy.
                 </span>
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                From fire risk assessments and fire safety consultancy to health &amp; safety support and compliance management —
+                Fire engineering consultancy, fire risk assessments, fire strategies, fire door inspections, compartmentation, health &amp; safety consultancy and training —
                 clear, proportionate advice for landlords, managing agents, businesses, and developers across London and the Home Counties.
               </p>
 
@@ -83,9 +83,9 @@ export default function HomePage() {
             {/* Right — service pillars */}
             <div className="hidden lg:grid grid-cols-1 gap-4">
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.08)" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Safety</p>
-                <p className="text-white font-semibold text-lg">Fire Risk Assessments &amp; Fire Safety Consultancy</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>PAS 79-compliant assessments, fire strategies, door inspections, compartmentation reviews, and training.</p>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Engineering</p>
+                <p className="text-white font-semibold text-lg">Fire Engineering &amp; Fire Safety Consultancy</p>
+                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Building fire safety, fire strategies, passive and active fire protection, fire risk assessments informed by recognised guidance including PAS 79 where appropriate, door inspections, compartmentation, and training.</p>
                               </div>
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(255,255,255,0.04)" }}>
                 <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety</p>
@@ -128,10 +128,10 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Our Services</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
-              Fire Safety &amp; Health and Safety Services
+              Fire Engineering, Health &amp; Safety and Fire Risk Assessment
             </h2>
             <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
-              Practical, proportionate consultancy — from initial assessment through to ongoing compliance management.
+              Practical, proportionate consultancy — from fire engineering and design-stage advice through to assessment and ongoing compliance management.
             </p>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-10">

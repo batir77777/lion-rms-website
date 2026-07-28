@@ -8,7 +8,7 @@ import { SITE, CREDENTIALS, COVERAGE_FULL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch about a fire risk assessment, health & safety audit, fire strategy, or compliance support. We respond the same day.",
+    "Get in touch about fire engineering, a fire strategy, a fire risk assessment, a health & safety audit, or compliance support. We respond the same day.",
   alternates: { canonical: "/contact" },
 };
 
@@ -19,7 +19,7 @@ export default function ContactPage() {
       <PhotoHero
         eyebrow="Contact"
         title="Get in Touch"
-        body="Get in touch about a fire risk assessment, health & safety audit, fire strategy, or compliance support. We respond the same day and can usually book within the week."
+        body="Get in touch about fire engineering, a fire strategy, a fire risk assessment, a health & safety audit, or compliance support. We respond the same day and can usually book within the week."
       />
 
       <section className="bg-white">

@@ -97,7 +97,7 @@ When you commission a fire risk assessment, asking whether it's carried out in l
 
 ## In practice
 
-Every fire risk assessment we carry out follows the PAS 79 methodology, from initial hazard identification through to a risk-rated, prioritised action plan — because a structured approach is what turns an assessment into something you can actually act on, rather than a document that sits on a shelf.`,
+Our fire risk assessments are informed by recognised guidance, including the PAS 79 methodology where appropriate to the premises and scope, from initial hazard identification through to a risk-rated, prioritised action plan — because a structured approach is what turns an assessment into something you can actually act on, rather than a document that sits on a shelf.`,
   },
   {
     slug: "fire-door-inspections-explained",
