@@ -3,7 +3,7 @@
 // jurisdictions are all deliberately closed vocabularies, not free text —
 // this is what makes navigable category/tag pages and long-term taxonomy
 // hygiene possible instead of the decorative, unbounded `tags: string[]`
-// pattern used by the current `lib/insights.ts`.
+// pattern used by the legacy `lib/insights.ts`, retired in Phase 5A PR 3.
 //
 // Any content item referencing a category/tag/audience slug that isn't
 // registered here fails validation (see lib/content-validation.ts and
@@ -99,6 +99,14 @@ export const CONTENT_TAGS: ContentTag[] = [
   { slug: "cdm", label: "CDM" },
   { slug: "construction-fire-safety", label: "Construction Fire Safety" },
   { slug: "evacuation-planning", label: "Evacuation Planning" },
+  // Added in Phase 5A PR 3. A technical building-fabric topic that sits
+  // alongside fire-doors and means-of-escape. The only tag added during the
+  // Insights migration: the other free-text tags on the legacy posts were
+  // categories, audiences or document references in disguise, and are handled
+  // by `category`, `audience` and the relatedStandards/relatedLegislation
+  // relation fields respectively rather than by inventing tags that would
+  // later compete with the /standards and /legislation pages themselves.
+  { slug: "compartmentation", label: "Compartmentation" },
   { slug: "fire-extinguishers", label: "Fire Extinguishers" },
 ];
 

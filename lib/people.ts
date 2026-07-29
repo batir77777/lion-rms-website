@@ -1,8 +1,9 @@
 // Author/Reviewer registry for the Knowledge Centre content platform
 // (Phase 5A). This is the fix for a real gap identified in the Phase 5A
-// architecture audit: the existing Article JSON-LD in app/insights/[slug]
-// hardcodes the author as the literal string "Batir Turakulov" instead of
-// sourcing the site's own ASSESSOR data in lib/site.ts. Every content
+// architecture audit: the old Article JSON-LD hardcoded the author as the
+// literal string "Batir Turakulov" instead of sourcing the site's own ASSESSOR
+// data in lib/site.ts. Phase 5A PR 3 consumes this registry from
+// lib/content-jsonld.ts, so /guides pages now emit a real Person. Every content
 // item's `author`/`reviewer` field should reference this registry by `id`,
 // never a free-text name — this also future-proofs for a second reviewer
 // without any restructuring if/when the practice grows.
