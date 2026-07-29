@@ -126,7 +126,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="text-lg font-bold text-navy-900">{ASSESSOR.name}</p>
-                <p className="mb-3 text-sm font-medium text-teal-600">{ASSESSOR.role}</p>
+                <p className="mb-3 text-sm font-medium text-teal-700">{ASSESSOR.role}</p>
                 <p className="mb-4 text-base leading-relaxed text-slate-500">{ASSESSOR.bio}</p>
                 <div className="flex flex-wrap gap-2">
                   {CREDENTIALS.map((c) => (
