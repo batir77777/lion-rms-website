@@ -26,6 +26,7 @@ import {
 } from "@/lib/site";
 import { getCaseStudy } from "@/lib/case-studies";
 import { getTerm, displayTerm, GLOSSARY_PATH } from "@/lib/glossary";
+import { getStandard, designation, STANDARDS_PATH } from "@/lib/standards";
 
 // Only published guides are generated, and `dynamicParams = false` means a slug
 // outside that set returns a genuine 404 rather than being rendered on demand —
@@ -122,6 +123,16 @@ export default async function GuidePage({
     .map((s) => getTerm(s))
     .filter((t): t is NonNullable<typeof t> => Boolean(t))
     .map((t) => ({ label: displayTerm(t), href: `${GLOSSARY_PATH}/${t.slug}` }));
+
+  // The Guide side of the Standards relation (Phase 5A PR 5). Same shape and
+  // same reasoning as the Glossary relation directly above: the Guide declares
+  // it, the standard page derives the inverse via guidesReferencing(), and both
+  // directions are covered by tests — PR 4 shipped a relation whose forward
+  // half was never rendered, and it took preview verification to catch.
+  const referencedStandards = guide.relatedStandards
+    .map((s) => getStandard(s))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s))
+    .map((s) => ({ label: designation(s), href: `${STANDARDS_PATH}/${s.slug}` }));
 
   return (
     <article className="bg-white">
@@ -239,6 +250,7 @@ export default async function GuidePage({
           groups={[
             { heading: "Related service", items: relatedServices },
             { heading: "Related case study", items: relatedCaseStudies },
+            { heading: "Standards referenced", items: referencedStandards },
             { heading: "Terms used in this guide", items: relatedTerms },
           ]}
         />
