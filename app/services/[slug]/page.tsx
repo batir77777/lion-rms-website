@@ -8,7 +8,7 @@ import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import RelatedContent from "@/components/RelatedContent";
 import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { getCaseStudiesForService } from "@/lib/case-studies";
-import { getPostsForService } from "@/lib/insights";
+import { getGuidesForService } from "@/lib/guides";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -39,7 +39,7 @@ export default async function ServiceDetailPage({
   if (!cat) notFound();
 
   const relatedCaseStudies = getCaseStudiesForService(slug);
-  const relatedPosts = getPostsForService(slug);
+  const relatedGuides = getGuidesForService(slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -109,8 +109,8 @@ export default async function ServiceDetailPage({
                 items: relatedCaseStudies.map((c) => ({ label: c.title, href: `/case-studies/${c.slug}` })),
               },
               {
-                heading: "Related insights",
-                items: relatedPosts.map((p) => ({ label: p.title, href: `/insights/${p.slug}` })),
+                heading: "Related guides",
+                items: relatedGuides.map((g) => ({ label: g.title, href: `/guides/${g.slug}` })),
               },
             ]}
           />
