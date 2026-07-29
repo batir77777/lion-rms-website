@@ -30,7 +30,7 @@ export const NAV = [
   { label: "Free Check", href: "/check" },
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Insights", href: "/insights" },
+  { label: "Knowledge Centre", href: "/guides" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];

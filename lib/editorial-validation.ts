@@ -20,6 +20,7 @@ import { SITE_URL } from "./site";
 import type { ValidationIssue, ContentItemLike } from "./content-validation";
 import {
   reviewCycleMonths,
+  tagsExpected,
   toDateOnly,
   addMonths,
   today,
@@ -273,8 +274,16 @@ export function checkTags(collections: Collections): ValidationIssue[] {
       seen.add(tag);
     }
 
-    // C3 — untagged published content is a discoverability gap, not a defect.
-    if (str(item.status) === "published" && tags.length === 0) {
+    // C3 — untagged published content is a discoverability gap, not a defect,
+    // and only in collections where tags are the load-bearing navigation axis.
+    // Guides are excluded: their taxonomy is carried by category, audience and
+    // document relations, so an empty tags array there is a valid editorial
+    // state. See TAGS_EXPECTED_COLLECTIONS in editorial-rules.ts.
+    if (
+      tagsExpected(collection) &&
+      str(item.status) === "published" &&
+      tags.length === 0
+    ) {
       issues.push(issue(collection, item, "C3", "warning",
         `published "${item.slug}" has no tags.`));
     }

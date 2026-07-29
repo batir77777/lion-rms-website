@@ -69,6 +69,9 @@ export default defineConfig({
   root: "content",
   output: {
     data: ".velite",
+    // GENERATED DIRECTORY — `clean: true` below empties public/static on every
+    // build. Never place a hand-managed asset here; it would be deleted by the
+    // next build with no warning. Hand-managed images live in public/images.
     assets: "public/static",
     base: "/static/",
     name: "[name]-[hash:6].[ext]",

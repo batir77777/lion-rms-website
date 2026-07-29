@@ -48,6 +48,47 @@ export const REVIEW_CYCLE_MONTHS: Record<string, number | null> = {
 /** High-risk legal or technical guidance shortens the Guides cycle to 6 months. */
 export const HIGH_RISK_GUIDE_CYCLE_MONTHS = 6;
 
+// ---------------------------------------------------------------------------
+// Which collections rule C3 ("published content has no tags") applies to.
+//
+// C3 exists to catch content that is invisible to tag-driven discovery. That
+// only makes sense where tags are the load-bearing cross-cutting axis for a
+// collection — so the rule is scoped rather than universal.
+//
+// Guides are deliberately excluded (Phase 5A PR 3). A Guide's taxonomy is
+// carried by `category`, which is mandatory and enum-constrained, by
+// `audience`, and by the relatedStandards/relatedLegislation relations that
+// point at the documents it discusses. Tags on a Guide describe supplementary
+// technical subject matter and are genuinely optional: several published
+// Guides are legal-duty or compliance-overview pieces whose subject matter IS
+// their category, and padding them with tags to silence a warning would
+// produce exactly the taxonomy sprawl the PR 2 tag constraint was built to
+// prevent. An empty tags array on a Guide is a valid editorial state, not a
+// gap.
+//
+// Every other collection keeps the previous behaviour unchanged.
+//
+// Add a collection here when tags become the primary way readers navigate it.
+// ---------------------------------------------------------------------------
+
+export const TAGS_EXPECTED_COLLECTIONS: readonly string[] = [
+  "news",
+  "standards",
+  "legislation",
+  "glossaryTerms",
+  "downloads",
+];
+
+const TAGS_EXPECTED_SET = new Set(TAGS_EXPECTED_COLLECTIONS);
+
+/**
+ * True where an empty `tags` array on published content is worth reporting.
+ * False for collections whose discoverability does not rest on tags.
+ */
+export function tagsExpected(collection: string): boolean {
+  return TAGS_EXPECTED_SET.has(collection);
+}
+
 /**
  * Resolves the review cycle for a given collection and risk tier.
  * Returns null where the collection has no routine cycle (News).

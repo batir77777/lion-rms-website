@@ -19,7 +19,7 @@ import {
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
 import { getCaseStudiesForSector } from "@/lib/case-studies";
-import { getPostsForSector } from "@/lib/insights";
+import { getGuidesForSector } from "@/lib/guides";
 
 export function generateStaticParams() {
   return SECTORS.filter((s) => s.hasPage).map((s) => ({ slug: s.slug }));
@@ -54,7 +54,7 @@ export default async function SectorDetailPage({
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
   const relatedCaseStudies = getCaseStudiesForSector(slug);
-  const relatedPosts = getPostsForSector(slug);
+  const relatedGuides = getGuidesForSector(slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -136,8 +136,8 @@ export default async function SectorDetailPage({
                 items: relatedCaseStudies.map((c) => ({ label: c.title, href: `/case-studies/${c.slug}` })),
               },
               {
-                heading: "Related insights",
-                items: relatedPosts.map((p) => ({ label: p.title, href: `/insights/${p.slug}` })),
+                heading: "Related guides",
+                items: relatedGuides.map((g) => ({ label: g.title, href: `/guides/${g.slug}` })),
               },
             ]}
           />
