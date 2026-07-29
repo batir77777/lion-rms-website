@@ -33,7 +33,7 @@ export default function ServicesPage() {
                   href={`/services/${cat.slug}`}
                   className="group flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal-100 hover:shadow-xl"
                 >
-                  <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-600">
+                  <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
                     <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
                     {cat.eyebrow}
                   </p>
@@ -43,7 +43,7 @@ export default function ServicesPage() {
                   <p className="mt-4 flex-1 text-base leading-relaxed text-slate-500">
                     {cat.short}
                   </p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 group-hover:gap-2.5 transition-all">
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700 group-hover:gap-2.5 transition-all">
                     View details
                     <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden>
                       <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
