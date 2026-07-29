@@ -156,11 +156,34 @@ describe("A. status coherence", () => {
   });
 
   test("A3 is satisfied by supersededBy", () => {
+    // supersededBy became an array in Phase 5A PR 5, because supersession is
+    // genuinely one-to-many — PAS 79:2012 was replaced by two documents.
     const issues = checkStatusCoherence(
-      { standards: [validItem({ status: "superseded", supersededBy: "bs-9999-2026" })] },
+      { standards: [validItem({ status: "superseded", supersededBy: ["bs-9999-2026"] })] },
       { now: NOW }
     );
     assert.equal(issues.filter((i) => i.rule === "A3").length, 0);
+  });
+
+  test("A3 is satisfied by more than one successor", () => {
+    const issues = checkStatusCoherence(
+      { standards: [validItem({ status: "superseded", supersededBy: ["a", "b"] })] },
+      { now: NOW }
+    );
+    assert.equal(issues.filter((i) => i.rule === "A3").length, 0);
+  });
+
+  test("A3 and G1 are different checks and say which is which", () => {
+    // A3 fires on `status` — OUR PAGE was superseded by another page here.
+    // G1 fires on `documentStatus` — the EXTERNAL DOCUMENT was superseded.
+    const issues = checkStatusCoherence(
+      { standards: [validItem({ status: "superseded", supersededBy: [] })] },
+      { now: NOW }
+    );
+    const a3 = issues.find((i) => i.rule === "A3");
+    assert.ok(a3);
+    assert.match(a3.message, /publication status/);
+    assert.match(a3.message, /successor page/);
   });
 
   test("A5 a future publishedDate is a warning, not an error", () => {
@@ -322,7 +345,7 @@ describe("C. taxonomy and people", () => {
     assert.deepEqual(issues.filter((i) => i.rule === "C3"), []);
   });
 
-  test("C3 still applies to every collection other than Guides and Glossary", () => {
+  test("C3 still applies to every collection where tags are load-bearing", () => {
     for (const collection of TAGS_EXPECTED_COLLECTIONS) {
       const issues = checkTags({ [collection]: [validItem({ tags: [] })] });
       const c3 = issues.filter((i) => i.rule === "C3");
@@ -331,18 +354,30 @@ describe("C. taxonomy and people", () => {
     }
     assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("guides"), false);
     assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("glossaryTerms"), false);
+    // Standards left in Phase 5A PR 5. Four of the eight launch documents have
+    // no honest match in the tag registry, and inventing one would duplicate an
+    // existing category and compete with the standard pages themselves.
+    assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("standards"), false);
     assert.deepEqual(
       [...TAGS_EXPECTED_COLLECTIONS].sort(),
-      ["downloads", "legislation", "news", "standards"]
+      ["downloads", "legislation", "news"]
     );
   });
 
-  test("tagsExpected is false for Guides and Glossary, true for the other four", () => {
+  test("tagsExpected is false for Guides, Glossary and Standards", () => {
     assert.equal(tagsExpected("guides"), false);
     assert.equal(tagsExpected("glossaryTerms"), false);
-    for (const c of ["news", "standards", "legislation", "downloads"]) {
+    assert.equal(tagsExpected("standards"), false);
+    for (const c of ["news", "legislation", "downloads"]) {
       assert.equal(tagsExpected(c), true, `${c} should expect tags`);
     }
+  });
+
+  test("excluding Standards from C3 leaves C1 and C2 untouched there", () => {
+    const unknown = checkTags({ standards: [validItem({ tags: ["not-a-real-tag"] })] });
+    assert.equal(unknown.filter((i) => i.rule === "C1").length, 1);
+    const dupe = checkTags({ standards: [validItem({ tags: ["fire-doors", "fire-doors"] })] });
+    assert.equal(dupe.filter((i) => i.rule === "C2").length, 1);
   });
 
   test("excluding Glossary from C3 leaves C1 and C2 untouched there", () => {

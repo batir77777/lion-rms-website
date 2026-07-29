@@ -54,13 +54,17 @@ const count = (text, token) =>
 // not be "fixed" — changing them to slate-500 would reduce contrast.
 // ---------------------------------------------------------------------------
 const SLATE_400_DARK_ALLOWLIST = {
-  "components/Footer.tsx": 14, // footer body, nav links, credentials, legal line — bg #060e1f
+  // 15 from Phase 5A PR 5: the fourteen existing uses plus the nested
+  // Knowledge Centre section links added under the Pages column. Same #060e1f
+  // background, same measured 7.51:1.
+  "components/Footer.tsx": 15, // footer body, nav links, Knowledge Centre sections, credentials, legal line — bg #060e1f
   "app/services/[slug]/page.tsx": 1, // dark gradient CTA panel
   "app/services/page.tsx": 1, // dark gradient CTA panel
   "app/sectors/[slug]/page.tsx": 1, // dark gradient CTA panel
   "app/sectors/page.tsx": 1, // dark gradient CTA panel
   "app/guides/[slug]/page.tsx": 1, // dark gradient CTA panel
   "app/glossary/[slug]/page.tsx": 1, // dark gradient CTA panel (PR 4)
+  "app/standards/[slug]/page.tsx": 1, // dark gradient CTA panel (PR 5)
   "app/about/page.tsx": 1, // dark gradient CTA panel
   "app/faq/page.tsx": 1, // dark gradient CTA panel
   "app/case-studies/page.tsx": 1, // dark gradient CTA panel
@@ -144,7 +148,7 @@ describe("Contrast token regressions", () => {
   test("the allowlist preserves the footer, which is the case most likely to be broken by a blanket fix", () => {
     const footer = fs.readFileSync(path.join(repoRoot, "components/Footer.tsx"), "utf8");
     assert.ok(footer.includes("#060e1f"), "footer background colour changed — re-measure the allowlist");
-    assert.equal(count(footer, "text-slate-400"), 14);
+    assert.equal(count(footer, "text-slate-400"), 15);
     assert.equal(count(footer, "text-slate-500"), 0, "slate-500 on #060e1f would be worse, not better");
   });
 });
