@@ -92,7 +92,10 @@ export const CONTENT_TAGS: ContentTag[] = [
   { slug: "peeps", label: "PEEPs" },
   { slug: "fire-alarm-systems", label: "Fire Alarm Systems" },
   { slug: "emergency-lighting", label: "Emergency Lighting" },
-  { slug: "legionella", label: "Legionella" },
+  // "legionella" removed in Phase 5A PR 2. Legionella is not a promoted
+  // service, and a tag in the registry would become a live topic page the
+  // moment taxonomy routes exist. Restore this entry if Legionella content or
+  // services are formally introduced.
   { slug: "cdm", label: "CDM" },
   { slug: "construction-fire-safety", label: "Construction Fire Safety" },
   { slug: "evacuation-planning", label: "Evacuation Planning" },

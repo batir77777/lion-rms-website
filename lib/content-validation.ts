@@ -14,17 +14,34 @@
 // Velite build to exercise it.
 
 import { isReservedSlug } from "./reserved-slugs";
+import type { Severity } from "./editorial-rules";
+import { validateEditorialRules } from "./editorial-validation";
 
 export interface ValidationIssue {
   collection: string;
   slug?: string;
   id?: string;
   message: string;
+  /**
+   * Rule identifier (e.g. "B4"), present on editorial issues added in PR 2 so
+   * output can be grouped by rule rather than by item.
+   */
+  rule?: string;
+  /**
+   * Defaults to "error" when absent, which keeps every PR 1 structural check
+   * blocking without needing to be rewritten. Only editorial checks set
+   * "warning".
+   */
+  severity?: Severity;
 }
 
 export interface ValidationResult {
+  /** True when there are no ERRORS. Warnings do not invalidate a build. */
   valid: boolean;
+  /** Everything found, errors and warnings together. */
   issues: ValidationIssue[];
+  errors: ValidationIssue[];
+  warnings: ValidationIssue[];
 }
 
 export interface ContentItemLike {
@@ -153,17 +170,55 @@ export function checkRelations(
 }
 
 /**
- * Runs the full cross-collection validation framework and returns a single
- * aggregated result. This is what velite.config.ts's `complete` hook calls,
- * and what the test suite exercises directly with in-memory fixtures.
+ * Runs the full validation framework — PR 1's structural checks plus PR 2's
+ * editorial checks — and returns a single aggregated result.
+ *
+ * Structural issues are always errors and always block the build. Editorial
+ * issues carry their own severity: errors block, warnings are reported only.
+ * The deliberate consequence is that a review date falling due can never break
+ * a deployment; only a real defect can. `npm run content:audit` re-runs the
+ * same validation with warnings escalated to failures.
+ *
+ * `options.now` is injectable so date-dependent rules are deterministic under
+ * test and fixtures do not rot as the real clock moves past them.
  */
 export function validateContentCollections(
-  collections: Record<string, ContentItemLike[]>
+  collections: Record<string, ContentItemLike[]>,
+  options: { now?: string } = {}
 ): ValidationResult {
   const issues: ValidationIssue[] = [
     ...checkReservedSlugs(collections),
     ...checkDuplicateIds(collections),
     ...checkRelations(collections),
+    ...validateEditorialRules(collections, options),
   ];
-  return { valid: issues.length === 0, issues };
+
+  const errors = issues.filter((i) => (i.severity ?? "error") === "error");
+  const warnings = issues.filter((i) => i.severity === "warning");
+
+  return { valid: errors.length === 0, issues, errors, warnings };
+}
+
+/**
+ * Formats issues for terminal output, grouped by rule so a run that surfaces
+ * twenty instances of one guideline reads as one heading rather than twenty
+ * unrelated lines. Warning fatigue is a real failure mode for tooling like
+ * this; grouping is the cheapest mitigation.
+ */
+export function formatIssues(issues: ValidationIssue[]): string {
+  if (issues.length === 0) return "";
+  const byRule = new Map<string, ValidationIssue[]>();
+  for (const i of issues) {
+    const key = i.rule ?? "structural";
+    if (!byRule.has(key)) byRule.set(key, []);
+    byRule.get(key)!.push(i);
+  }
+  const lines: string[] = [];
+  for (const [rule, group] of [...byRule.entries()].sort()) {
+    lines.push(`  [${rule}] ${group.length} item${group.length === 1 ? "" : "s"}`);
+    for (const i of group) {
+      lines.push(`    - ${i.collection}: ${i.message}`);
+    }
+  }
+  return lines.join("\n");
 }

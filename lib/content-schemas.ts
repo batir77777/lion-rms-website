@@ -23,7 +23,7 @@
 // without any dependency on Velite's internal build context.
 
 import { s } from "velite";
-import { CONTENT_CATEGORY_SLUGS, AUDIENCE_SLUGS } from "./taxonomy";
+import { CONTENT_CATEGORY_SLUGS, CONTENT_TAG_SLUGS, AUDIENCE_SLUGS } from "./taxonomy";
 import { AUTHOR_IDS, REVIEWER_IDS } from "./people";
 
 // ---------------------------------------------------------------------------
@@ -57,7 +57,11 @@ export const baseFields = {
   nextReviewDue: s.isodate().optional(),
 
   category: s.enum(CONTENT_CATEGORY_SLUGS),
-  tags: s.array(s.string()).default([]),
+  // Constrained to the taxonomy registry (Phase 5A PR 2). Previously this was
+  // a free-string array, so any typo silently created a new tag — the exact
+  // sprawl that makes tag pages worthless at scale. Adding a genuinely new tag
+  // is now a deliberate edit to lib/taxonomy.ts, which is the intent.
+  tags: s.array(s.enum(CONTENT_TAG_SLUGS)).default([]),
   audience: s.array(s.enum(AUDIENCE_SLUGS)).default([]),
 
   relatedServices: s.array(s.string()).default([]),

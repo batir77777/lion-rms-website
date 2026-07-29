@@ -23,7 +23,11 @@ import {
   glossaryTermSchema,
   downloadResourceSchema,
 } from "./lib/content-schemas";
-import { validateContentCollections, type ContentItemLike } from "./lib/content-validation";
+import {
+  validateContentCollections,
+  formatIssues,
+  type ContentItemLike,
+} from "./lib/content-validation";
 
 const guides = defineCollection({
   name: "Guide",
@@ -90,9 +94,28 @@ export default defineConfig({
     };
 
     const result = validateContentCollections(collections);
-    if (!result.valid) {
-      const message = result.issues.map((issue) => `  - [${issue.collection}] ${issue.message}`).join("\n");
-      throw new Error(`Cross-collection content validation failed:\n${message}`);
+
+    // Warnings are reported, never fatal. This is deliberate: editorial
+    // observations — an overdue review date, a short meta description — must
+    // never break a production deployment, or content simply ageing could
+    // block an unrelated urgent fix months later.
+    if (result.warnings.length > 0) {
+      console.warn(
+        `\n[content] ${result.warnings.length} editorial warning${result.warnings.length === 1 ? "" : "s"}:\n${formatIssues(result.warnings)}\n` +
+          `[content] Warnings do not fail the build. Run \`npm run content:audit\` to treat them as failures.\n`
+      );
+    }
+
+    // CONTENT_AUDIT escalates warnings to failures. Set by
+    // scripts/content-audit.mjs; never set during a normal build.
+    const auditMode = process.env.CONTENT_AUDIT === "1";
+    const fatal = auditMode ? result.issues : result.errors;
+
+    if (fatal.length > 0) {
+      const heading = auditMode
+        ? `Content audit failed: ${result.errors.length} error(s), ${result.warnings.length} warning(s)`
+        : `Content validation failed: ${result.errors.length} error(s)`;
+      throw new Error(`${heading}\n${formatIssues(fatal)}`);
     }
   },
 });
