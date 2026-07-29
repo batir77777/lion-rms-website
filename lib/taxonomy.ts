@@ -25,12 +25,19 @@ export interface ContentCategory {
   description: string;
   /**
    * Which public sections may use this category. Values name sections
-   * (/guides, /news, /glossary), not schema contentType literals — "glossary"
-   * therefore matches the section, consistent with how "guide" and "news"
-   * already work. Phase 5A PR 3 added Guides; PR 4 opted in the three
-   * categories that genuinely fit the launch Glossary terms.
+   * (/guides, /news, /glossary, /standards), not schema contentType literals —
+   * "glossary" therefore matches the section, consistent with how "guide" and
+   * "news" already work. Phase 5A PR 3 added Guides; PR 4 opted in the three
+   * categories that genuinely fit the launch Glossary terms; PR 5 opted in the
+   * four that fit Standards.
+   *
+   * From PR 5 this field is ENFORCED rather than declarative: rule C6 in
+   * lib/editorial-validation.ts rejects a content item whose category does not
+   * list that item's section. Before that it was documentation only, which
+   * meant the registry could drift away from what content actually did without
+   * anything noticing.
    */
-  appliesTo: ("guide" | "news" | "glossary")[];
+  appliesTo: ("guide" | "news" | "glossary" | "standard")[];
 }
 
 export const CONTENT_CATEGORIES: ContentCategory[] = [
@@ -39,28 +46,28 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
     label: "Fire Risk Assessments",
     description:
       "Guidance on the fire risk assessment process itself — methodology, scope, what a competent assessment covers, and how to read and act on one.",
-    appliesTo: ["guide", "news", "glossary"],
+    appliesTo: ["guide", "news", "glossary", "standard"],
   },
   {
     slug: "fire-safety",
     label: "Fire Safety",
     description:
       "Practical fire safety guidance for buildings in use — means of escape, fire doors, detection and alarm systems, evacuation planning, and day-to-day management.",
-    appliesTo: ["guide", "news", "glossary"],
+    appliesTo: ["guide", "news", "glossary", "standard"],
   },
   {
     slug: "health-safety",
     label: "Health & Safety",
     description:
       "Wider workplace health and safety guidance beyond fire — risk assessment, compliance systems, and statutory duties under the Health and Safety at Work Act.",
-    appliesTo: ["guide", "news"],
+    appliesTo: ["guide", "news", "standard"],
   },
   {
     slug: "compliance-legislation",
     label: "Compliance & Legislation",
     description:
       "How fire safety and health & safety legislation applies in practice — duties, responsibilities, and what compliance actually requires of a Responsible Person or employer.",
-    appliesTo: ["guide", "news", "glossary"],
+    appliesTo: ["guide", "news", "glossary", "standard"],
   },
   {
     slug: "business-duty-holder-guidance",
@@ -196,7 +203,7 @@ const categorySchema = z.object({
   slug: z.string().min(1),
   label: z.string().min(1),
   description: z.string().min(1),
-  appliesTo: z.array(z.enum(["guide", "news", "glossary"])).min(1),
+  appliesTo: z.array(z.enum(["guide", "news", "glossary", "standard"])).min(1),
 });
 
 const tagSchema = z.object({

@@ -121,6 +121,20 @@ const RELATION_TARGET_COLLECTIONS: Record<string, string> = {
   relatedDownloads: "downloads",
 };
 
+// Relation fields that point WITHIN the item's own collection rather than at a
+// fixed target (Phase 5A, PR 5).
+//
+// `supersededBy` names successor documents in the same collection — a standard
+// is superseded by a standard, an Act by an Act. Before this, `supersededBy`
+// was not validated at all: a successor slug with a typo in it resolved to
+// nothing, rendered as nothing, and reported as nothing. On a page whose entire
+// job is to tell a reader "this document no longer stands, here is what
+// replaced it", a silently missing successor is the worst possible failure.
+//
+// Keyed by field name rather than by collection so Legislation inherits the
+// check in PR 6 with no change here.
+const SELF_RELATION_FIELDS: readonly string[] = ["supersededBy"];
+
 /**
  * Cross-collection relation validation. For every relation field this
  * platform's content model defines that points at another *content*
@@ -142,6 +156,25 @@ export function checkRelations(
 
   for (const [collectionName, items] of Object.entries(collections)) {
     for (const item of items) {
+      // Self-referencing relations first — the target is the item's own
+      // collection, which is always present in the build by definition.
+      for (const field of SELF_RELATION_FIELDS) {
+        const value = item[field];
+        if (!Array.isArray(value) || value.length === 0) continue;
+        const targetSlugs = slugSetsByCollection[collectionName] ?? new Set<string>();
+        for (const referencedSlug of value as string[]) {
+          if (!targetSlugs.has(referencedSlug)) {
+            issues.push({
+              collection: collectionName,
+              slug: item.slug,
+              id: item.id,
+              rule: "G2",
+              message: `"${item.slug}" has ${field} referencing "${referencedSlug}", which does not exist in the "${collectionName}" collection.`,
+            });
+          }
+        }
+      }
+
       for (const [field, targetCollection] of Object.entries(RELATION_TARGET_COLLECTIONS)) {
         const value = item[field];
         if (!Array.isArray(value) || value.length === 0) continue;
