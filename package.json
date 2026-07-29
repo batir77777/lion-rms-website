@@ -9,6 +9,7 @@
     "lint": "next lint",
     "content:build": "velite build --strict --clean",
     "content:validate": "velite build --strict --clean",
+    "content:audit": "node scripts/content-audit.mjs",
     "test": "node --import tsx --test tests/*.test.mjs"
   },
   "dependencies": {
