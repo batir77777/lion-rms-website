@@ -36,7 +36,7 @@ export default function Testimonials() {
       onBlurCapture={() => setPaused(false)}
     >
       <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:py-28">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-600">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
           What clients say
         </p>
         <span

@@ -72,7 +72,7 @@ export default function ChecklistPage() {
           />
         </div>
         <div className="relative mx-auto max-w-3xl px-4 pb-14 pt-36 sm:px-6 sm:pt-44 print:pt-8">
-          <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-600 print:hidden">
+          <p className="mb-4 inline-block rounded-full border border-teal-100 bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-teal-700 print:hidden">
             Free resource
           </p>
           <h1 className="text-3xl font-bold text-navy-900 sm:text-4xl">

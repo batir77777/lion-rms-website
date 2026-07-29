@@ -108,3 +108,69 @@ export function buildCollectionPageSchema(input: CollectionPageInput) {
     publisher,
   };
 }
+
+export interface DefinedTermInput {
+  name: string;
+  description: string;
+  path: string;
+  /** Synonyms plus, for an abbreviation, the full form it stands for. */
+  alternateNames?: string[];
+  /** The abbreviation itself, e.g. "AFD" — omitted where the term is not one. */
+  termCode?: string;
+  /** Absolute URL of the DefinedTermSet this term belongs to. */
+  inDefinedTermSet: string;
+}
+
+/**
+ * A single Glossary term (Phase 5A, PR 4).
+ *
+ * `inDefinedTermSet` is what ties every term back to one sitewide set rather
+ * than leaving twelve unrelated DefinedTerm nodes scattered across the site.
+ * The set itself lives on /glossary — see buildDefinedTermSetSchema — because
+ * repeating the full set on every term page would be noise.
+ */
+export function buildDefinedTermSchema(input: DefinedTermInput) {
+  const url = `${SITE_URL}${input.path}`;
+  const alternates = (input.alternateNames ?? []).filter(Boolean);
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: input.name,
+    description: input.description,
+    url,
+    "@id": url,
+    ...(alternates.length > 0
+      ? { alternateName: alternates.length === 1 ? alternates[0] : alternates }
+      : {}),
+    ...(input.termCode ? { termCode: input.termCode } : {}),
+    inDefinedTermSet: input.inDefinedTermSet,
+  };
+}
+
+export interface DefinedTermSetInput {
+  name: string;
+  description: string;
+  path: string;
+  terms: { name: string; description: string; path: string }[];
+}
+
+/** The Glossary index's DefinedTermSet, listing every published term. */
+export function buildDefinedTermSetSchema(input: DefinedTermSetInput) {
+  const url = `${SITE_URL}${input.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: input.name,
+    description: input.description,
+    url,
+    "@id": url,
+    hasDefinedTerm: input.terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.name,
+      description: t.description,
+      url: `${SITE_URL}${t.path}`,
+      inDefinedTermSet: url,
+    })),
+    publisher,
+  };
+}

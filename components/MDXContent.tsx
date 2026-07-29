@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import GlossaryLink from "@/components/GlossaryLink";
 import * as jsxRuntime from "react/jsx-runtime";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
@@ -25,8 +26,9 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 // document outline intact, semantic tables with scoped headers, images that
 // must carry alt text, and links that mark external destinations. Enforcing
 // them structurally here means every guide gets them, rather than each author
-// remembering. It is also the intended hook point for first-mention glossary
-// auto-linking in PR 4.
+// remembering. It also exposes GlossaryLink for explicit, author-triggered
+// glossary links; automatic first-mention linking was deliberately NOT built —
+// see components/GlossaryLink.tsx for why.
 //
 // Reused unchanged by News, Standards, Legislation, Glossary and Downloads.
 // ---------------------------------------------------------------------------
@@ -60,6 +62,11 @@ function isExternal(href: string | undefined): boolean {
 }
 
 const components: Record<string, unknown> = {
+  // Available to every MDX body. Explicit, author-triggered glossary linking —
+  // deliberately not automatic first-mention replacement, for the reasons in
+  // components/GlossaryLink.tsx.
+  GlossaryLink,
+
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 {...props} className="mt-10 scroll-mt-28 text-2xl font-bold text-navy-900" />
   ),

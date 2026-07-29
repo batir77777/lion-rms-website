@@ -43,7 +43,7 @@ export default function AssessorSection() {
           </Reveal>
           <Reveal delay={80}>
             <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
                 About the Founder
               </p>
               <h2 className="text-2xl font-extrabold text-slate-800 sm:text-3xl">
@@ -60,7 +60,7 @@ export default function AssessorSection() {
               </div>
               <Link
                 href="/about"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 hover:gap-2.5 transition-all"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700 hover:gap-2.5 transition-all"
               >
                 More about Batir &rarr;
               </Link>

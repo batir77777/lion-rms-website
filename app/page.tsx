@@ -111,12 +111,12 @@ export default function HomePage() {
 {/* ── CREDENTIALS STRIP ── */}
       <div className="border-y border-slate-100 bg-slate-50">
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-          <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+          <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
             Delivered by qualified UK compliance professionals
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
             {CREDENTIALS.map((c) => (
-              <span key={c} className="text-xs font-bold uppercase tracking-widest text-slate-400">{c}</span>
+              <span key={c} className="text-xs font-bold uppercase tracking-widest text-slate-500">{c}</span>
             ))}
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function HomePage() {
       <section className="py-20 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Our Services</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Our Services</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
               Fire Engineering, Health &amp; Safety and Fire Risk Assessment
             </h2>
@@ -178,7 +178,7 @@ export default function HomePage() {
       <section className="py-20 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Sectors We Serve</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Sectors We Serve</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
               Trusted Across Nine Sectors
             </h2>
@@ -196,7 +196,7 @@ export default function HomePage() {
                 >
                   <h3 className="text-sm font-bold text-slate-800 group-hover:text-navy-800">{s.title}</h3>
                   <p className="mt-2 flex-1 text-xs text-slate-500 leading-relaxed">{s.summary}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600">
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700">
                     View details &rarr;
                   </span>
                 </Link>
@@ -227,7 +227,7 @@ export default function HomePage() {
       <section className="py-20 border-b border-slate-100 bg-white">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">What Clients Receive</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">What Clients Receive</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
               Practical Deliverables, Not Just a Report
             </h2>
@@ -247,7 +247,7 @@ export default function HomePage() {
       <section className="py-20 bg-slate-50 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">Our Process</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Our Process</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">How It Works</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -265,7 +265,7 @@ export default function HomePage() {
       {/* ── TESTIMONIALS ── */}
       <section className="py-16 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
-          <p className="mb-10 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+          <p className="mb-10 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
             What clients say
           </p>
           <div className="grid gap-6 sm:grid-cols-3">
@@ -274,7 +274,7 @@ export default function HomePage() {
                 <p className="text-sm text-slate-600 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-5 border-t border-slate-100 pt-4">
                   <p className="text-sm font-semibold text-slate-800">{t.name}</p>
-                  <p className="text-xs text-slate-400">{t.role}</p>
+                  <p className="text-xs text-slate-500">{t.role}</p>
                 </div>
               </div>
             ))}

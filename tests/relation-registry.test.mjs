@@ -84,6 +84,48 @@ describe("Registry-backed relations resolve", () => {
     }
   });
 
+  // Phase 5A PR 4: relatedTerms points at the glossaryTerms collection but is
+  // absent from PR 1's RELATION_TARGET_COLLECTIONS, so a typo would silently
+  // drop a link rather than failing the build. Closed here rather than by
+  // modifying the shared validator, consistent with how the registry-backed
+  // relations above are handled.
+  test("every relatedTerms slug resolves to a published glossary term", async () => {
+    const { glossaryTerms } = await import("../.velite");
+    const published = new Set(
+      glossaryTerms.filter((t) => t.status === "published").map((t) => t.slug)
+    );
+    for (const term of glossaryTerms) {
+      for (const slug of term.relatedTerms ?? []) {
+        assert.ok(published.has(slug), `${term.slug}: relatedTerms "${slug}" does not resolve`);
+        assert.notEqual(slug, term.slug, `${term.slug} relates to itself`);
+      }
+    }
+  });
+
+  test("every Guide relatedGlossaryTerms slug resolves to a published term", async () => {
+    const { guides, glossaryTerms } = await import("../.velite");
+    const published = new Set(
+      glossaryTerms.filter((t) => t.status === "published").map((t) => t.slug)
+    );
+    for (const guide of guides) {
+      for (const slug of guide.relatedGlossaryTerms ?? []) {
+        assert.ok(
+          published.has(slug),
+          `${guide.slug}: relatedGlossaryTerms "${slug}" does not resolve`
+        );
+      }
+    }
+  });
+
+  test("glossary terms carry no registry-backed relations at launch", async () => {
+    const { glossaryTerms } = await import("../.velite");
+    for (const term of glossaryTerms) {
+      for (const field of ["relatedServices", "relatedSectors", "relatedCaseStudies"]) {
+        assert.deepEqual(term[field], [], `${term.slug}: ${field} should be empty at launch`);
+      }
+    }
+  });
+
   test("content-collection relations stay empty until those collections exist", async () => {
     const { guides } = await import("../.velite");
     for (const guide of guides) {
@@ -91,7 +133,6 @@ describe("Registry-backed relations resolve", () => {
         "relatedArticles",
         "relatedStandards",
         "relatedLegislation",
-        "relatedGlossaryTerms",
         "relatedDownloads",
       ]) {
         assert.deepEqual(

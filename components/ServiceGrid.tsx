@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 function Check() {
   return (
     <svg
-      className="mt-0.5 h-5 w-5 flex-shrink-0 text-teal-600"
+      className="mt-0.5 h-5 w-5 flex-shrink-0 text-teal-700"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"

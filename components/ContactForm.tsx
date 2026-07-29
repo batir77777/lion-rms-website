@@ -193,7 +193,7 @@ export default function ContactForm() {
           className="mb-1.5 block text-sm font-medium text-slate-700"
         >
           How can we help?
-          <span aria-hidden className="text-teal-600"> *</span>
+          <span aria-hidden className="text-teal-700"> *</span>
         </label>
         <textarea
           id="contact-message"
@@ -266,7 +266,7 @@ function Field({
     <div>
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-slate-700">
         {label}
-        {required && <span aria-hidden className="text-teal-600"> *</span>}
+        {required && <span aria-hidden className="text-teal-700"> *</span>}
       </label>
       <input
         id={id}

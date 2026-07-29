@@ -23,7 +23,7 @@ export default function FaqAccordion({
             >
               <span className="text-sm font-semibold text-slate-900">{item.q}</span>
               <span
-                className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-600 transition-transform ${
+                className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-50 text-teal-700 transition-transform ${
                   isOpen ? "rotate-45" : ""
                 }`}
                 aria-hidden
@@ -37,7 +37,7 @@ export default function FaqAccordion({
                 {item.relatedService && getCategory(item.relatedService) && (
                   <Link
                     href={`/services/${item.relatedService}`}
-                    className="mt-3 flex w-fit items-center gap-1 text-sm font-semibold text-teal-600 hover:underline"
+                    className="mt-3 flex w-fit items-center gap-1 text-sm font-semibold text-teal-700 hover:underline"
                   >
                     More about {getCategory(item.relatedService)!.title} &rarr;
                   </Link>

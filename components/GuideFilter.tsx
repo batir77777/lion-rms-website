@@ -103,7 +103,7 @@ function FilterButton({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={`rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 ${
+      className={`rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 ${
         pressed
           ? "border-teal-700 bg-teal-700 text-white"
           : "border-slate-200 bg-white text-slate-600 hover:border-teal-200 hover:text-teal-700"

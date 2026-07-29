@@ -13,7 +13,7 @@
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
-// Primary categories (Guides and News only)
+// Primary categories (Guides, News and — from Phase 5A PR 4 — Glossary)
 // ---------------------------------------------------------------------------
 
 export interface ContentCategory {
@@ -23,7 +23,14 @@ export interface ContentCategory {
    *  category archives; every category must have real editorial framing
    *  before it's used, not just an auto-generated "posts tagged X" list. */
   description: string;
-  appliesTo: ("guide" | "news")[];
+  /**
+   * Which public sections may use this category. Values name sections
+   * (/guides, /news, /glossary), not schema contentType literals — "glossary"
+   * therefore matches the section, consistent with how "guide" and "news"
+   * already work. Phase 5A PR 3 added Guides; PR 4 opted in the three
+   * categories that genuinely fit the launch Glossary terms.
+   */
+  appliesTo: ("guide" | "news" | "glossary")[];
 }
 
 export const CONTENT_CATEGORIES: ContentCategory[] = [
@@ -32,14 +39,14 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
     label: "Fire Risk Assessments",
     description:
       "Guidance on the fire risk assessment process itself — methodology, scope, what a competent assessment covers, and how to read and act on one.",
-    appliesTo: ["guide", "news"],
+    appliesTo: ["guide", "news", "glossary"],
   },
   {
     slug: "fire-safety",
     label: "Fire Safety",
     description:
       "Practical fire safety guidance for buildings in use — means of escape, fire doors, detection and alarm systems, evacuation planning, and day-to-day management.",
-    appliesTo: ["guide", "news"],
+    appliesTo: ["guide", "news", "glossary"],
   },
   {
     slug: "health-safety",
@@ -53,7 +60,7 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
     label: "Compliance & Legislation",
     description:
       "How fire safety and health & safety legislation applies in practice — duties, responsibilities, and what compliance actually requires of a Responsible Person or employer.",
-    appliesTo: ["guide", "news"],
+    appliesTo: ["guide", "news", "glossary"],
   },
   {
     slug: "business-duty-holder-guidance",
@@ -189,7 +196,7 @@ const categorySchema = z.object({
   slug: z.string().min(1),
   label: z.string().min(1),
   description: z.string().min(1),
-  appliesTo: z.array(z.enum(["guide", "news"])).min(1),
+  appliesTo: z.array(z.enum(["guide", "news", "glossary"])).min(1),
 });
 
 const tagSchema = z.object({

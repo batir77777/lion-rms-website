@@ -7,7 +7,7 @@ export default function ResourcesSection() {
     <section className="bg-slate-50">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <Reveal>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-700">
             Free resources
           </p>
           <h2 className="max-w-2xl text-3xl font-bold text-navy-900 sm:text-4xl">
@@ -26,7 +26,7 @@ export default function ResourcesSection() {
                 >
                   <h3 className="text-lg font-semibold text-navy-900">{r.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
-                  <span className="mt-4 text-sm font-semibold text-teal-600">Open →</span>
+                  <span className="mt-4 text-sm font-semibold text-teal-700">Open →</span>
                 </a>
               ) : (
                 <Link
@@ -35,7 +35,7 @@ export default function ResourcesSection() {
                 >
                   <h3 className="text-lg font-semibold text-navy-900">{r.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{r.body}</p>
-                  <span className="mt-4 text-sm font-semibold text-teal-600">View →</span>
+                  <span className="mt-4 text-sm font-semibold text-teal-700">View →</span>
                 </Link>
               )}
             </Reveal>

@@ -9,7 +9,7 @@ export default function ServiceCheckCTA() {
     <Reveal>
       <div className="flex flex-col items-center gap-6 rounded-2xl border border-dashed border-teal-200 bg-white p-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal-600">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
             Free tool
           </p>
           <h3 className="mt-2 text-lg font-bold text-navy-900">

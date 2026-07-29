@@ -32,30 +32,30 @@ export default function ContactPage() {
             </p>
             <dl className="mt-6 space-y-5 text-base">
               <div>
-                <dt className="text-xs font-bold uppercase tracking-widest text-slate-400">Phone</dt>
+                <dt className="text-xs font-bold uppercase tracking-widest text-slate-500">Phone</dt>
                 <dd className="mt-1">
-                  <a href={SITE.phoneHref} className="text-lg font-bold text-teal-600 hover:text-teal-700">
+                  <a href={SITE.phoneHref} className="text-lg font-bold text-teal-700 hover:text-teal-700">
                     {SITE.phone}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-xs font-bold uppercase tracking-widest text-slate-400">Email</dt>
+                <dt className="text-xs font-bold uppercase tracking-widest text-slate-500">Email</dt>
                 <dd className="mt-1">
-                  <a href={SITE.emailHref} className="font-semibold text-teal-600 hover:underline">
+                  <a href={SITE.emailHref} className="font-semibold text-teal-700 hover:underline">
                     {SITE.email}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-xs font-bold uppercase tracking-widest text-slate-400">Coverage</dt>
+                <dt className="text-xs font-bold uppercase tracking-widest text-slate-500">Coverage</dt>
                 <dd className="mt-1 text-slate-700">{COVERAGE_FULL}</dd>
               </div>
             </dl>
 
             {/* Credentials */}
             <div className="mt-8 rounded-2xl border border-slate-100 bg-slate-50 p-6">
-              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Qualifications</p>
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-500">Qualifications</p>
               <div className="flex flex-wrap gap-2">
                 {CREDENTIALS.map((c) => (
                   <span
@@ -83,10 +83,10 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm">
             <h2 className="mb-1 text-xl font-bold text-navy-900">Send us a message</h2>
             <p className="mb-6 text-sm text-slate-500">Fill in your details and we&apos;ll be in touch shortly.</p>
-            <Suspense fallback={<p className="text-sm text-slate-400">Loading form…</p>}>
+            <Suspense fallback={<p className="text-sm text-slate-500">Loading form…</p>}>
               <ContactForm />
             </Suspense>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-5 text-xs font-semibold text-slate-400">
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-5 text-xs font-semibold text-slate-500">
               <span>CMIOSH Chartered</span>
               <span aria-hidden>&middot;</span>
               <span>PI Insured</span>

@@ -209,7 +209,15 @@ export const glossaryTermSchema = s.object({
   synonyms: s.array(s.string()).default([]),
   abbreviationFor: s.string().optional(),
   shortDefinition: s.string().min(1),
-  extendedDefinition: s.mdx().optional(),
+  // Phase 5A PR 4: was `s.mdx().optional()`, which could never be populated.
+  // Velite's s.mdx() reads the document body from build context rather than
+  // from a frontmatter key, but zod's .optional() short-circuits on an absent
+  // input and returns undefined without ever running the inner transform — so
+  // the field silently resolved to undefined for every term regardless of what
+  // the file contained. Made required so the body is actually compiled; a term
+  // with nothing more to say can still carry a short body, and shortDefinition
+  // remains the field that must always stand alone.
+  extendedDefinition: s.mdx(),
   relatedTerms: s.array(s.string()).default([]),
   jurisdiction: s
     .enum(["england", "wales", "england-and-wales", "scotland", "northern-ireland", "uk-wide"])
