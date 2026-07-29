@@ -38,6 +38,8 @@ import {
   toDateOnly,
   reviewCycleMonths,
   REVIEW_CYCLE_MONTHS,
+  TAGS_EXPECTED_COLLECTIONS,
+  tagsExpected,
 } from "../lib/editorial-rules";
 import { CONTENT_TAGS } from "../lib/taxonomy";
 
@@ -295,11 +297,62 @@ describe("C. taxonomy and people", () => {
     assert.equal(issues.filter((i) => i.rule === "C2").length, 1);
   });
 
-  test("C3 a published item with no tags is a warning", () => {
-    const issues = checkTags({ guides: [validItem({ tags: [] })] });
+  test("C3 a published item with no tags warns in a tag-driven collection", () => {
+    const issues = checkTags({ news: [validItem({ tags: [] })] });
     const c3 = issues.filter((i) => i.rule === "C3");
     assert.equal(c3.length, 1);
     assert.equal(c3[0].severity, "warning");
+  });
+
+  // Phase 5A PR 3. A Guide's taxonomy is carried by category, audience and the
+  // document relations; tags are supplementary, so an empty tags array is a
+  // valid editorial state rather than a gap. Padding Guides with tags to
+  // silence a warning is precisely the sprawl the PR 2 tag constraint exists to
+  // prevent.
+  test("C3 does not warn for a published Guide with no tags", () => {
+    const issues = checkTags({ guides: [validItem({ tags: [] })] });
+    assert.deepEqual(issues.filter((i) => i.rule === "C3"), []);
+  });
+
+  test("C3 still applies to every collection other than Guides", () => {
+    for (const collection of TAGS_EXPECTED_COLLECTIONS) {
+      const issues = checkTags({ [collection]: [validItem({ tags: [] })] });
+      const c3 = issues.filter((i) => i.rule === "C3");
+      assert.equal(c3.length, 1, `${collection} should still raise C3`);
+      assert.equal(c3[0].severity, "warning");
+    }
+    assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("guides"), false);
+    assert.deepEqual(
+      [...TAGS_EXPECTED_COLLECTIONS].sort(),
+      ["downloads", "glossaryTerms", "legislation", "news", "standards"]
+    );
+  });
+
+  test("tagsExpected is false only for Guides among the six collections", () => {
+    assert.equal(tagsExpected("guides"), false);
+    for (const c of ["news", "standards", "legislation", "glossaryTerms", "downloads"]) {
+      assert.equal(tagsExpected(c), true, `${c} should expect tags`);
+    }
+  });
+
+  test("excluding Guides from C3 leaves C1 and C2 untouched there", () => {
+    const unknown = checkTags({ guides: [validItem({ tags: ["not-a-real-tag"] })] });
+    assert.equal(unknown.filter((i) => i.rule === "C1").length, 1);
+    const repeated = checkTags({ guides: [validItem({ tags: ["fire-doors", "fire-doors"] })] });
+    assert.equal(repeated.filter((i) => i.rule === "C2").length, 1);
+  });
+
+  test("a published Guide with no tags produces no warnings at all", () => {
+    const result = validateContentCollections(
+      // No seoDescription: D2 only measures one when present, so this isolates
+      // the question being asked — does an empty tags array on a Guide produce
+      // anything at all?
+      { guides: [validItem({ tags: [] })] },
+      { now: NOW }
+    );
+    assert.deepEqual(result.errors, []);
+    assert.deepEqual(result.warnings, []);
+    assert.equal(result.valid, true);
   });
 
   test("the legionella seed tag has been removed from the registry", () => {
@@ -544,8 +597,10 @@ describe("aggregation and severity", () => {
   });
 
   test("formatIssues groups by rule rather than listing every item flat", () => {
+    // News rather than Guides: C3 no longer applies to Guides (PR 3), and this
+    // test needs two distinct rules present to prove the grouping.
     const result = validateContentCollections(
-      { guides: [validItem({ title: "Short", tags: [] })] },
+      { news: [validItem({ title: "Short", tags: [] })] },
       { now: NOW }
     );
     const formatted = formatIssues(result.warnings);
