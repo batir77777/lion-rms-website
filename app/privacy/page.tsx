@@ -43,8 +43,8 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-3">
               <strong>Registered business:</strong> Lion Risk Management Solutions<br />
-              <strong>Email:</strong> <a href={SITE.emailHref} className="text-teal-600 hover:underline">{SITE.email}</a><br />
-              <strong>Phone:</strong> <a href={SITE.phoneHref} className="text-teal-600 hover:underline">{SITE.phone}</a>
+              <strong>Email:</strong> <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a><br />
+              <strong>Phone:</strong> <a href={SITE.phoneHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.phone}</a>
             </p>
           </Section>
 
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
               We will only send you marketing communications if you have given us your explicit consent, or if you are an existing client and the communication relates to similar services (&ldquo;soft opt-in&rdquo; under PECR).
             </p>
             <p className="mt-3">
-              You can opt out at any time by emailing <a href={SITE.emailHref} className="text-teal-600 hover:underline">{SITE.email}</a> or clicking the unsubscribe link in any marketing email.
+              You can opt out at any time by emailing <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a> or clicking the unsubscribe link in any marketing email.
             </p>
           </Section>
 
@@ -171,7 +171,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-4">
               To exercise any of these rights, email us at{" "}
-              <a href={SITE.emailHref} className="text-teal-600 hover:underline">{SITE.email}</a>. We will respond within one calendar month.
+              <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a>. We will respond within one calendar month.
             </p>
           </Section>
 
@@ -189,14 +189,14 @@ export default function PrivacyPage() {
           <Section title="11. How to make a complaint">
             <p>
               If you are unhappy with how we have handled your data, please contact us first at{" "}
-              <a href={SITE.emailHref} className="text-teal-600 hover:underline">{SITE.email}</a> so we can try to resolve it.
+              <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a> so we can try to resolve it.
             </p>
             <p className="mt-3">
               You also have the right to lodge a complaint with the UK supervisory authority:
             </p>
             <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm">
               <strong>Information Commissioner&rsquo;s Office (ICO)</strong><br />
-              Website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">ico.org.uk</a><br />
+              Website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-teal-700 underline underline-offset-2 hover:text-teal-800">ico.org.uk</a><br />
               Helpline: 0303 123 1113
             </div>
           </Section>
@@ -210,7 +210,7 @@ export default function PrivacyPage() {
           <div className="mt-12 rounded-2xl border border-slate-100 bg-slate-50 p-6">
             <p className="text-sm font-semibold text-slate-700">Questions about this policy?</p>
             <p className="mt-1 text-sm text-slate-500">
-              Contact us at <a href={SITE.emailHref} className="text-teal-600 hover:underline">{SITE.email}</a> or call <a href={SITE.phoneHref} className="text-teal-600 hover:underline">{SITE.phone}</a>.
+              Contact us at <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a> or call <a href={SITE.phoneHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.phone}</a>.
             </p>
             <Link href="/contact" className="mt-4 inline-flex rounded-full px-6 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5"
               style={{ background: "linear-gradient(135deg, #0a1628, #0f2040)" }}>
