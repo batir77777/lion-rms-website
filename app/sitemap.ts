@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SERVICE_CATEGORIES, SECTORS } from "@/lib/site";
 import { CASE_STUDIES } from "@/lib/case-studies";
 import { publishedGuides, lastModified } from "@/lib/guides";
+import { publishedTerms, lastModified as termLastModified, GLOSSARY_PATH } from "@/lib/glossary";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.lionrms.uk";
@@ -56,5 +57,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  return [...staticEntries, ...guideEntries];
+  // Phase 5A PR 4. Same treatment as Guides: a real per-item date rather than
+  // the build timestamp.
+  const glossaryEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${GLOSSARY_PATH}`,
+      lastModified: buildDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    ...publishedTerms().map((t) => ({
+      url: `${base}${GLOSSARY_PATH}/${t.slug}`,
+      lastModified: new Date(`${(termLastModified(t) ?? "").slice(0, 10)}T00:00:00Z`),
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
+  ];
+
+  return [...staticEntries, ...guideEntries, ...glossaryEntries];
 }
