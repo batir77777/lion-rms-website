@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PhotoHero from "@/components/PhotoHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import KnowledgeCentreNav from "@/components/KnowledgeCentreNav";
 import AlphabetNav from "@/components/AlphabetNav";
 import GlossaryEntry from "@/components/GlossaryEntry";
 import {
@@ -66,6 +67,8 @@ export default function GlossaryPage() {
           <div className="mb-8">
             <Breadcrumbs items={GLOSSARY_INDEX_CRUMBS} />
           </div>
+
+          <KnowledgeCentreNav current={GLOSSARY_PATH} />
 
           {terms.length === 0 ? (
             <p className="text-lg text-slate-600">No glossary terms have been published yet.</p>
