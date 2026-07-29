@@ -19,6 +19,7 @@ import {
   GLOSSARY_PATH,
 } from "@/lib/glossary";
 import { formatDate } from "@/lib/guides";
+import { standardsUsingTerm, designation, STANDARDS_PATH } from "@/lib/standards";
 import { buildDefinedTermSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import { SITE, SITE_URL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
@@ -223,6 +224,17 @@ export default async function GlossaryTermPage({
             {
               heading: "Guides that use this term",
               items: guides.map((g) => ({ label: g.title, href: `/guides/${g.slug}` })),
+            },
+            {
+              // Phase 5A PR 5. Derived by inverting each standard's
+              // relatedGlossaryTerms — declared once on the standard, surfaced
+              // on both. A term like "fire resistance rating" is materially
+              // more useful when it names the documents that define it.
+              heading: "Standards that use this term",
+              items: standardsUsingTerm(term.slug).map((s) => ({
+                label: designation(s),
+                href: `${STANDARDS_PATH}/${s.slug}`,
+              })),
             },
           ]}
         />
