@@ -4,7 +4,7 @@ import RelatedContent from "@/components/RelatedContent";
 import TestimonialGrid from "@/components/TestimonialGrid";
 import type { CaseStudy } from "@/lib/case-studies";
 import { getSector, getCategory, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
-import { getPost } from "@/lib/insights";
+import { getGuide } from "@/lib/guides";
 
 function KeyFactsPanel({ facts }: { facts: CaseStudy["keyFacts"] }) {
   const rows: Array<[string, string]> = [
@@ -62,10 +62,10 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
     .filter((c): c is NonNullable<typeof c> => Boolean(c))
     .map((c) => ({ label: c.title, href: `/services/${c.slug}` }));
 
-  const relatedInsightItems = (study.relatedInsightSlugs ?? [])
-    .map((slug) => getPost(slug))
+  const relatedGuideItems = (study.relatedInsightSlugs ?? [])
+    .map((slug) => getGuide(slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
-    .map((p) => ({ label: p.title, href: `/insights/${p.slug}` }));
+    .map((g) => ({ label: g.title, href: `/guides/${g.slug}` }));
 
   return (
     <>
@@ -107,7 +107,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
           groups={[
             { heading: "Related services", items: relatedServiceItems },
             { heading: "Related sectors", items: relatedSectorItems },
-            { heading: "Related insights", items: relatedInsightItems },
+            { heading: "Related guides", items: relatedGuideItems },
           ]}
         />
       </div>

@@ -93,7 +93,12 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
-        <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
+        {/* shrink-0: without it the logo is the flex item that gives way when
+            the row is over-constrained, and it silently compresses to nothing
+            rather than the layout visibly breaking. Found at 1280px during the
+            Phase 5A PR 3 header QA, when the longer "Knowledge Centre" nav
+            label widened the nav by 78px. */}
+        <Link href="/" className="flex shrink-0 items-center" onClick={() => setOpen(false)}>
           <Logo className="h-12 w-auto" dark />
         </Link>
 
@@ -105,7 +110,7 @@ export default function Header() {
               <Link
                 key={n.href}
                 href={n.href}
-                className={`relative rounded-lg px-3.5 py-2 text-[15px] font-medium whitespace-nowrap transition-colors ${
+                className={`relative rounded-lg px-2.5 py-2 text-[15px] font-medium whitespace-nowrap transition-colors 2xl:px-3.5 ${
                   active
                     ? "text-teal-600"
                     : "text-slate-600 hover:bg-slate-50 hover:text-navy-900"
@@ -115,7 +120,7 @@ export default function Header() {
                 {active && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className="absolute -bottom-3.5 left-3 right-3 h-0.5 rounded-full bg-teal-500"
+                    className="absolute -bottom-3.5 left-2 right-2 h-0.5 rounded-full bg-teal-500 2xl:left-3 2xl:right-3"
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
