@@ -3,14 +3,21 @@ id: "fixture-news"
 schemaVersion: 1
 contentType: "news"
 slug: "fixture-news"
-title: "Fixture News Item"
-summary: "A throwaway fixture news item used only by PR 1's validation test suite."
+title: "Fixture News Item for Editorial Validation Tests"
+summary: "A throwaway fixture news item used only by the validation test suite, not real news content."
 status: "published"
 authorId: "batir-turakulov"
+reviewerId: "batir-turakulov"
+publishedDate: "2026-06-01"
 category: "compliance-legislation"
+tags: ["cdm"]
 sourceType: "hse-update"
 sourceUrl: "https://example.com/hse-update"
 schemaType: "NewsArticle"
 ---
 
 Fixture body — not real news content.
+
+News carries no routine review cycle, so this item deliberately has no
+nextReviewDue. It exercises the branch of the review-cycle rules that must skip
+News rather than demand a review date.
