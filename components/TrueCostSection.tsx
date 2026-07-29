@@ -86,7 +86,7 @@ export default function TrueCostSection() {
                   }`}
                 >
                   {ember && (
-                    <span className="absolute -top-3 left-6 rounded-full bg-teal-600 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                    <span className="absolute -top-3 left-6 rounded-full bg-teal-700 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
                       What you actually need
                     </span>
                   )}
@@ -115,7 +115,7 @@ export default function TrueCostSection() {
           <div className="mt-12 text-center">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-teal-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-teal-950/40 transition hover:bg-teal-500"
+              className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-teal-950/40 transition hover:bg-teal-500"
             >
               Get a sensible assessment <span aria-hidden>→</span>
             </Link>

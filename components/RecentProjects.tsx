@@ -9,7 +9,7 @@ export default function RecentProjects() {
     <section className="border-b border-slate-100 bg-white py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="mb-12 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
+          <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
             Recent Projects
           </span>
           <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
@@ -24,7 +24,7 @@ export default function RecentProjects() {
           {RECENT_PROJECTS.map((p, i) => (
             <Reveal key={p.title} delay={i * 70}>
               <div className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-100 hover:shadow-md">
-                <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-600">
+                <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
                   {p.sector}
                 </p>
@@ -37,7 +37,7 @@ export default function RecentProjects() {
         <div className="mt-10 text-center">
           <Link
             href="/case-studies"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 hover:underline"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700 hover:underline"
           >
             View all case studies &rarr;
           </Link>

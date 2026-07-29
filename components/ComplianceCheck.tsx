@@ -153,7 +153,7 @@ export default function ComplianceCheck() {
     <div className="mx-auto w-full max-w-3xl">
       {/* Progress */}
       <div className="mb-8">
-        <div className="mb-2 flex items-center justify-between text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+        <div className="mb-2 flex items-center justify-between text-[11px] font-semibold uppercase tracking-widest text-slate-500">
           <span>
             {answered} of {QUESTIONS.length} answered
           </span>
@@ -235,7 +235,7 @@ export default function ComplianceCheck() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact"
-                  className="flex-1 rounded-full bg-teal-600 px-6 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-teal-950/40 transition hover:bg-teal-500"
+                  className="flex-1 rounded-full bg-teal-700 px-6 py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-teal-950/40 transition hover:bg-teal-500"
                 >
                   Book a call
                 </Link>

@@ -10,7 +10,7 @@ export default function AuthorityStrip() {
   return (
     <section className="border-b border-slate-100 bg-slate-50">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+        <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
           Grounded in UK legislation &amp; recognised standards
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">

@@ -24,7 +24,7 @@ export default function PhotoHero({
       <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-40 sm:px-6 sm:pb-24">
         <div className="max-w-3xl">
           <Reveal>
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-600">
+            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
               {eyebrow}
             </p>

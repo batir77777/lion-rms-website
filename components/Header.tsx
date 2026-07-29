@@ -112,7 +112,7 @@ export default function Header() {
                 href={n.href}
                 className={`relative rounded-lg px-2.5 py-2 text-[15px] font-medium whitespace-nowrap transition-colors 2xl:px-3.5 ${
                   active
-                    ? "text-teal-600"
+                    ? "text-teal-700"
                     : "text-slate-600 hover:bg-slate-50 hover:text-navy-900"
                 }`}
               >
@@ -133,7 +133,7 @@ export default function Header() {
         <div className="hidden items-center gap-5 xl:flex">
           <a
             href={SITE.phoneHref}
-            className="whitespace-nowrap text-[15px] font-semibold text-slate-700 transition hover:text-teal-600"
+            className="whitespace-nowrap text-[15px] font-semibold text-slate-700 transition hover:text-teal-700"
           >
             {SITE.phone}
           </a>
@@ -195,8 +195,8 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                   className={`border-b border-slate-100 py-3.5 text-[15px] font-medium ${
                     isActive(n.href)
-                      ? "text-teal-600"
-                      : "text-slate-700 hover:text-teal-600"
+                      ? "text-teal-700"
+                      : "text-slate-700 hover:text-teal-700"
                   }`}
                 >
                   {n.label}
@@ -205,7 +205,7 @@ export default function Header() {
               <div className="flex items-center justify-between pb-4 pt-4">
                 <a
                   href={SITE.phoneHref}
-                  className="text-[15px] font-semibold text-slate-700 hover:text-teal-600"
+                  className="text-[15px] font-semibold text-slate-700 hover:text-teal-700"
                 >
                   {SITE.phone}
                 </a>
