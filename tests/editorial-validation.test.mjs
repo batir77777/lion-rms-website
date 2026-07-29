@@ -314,7 +314,15 @@ describe("C. taxonomy and people", () => {
     assert.deepEqual(issues.filter((i) => i.rule === "C3"), []);
   });
 
-  test("C3 still applies to every collection other than Guides", () => {
+  // Phase 5A PR 4. Glossary navigation is alphabetical, so tags carry no
+  // discovery weight there either; four of the twelve launch terms have no
+  // honest registry tag and must not have one invented to silence a warning.
+  test("C3 does not warn for a published Glossary term with no tags", () => {
+    const issues = checkTags({ glossaryTerms: [validItem({ tags: [] })] });
+    assert.deepEqual(issues.filter((i) => i.rule === "C3"), []);
+  });
+
+  test("C3 still applies to every collection other than Guides and Glossary", () => {
     for (const collection of TAGS_EXPECTED_COLLECTIONS) {
       const issues = checkTags({ [collection]: [validItem({ tags: [] })] });
       const c3 = issues.filter((i) => i.rule === "C3");
@@ -322,17 +330,38 @@ describe("C. taxonomy and people", () => {
       assert.equal(c3[0].severity, "warning");
     }
     assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("guides"), false);
+    assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("glossaryTerms"), false);
     assert.deepEqual(
       [...TAGS_EXPECTED_COLLECTIONS].sort(),
-      ["downloads", "glossaryTerms", "legislation", "news", "standards"]
+      ["downloads", "legislation", "news", "standards"]
     );
   });
 
-  test("tagsExpected is false only for Guides among the six collections", () => {
+  test("tagsExpected is false for Guides and Glossary, true for the other four", () => {
     assert.equal(tagsExpected("guides"), false);
-    for (const c of ["news", "standards", "legislation", "glossaryTerms", "downloads"]) {
+    assert.equal(tagsExpected("glossaryTerms"), false);
+    for (const c of ["news", "standards", "legislation", "downloads"]) {
       assert.equal(tagsExpected(c), true, `${c} should expect tags`);
     }
+  });
+
+  test("excluding Glossary from C3 leaves C1 and C2 untouched there", () => {
+    const unknown = checkTags({ glossaryTerms: [validItem({ tags: ["not-a-real-tag"] })] });
+    assert.equal(unknown.filter((i) => i.rule === "C1").length, 1);
+    const repeated = checkTags({
+      glossaryTerms: [validItem({ tags: ["fire-doors", "fire-doors"] })],
+    });
+    assert.equal(repeated.filter((i) => i.rule === "C2").length, 1);
+  });
+
+  test("a published Glossary term with no tags produces no warnings at all", () => {
+    const result = validateContentCollections(
+      { glossaryTerms: [validItem({ tags: [] })] },
+      { now: NOW }
+    );
+    assert.deepEqual(result.errors, []);
+    assert.deepEqual(result.warnings, []);
+    assert.equal(result.valid, true);
   });
 
   test("excluding Guides from C3 leaves C1 and C2 untouched there", () => {

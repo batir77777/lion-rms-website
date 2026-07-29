@@ -94,17 +94,11 @@ describe("Guides routing", () => {
     assert.equal(exists("guides/tag"), false, "tag archives are deliberately not built");
   });
 
-  test("no other content vertical is introduced", () => {
-    for (const route of [
-      "news",
-      "standards",
-      "legislation",
-      "glossary",
-      "downloads",
-      "knowledge",
-      "search",
-    ]) {
-      assert.equal(exists(route), false, `/${route} must not exist in PR 3`);
+  test("no content vertical beyond Guides and Glossary is introduced", () => {
+    // "glossary" left this list in Phase 5A PR 4, which launched it. The
+    // remaining four are still deferred and this assertion still guards them.
+    for (const route of ["news", "standards", "legislation", "downloads", "knowledge", "search"]) {
+      assert.equal(exists(route), false, `/${route} must not exist yet`);
     }
   });
 
