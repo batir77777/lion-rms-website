@@ -102,7 +102,7 @@ export default async function SectorDetailPage({
                 {sector.considerations.map((c, i) => (
                   <Reveal key={c} delay={i * 50}>
                     <div className="flex h-full items-start gap-3 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-50 text-xs font-bold text-teal-600">
+                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-50 text-xs font-bold text-teal-700">
                         {i + 1}
                       </span>
                       <p className="text-sm leading-relaxed text-slate-600">{c}</p>
