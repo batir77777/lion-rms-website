@@ -78,9 +78,36 @@ export const HIGH_RISK_GUIDE_CYCLE_MONTHS = 6;
 // Add a collection here when tags become the primary way readers navigate it.
 // ---------------------------------------------------------------------------
 
+// Standards are excluded (Phase 5A PR 5), on the same principle and for a
+// reason established by evidence rather than by analogy. A standard's
+// navigation axes are its designation and its document class, both of which
+// are mandatory and enum-constrained, plus the relations that connect it to
+// the Guides and terms that use it. Tags add description but carry no
+// discovery weight.
+//
+// The decisive evidence is the launch set itself: four of the eight — PAS 79-1,
+// PAS 79-2, BS 9792 and HSG65 — have no honest match in the tag registry,
+// because they are about the assessment process or about management systems
+// rather than about fire doors or alarm panels. Satisfying C3 would mean
+// inventing a `fire-risk-assessment` tag that duplicates an existing category
+// AND an existing technical-domain slug, and that would then compete in search
+// with the very standard pages it was invented to classify.
+//
+// That is the same conclusion reached in PR 3, where PAS 79, RRO 2005, the
+// Building Safety Act and Responsible Person were deliberately NOT made tags,
+// precisely to avoid competing with the future /standards and /legislation
+// pages. Excluding Standards here is the consistent application of a decision
+// already on the record, not a new exception.
+//
+// Tags remain available and are used where honest: BS 5839-1 carries
+// `fire-alarm-systems`, BS 9999 and BS 9991 carry `means-of-escape` and
+// `compartmentation`. They simply stop being mandatory.
+//
+// Legislation is deliberately LEFT IN. It has no content yet, so nothing can
+// warn, and PR 6 should take that decision on its own evidence rather than
+// inherit it here.
 export const TAGS_EXPECTED_COLLECTIONS: readonly string[] = [
   "news",
-  "standards",
   "legislation",
   "downloads",
 ];
@@ -129,6 +156,86 @@ export const SEO_DESCRIPTION_MAX = 170;
 
 export const SUMMARY_MIN = 50;
 export const SUMMARY_MAX = 300;
+
+// ---------------------------------------------------------------------------
+// External-document reference thresholds (Phase 5A, PR 5).
+//
+// These govern the Standards library and, from PR 6, Legislation. They are
+// gathered here rather than inline in the rules for the same reason as
+// everything above: a policy change should be a one-line edit in this file.
+// ---------------------------------------------------------------------------
+
+/**
+ * Collections whose items describe an EXTERNAL document — one this site does
+ * not own, that changes without warning, and whose currency a reader is
+ * relying on. The G-series rules iterate this list rather than naming
+ * "standards", so PR 6 enables every rule for Legislation by adding one entry.
+ */
+export const DOCUMENT_REFERENCE_COLLECTIONS: readonly string[] = [
+  "standards",
+  "legislation",
+];
+
+export function isDocumentReferenceCollection(collection: string): boolean {
+  return DOCUMENT_REFERENCE_COLLECTIONS.includes(collection);
+}
+
+/** Document classes for which an edition year is meaningful and required. */
+export const EDITION_REQUIRED_CLASSES: readonly string[] = [
+  "british-standard",
+  "pas",
+];
+
+/**
+ * Recognised official-source hosts per document class.
+ *
+ * The point is to catch a link to a reseller, an aggregator or somebody's blog
+ * where the publisher's own page belongs. A reader following "official source"
+ * from a compliance reference must land on the publisher, not on a shop.
+ *
+ * Matched on the registrable-domain suffix, so subdomains such as
+ * knowledge.bsigroup.com and assets.publishing.service.gov.uk both pass.
+ */
+export const OFFICIAL_SOURCE_HOSTS: Record<string, readonly string[]> = {
+  "british-standard": ["bsigroup.com"],
+  pas: ["bsigroup.com"],
+  "statutory-guidance": ["gov.uk", "legislation.gov.uk"],
+  "regulator-guidance": ["gov.uk", "hse.gov.uk", "legislation.gov.uk"],
+  // Industry guidance has no single publisher — trade bodies, fire and rescue
+  // services and professional institutions all publish it — so there is
+  // nothing honest to check against and the rule deliberately skips it.
+  "industry-guidance": [],
+  act: ["legislation.gov.uk"],
+  regulation: ["legislation.gov.uk"],
+  "statutory-instrument": ["legislation.gov.uk"],
+  order: ["legislation.gov.uk"],
+};
+
+/**
+ * Wording that must appear in the copyright notice for each licence regime.
+ * Checked case-insensitively by rule G8 — a page claiming Open Government
+ * Licence terms over commercially licensed BSI material, or the reverse, is a
+ * substantive error rather than a typo.
+ */
+export const LICENCE_NOTICE_MARKERS: Record<string, readonly string[]> = {
+  "open-government-licence": ["open government licence"],
+  "crown-copyright": ["crown copyright"],
+  // Commercial and "other" carry no required phrase: there is no single form
+  // of words, and inventing one would produce false positives.
+  commercial: [],
+  other: [],
+};
+
+/** Below this, a copyright notice or disclaimer is almost certainly a placeholder. */
+export const NOTICE_MIN_LENGTH = 40;
+
+/**
+ * Longest verbatim block quotation tolerated from a commercially licensed
+ * source before rule G11 asks for a human look. Not a legal threshold — no
+ * such number exists — but a tripwire: past this length the question "is this
+ * still fair dealing" needs answering by a person rather than assumed.
+ */
+export const COMMERCIAL_QUOTE_MAX_CHARS = 300;
 
 // ---------------------------------------------------------------------------
 // Date handling.

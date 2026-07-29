@@ -147,6 +147,77 @@ export function buildDefinedTermSchema(input: DefinedTermInput) {
   };
 }
 
+export interface StandardSchemaInput {
+  /** Our headline for the page — not the document's own title. */
+  headline: string;
+  description: string;
+  path: string;
+  authorId: string;
+  datePublished?: string;
+  dateModified?: string;
+  articleSection?: string;
+  /** The external document this page is about. */
+  document: {
+    /** The document's own title, as its publisher writes it. */
+    name: string;
+    /** The designation, e.g. "PAS 79-1:2020". */
+    identifier: string;
+    /** Edition, where the document has one. */
+    version?: string;
+    /** The publishing body — BSI, HM Government, HSE. NOT this site. */
+    publisher: string;
+    /** The publisher's own page for the document. */
+    url: string;
+  };
+}
+
+/**
+ * A Standards library page (Phase 5A, PR 5).
+ *
+ * There is no schema.org type for a standard, and the gap has to be handled
+ * honestly rather than approximately.
+ *
+ * This page is Lion RMS's COMMENTARY ON a document. It is not the document.
+ * Marking it up as though it were would claim BSI's — or the Crown's —
+ * intellectual property as this site's content in structured data, which is
+ * wrong on the facts and, for the commercially licensed material, unwise.
+ *
+ * So the outer node is a TechArticle whose `author` and `publisher` are ours,
+ * and the document appears as a nested CreativeWork under `about` with its own
+ * publisher and identifier. The two publisher fields carrying different values
+ * is the entire point of the shape, not an oversight.
+ *
+ * `about` is deliberately unchanged by a document's status. A withdrawn
+ * standard is still the same work; supersession is expressed in the visible
+ * banner and the internal link graph, rather than forced into a schema.org
+ * property that does not carry that meaning cleanly.
+ */
+export function buildStandardSchema(input: StandardSchemaInput) {
+  const url = `${SITE_URL}${input.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: input.headline,
+    description: input.description,
+    url,
+    "@id": url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(input.articleSection ? { articleSection: input.articleSection } : {}),
+    author: buildPersonRef(input.authorId),
+    publisher,
+    about: {
+      "@type": "CreativeWork",
+      name: input.document.name,
+      identifier: input.document.identifier,
+      ...(input.document.version ? { version: input.document.version } : {}),
+      publisher: { "@type": "Organization", name: input.document.publisher },
+      url: input.document.url,
+    },
+  };
+}
+
 export interface DefinedTermSetInput {
   name: string;
   description: string;

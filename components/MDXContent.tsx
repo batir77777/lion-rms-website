@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import GlossaryLink from "@/components/GlossaryLink";
+import StandardLink from "@/components/StandardLink";
 import * as jsxRuntime from "react/jsx-runtime";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
@@ -62,10 +63,12 @@ function isExternal(href: string | undefined): boolean {
 }
 
 const components: Record<string, unknown> = {
-  // Available to every MDX body. Explicit, author-triggered glossary linking —
-  // deliberately not automatic first-mention replacement, for the reasons in
-  // components/GlossaryLink.tsx.
+  // Available to every MDX body. Explicit, author-triggered linking to the
+  // Glossary and the Standards library — deliberately not automatic
+  // first-mention replacement, for the reasons in components/GlossaryLink.tsx
+  // and components/StandardLink.tsx.
   GlossaryLink,
+  StandardLink,
 
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 {...props} className="mt-10 scroll-mt-28 text-2xl font-bold text-navy-900" />

@@ -3,6 +3,11 @@ import { SERVICE_CATEGORIES, SECTORS } from "@/lib/site";
 import { CASE_STUDIES } from "@/lib/case-studies";
 import { publishedGuides, lastModified } from "@/lib/guides";
 import { publishedTerms, lastModified as termLastModified, GLOSSARY_PATH } from "@/lib/glossary";
+import {
+  publishedStandards,
+  lastModified as standardLastModified,
+  STANDARDS_PATH,
+} from "@/lib/standards";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.lionrms.uk";
@@ -74,5 +79,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  return [...staticEntries, ...guideEntries, ...glossaryEntries];
+  // Phase 5A PR 5. Monthly rather than the Glossary's yearly: standards
+  // genuinely do change, and the six-month source-currency cycle reflects that.
+  //
+  // Withdrawn and superseded documents STAY in the sitemap. They are live,
+  // canonical, useful pages — removing the PAS 79-2 page would remove the
+  // answer for the reader most likely to be looking for it.
+  const standardEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${STANDARDS_PATH}`,
+      lastModified: buildDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    ...publishedStandards().map((s) => ({
+      url: `${base}${STANDARDS_PATH}/${s.slug}`,
+      lastModified: new Date(`${(standardLastModified(s) ?? "").slice(0, 10)}T00:00:00Z`),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
+
+  return [...staticEntries, ...guideEntries, ...glossaryEntries, ...standardEntries];
 }

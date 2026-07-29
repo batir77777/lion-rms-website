@@ -14,6 +14,7 @@
 
 import {
   CONTENT_TAG_SLUGS,
+  getContentCategory,
 } from "./taxonomy";
 import { AUTHOR_IDS, REVIEWER_IDS } from "./people";
 import { SITE_URL } from "./site";
@@ -30,6 +31,12 @@ import {
   SEO_DESCRIPTION_MAX,
   SUMMARY_MIN,
   SUMMARY_MAX,
+  DOCUMENT_REFERENCE_COLLECTIONS,
+  EDITION_REQUIRED_CLASSES,
+  OFFICIAL_SOURCE_HOSTS,
+  LICENCE_NOTICE_MARKERS,
+  NOTICE_MIN_LENGTH,
+  COMMERCIAL_QUOTE_MAX_CHARS,
 } from "./editorial-rules";
 
 export interface EditorialOptions {
@@ -92,12 +99,21 @@ export function checkStatusCoherence(
     }
 
     // A3 — superseded must say what superseded it.
+    //
+    // Reconciled with G1 in Phase 5A PR 5, because the two look alike and are
+    // not the same check. A3 fires on `status` — OUR PAGE has been superseded
+    // by another page on this site. G1 fires on `documentStatus` — the
+    // EXTERNAL DOCUMENT this page describes has been superseded by another
+    // document. A page can be in either state independently of the other, so
+    // both rules exist; the messages name which one is being reported.
+    //
+    // `supersededBy` became an array in PR 5, so it is read as one here.
     if (status === "superseded") {
       const hasSuccessor =
-        !!str(item.supersededBy) || arr(item.relatedArticles).length > 0;
+        arr(item.supersededBy).length > 0 || arr(item.relatedArticles).length > 0;
       if (!hasSuccessor) {
         issues.push(issue(collection, item, "A3", "error",
-          `"${item.slug}" is superseded but names no successor (supersededBy or relatedArticles).`));
+          `"${item.slug}" has publication status "superseded" but names no successor page (supersededBy or relatedArticles).`));
       }
     }
 
@@ -286,6 +302,56 @@ export function checkTags(collections: Collections): ValidationIssue[] {
     ) {
       issues.push(issue(collection, item, "C3", "warning",
         `published "${item.slug}" has no tags.`));
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * C6 — a category must declare that it applies to the section using it.
+ *
+ * `appliesTo` has existed in the taxonomy registry since PR 1 and was, until
+ * now, documentation: it described which sections a category was intended for
+ * and nothing checked it. That meant the registry could quietly drift away
+ * from what content actually did — a category could say "guides and news"
+ * while a glossary term used it, and the only cost would be a comment that had
+ * become untrue.
+ *
+ * Enforcing it in Phase 5A PR 5 makes the applicability decision real. Opting a
+ * category into a new section is now a deliberate registry edit that has to be
+ * made before content can use it, which is exactly the property the closed
+ * taxonomy was built for in the first place.
+ *
+ * The map below translates a collection name to the section value the registry
+ * uses. Collections not in the map are unconstrained, because their categories
+ * were never scoped — adding one here is how a future vertical opts in.
+ */
+const COLLECTION_SECTIONS: Record<string, string> = {
+  guides: "guide",
+  news: "news",
+  glossaryTerms: "glossary",
+  standards: "standard",
+};
+
+export function checkCategoryApplicability(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const { collection, item } of eachItem(collections)) {
+    const section = COLLECTION_SECTIONS[collection];
+    if (!section) continue;
+
+    const slug = str(item.category);
+    if (!slug) continue;
+
+    const category = getContentCategory(slug);
+    // An unknown category is already an error at parse time via the schema's
+    // enum; nothing to add here.
+    if (!category) continue;
+
+    if (!category.appliesTo.includes(section as never)) {
+      issues.push(issue(collection, item, "C6", "error",
+        `"${item.slug}" uses category "${slug}", which is not declared as applying to the ${section} section (appliesTo: ${category.appliesTo.join(", ")}).`));
     }
   }
 
@@ -496,8 +562,11 @@ export function checkGovernance(
     }
 
     // F5 — legal/technical content benefits from a named compliance reviewer.
+    // Standards joined in Phase 5A PR 5: a page that misstates what a document
+    // requires carries the same professional risk as a legislation page.
     const needsComplianceReviewer =
       collection === "legislation" ||
+      collection === "standards" ||
       (collection === "guides" && str(item.riskTier) === "high-risk");
     if (
       needsComplianceReviewer &&
@@ -506,6 +575,357 @@ export function checkGovernance(
     ) {
       issues.push(issue(collection, item, "F5", "warning",
         `published "${item.slug}" has no complianceReviewerId.`));
+    }
+  }
+
+  return issues;
+}
+
+// ---------------------------------------------------------------------------
+// G. External document references — Standards now, Legislation from PR 6.
+//
+// Everything in this section iterates DOCUMENT_REFERENCE_COLLECTIONS rather
+// than naming "standards", so PR 6 enables the whole set for Legislation by
+// adding one entry to that list.
+//
+// The thing these rules exist to prevent is a specific and quiet failure: a
+// reference page that looks authoritative, is trusted by a professional
+// reader, and is silently out of date. Nothing about a stale page looks wrong.
+// ---------------------------------------------------------------------------
+
+/** Items across every collection that describes an external document. */
+function* eachDocumentItem(collections: Collections) {
+  for (const collection of DOCUMENT_REFERENCE_COLLECTIONS) {
+    for (const item of collections[collection] ?? []) yield { collection, item };
+  }
+}
+
+/** Registrable-domain suffix match, so subdomains of an allowed host pass. */
+function hostMatches(url: string, allowed: readonly string[]): boolean {
+  let host: string;
+  try {
+    host = new URL(url).hostname.toLowerCase();
+  } catch {
+    return false;
+  }
+  return allowed.some((d) => host === d || host.endsWith(`.${d}`));
+}
+
+/**
+ * G1–G4, G9–G12, G16 — lifecycle and supersession coherence.
+ */
+export function checkDocumentLifecycle(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const issues: ValidationIssue[] = [];
+
+  for (const collection of DOCUMENT_REFERENCE_COLLECTIONS) {
+    const items = collections[collection] ?? [];
+    const bySlug = new Map(items.map((i) => [i.slug, i]));
+
+    for (const item of items) {
+      const docStatus = str(item.documentStatus);
+      const successors = arr(item.supersededBy) as string[];
+      const withdrawn = toDateOnly(item.withdrawnDate);
+
+      // G1 — a superseded document that names no successor strands the reader
+      // on the one page whose entire job is to point them onward.
+      if (docStatus === "superseded" && successors.length === 0) {
+        issues.push(issue(collection, item, "G1", "error",
+          `"${item.slug}" has documentStatus "superseded" but names no successor in supersededBy.`));
+      }
+
+      // G3 — self-supersession.
+      if (successors.includes(item.slug)) {
+        issues.push(issue(collection, item, "G3", "error",
+          `"${item.slug}" lists itself in supersededBy.`));
+      }
+
+      // G4 — cycles. Walked ITERATIVELY with a visited set rather than
+      // recursively: a cycle here must be reported, never become a stack
+      // overflow during a content build.
+      const seen = new Set<string>([item.slug]);
+      const queue = [...successors];
+      while (queue.length > 0) {
+        const next = queue.shift()!;
+        if (next === item.slug) {
+          issues.push(issue(collection, item, "G4", "error",
+            `"${item.slug}" is part of a supersession cycle.`));
+          break;
+        }
+        if (seen.has(next)) continue;
+        seen.add(next);
+        const target = bySlug.get(next);
+        if (target) queue.push(...(arr(target.supersededBy) as string[]));
+      }
+
+      // G9 — a withdrawal that has not happened yet.
+      if (withdrawn && withdrawn > now) {
+        issues.push(issue(collection, item, "G9", "error",
+          `"${item.slug}" has withdrawnDate ${withdrawn}, which is in the future.`));
+      }
+
+      // G10 — withdrawn with no date. A warning, not an error: publishers do
+      // not always state one, and PAS 79-2 is the live example — suspended
+      // March 2021, withdrawal confirmed by BSI statement that August, with no
+      // discrete withdrawal date published in the catalogue.
+      if (docStatus === "withdrawn" && !withdrawn) {
+        issues.push(issue(collection, item, "G10", "warning",
+          `"${item.slug}" is withdrawn but records no withdrawnDate.`));
+      }
+
+      // G12 — incoherent: current documents have not been withdrawn.
+      if (docStatus === "current" && withdrawn) {
+        issues.push(issue(collection, item, "G12", "error",
+          `"${item.slug}" has documentStatus "current" but also a withdrawnDate (${withdrawn}).`));
+      }
+
+      // G16 — an amendment dated in the future. A warning rather than an
+      // error, because amendments ARE published ahead of coming into force
+      // (Approved Document B's 2026 and 2029 amendment sets are exactly this),
+      // but a future date in the amendments list reads as already applying.
+      for (const entry of arr(item.amendments) as { reference?: unknown; date?: unknown }[]) {
+        const date = toDateOnly(entry?.date);
+        if (date && date > now) {
+          issues.push(issue(collection, item, "G16", "warning",
+            `"${item.slug}" lists amendment "${String(entry?.reference ?? "?")}" dated ${date}, which is in the future — if it is not yet in force, describe it in the body rather than listing it as an amendment.`));
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * G5 — a published Guide pointing at a document that is no longer current.
+ *
+ * The most valuable rule in this file. It catches the day a standard is
+ * withdrawn and a Guide carries on recommending it — which is not a
+ * hypothetical: PAS 79-2 was withdrawn in 2021 and replaced in 2025, and
+ * anything still citing it as live guidance for housing is now wrong.
+ *
+ * A warning, not an error. A Guide may legitimately discuss a withdrawn
+ * document, and often should. The rule asks for a look, not a removal.
+ */
+export function checkReferencedDocumentCurrency(
+  collections: Collections
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  const statusBy: Record<string, Map<string, string | undefined>> = {};
+  for (const collection of DOCUMENT_REFERENCE_COLLECTIONS) {
+    statusBy[collection] = new Map(
+      (collections[collection] ?? []).map((i) => [i.slug, str(i.documentStatus)])
+    );
+  }
+
+  const fieldToCollection: Record<string, string> = {
+    relatedStandards: "standards",
+    relatedLegislation: "legislation",
+  };
+
+  for (const { collection, item } of eachItem(collections)) {
+    const acknowledged = new Set(arr(item.acknowledgedNonCurrentDocuments) as string[]);
+    const referenced = new Set<string>();
+
+    if (str(item.status) === "published") {
+      for (const [field, target] of Object.entries(fieldToCollection)) {
+        const statuses = statusBy[target];
+        if (!statuses) continue;
+        for (const ref of arr(item[field]) as string[]) {
+          referenced.add(ref);
+          const refStatus = statuses.get(ref);
+          if (refStatus && refStatus !== "current" && !acknowledged.has(ref)) {
+            issues.push(issue(collection, item, "G5", "warning",
+              `published "${item.slug}" references "${ref}" via ${field}, and that document is ${refStatus} — check the page still describes the position accurately, then list the slug in acknowledgedNonCurrentDocuments to record that it was reviewed.`));
+          }
+        }
+      }
+    } else {
+      for (const field of Object.keys(fieldToCollection)) {
+        for (const ref of arr(item[field]) as string[]) referenced.add(ref);
+      }
+    }
+
+    // G17 — keeps the acknowledgement honest. An entry that names a document
+    // which has since become current again, or one this item no longer
+    // references, is a silencer left lying around; both surface here rather
+    // than quietly suppressing a future G5 that would have mattered.
+    for (const ack of acknowledged) {
+      if (!referenced.has(ack)) {
+        issues.push(issue(collection, item, "G17", "warning",
+          `"${item.slug}" acknowledges non-current document "${ack}" but does not reference it — remove the stale acknowledgement.`));
+        continue;
+      }
+      const stillNonCurrent = Object.values(fieldToCollection).some((target) => {
+        const status = statusBy[target]?.get(ack);
+        return status !== undefined && status !== "current";
+      });
+      if (!stillNonCurrent) {
+        issues.push(issue(collection, item, "G17", "warning",
+          `"${item.slug}" acknowledges "${ack}" as non-current, but that document is current — remove the acknowledgement.`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * G6, G7, G8, G11 — provenance, official source and copyright integrity.
+ */
+export function checkDocumentProvenance(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const { collection, item } of eachDocumentItem(collections)) {
+    const documentClass = str(item.documentClass);
+
+    // G6 — a BS or PAS without an edition year is not a usable reference.
+    if (
+      documentClass &&
+      EDITION_REQUIRED_CLASSES.includes(documentClass) &&
+      !str(item.currentEdition)
+    ) {
+      issues.push(issue(collection, item, "G6", "error",
+        `"${item.slug}" is a ${documentClass} but records no currentEdition.`));
+    }
+
+    // G7 — "official source" must reach the publisher, not a reseller.
+    const sourceUrl = str(item.officialSourceUrl);
+    const allowedHosts = documentClass ? OFFICIAL_SOURCE_HOSTS[documentClass] : undefined;
+    if (sourceUrl && allowedHosts && allowedHosts.length > 0) {
+      if (!hostMatches(sourceUrl, allowedHosts)) {
+        issues.push(issue(collection, item, "G7", "warning",
+          `"${item.slug}" has officialSourceUrl "${sourceUrl}", which is not on a recognised publisher domain for ${documentClass} (${allowedHosts.join(", ")}).`));
+      }
+    }
+
+    // G8 — the notice and the disclaimer must be real, and the notice must
+    // match the licence regime. `min(1)` in the schema is satisfied by a
+    // single character, which is exactly what a placeholder looks like.
+    const licence = str(item.sourceLicence) ?? "commercial";
+    const notice = str(item.copyrightNotice) ?? "";
+    const disclaimer = str(item.disclaimer) ?? "";
+
+    if (notice.length < NOTICE_MIN_LENGTH) {
+      issues.push(issue(collection, item, "G8", "warning",
+        `"${item.slug}" has a copyrightNotice of ${notice.length} characters, below the ${NOTICE_MIN_LENGTH}-character minimum for a meaningful notice.`));
+    }
+    if (disclaimer.length < NOTICE_MIN_LENGTH) {
+      issues.push(issue(collection, item, "G8", "warning",
+        `"${item.slug}" has a disclaimer of ${disclaimer.length} characters, below the ${NOTICE_MIN_LENGTH}-character minimum.`));
+    }
+
+    const markers = LICENCE_NOTICE_MARKERS[licence] ?? [];
+    if (markers.length > 0 && notice.length > 0) {
+      const lower = notice.toLowerCase();
+      if (!markers.some((m) => lower.includes(m))) {
+        issues.push(issue(collection, item, "G8", "warning",
+          `"${item.slug}" declares sourceLicence "${licence}" but its copyrightNotice does not mention it.`));
+      }
+    }
+    // The reverse, and the more dangerous direction: claiming open terms over
+    // commercially licensed material.
+    if (licence === "commercial" && notice.toLowerCase().includes("open government licence")) {
+      issues.push(issue(collection, item, "G8", "warning",
+        `"${item.slug}" declares sourceLicence "commercial" but its copyrightNotice claims Open Government Licence terms.`));
+    }
+
+    // G11 — the machine-checkable half of the copyright boundary. A long
+    // verbatim block quotation from a commercially licensed source is not
+    // automatically a breach, and this is not a legal test — it is a tripwire
+    // that puts the question in front of a person instead of letting it pass.
+    if (licence === "commercial") {
+      const body = typeof item.body === "string" ? item.body : "";
+      for (const match of body.matchAll(/^>\s?.*(?:\n>\s?.*)*/gm)) {
+        const quote = match[0].replace(/^>\s?/gm, "");
+        if (quote.length > COMMERCIAL_QUOTE_MAX_CHARS) {
+          issues.push(issue(collection, item, "G11", "warning",
+            `"${item.slug}" quotes ${quote.length} characters verbatim from a commercially licensed source — review against the publisher's reproduction terms.`));
+          break;
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * G13, G14, G15 — the publication gate (owner-required, Phase 5A PR 5).
+ *
+ * A Standards page may not be published unless it carries explicit evidence
+ * that its status, edition and licence were actively confirmed, by a named
+ * person, against the official source.
+ *
+ * The reasoning is that this is the site's first authoritative reference
+ * library, and the currency of a reference page is the whole of its value.
+ * `lastCheckedDate` records that somebody looked; these fields record what
+ * they actually confirmed, which is a different and stronger claim.
+ *
+ * Every field is optional in the schema and required HERE, so a half-verified
+ * draft can exist while it is being written but can never go live.
+ */
+export function checkDocumentPublicationGate(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const issues: ValidationIssue[] = [];
+
+  for (const { collection, item } of eachDocumentItem(collections)) {
+    const documentClass = str(item.documentClass);
+    const editionRequired =
+      !!documentClass && EDITION_REQUIRED_CLASSES.includes(documentClass);
+
+    const confirmations: [string, string | undefined][] = [
+      ["statusConfirmedDate", toDateOnly(item.statusConfirmedDate)],
+      ["editionConfirmedDate", toDateOnly(item.editionConfirmedDate)],
+      ["licenceConfirmedDate", toDateOnly(item.licenceConfirmedDate)],
+    ];
+
+    // G14 — a confirmation cannot have happened in the future. Applies
+    // whatever the publication state, because a future-dated confirmation is
+    // a mistake in a draft too.
+    for (const [field, value] of confirmations) {
+      if (value && value > now) {
+        issues.push(issue(collection, item, "G14", "error",
+          `"${item.slug}" has ${field} ${value}, which is in the future.`));
+      }
+    }
+
+    if (str(item.status) !== "published") continue;
+
+    const missing: string[] = [];
+    if (!str(item.documentStatus)) missing.push("documentStatus");
+    if (!toDateOnly(item.statusConfirmedDate)) missing.push("statusConfirmedDate");
+    if (editionRequired && !str(item.currentEdition)) missing.push("currentEdition");
+    if (!toDateOnly(item.editionConfirmedDate)) missing.push("editionConfirmedDate");
+    if (!toDateOnly(item.lastCheckedDate)) missing.push("lastCheckedDate");
+    if (!toDateOnly(item.licenceConfirmedDate)) missing.push("licenceConfirmedDate");
+    if (!str(item.verifiedBy)) missing.push("verifiedBy");
+    if (!str(item.officialReference)) missing.push("officialReference");
+    if (!str(item.publisher)) missing.push("publisher");
+    if (!str(item.officialSourceUrl)) missing.push("officialSourceUrl");
+
+    if (missing.length > 0) {
+      issues.push(issue(collection, item, "G13", "error",
+        `published "${item.slug}" is missing required verification metadata: ${missing.join(", ")}. A reference page may not be published without explicit evidence that its status, edition and licence were confirmed against the official source.`));
+    }
+
+    // G15 — confirmations that have gone stale. Warning, consistent with B4
+    // and B5: the passage of time must never break a deployment.
+    const cycle = reviewCycleMonths(collection);
+    if (cycle !== null) {
+      for (const [field, value] of confirmations) {
+        if (value && addMonths(value, cycle) < now) {
+          issues.push(issue(collection, item, "G15", "warning",
+            `"${item.slug}" has ${field} ${value}, beyond the ${cycle}-month currency window.`));
+        }
+      }
     }
   }
 
@@ -526,9 +946,14 @@ export function validateEditorialRules(
     ...checkReviewCycles(collections, options),
     ...checkSourceCurrency(collections, options),
     ...checkTags(collections),
+    ...checkCategoryApplicability(collections),
     ...checkPeopleReferences(collections),
     ...checkEditorialHeuristics(collections),
     ...checkAccessibility(collections),
     ...checkGovernance(collections, options),
+    ...checkDocumentLifecycle(collections, options),
+    ...checkReferencedDocumentCurrency(collections),
+    ...checkDocumentProvenance(collections),
+    ...checkDocumentPublicationGate(collections, options),
   ];
 }
