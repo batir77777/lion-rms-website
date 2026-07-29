@@ -129,6 +129,30 @@ describe("Glossary accessor layer", () => {
     }
   });
 
+  // Both halves of the relation must actually reach a page. The inversion was
+  // implemented and tested first, and preview verification caught that the
+  // Guide side was never rendered — so this asserts the forward direction at
+  // the route, not just in the data.
+  test("the guide route renders a link to each of its related terms", async () => {
+    const fsMod = await import("node:fs");
+    const src = fsMod.readFileSync(path.join(appDir, "guides/[slug]/page.tsx"), "utf8");
+    assert.match(src, /relatedGlossaryTerms/, "guide route does not read the relation");
+    assert.match(src, /Terms used in this guide/, "guide route does not render a related-terms group");
+  });
+
+  test("every guide with related terms resolves all of them", async () => {
+    const { publishedGuides } = await import("../lib/guides");
+    const { getTerm } = await import("../lib/glossary");
+    let total = 0;
+    for (const guide of publishedGuides()) {
+      for (const slug of guide.relatedGlossaryTerms ?? []) {
+        assert.ok(getTerm(slug), `${guide.slug}: ${slug} does not resolve`);
+        total++;
+      }
+    }
+    assert.ok(total >= 20, `expected the relation to be populated, found ${total}`);
+  });
+
   test("breadcrumbs are Home / Knowledge Centre / Glossary / term", async () => {
     const { getTerm, buildTermBreadcrumbs } = await import("../lib/glossary");
     const crumbs = buildTermBreadcrumbs(getTerm("stay-put"));
