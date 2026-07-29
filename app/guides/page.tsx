@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PhotoHero from "@/components/PhotoHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import KnowledgeCentreNav from "@/components/KnowledgeCentreNav";
 import GuideFilter, { type FilterableGuide } from "@/components/GuideFilter";
 import {
   publishedGuides,
@@ -69,9 +70,11 @@ export default function GuidesPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <div className="mb-10">
+          <div className="mb-8">
             <Breadcrumbs items={CRUMBS} />
           </div>
+
+          <KnowledgeCentreNav current="/guides" />
 
           {guides.length === 0 ? (
             <p className="text-lg text-slate-600">
