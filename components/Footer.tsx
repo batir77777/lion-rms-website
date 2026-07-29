@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { NAV, SITE, CREDENTIALS, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { KNOWLEDGE_SECTIONS } from "@/components/KnowledgeCentreNav";
 
 export default function Footer() {
   return (
@@ -39,6 +40,28 @@ export default function Footer() {
                   <Link href={n.href} className="text-slate-400 transition hover:text-white">
                     {n.label}
                   </Link>
+                  {/*
+                    Knowledge Centre sections, nested under their parent
+                    (Phase 5A PR 5). The header deliberately carries one entry
+                    for the whole section rather than one per vertical — see
+                    components/KnowledgeCentreNav.tsx — which until now left the
+                    Glossary with no route into it from global navigation at
+                    all. This is the other half of that fix.
+                  */}
+                  {n.href === "/guides" && (
+                    <ul className="mt-2.5 space-y-2.5 border-l border-slate-800 pl-4">
+                      {KNOWLEDGE_SECTIONS.map((section) => (
+                        <li key={section.href}>
+                          <Link
+                            href={section.href}
+                            className="text-slate-400 transition hover:text-white"
+                          >
+                            {section.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
