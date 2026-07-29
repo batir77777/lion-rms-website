@@ -25,6 +25,7 @@ import {
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
 import { getCaseStudy } from "@/lib/case-studies";
+import { getTerm, displayTerm, GLOSSARY_PATH } from "@/lib/glossary";
 
 // Only published guides are generated, and `dynamicParams = false` means a slug
 // outside that set returns a genuine 404 rather than being rendered on demand —
@@ -113,6 +114,14 @@ export default async function GuidePage({
     .map((s) => getCaseStudy(s))
     .filter((c): c is NonNullable<typeof c> => Boolean(c))
     .map((c) => ({ label: c.title, href: `/case-studies/${c.slug}` }));
+
+  // The Guide side of the Glossary relation. The term pages derive their
+  // "Guides that use this term" list by inverting this same declaration, so the
+  // link is authored once and surfaced on both.
+  const relatedTerms = guide.relatedGlossaryTerms
+    .map((s) => getTerm(s))
+    .filter((t): t is NonNullable<typeof t> => Boolean(t))
+    .map((t) => ({ label: displayTerm(t), href: `${GLOSSARY_PATH}/${t.slug}` }));
 
   return (
     <article className="bg-white">
@@ -230,6 +239,7 @@ export default async function GuidePage({
           groups={[
             { heading: "Related service", items: relatedServices },
             { heading: "Related case study", items: relatedCaseStudies },
+            { heading: "Terms used in this guide", items: relatedTerms },
           ]}
         />
 
