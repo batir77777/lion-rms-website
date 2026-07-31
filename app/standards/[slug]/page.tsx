@@ -27,6 +27,11 @@ import {
   STANDARDS_PATH,
 } from "@/lib/standards";
 import { displayTerm, GLOSSARY_PATH } from "@/lib/glossary";
+import {
+  getLegislation,
+  legislationUsingStandard,
+  LEGISLATION_PATH,
+} from "@/lib/legislation";
 import { buildStandardSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import {
@@ -156,11 +161,17 @@ export default async function StandardPage({
       href: s.hasPage ? `/sectors/${s.slug}` : undefined,
     }));
 
-  // Legislation pages do not exist until PR 6. Passed through as unlinked
-  // labels so the relationship is visible now and becomes a link later with no
-  // content change.
-  const legislationItems = (standard.relatedLegislation ?? []).map((slugRef) => ({
-    label: slugRef,
+  // Phase 5A PR 6: legislation pages now exist, so these resolve to real links
+  // rather than the unlinked labels PR 5 rendered.
+  const legislationItems = (standard.relatedLegislation ?? [])
+    .map((s) => getLegislation(s))
+    .filter((l): l is NonNullable<typeof l> => Boolean(l))
+    .map((l) => ({ label: l.shortTitle, href: `${LEGISLATION_PATH}/${l.slug}` }));
+
+  // The inverse: legislation pages that declare this standard.
+  const legislationUsingThis = legislationUsingStandard(standard.slug).map((l) => ({
+    label: l.shortTitle,
+    href: `${LEGISLATION_PATH}/${l.slug}`,
   }));
 
   const withdrawnLabel = formatDate(standard.withdrawnDate);
@@ -360,6 +371,7 @@ export default async function StandardPage({
             { heading: "Replaces", items: predecessorItems },
             { heading: "Related standards", items: peerItems },
             { heading: "Related legislation", items: legislationItems },
+            { heading: "Legislation that references this", items: legislationUsingThis },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
             { heading: "Related sector", items: sectorItems },
