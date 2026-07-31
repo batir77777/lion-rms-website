@@ -87,6 +87,8 @@ export default function ContactPage() {
               <ContactForm />
             </Suspense>
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-5 text-xs font-semibold text-slate-500">
+              <span>MIFireE</span>
+              <span aria-hidden>&middot;</span>
               <span>CMIOSH Chartered</span>
               <span aria-hidden>&middot;</span>
               <span>PI Insured</span>
