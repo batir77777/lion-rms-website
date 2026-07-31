@@ -20,6 +20,7 @@ import {
 } from "@/lib/glossary";
 import { formatDate } from "@/lib/guides";
 import { standardsUsingTerm, designation, STANDARDS_PATH } from "@/lib/standards";
+import { legislationUsingTerm, LEGISLATION_PATH } from "@/lib/legislation";
 import { buildDefinedTermSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import { SITE, SITE_URL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
@@ -236,6 +237,15 @@ export default async function GlossaryTermPage({
                 href: `${STANDARDS_PATH}/${s.slug}`,
               })),
             },
+            {
+              // Phase 5A PR 6. Derived by inverting each instrument's
+              // relatedGlossaryTerms — declared once, surfaced on both.
+              heading: "Legislation that uses this term",
+              items: legislationUsingTerm(term.slug).map((l) => ({
+                label: l.shortTitle,
+                href: `${LEGISLATION_PATH}/${l.slug}`,
+              })),
+            },
           ]}
         />
 
@@ -291,5 +301,6 @@ const JURISDICTION_LABELS: Record<string, string> = {
   "england-and-wales": "England and Wales",
   scotland: "Scotland",
   "northern-ireland": "Northern Ireland",
-  "uk-wide": "UK-wide",
+  "great-britain": "Great Britain",
+  "united-kingdom": "United Kingdom",
 };
