@@ -77,6 +77,20 @@ export const baseFields = {
   relatedLegislation: s.array(s.string()).default([]),
   relatedGlossaryTerms: s.array(s.string()).default([]),
   relatedDownloads: s.array(s.string()).default([]),
+  /**
+   * News items relevant to this page (Phase 5A PR 7).
+   *
+   * On baseFields rather than only on the News schema, for two reasons. A news
+   * item needs to reference an earlier one — "the consultation we reported in
+   * March has now closed" — and before this there was no field that could:
+   * `relatedArticles` targets GUIDES, not news, which was the one genuine gap
+   * in the relation model. And a Guide, Standard or Legislation page benefits
+   * from pointing at the news that reported a change to it.
+   *
+   * Registered in RELATION_TARGET_COLLECTIONS in lib/content-validation.ts, so
+   * every existing dangling-reference check applies with no new rule code.
+   */
+  relatedNews: s.array(s.string()).default([]),
 
   /**
    * Slugs of non-current standards or legislation this item references
@@ -143,21 +157,116 @@ export const newsArticleSchema = s.object({
   contentType: s.literal("news"),
   slug: s.slug("news"),
   body: s.mdx(),
-  sourceType: s.enum([
-    "monthly-roundup",
-    "hse-update",
-    "consultation",
-    "enforcement-case",
+
+  // -------------------------------------------------------------------------
+  // Classification — two orthogonal axes (Phase 5A PR 7).
+  //
+  // Replaces `sourceType: monthly-roundup | hse-update | consultation |
+  // enforcement-case | prosecution | product-recall | standards-revision`,
+  // which was not decidable. `monthly-roundup` described the FORMAT of the
+  // page; the other six described its SUBJECT. They were never alternatives —
+  // a round-up CONTAINS consultations and enforcement cases — so a round-up
+  // could not also be classified by topic, and a topic-classified item could
+  // not be marked as a round-up.
+  //
+  // This is the same defect PR 6 found in `documentClass`, where Regulations
+  // and Orders both being statutory instruments made three of four values
+  // overlap. The fix is the same: separate the axes.
+  //
+  // `hse-update` also disappears, because it encoded the PUBLISHER into the
+  // subject axis. HSE is one of several bodies publishing fire safety and
+  // health & safety guidance — MHCLG, the Home Office and BSI all do too —
+  // so publisher moves to `sourceOrganisation` where it belongs, and the
+  // subject becomes `government-guidance`.
+  // -------------------------------------------------------------------------
+
+  /** How the page is shaped: one report, or a dated monthly digest. */
+  newsFormat: s.enum(["single-item", "monthly-roundup"]),
+
+  /**
+   * What the item is about.
+   *
+   * `prosecution` is deliberately kept separate from `enforcement`
+   * (owner decision, Phase 5A PR 7). An improvement notice and a Crown Court
+   * conviction differ in kind, in evidential weight, and in what a duty holder
+   * should take from them. Filing them together would read as though written
+   * by someone who has not worked with either.
+   */
+  newsCategory: s.enum([
+    "enforcement",
     "prosecution",
+    "consultation",
+    "standards-update",
     "product-recall",
-    "standards-revision",
+    "government-guidance",
+    "regulatory-change",
   ]),
-  sourceUrl: s.string().min(1),
+
+  // -------------------------------------------------------------------------
+  // Dates (Phase 5A PR 7).
+  //
+  // `publishedDate` and `updatedDate` come from baseFields and describe OUR
+  // page. The three below describe the thing being reported, and they are not
+  // interchangeable:
+  //
+  //   - an enforcement case has an event date and no effective date;
+  //   - a commencement regulation has an effective date and, often, a separate
+  //     announcement date;
+  //   - a consultation has an opening date and a closing date, and neither is
+  //     an "effective" date at all.
+  //
+  // One optional field could not carry this. `effectiveDate` previously tried
+  // to, and using it for a sentencing date would have put a false claim into
+  // the page's structured data.
+  //
+  // All three are optional HERE and required per-category by the N-series
+  // rules in lib/editorial-validation.ts — the same split used for the
+  // Standards and Legislation publication gates, so a half-written draft can
+  // exist on disk but cannot be published.
+  // -------------------------------------------------------------------------
+
+  /** When the reported thing happened: sentencing, a recall notice, a launch. */
+  eventDate: s.isodate().optional(),
+  /** When a change takes legal or practical effect. Narrower than before. */
   effectiveDate: s.isodate().optional(),
-  // Monthly round-ups are immutable historical records once published
-  // (owner-approved decision) — enforced editorially, this field just
-  // records the fact for anyone building tooling against it later.
+  /** Consultation closing date — the one a reader must not miss. */
+  consultationClosesDate: s.isodate().optional(),
+
+  // -------------------------------------------------------------------------
+  // Source attribution (Phase 5A PR 7)
+  // -------------------------------------------------------------------------
+
+  sourceUrl: s.string().min(1),
+  /** The body that published the primary source: HSE, MHCLG, BSI, a fire and
+   *  rescue service. There is no single publisher here, unlike legislation. */
+  sourceOrganisation: s.string().min(1),
+  /** When we last looked at the primary source. Required at publication by
+   *  rule N6. Deliberately NOT subject to a staleness window: a dated report
+   *  of a past event does not go stale the way a live standard does. */
+  sourceCheckedDate: s.isodate(),
+  /** False where the primary source sits behind a paywall or has been taken
+   *  down, so the page can say so rather than offering a link that fails. */
+  sourcePubliclyAccessible: s.boolean().default(true),
+
+  // -------------------------------------------------------------------------
+  // Immutability and corrections
+  // -------------------------------------------------------------------------
+
+  /**
+   * Monthly round-ups are immutable historical records once published
+   * (owner-approved decision). The value of a round-up is that it says what
+   * was true in a given month; silently editing it destroys that.
+   *
+   * Rules F2/F3 already enforce the changelog side. PR 7 adds N7/N8: F4 is
+   * promoted to an error here, and a corrected round-up must carry a
+   * `correctionNote` that the page renders visibly.
+   */
   immutable: s.boolean().default(false),
+  /** Plain-English note rendered beneath the body where a correction was made.
+   *  Append-only in practice: the original wording stays, this explains what
+   *  changed, because a reader who acted on the original needs to see both. */
+  correctionNote: s.string().optional(),
+
   schemaType: s.literal("NewsArticle"),
 });
 

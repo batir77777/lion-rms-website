@@ -329,3 +329,47 @@ export function buildDefinedTermSetSchema(input: DefinedTermSetInput) {
     publisher,
   };
 }
+
+export interface NewsArticleSchemaInput {
+  headline: string;
+  description: string;
+  path: string;
+  authorId: string;
+  datePublished?: string;
+  dateModified?: string;
+  articleSection?: string;
+  image?: string;
+}
+
+/**
+ * A News item (Phase 5A, PR 7).
+ *
+ * Unlike Standards and Legislation, there is no external document to nest
+ * under `about`: the page IS the report, written by us, and the primary source
+ * it cites is a citation rather than a work the page is commentary on. So this
+ * is a plain NewsArticle with our author and publisher, and no second node.
+ *
+ * `eventDate` is deliberately NOT emitted. schema.org's NewsArticle has no
+ * property for "the date the reported thing happened" — `datePublished` means
+ * when the article was published, and putting a sentencing date there would be
+ * a false statement in machine-readable form. The event dates are rendered for
+ * human readers instead, each with the label that is true for its category.
+ */
+export function buildNewsArticleSchema(input: NewsArticleSchemaInput) {
+  const url = `${SITE_URL}${input.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: input.headline,
+    description: input.description,
+    url,
+    "@id": url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(input.articleSection ? { articleSection: input.articleSection } : {}),
+    ...(input.image ? { image: `${SITE_URL}${input.image}` } : {}),
+    author: buildPersonRef(input.authorId),
+    publisher,
+  };
+}

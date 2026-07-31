@@ -393,3 +393,63 @@ export const TERMINATION_STATUS_TIER: Record<string, "primary" | "secondary"> = 
   repealed: "primary",
   revoked: "secondary",
 };
+
+// ---------------------------------------------------------------------------
+// News constants (Phase 5A, PR 7).
+// ---------------------------------------------------------------------------
+
+/**
+ * Which of the three event-side dates each news category must carry, and which
+ * it may optionally carry.
+ *
+ * The three dates are not interchangeable — an enforcement case has an event
+ * date and no effective date; a commencement regulation has an effective date
+ * and often a separate announcement date; a consultation has an opening and a
+ * closing date and neither is an "effective" date at all. Requiring all three
+ * everywhere would force authors to invent facts; requiring none would let a
+ * consultation publish without the one date a reader must not miss.
+ *
+ * Monthly round-ups are absent from this map deliberately: a round-up covers a
+ * period, and forcing a single event date onto it would be a false claim. The
+ * period comes from publishedDate and the title.
+ */
+export const NEWS_CATEGORY_DATES: Record<
+  string,
+  { required: readonly string[]; optional: readonly string[] }
+> = {
+  enforcement: { required: ["eventDate"], optional: [] },
+  prosecution: { required: ["eventDate"], optional: [] },
+  consultation: {
+    required: ["consultationClosesDate"],
+    optional: ["eventDate"],
+  },
+  "standards-update": { required: ["effectiveDate"], optional: ["eventDate"] },
+  "product-recall": { required: ["eventDate"], optional: [] },
+  "government-guidance": { required: ["eventDate"], optional: ["effectiveDate"] },
+  "regulatory-change": { required: ["effectiveDate"], optional: ["eventDate"] },
+};
+
+/** Every event-side date field, for the "not applicable to this category" check. */
+export const NEWS_DATE_FIELDS: readonly string[] = [
+  "eventDate",
+  "effectiveDate",
+  "consultationClosesDate",
+];
+
+/**
+ * Fields a published news item must carry, whatever its category.
+ *
+ * `sourceCheckedDate` is here rather than in a staleness rule on purpose. News
+ * carries no routine review cycle (REVIEW_CYCLE_MONTHS.news is null), and that
+ * is correct: a dated report of a past prosecution does not go stale the way a
+ * live standard does. What matters is that somebody looked at the primary
+ * source and recorded when — so the date is required at publication and
+ * checked for being in the future, but never for age.
+ */
+export const NEWS_PUBLICATION_GATE_FIELDS: readonly string[] = [
+  "newsFormat",
+  "newsCategory",
+  "sourceUrl",
+  "sourceOrganisation",
+  "sourceCheckedDate",
+];

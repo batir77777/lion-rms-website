@@ -119,6 +119,11 @@ const RELATION_TARGET_COLLECTIONS: Record<string, string> = {
   relatedLegislation: "legislation",
   relatedGlossaryTerms: "glossaryTerms",
   relatedDownloads: "downloads",
+  // Phase 5A PR 7. Points at the news collection from any collection,
+  // including news itself — a follow-up item referencing an earlier one is a
+  // self-reference by target, which is why it also appears in
+  // SELF_REFERENCE_GUARDED_FIELDS below.
+  relatedNews: "news",
 };
 
 // Relation fields that point WITHIN the item's own collection rather than at a
@@ -178,6 +183,24 @@ export function checkRelations(
       for (const [field, targetCollection] of Object.entries(RELATION_TARGET_COLLECTIONS)) {
         const value = item[field];
         if (!Array.isArray(value) || value.length === 0) continue;
+
+        // A relation whose target is the item's own collection can name the
+        // item itself, which a plain existence check would happily accept
+        // because the slug does exist. `relatedNews` on a news item is the
+        // first such case (Phase 5A PR 7); the same guard covers any future
+        // field pointing at its own collection.
+        if (targetCollection === collectionName) {
+          for (const referencedSlug of value as string[]) {
+            if (referencedSlug === item.slug) {
+              issues.push({
+                collection: collectionName,
+                slug: item.slug,
+                id: item.id,
+                message: `"${item.slug}" lists itself in ${field}.`,
+              });
+            }
+          }
+        }
         // Only validate against a target collection that exists in this
         // build — an empty/absent target collection means "not built yet",
         // not "every reference to it is wrong". PR 1 ships fixture-only
