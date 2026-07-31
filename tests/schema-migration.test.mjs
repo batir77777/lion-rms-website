@@ -23,6 +23,7 @@
 import { test, describe, before } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -236,5 +237,105 @@ describe("The jurisdiction vocabulary migration is complete on both sides", () =
       migrated.length > 0,
       "the rename must have moved at least one Glossary term, or the rollback note is wrong"
     );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The News migration guarantee (Phase 5A, PR 7).
+//
+// PR 7 removed `sourceType` — a live enum with fixtures against it — and split
+// it into `newsFormat` and `newsCategory`. Removing a field is the change most
+// likely to weaken a rule silently: a check that read `sourceType` and now
+// reads nothing would still pass every test that never asserted on it.
+//
+// These assertions pin that no rule lost its grip, and that the split actually
+// achieved the thing it was for.
+// ---------------------------------------------------------------------------
+
+describe("News: the sourceType split weakened nothing", () => {
+  test("sourceType is gone from the schema, the fixtures and the output", async () => {
+    const mod = await import("../lib/content-schemas");
+    const { news } = await import("../.velite");
+    assert.ok(
+      !Object.keys(mod.newsArticleSchema.shape ?? {}).includes("sourceType"),
+      "sourceType is still declared on the news schema"
+    );
+    for (const i of news) {
+      assert.equal(i.sourceType, undefined, `${i.slug} still carries sourceType`);
+    }
+  });
+
+  test("both replacement axes are required, not optional", async () => {
+    // If either were optional, an item could publish classified on neither
+    // axis — strictly worse than the single field it replaced.
+    const { news } = await import("../.velite");
+    for (const i of news) {
+      assert.equal(typeof i.newsFormat, "string", `${i.slug}: newsFormat missing`);
+      assert.equal(typeof i.newsCategory, "string", `${i.slug}: newsCategory missing`);
+    }
+  });
+
+  test("the axes are genuinely orthogonal in real content", async () => {
+    // The defect being fixed was that monthly-roundup and the six subjects
+    // could not co-exist. If no round-up carries a category that also appears
+    // on a single item, the split has not been exercised.
+    const { news } = await import("../.velite");
+    const roundUpCategories = new Set(
+      news.filter((i) => i.newsFormat === "monthly-roundup").map((i) => i.newsCategory)
+    );
+    const singleCategories = new Set(
+      news.filter((i) => i.newsFormat === "single-item").map((i) => i.newsCategory)
+    );
+    const shared = [...roundUpCategories].filter((c) => singleCategories.has(c));
+    assert.ok(
+      shared.length > 0,
+      "no category appears in both formats — the orthogonality is untested by content"
+    );
+  });
+
+  test("prosecution survives as its own category, not folded into enforcement", async () => {
+    const { NEWS_CATEGORY_DATES } = await import("../lib/editorial-rules");
+    assert.ok(NEWS_CATEGORY_DATES.prosecution, "prosecution lost its own date spec");
+    assert.ok(NEWS_CATEGORY_DATES.enforcement, "enforcement lost its own date spec");
+    const { news } = await import("../.velite");
+    assert.ok(
+      news.some((i) => i.newsCategory === "prosecution"),
+      "no content exercises the prosecution category"
+    );
+  });
+
+  test("the news publication gate covers what sourceType never did", async () => {
+    const { NEWS_PUBLICATION_GATE_FIELDS } = await import("../lib/editorial-rules");
+    for (const field of ["newsFormat", "newsCategory", "sourceOrganisation", "sourceCheckedDate"]) {
+      assert.ok(
+        NEWS_PUBLICATION_GATE_FIELDS.includes(field),
+        `${field} is not gated at publication`
+      );
+    }
+  });
+
+  test("news still carries no review cycle, and no staleness rule crept in", async () => {
+    const { reviewCycleMonths } = await import("../lib/editorial-rules");
+    assert.equal(reviewCycleMonths("news"), null);
+    const src = fs.readFileSync(path.join(repoRoot, "lib/editorial-validation.ts"), "utf8");
+    const fn = src.slice(src.indexOf("export function checkSourceCurrency"));
+    const body = fn.slice(0, fn.indexOf("\n}"));
+    assert.ok(
+      !/["']news["']/.test(body),
+      "checkSourceCurrency now covers news — that would age a dated report of a past event"
+    );
+  });
+
+  test("relatedNews is registered as a real relation target", async () => {
+    const src = fs.readFileSync(path.join(repoRoot, "lib/content-validation.ts"), "utf8");
+    assert.match(src, /relatedNews: "news"/);
+  });
+
+  test("the tag registry grew by exactly the four approved additions", async () => {
+    const { CONTENT_TAG_SLUGS } = await import("../lib/taxonomy");
+    for (const slug of ["sprinklers-suppression", "external-wall-systems", "smoke-control", "asbestos"]) {
+      assert.ok(CONTENT_TAG_SLUGS.includes(slug), `${slug} missing from the registry`);
+    }
+    assert.equal(CONTENT_TAG_SLUGS.length, 14, "the registry grew beyond the four approved tags");
   });
 });
