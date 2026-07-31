@@ -31,6 +31,7 @@ export const KNOWLEDGE_SECTIONS: KnowledgeSection[] = [
   { label: "Glossary", href: "/glossary" },
   { label: "Standards", href: "/standards" },
   { label: "Legislation", href: "/legislation" },
+  { label: "News", href: "/news" },
 ];
 
 export default function KnowledgeCentreNav({ current }: { current: string }) {

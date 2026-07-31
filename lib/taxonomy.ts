@@ -122,6 +122,22 @@ export const CONTENT_TAGS: ContentTag[] = [
   // later compete with the /standards and /legislation pages themselves.
   { slug: "compartmentation", label: "Compartmentation" },
   { slug: "fire-extinguishers", label: "Fire Extinguishers" },
+  // Added in Phase 5A PR 6 (News). Rule C3 makes tags mandatory on News, and
+  // the ten tags above are all building-fabric or life-safety-system topics
+  // that no enforcement notice, consultation or product recall could honestly
+  // carry. Rather than weaken C3 or invent news-shaped tags, the registry
+  // gains four subjects that are genuinely technical, recur across this
+  // sector, and — the test of a legitimate tag — would apply just as well to
+  // an existing Guide or Standard as to a news item.
+  //
+  // Deliberately NOT added: anything matching an existing category
+  // ("enforcement", "regulatory-change"), which would duplicate `newsCategory`
+  // and compete in search with the pages it was meant to classify. That was
+  // the PR 3 and PR 5 conclusion and it still holds.
+  { slug: "sprinklers-suppression", label: "Sprinklers & Suppression" },
+  { slug: "external-wall-systems", label: "External Wall Systems" },
+  { slug: "smoke-control", label: "Smoke Control" },
+  { slug: "asbestos", label: "Asbestos" },
 ];
 
 export const CONTENT_TAG_SLUGS = CONTENT_TAGS.map((t) => t.slug) as [string, ...string[]];

@@ -218,10 +218,10 @@ describe("Glossary routing", () => {
   });
 
   test("no other vertical is introduced", () => {
-    // "standards" left this list in Phase 5A PR 5 and "legislation" in PR 6,
-    // each of which launched it. The remaining four are still deferred and this
-    // assertion still guards them.
-    for (const route of ["news", "downloads", "knowledge", "search"]) {
+    // "standards" left this list in PR 5, "legislation" in PR 6 and "news" in
+    // PR 7, each of which launched it. The remaining three are still deferred
+    // and this assertion still guards them.
+    for (const route of ["downloads", "knowledge", "search"]) {
       assert.equal(exists(route), false, `/${route} must not exist yet`);
     }
   });

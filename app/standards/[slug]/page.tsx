@@ -42,6 +42,7 @@ import {
   CTA_SECONDARY_LABEL,
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
+import { newsMentioningStandard, NEWS_PATH } from "@/lib/news";
 
 // Only published standards are generated, and `dynamicParams = false` means a
 // slug outside that set returns a genuine 404 rather than being rendered on
@@ -175,6 +176,11 @@ export default async function StandardPage({
   }));
 
   const withdrawnLabel = formatDate(standard.withdrawnDate);
+
+  const newsItems = newsMentioningStandard(standard.slug).map((n) => ({
+    label: n.title,
+    href: `${NEWS_PATH}/${n.slug}`,
+  }));
 
   return (
     <article className="bg-white">
@@ -372,6 +378,7 @@ export default async function StandardPage({
             { heading: "Related standards", items: peerItems },
             { heading: "Related legislation", items: legislationItems },
             { heading: "Legislation that references this", items: legislationUsingThis },
+            { heading: "News mentioning this document", items: newsItems },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
             { heading: "Related sector", items: sectorItems },

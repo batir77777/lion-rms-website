@@ -265,10 +265,10 @@ describe("Knowledge Centre navigation", () => {
       path.join(repoRoot, "components/KnowledgeCentreNav.tsx"),
       "utf8"
     );
-    for (const href of ["/guides", "/glossary", "/standards", "/legislation"]) {
+    for (const href of ["/guides", "/glossary", "/standards", "/legislation", "/news"]) {
       assert.ok(src.includes(`href: "${href}"`), `${href} missing from the section nav`);
     }
-    for (const href of ["/news", "/downloads"]) {
+    for (const href of ["/downloads", "/knowledge"]) {
       assert.ok(!src.includes(`href: "${href}"`), `${href} is a later PR`);
     }
   });

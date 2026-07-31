@@ -42,6 +42,9 @@ import {
   LEGISLATION_OFFICIAL_HOST,
   FORM_PERMITTED_EXTENTS,
   TERMINATION_STATUS_TIER,
+  NEWS_CATEGORY_DATES,
+  NEWS_DATE_FIELDS,
+  NEWS_PUBLICATION_GATE_FIELDS,
 } from "./editorial-rules";
 import { hasCycleVia } from "./supersession";
 
@@ -1225,6 +1228,205 @@ export function checkLegislationReferenceCurrency(
   return issues;
 }
 
+
+// ---------------------------------------------------------------------------
+// N. News (Phase 5A, PR 7).
+//
+// Scoped to the news collection. News has a date model, a source model and an
+// immutability model that no other collection has: three event-side dates that
+// are required per category rather than universally, a primary source that is
+// recorded and checked but never aged, and monthly round-ups whose whole value
+// is that they are not edited after the fact.
+// ---------------------------------------------------------------------------
+
+const NEWS = "news";
+
+function* eachNews(collections: Collections) {
+  for (const item of collections[NEWS] ?? []) yield item;
+}
+
+/** N1-N3 - per-category date requirements. */
+export function checkNewsDates(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachNews(collections)) {
+    const format = str(item.newsFormat);
+    const category = str(item.newsCategory);
+
+    // N3 - only eventDate is checked for being in the future, and the reason
+    // is worth stating because the first draft of this rule got it wrong.
+    //
+    // An eventDate in the future is incoherent: a news item reports something
+    // that has happened, and a sentencing or a recall cannot be reported
+    // before it occurs. But effectiveDate and consultationClosesDate SHOULD
+    // routinely be in the future - a change announced ahead of commencement,
+    // and a consultation still open, are precisely the items worth publishing
+    // while there is still time for a reader to act. Rejecting them would
+    // block the most useful news this library can carry, and the only way to
+    // satisfy such a rule would be to withhold the item until it was too late
+    // to be useful. That is the same defect as PR 6's rule L10, where the only
+    // remedy was writing a date the source never claimed.
+    const event = toDateOnly(item.eventDate);
+    if (event && event > now) {
+      issues.push(issue(NEWS, item, "N3", "error",
+        `"${item.slug}" has eventDate ${event}, which is in the future - a news item cannot report something that has not happened.`));
+    }
+
+    // A round-up covers a period rather than an event, so the per-category
+    // date requirements do not apply to it.
+    if (format === "monthly-roundup") {
+      for (const field of NEWS_DATE_FIELDS) {
+        if (toDateOnly(item[field])) {
+          issues.push(issue(NEWS, item, "N2", "warning",
+            `monthly round-up "${item.slug}" carries ${field}. A round-up covers a period, not a single dated event - the period comes from publishedDate and the title.`));
+        }
+      }
+      continue;
+    }
+
+    const spec = category ? NEWS_CATEGORY_DATES[category] : undefined;
+    if (!spec) continue;
+
+    // N1 - the date this category cannot do without.
+    for (const field of spec.required) {
+      if (!toDateOnly(item[field])) {
+        issues.push(issue(NEWS, item, "N1", "error",
+          `"${item.slug}" is a ${category} item and records no ${field}.`));
+      }
+    }
+
+    // N2 - a date that does not apply to this category is a modelling error,
+    // not a harmless extra: an effectiveDate on a prosecution would claim the
+    // sentencing "takes effect", which is not a thing that happens.
+    const permitted = new Set([...spec.required, ...spec.optional]);
+    for (const field of NEWS_DATE_FIELDS) {
+      if (permitted.has(field)) continue;
+      if (toDateOnly(item[field])) {
+        issues.push(issue(NEWS, item, "N2", "warning",
+          `"${item.slug}" is a ${category} item carrying ${field}, which does not apply to that category (permitted: ${[...permitted].join(", ") || "none"}).`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * N9 - a news slug must not look like a year.
+ *
+ * `/news/[slug]` and `/news/[year]` cannot be sibling dynamic segments: Next
+ * rejects two different slug names at the same path depth. Both are therefore
+ * served by one route that branches on the shape of the parameter, which makes
+ * a news item slugged "2026" genuinely dangerous - it would be unreachable,
+ * and it would silently replace that year's archive. Caught at build time
+ * rather than discovered as a missing page.
+ */
+export function checkNewsSlugShape(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  for (const item of eachNews(collections)) {
+    if (/^\d{4}$/.test(str(item.slug) ?? "")) {
+      issues.push(issue(NEWS, item, "N9", "error",
+        `"${item.slug}" is slugged like a year, which would shadow the /news/${item.slug} archive and make the item unreachable.`));
+    }
+  }
+  return issues;
+}
+
+/** N4-N6 - source attribution and the publication gate. */
+export function checkNewsSource(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachNews(collections)) {
+    // N6 - a future check date is impossible.
+    const checked = toDateOnly(item.sourceCheckedDate);
+    if (checked && checked > now) {
+      issues.push(issue(NEWS, item, "N6", "error",
+        `"${item.slug}" has sourceCheckedDate ${checked}, which is in the future.`));
+    }
+
+    if (str(item.status) !== "published") continue;
+
+    // N4 - the publication gate. Deliberately NOT paired with a staleness
+    // window: news carries no review cycle, and a dated report of a past event
+    // does not go stale the way a live standard does.
+    const missing: string[] = [];
+    for (const field of NEWS_PUBLICATION_GATE_FIELDS) {
+      const value = item[field];
+      if (field === "sourceCheckedDate") {
+        if (!toDateOnly(value)) missing.push(field);
+      } else if (!str(value)) {
+        missing.push(field);
+      }
+    }
+    if (missing.length > 0) {
+      issues.push(issue(NEWS, item, "N4", "error",
+        `published "${item.slug}" is missing required source metadata: ${missing.join(", ")}. A news item may not be published without a named primary source and the date it was checked.`));
+    }
+
+    // N5 - where the source is not publicly reachable, the page must say so in
+    // prose. A link the reader cannot follow, with no explanation, reads as a
+    // broken citation rather than a paywalled one.
+    if (item.sourcePubliclyAccessible === false) {
+      const body = typeof item.body === "string" ? item.body : "";
+      if (!/paywall|subscription|not publicly|no longer available|behind a|withdrawn from/i.test(body)) {
+        issues.push(issue(NEWS, item, "N5", "warning",
+          `"${item.slug}" marks its source as not publicly accessible but the body does not explain that - a link the reader cannot follow needs saying so.`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/** N7-N8 - immutable round-ups and the append-only correction record. */
+export function checkNewsImmutability(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachNews(collections)) {
+    const published = toDateOnly(item.publishedDate);
+    const updated = toDateOnly(item.updatedDate);
+    const changelog = arr(item.changelog) as { date?: unknown; summary?: unknown }[];
+    const edited = Boolean(published && updated && updated > published);
+
+    // N7 - every monthly round-up must be marked immutable. The format and the
+    // flag are two statements of the same fact, and one without the other is
+    // how a round-up quietly becomes editable.
+    if (str(item.newsFormat) === "monthly-roundup" && item.immutable !== true) {
+      issues.push(issue(NEWS, item, "N7", "error",
+        `"${item.slug}" is a monthly round-up but is not marked immutable.`));
+    }
+
+    if (!edited) continue;
+
+    // N8 - a corrected round-up must carry a visible correction note. Rule F2
+    // already requires a changelog entry, which is the machine-readable record;
+    // this is the sentence the reader actually sees. A correction nobody can
+    // see is not a correction.
+    if (item.immutable === true && !str(item.correctionNote)) {
+      issues.push(issue(NEWS, item, "N8", "error",
+        `immutable "${item.slug}" was corrected after publication but carries no correctionNote for the reader.`));
+    }
+
+    // N8 - F4 promoted from warning to error for immutable items. On ordinary
+    // content an undocumented edit is untidy; on a historical record it
+    // destroys the thing that made the record worth keeping.
+    if (item.immutable === true && changelog.length === 0) {
+      issues.push(issue(NEWS, item, "N8", "error",
+        `immutable "${item.slug}" was updated after publication with an empty changelog.`));
+    }
+  }
+
+  return issues;
+}
+
 // ---------------------------------------------------------------------------
 // Aggregate
 // ---------------------------------------------------------------------------
@@ -1252,5 +1454,9 @@ export function validateEditorialRules(
     ...checkLegislationCoherence(collections),
     ...checkLegislationSource(collections, options),
     ...checkLegislationReferenceCurrency(collections),
+    ...checkNewsDates(collections, options),
+    ...checkNewsSource(collections, options),
+    ...checkNewsImmutability(collections),
+    ...checkNewsSlugShape(collections),
   ];
 }

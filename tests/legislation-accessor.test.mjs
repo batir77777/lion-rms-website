@@ -412,7 +412,6 @@ describe("Legislation routing", () => {
       "legislation/jurisdiction",
       "legislation/category",
       "legislation/tag",
-      "news",
       "downloads",
       "knowledge",
       "search",
