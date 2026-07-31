@@ -24,6 +24,7 @@ import { legislationUsingTerm, LEGISLATION_PATH } from "@/lib/legislation";
 import { buildDefinedTermSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import { SITE, SITE_URL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { newsUsingTerm, NEWS_PATH } from "@/lib/news";
 
 export const dynamicParams = false;
 
@@ -244,6 +245,13 @@ export default async function GlossaryTermPage({
               items: legislationUsingTerm(term.slug).map((l) => ({
                 label: l.shortTitle,
                 href: `${LEGISLATION_PATH}/${l.slug}`,
+              })),
+            },
+            {
+              heading: "News that uses this term",
+              items: newsUsingTerm(term.slug).map((n) => ({
+                label: n.title,
+                href: `${NEWS_PATH}/${n.slug}`,
               })),
             },
           ]}
