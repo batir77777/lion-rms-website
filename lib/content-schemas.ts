@@ -23,7 +23,12 @@
 // without any dependency on Velite's internal build context.
 
 import { s } from "velite";
-import { CONTENT_CATEGORY_SLUGS, CONTENT_TAG_SLUGS, AUDIENCE_SLUGS } from "./taxonomy";
+import {
+  CONTENT_CATEGORY_SLUGS,
+  CONTENT_TAG_SLUGS,
+  AUDIENCE_SLUGS,
+  JURISDICTION_SLUGS,
+} from "./taxonomy";
 import { AUTHOR_IDS, REVIEWER_IDS } from "./people";
 
 // ---------------------------------------------------------------------------
@@ -157,49 +162,32 @@ export const newsArticleSchema = s.object({
 });
 
 // ---------------------------------------------------------------------------
-// Shared document-reference fields (Phase 5A, PR 5).
+// Shared document-reference fields (Phase 5A, PR 5; narrowed in PR 6).
 //
-// StandardGuidancePage and LegislationPage are genuinely different content
-// types — edition tracking has no meaning for an Act, and jurisdiction and
-// in-force dates have none for a BSI standard — but they share one thing
-// exactly: both describe an EXTERNAL document that this site does not own,
-// that changes without warning, and whose currency the reader is relying on.
+// StandardGuidancePage and LegislationPage both describe an EXTERNAL document
+// that this site does not own, that changes without warning, and whose
+// currency the reader is relying on. What follows is the part they genuinely
+// share.
 //
-// These fields are that shared part. Keeping them in one object rather than
-// duplicated in two schemas is what lets the G-series validation rules in
-// lib/editorial-validation.ts be written once, against "any collection whose
-// items carry documentStatus", and fire for Legislation in PR 6 with no rule
-// changes at all.
+// PR 5 ALSO put `documentStatus`, `withdrawnDate` and `editionConfirmedDate`
+// here, on the stated expectation that Legislation would inherit them and PR 6
+// would need no new shared plumbing. **That expectation was wrong**, and PR 6
+// withdraws it rather than preserving an unsuitable model because it already
+// exists.
+//
+// A BSI lifecycle — current, under review, proposed for withdrawal, withdrawn
+// — has no legislative equivalent. Legislation is repealed or revoked, never
+// withdrawn; it can be partially in force or partially repealed; and "under
+// review" is a publisher status with no analogue in statute. So those three
+// fields moved into standardGuidancePageSchema, unchanged in name, type and
+// required-ness, and Legislation declares its own `forceStatus` model instead.
+//
+// The move is deliberately behaviour-neutral for Standards. Every existing
+// Standards test passes unmodified across it, and tests/schema-migration.test.mjs
+// pins that guarantee so the refactor cannot quietly weaken the gate.
 // ---------------------------------------------------------------------------
 
 export const documentReferenceFields = {
-  /**
-   * Real-world state of the EXTERNAL document.
-   *
-   * Deliberately orthogonal to `status`, which is the publication state of
-   * OUR page. A published page about a withdrawn standard — `status:
-   * "published"` with `documentStatus: "withdrawn"` — is a normal and useful
-   * combination, not a contradiction: readers arrive from old assessments
-   * citing withdrawn documents and need to be told the document no longer
-   * stands. Conflating the two fields is the obvious failure mode here, so
-   * tests assert that combination renders and stays in the sitemap.
-   *
-   * `withdrawn` and `superseded` are NOT mutually exclusive. PAS 79-2:2020
-   * was withdrawn AND later replaced by BS 9792:2025; the honest encoding is
-   * `documentStatus: "withdrawn"` with a populated `supersededBy`.
-   *
-   * No `.default()`. An unstated status would silently read as "current",
-   * which is the one wrong answer that looks right — the whole point of rule
-   * G13 is that a published page must have had its status actively confirmed.
-   */
-  documentStatus: s.enum([
-    "current",
-    "under-review",
-    "proposed-for-withdrawal",
-    "superseded",
-    "withdrawn",
-  ]),
-
   /**
    * Successor documents, by slug, within the SAME collection.
    *
@@ -213,9 +201,6 @@ export const documentReferenceFields = {
    * passing silently.
    */
   supersededBy: s.array(s.string()).default([]),
-
-  /** Date of withdrawal where one is published. Optional: not always stated. */
-  withdrawnDate: s.isodate().optional(),
 
   /**
    * Copyright regime of the SOURCE document — not of this page.
@@ -251,8 +236,6 @@ export const documentReferenceFields = {
 
   /** When `documentStatus` was last confirmed against the publisher. */
   statusConfirmedDate: s.isodate().optional(),
-  /** When `currentEdition` / `officialReference` was last confirmed. */
-  editionConfirmedDate: s.isodate().optional(),
   /** When `sourceLicence` and `copyrightNotice` were last confirmed. */
   licenceConfirmedDate: s.isodate().optional(),
   /** Who carried out the verification. */
@@ -267,6 +250,44 @@ export const documentReferenceFields = {
 export const standardGuidancePageSchema = s.object({
   ...baseFields,
   ...documentReferenceFields,
+
+  // -------------------------------------------------------------------------
+  // Moved here from documentReferenceFields in Phase 5A PR 6, unchanged in
+  // name, type and required-ness. These are BSI lifecycle concepts, not shared
+  // ones — see the note on that block above.
+  // -------------------------------------------------------------------------
+
+  /**
+   * Real-world state of the EXTERNAL document.
+   *
+   * Deliberately orthogonal to `status`, which is the publication state of
+   * OUR page. A published page about a withdrawn standard — `status:
+   * "published"` with `documentStatus: "withdrawn"` — is a normal and useful
+   * combination, not a contradiction: readers arrive from old assessments
+   * citing withdrawn documents and need to be told the document no longer
+   * stands. Conflating the two fields is the obvious failure mode here, so
+   * tests assert that combination renders and stays in the sitemap.
+   *
+   * `withdrawn` and `superseded` are NOT mutually exclusive. PAS 79-2:2020
+   * was withdrawn AND later replaced by BS 9792:2025; the honest encoding is
+   * `documentStatus: "withdrawn"` with a populated `supersededBy`.
+   *
+   * No `.default()`. An unstated status would silently read as "current",
+   * which is the one wrong answer that looks right — the whole point of rule
+   * G13 is that a published page must have had its status actively confirmed.
+   */
+  documentStatus: s.enum([
+    "current",
+    "under-review",
+    "proposed-for-withdrawal",
+    "superseded",
+    "withdrawn",
+  ]),
+  /** Date of withdrawal where one is published. Optional: not always stated. */
+  withdrawnDate: s.isodate().optional(),
+  /** When `currentEdition` / `officialReference` was last confirmed. */
+  editionConfirmedDate: s.isodate().optional(),
+
   contentType: s.literal("standard"),
   slug: s.slug("standards"),
   documentClass: s.enum([
@@ -311,31 +332,224 @@ export const standardGuidancePageSchema = s.object({
 
 export const legislationPageSchema = s.object({
   ...baseFields,
-  // Phase 5A PR 5: the shared external-document fields — status, supersession,
-  // licence and the verification record — now come from one place, so the
-  // G-series rules built for Standards apply to Legislation in PR 6 without a
-  // single rule change. The collection is empty, so this costs nothing today.
   ...documentReferenceFields,
   contentType: s.literal("legislation"),
   slug: s.slug("legislation"),
-  documentClass: s.enum(["act", "regulation", "statutory-instrument", "order"]),
+
+  // -------------------------------------------------------------------------
+  // Identity
+  // -------------------------------------------------------------------------
+
+  /**
+   * The legal short title — "Fire Safety Act 2021". Distinct from `title`,
+   * which is our editorial headline for the page. The short title is what a
+   * reader searches for and what belongs in a breadcrumb.
+   */
+  shortTitle: s.string().min(1),
+  /** Official citation exactly as legislation.gov.uk writes it:
+   *  "2021 c. 24" · "S.I. 2022/547" · "2005 asp 5". */
   officialReference: s.string().min(1),
-  // Added in Phase 5A PR 5 so the publication gate (rule G13) can be uniform
-  // across both document-reference collections. A reference page that does not
-  // say who published the document is incomplete whichever collection it sits
-  // in — for UK legislation this is typically The National Archives on behalf
-  // of the Crown, which is not something a reader should have to infer.
+  year: s.number().int().min(1200).max(2100),
   publisher: s.string().min(1),
-  jurisdiction: s.enum(["england", "wales", "england-and-wales", "scotland", "northern-ireland", "uk-wide"]),
+
+  // -------------------------------------------------------------------------
+  // Classification — three orthogonal axes (Phase 5A PR 6).
+  //
+  // Replaces `documentClass: act | regulation | statutory-instrument | order`,
+  // which was not decidable: Regulations ARE statutory instruments, and so are
+  // Orders, so three of those four values overlapped. The axis also could not
+  // express an Act of the Scottish Parliament, which is why the Fire (Scotland)
+  // Act 2005 could not have been filed correctly under it.
+  // -------------------------------------------------------------------------
+
+  legislationTier: s.enum(["primary", "secondary"]),
+  /** WHO made it, and under what constitutional form. */
+  instrumentForm: s.enum([
+    "uk-public-general-act",
+    "act-of-the-scottish-parliament",
+    "act-of-senedd-cymru",
+    "northern-ireland-order-in-council",
+    "statutory-instrument",
+    "scottish-statutory-instrument",
+    "welsh-statutory-instrument",
+    "northern-ireland-statutory-rule",
+  ]),
+  /** WHAT KIND of instrument it is. Deliberately a separate axis from
+   *  `instrumentForm`: an Order and a set of Regulations are both statutory
+   *  instruments, so these concepts cannot compete inside one enum. */
+  instrumentType: s.enum(["act", "regulations", "order", "rules", "measure"]),
+  /** The provision secondary legislation was made under, e.g. "article 24 of
+   *  the Regulatory Reform (Fire Safety) Order 2005". Required for secondary
+   *  legislation by rule L5: an instrument that does not say what power it was
+   *  made under cannot be placed in the statutory scheme. */
+  enablingPower: s.string().optional(),
+
+  // -------------------------------------------------------------------------
+  // Territory — extent and application are DIFFERENT THINGS (Phase 5A PR 6).
+  //
+  // Extent is the jurisdiction whose law the instrument forms part of.
+  // Application is where it actually imposes duties. The Fire Safety (England)
+  // Regulations 2022 extend to England and Wales and apply only in England — a
+  // reader in Cardiff needs to know that a regulation technically part of their
+  // law does not bite on their building. One field could not say this.
+  // -------------------------------------------------------------------------
+
+  extent: s.array(s.enum(JURISDICTION_SLUGS)).min(1),
+  application: s.array(s.enum(JURISDICTION_SLUGS)).min(1),
+  /** Required by rule L7 wherever extent and application differ, and used for
+   *  positions the enums cannot carry on their own — HSWA 1974's narrow
+   *  Northern Ireland extent for regulation-making under ss.15 and 30, or
+   *  application extended offshore by Order in Council. */
+  extentNote: s.string().optional(),
+
+  // -------------------------------------------------------------------------
+  // Lifecycle (Phase 5A PR 6).
+  //
+  // Legislation-specific, replacing the BSI `documentStatus` vocabulary, which
+  // has no legislative equivalent. "Amended" is deliberately NOT a status:
+  // virtually all long-standing in-force legislation has been amended, so as a
+  // flag it would be true of almost every page and tell a reader nothing.
+  // legislation.gov.uk does not offer it either. Amendments are recorded below
+  // as dated effects saying WHAT CHANGED, which is the only useful form.
+  // -------------------------------------------------------------------------
+
+  forceStatus: s.enum([
+    "not-yet-in-force",
+    "partially-in-force",
+    "in-force",
+    "partially-repealed",
+    "repealed",
+    "revoked",
+    "spent",
+  ]),
+  /**
+   * Prose for the cases where the enum alone would mislead.
+   *
+   * The Fire Safety Act 2021 is the live example: fully in force, but ss.1 and
+   * 3 were textual amendments to the Fire Safety Order and were exhausted on
+   * commencement, while s.2 remains a live and unexercised power. "Spent" is
+   * wrong; bare "in force" is technically right and practically misleading.
+   *
+   * Same pattern as `revisionNote` on Standards: the structured field carries
+   * the defensible fact, the prose carries the nuance, and neither pretends to
+   * be the other.
+   */
+  statusNote: s.string().optional(),
+  /** Acts are REPEALED. Rule L4 rejects this on secondary legislation. */
+  repealedDate: s.isodate().optional(),
+  /** Statutory instruments are REVOKED. Rule L4 rejects this on primary. */
+  revokedDate: s.isodate().optional(),
+
+  // -------------------------------------------------------------------------
+  // Commencement (Phase 5A PR 6).
+  //
+  // One `inForceDate` could not describe the Building Safety Act 2022, which
+  // commenced in stages across 2022–2024 with provisions still uncommenced —
+  // including s.156(4), which would insert article 9A into the Fire Safety
+  // Order. A page must not imply every provision is operative because part of
+  // an Act has commenced.
+  // -------------------------------------------------------------------------
+
+  /** Retained for the simple case only. Derived from commencement[0] when absent. */
   inForceDate: s.isodate().optional(),
-  amendments: s
-    .array(s.object({ reference: s.string().min(1), date: s.isodate(), summary: s.string().min(1) }))
+  commencement: s
+    .array(
+      s.object({
+        date: s.isodate(),
+        /** "fully" · "articles 1 and 52(1)(a)" · "section 1" */
+        scope: s.string().min(1),
+        /** Commencement can differ by nation: Fire Safety Act 2021 s.1
+         *  commenced in Wales on 1 October 2021 and in England on 16 May 2022. */
+        jurisdiction: s.enum(JURISDICTION_SLUGS).optional(),
+        /** The commencing instrument, e.g. "S.I. 2022/544". */
+        broughtInBy: s.string().optional(),
+      })
+    )
     .default([]),
+  /** Provisions that have NOT commenced. Required by rule L6 where
+   *  `forceStatus` is `partially-in-force`. */
+  notYetInForce: s
+    .array(s.object({ provision: s.string().min(1), note: s.string().min(1) }))
+    .default([]),
+  /** Qualifications on the commencement record — including, where true, that
+   *  it is what we have verified rather than an exhaustive consolidated list. */
+  commencementNote: s.string().optional(),
+
+  // -------------------------------------------------------------------------
+  // Amendments and outstanding effects (Phase 5A PR 6)
+  // -------------------------------------------------------------------------
+
+  amendments: s
+    .array(
+      s.object({
+        reference: s.string().min(1),
+        date: s.isodate(),
+        summary: s.string().min(1),
+        /** false = made but not yet in force. Normal for legislation, and
+         *  exempted from rule G16 so recording it correctly does not trip a
+         *  rule designed to catch a date typo on a standard. */
+        inForce: s.boolean().default(true),
+      })
+    )
+    .default([]),
+  /** Instruments THIS one amends. The inverse (`amendedBy`) is derived by
+   *  inversion in lib/supersession.ts and never authored — same discipline as
+   *  `supersededBy`, so the two halves cannot disagree. */
+  amends: s.array(s.string()).default([]),
+
+  /**
+   * legislation.gov.uk's warning that the revised text is KNOWN not to reflect
+   * all changes — the single most important caution on a legal reference page,
+   * because the text a reader is looking at is then demonstrably incomplete.
+   *
+   * Structured rather than prose so it can be rendered prominently above the
+   * body and validated, per the owner requirement that it must not be treated
+   * as ordinary commentary or hidden in the body.
+   */
+  outstandingEffects: s
+    .array(
+      s.object({
+        effect: s.string().min(1),
+        source: s.string().min(1),
+        note: s.string().optional(),
+      })
+    )
+    .default([]),
+  /** Explicit, so "checked, none found" is distinguishable from "not looked
+   *  at". A boolean with no default: required at publication by rule G13. */
+  outstandingEffectsChecked: s.boolean(),
+
+  // -------------------------------------------------------------------------
+  // Source currency
+  // -------------------------------------------------------------------------
+
+  /** The date legislation.gov.uk states its revised text is current to. These
+   *  DIFFER between instruments — there is no common cut-off, and presenting a
+   *  single sitewide "verified as at" date would be wrong. */
+  sourceTextAsAtDate: s.isodate(),
+  /**
+   * Whether that date was STATED BY THE SOURCE, or is our own check date
+   * standing in for it.
+   *
+   * legislation.gov.uk shows an "up to date with all changes known to be in
+   * force on or before X" line on most instruments but not all. Where it does
+   * not, recording our check date silently in `sourceTextAsAtDate` would let a
+   * reader believe the source vouched for a currency it never claimed. This
+   * flag keeps the two apart, and the page says which it is.
+   */
+  sourceTextAsAtDateStated: s.boolean().default(true),
+  /** When we last confirmed that as-at date against the source. */
+  sourceCurrencyConfirmedDate: s.isodate().optional(),
   lastCheckedDate: s.isodate(),
   officialSourceUrl: s.string().min(1),
+
+  // -------------------------------------------------------------------------
+  // Editorial
+  // -------------------------------------------------------------------------
+
   copyrightNotice: s.string().min(1),
-  body: s.mdx(),
   disclaimer: s.string().min(1),
+  body: s.mdx(),
   schemaType: s.enum(["Article", "TechArticle"]),
 });
 
@@ -363,7 +577,7 @@ export const glossaryTermSchema = s.object({
   extendedDefinition: s.mdx(),
   relatedTerms: s.array(s.string()).default([]),
   jurisdiction: s
-    .enum(["england", "wales", "england-and-wales", "scotland", "northern-ireland", "uk-wide"])
+    .enum(JURISDICTION_SLUGS)
     .optional(),
   schemaType: s.literal("DefinedTerm"),
 });

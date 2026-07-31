@@ -37,7 +37,7 @@ export interface ContentCategory {
    * meant the registry could drift away from what content actually did without
    * anything noticing.
    */
-  appliesTo: ("guide" | "news" | "glossary" | "standard")[];
+  appliesTo: ("guide" | "news" | "glossary" | "standard" | "legislation")[];
 }
 
 export const CONTENT_CATEGORIES: ContentCategory[] = [
@@ -46,28 +46,28 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
     label: "Fire Risk Assessments",
     description:
       "Guidance on the fire risk assessment process itself — methodology, scope, what a competent assessment covers, and how to read and act on one.",
-    appliesTo: ["guide", "news", "glossary", "standard"],
+    appliesTo: ["guide", "news", "glossary", "standard", "legislation"],
   },
   {
     slug: "fire-safety",
     label: "Fire Safety",
     description:
       "Practical fire safety guidance for buildings in use — means of escape, fire doors, detection and alarm systems, evacuation planning, and day-to-day management.",
-    appliesTo: ["guide", "news", "glossary", "standard"],
+    appliesTo: ["guide", "news", "glossary", "standard", "legislation"],
   },
   {
     slug: "health-safety",
     label: "Health & Safety",
     description:
       "Wider workplace health and safety guidance beyond fire — risk assessment, compliance systems, and statutory duties under the Health and Safety at Work Act.",
-    appliesTo: ["guide", "news", "standard"],
+    appliesTo: ["guide", "news", "standard", "legislation"],
   },
   {
     slug: "compliance-legislation",
     label: "Compliance & Legislation",
     description:
       "How fire safety and health & safety legislation applies in practice — duties, responsibilities, and what compliance actually requires of a Responsible Person or employer.",
-    appliesTo: ["guide", "news", "glossary", "standard"],
+    appliesTo: ["guide", "news", "glossary", "standard", "legislation"],
   },
   {
     slug: "business-duty-holder-guidance",
@@ -159,7 +159,18 @@ export const JURISDICTIONS = [
   "england-and-wales",
   "scotland",
   "northern-ireland",
-  "uk-wide",
+  // Added in Phase 5A PR 6. England, Wales and Scotland — the extent of the
+  // Health and Safety at Work etc. Act 1974 and of regulations made under it.
+  // Neither "england-and-wales" nor "united-kingdom" is correct for those, and
+  // until now there was no value that was.
+  "great-britain",
+  // Renamed from "uk-wide" in Phase 5A PR 6. From this PR the field makes legal
+  // statements about territorial extent and application, and "UK-wide" is a
+  // colloquialism rather than a jurisdiction. The one published Glossary term
+  // using the old value is migrated in the same commit — see the rollback note
+  // in the PR description: a revert must restore both the vocabulary and that
+  // content value together.
+  "united-kingdom",
 ] as const;
 
 export const JURISDICTION_SLUGS = JURISDICTIONS as unknown as [string, ...string[]];
@@ -203,7 +214,7 @@ const categorySchema = z.object({
   slug: z.string().min(1),
   label: z.string().min(1),
   description: z.string().min(1),
-  appliesTo: z.array(z.enum(["guide", "news", "glossary", "standard"])).min(1),
+  appliesTo: z.array(z.enum(["guide", "news", "glossary", "standard", "legislation"])).min(1),
 });
 
 const tagSchema = z.object({

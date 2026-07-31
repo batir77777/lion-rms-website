@@ -22,6 +22,70 @@ export interface SupersedableLike {
 }
 
 /**
+ * Any item carrying directed relations, keyed by field name (Phase 5A, PR 6).
+ *
+ * Generalised from `supersededBy` so the same three guarantees — resolve,
+ * reject self-reference, terminate on a cycle — cover the legislation
+ * `amends` graph without a second implementation of the same walk.
+ */
+export interface DirectedRelationLike {
+  slug: string;
+  [field: string]: unknown;
+}
+
+const edges = (item: DirectedRelationLike, field: string): string[] =>
+  Array.isArray(item[field]) ? (item[field] as string[]) : [];
+
+/** Targets of a directed relation, resolved. Unresolvable slugs are dropped —
+ *  rule L1 reports them at build time, and a render-time throw would be a
+ *  worse failure than a missing link. */
+export function relatedVia<T extends DirectedRelationLike>(
+  item: T,
+  field: string,
+  all: readonly T[]
+): T[] {
+  const bySlug = new Map(all.map((i) => [i.slug, i]));
+  return edges(item, field)
+    .filter((slug) => slug !== item.slug)
+    .map((slug) => bySlug.get(slug))
+    .filter((i): i is T => Boolean(i));
+}
+
+/** The inverse of a directed relation, derived by scanning. Never authored —
+ *  which is what stops the two halves ever disagreeing. */
+export function inverseVia<T extends DirectedRelationLike>(
+  item: T,
+  field: string,
+  all: readonly T[]
+): T[] {
+  return all.filter(
+    (candidate) => candidate.slug !== item.slug && edges(candidate, field).includes(item.slug)
+  );
+}
+
+/** True where following `field` from this item returns to it. Iterative with a
+ *  visited set: a cycle is a content error rule L2 reports, never a stack
+ *  overflow that takes the build down with no useful message. */
+export function hasCycleVia<T extends DirectedRelationLike>(
+  item: T,
+  field: string,
+  all: readonly T[]
+): boolean {
+  const bySlug = new Map(all.map((i) => [i.slug, i]));
+  const visited = new Set<string>();
+  const queue = [...edges(item, field)];
+  while (queue.length > 0) {
+    const slug = queue.shift()!;
+    if (slug === item.slug) return true;
+    if (visited.has(slug)) continue;
+    visited.add(slug);
+    const next = bySlug.get(slug);
+    if (next) queue.push(...edges(next, field));
+  }
+  return false;
+}
+
+/**
  * Direct successors, resolved to real items. Slugs that do not resolve are
  * dropped rather than throwing — rule G2 reports them as an error at build
  * time, so by the time this runs in a page render they cannot exist, and a

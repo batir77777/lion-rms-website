@@ -103,12 +103,15 @@ export const HIGH_RISK_GUIDE_CYCLE_MONTHS = 6;
 // `fire-alarm-systems`, BS 9999 and BS 9991 carry `means-of-escape` and
 // `compartmentation`. They simply stop being mandatory.
 //
-// Legislation is deliberately LEFT IN. It has no content yet, so nothing can
-// warn, and PR 6 should take that decision on its own evidence rather than
-// inherit it here.
+// Legislation is excluded too (Phase 5A PR 6), on the evidence PR 5 said would
+// decide it. Of the eight launch instruments only the Fire Safety (England)
+// Regulations 2022 and the 2025 Evacuation Plans Regulations map cleanly onto
+// existing tags. The Fire Safety Order, the Fire Safety Act, the Building
+// Safety Act, HSWA, MHSWR and the Fire (Scotland) Act have no honest match —
+// they are general duty regimes, not technical topics. Legislation navigates by
+// jurisdiction, tier and citation, all mandatory and enum-constrained.
 export const TAGS_EXPECTED_COLLECTIONS: readonly string[] = [
   "news",
-  "legislation",
   "downloads",
 ];
 
@@ -179,6 +182,66 @@ export const DOCUMENT_REFERENCE_COLLECTIONS: readonly string[] = [
 export function isDocumentReferenceCollection(collection: string): boolean {
   return DOCUMENT_REFERENCE_COLLECTIONS.includes(collection);
 }
+
+/**
+ * Collections whose items carry `documentStatus` — the BSI lifecycle field
+ * (Phase 5A, PR 6).
+ *
+ * Rules G1, G9, G10, G12 and G16 were written in PR 5 against every
+ * document-reference collection, on the expectation that Legislation would use
+ * the same lifecycle vocabulary. It does not: legislation is repealed or
+ * revoked rather than withdrawn, can be partially in force or partially
+ * repealed, and has no notion of a publisher "review". Legislation uses
+ * `forceStatus` and the L-series rules instead.
+ *
+ * Scoping those five rules here rather than deleting them keeps Standards
+ * behaviour byte-identical while letting Legislation have a model that fits.
+ */
+export const DOCUMENT_STATUS_COLLECTIONS: readonly string[] = ["standards"];
+
+export function usesDocumentStatus(collection: string): boolean {
+  return DOCUMENT_STATUS_COLLECTIONS.includes(collection);
+}
+
+/**
+ * Per-collection required-field lists for the publication gate (rule G13).
+ *
+ * Was a single hardcoded list in PR 5. Legislation requires a different set —
+ * `forceStatus` rather than `documentStatus`, plus extent, application, source
+ * currency and the outstanding-effects check — so the gate takes the list from
+ * here.
+ *
+ * The Standards entry is deliberately identical to PR 5's hardcoded list, and
+ * tests/schema-migration.test.mjs pins that, so the most important rule in the
+ * codebase cannot be quietly weakened by a refactor.
+ */
+export const PUBLICATION_GATE_FIELDS: Record<string, readonly string[]> = {
+  standards: [
+    "documentStatus",
+    "statusConfirmedDate",
+    "editionConfirmedDate",
+    "lastCheckedDate",
+    "licenceConfirmedDate",
+    "verifiedBy",
+    "officialReference",
+    "publisher",
+    "officialSourceUrl",
+  ],
+  legislation: [
+    "forceStatus",
+    "statusConfirmedDate",
+    "extent",
+    "application",
+    "sourceTextAsAtDate",
+    "outstandingEffectsChecked",
+    "lastCheckedDate",
+    "licenceConfirmedDate",
+    "verifiedBy",
+    "officialReference",
+    "publisher",
+    "officialSourceUrl",
+  ],
+};
 
 /** Document classes for which an edition year is meaningful and required. */
 export const EDITION_REQUIRED_CLASSES: readonly string[] = [
@@ -285,3 +348,48 @@ export function addMonths(dateOnly: string, months: number): string {
 export function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
+
+// ---------------------------------------------------------------------------
+// Legislation-specific constants (Phase 5A, PR 6).
+// ---------------------------------------------------------------------------
+
+/**
+ * The one official source for UK legislation.
+ *
+ * Rule L13 makes this an ERROR rather than G7's warning: on a page about legal
+ * duties there is exactly one authoritative source, so a link to anywhere else
+ * is a defect rather than an observation.
+ */
+export const LEGISLATION_OFFICIAL_HOST = "legislation.gov.uk";
+
+/**
+ * Territorial extents each instrument form may legitimately have.
+ *
+ * A devolved legislature cannot make law for another jurisdiction, so an Act of
+ * the Scottish Parliament extending to England, or a Northern Ireland Statutory
+ * Rule extending outside Northern Ireland, is a data error rather than an
+ * unusual case. Forms absent from this map — UK Public General Acts and UK
+ * statutory instruments — are unconstrained, because their extent genuinely
+ * varies and is set provision by provision.
+ */
+export const FORM_PERMITTED_EXTENTS: Record<string, readonly string[]> = {
+  "act-of-the-scottish-parliament": ["scotland"],
+  "scottish-statutory-instrument": ["scotland"],
+  "act-of-senedd-cymru": ["wales"],
+  "welsh-statutory-instrument": ["wales"],
+  "northern-ireland-order-in-council": ["northern-ireland"],
+  "northern-ireland-statutory-rule": ["northern-ireland"],
+};
+
+/**
+ * Which legislative tier each terminating `forceStatus` value belongs to.
+ *
+ * Acts are REPEALED; statutory instruments are REVOKED. The distinction is a
+ * drafting convention rather than a difference in legal effect, but a reference
+ * library that mixes them reads as though written by someone who does not work
+ * with legislation. Rule L4 enforces the pairing in both directions.
+ */
+export const TERMINATION_STATUS_TIER: Record<string, "primary" | "secondary"> = {
+  repealed: "primary",
+  revoked: "secondary",
+};

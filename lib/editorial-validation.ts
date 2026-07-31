@@ -32,12 +32,18 @@ import {
   SUMMARY_MIN,
   SUMMARY_MAX,
   DOCUMENT_REFERENCE_COLLECTIONS,
+  DOCUMENT_STATUS_COLLECTIONS,
+  PUBLICATION_GATE_FIELDS,
   EDITION_REQUIRED_CLASSES,
   OFFICIAL_SOURCE_HOSTS,
   LICENCE_NOTICE_MARKERS,
   NOTICE_MIN_LENGTH,
   COMMERCIAL_QUOTE_MAX_CHARS,
+  LEGISLATION_OFFICIAL_HOST,
+  FORM_PERMITTED_EXTENTS,
+  TERMINATION_STATUS_TIER,
 } from "./editorial-rules";
+import { hasCycleVia } from "./supersession";
 
 export interface EditorialOptions {
   /** Date-only "YYYY-MM-DD". Defaults to the real clock. */
@@ -332,6 +338,7 @@ const COLLECTION_SECTIONS: Record<string, string> = {
   news: "news",
   glossaryTerms: "glossary",
   standards: "standard",
+  legislation: "legislation",
 };
 
 export function checkCategoryApplicability(collections: Collections): ValidationIssue[] {
@@ -621,14 +628,20 @@ export function checkDocumentLifecycle(
   const now = options.now ?? today();
   const issues: ValidationIssue[] = [];
 
+  // G1, G9, G10, G12 and G16 read `documentStatus`, which is a BSI lifecycle
+  // field. Scoped in Phase 5A PR 6 to the collections that actually carry it —
+  // Legislation uses `forceStatus` and the L-series rules instead. G3 and G4
+  // (self-supersession and cycles) are lifecycle-agnostic and stay universal,
+  // so they run for both collections below.
   for (const collection of DOCUMENT_REFERENCE_COLLECTIONS) {
     const items = collections[collection] ?? [];
     const bySlug = new Map(items.map((i) => [i.slug, i]));
+    const lifecycleApplies = DOCUMENT_STATUS_COLLECTIONS.includes(collection);
 
     for (const item of items) {
-      const docStatus = str(item.documentStatus);
+      const docStatus = lifecycleApplies ? str(item.documentStatus) : undefined;
       const successors = arr(item.supersededBy) as string[];
-      const withdrawn = toDateOnly(item.withdrawnDate);
+      const withdrawn = lifecycleApplies ? toDateOnly(item.withdrawnDate) : undefined;
 
       // G1 — a superseded document that names no successor strands the reader
       // on the one page whose entire job is to point them onward.
@@ -686,7 +699,17 @@ export function checkDocumentLifecycle(
       // error, because amendments ARE published ahead of coming into force
       // (Approved Document B's 2026 and 2029 amendment sets are exactly this),
       // but a future date in the amendments list reads as already applying.
-      for (const entry of arr(item.amendments) as { reference?: unknown; date?: unknown }[]) {
+      //
+      // Phase 5A PR 6: an amendment explicitly marked `inForce: false` is a
+      // deliberate record of something made but not yet commenced, which is
+      // normal and important for legislation. Recording it correctly must not
+      // trip a rule designed to catch a date typo.
+      for (const entry of arr(item.amendments) as {
+        reference?: unknown;
+        date?: unknown;
+        inForce?: unknown;
+      }[]) {
+        if (entry?.inForce === false) continue;
         const date = toDateOnly(entry?.date);
         if (date && date > now) {
           issues.push(issue(collection, item, "G16", "warning",
@@ -885,6 +908,7 @@ export function checkDocumentPublicationGate(
       ["statusConfirmedDate", toDateOnly(item.statusConfirmedDate)],
       ["editionConfirmedDate", toDateOnly(item.editionConfirmedDate)],
       ["licenceConfirmedDate", toDateOnly(item.licenceConfirmedDate)],
+      ["sourceCurrencyConfirmedDate", toDateOnly(item.sourceCurrencyConfirmedDate)],
     ];
 
     // G14 — a confirmation cannot have happened in the future. Applies
@@ -899,17 +923,38 @@ export function checkDocumentPublicationGate(
 
     if (str(item.status) !== "published") continue;
 
+    // The required set is per-collection from Phase 5A PR 6, because
+    // Legislation needs `forceStatus`, extent, application, source currency and
+    // the outstanding-effects check rather than the Standards set. The
+    // Standards entry in PUBLICATION_GATE_FIELDS is deliberately identical to
+    // what was hardcoded here in PR 5, and a test pins that.
+    const required = PUBLICATION_GATE_FIELDS[collection] ?? [];
+    const DATE_FIELDS = new Set([
+      "statusConfirmedDate",
+      "editionConfirmedDate",
+      "licenceConfirmedDate",
+      "lastCheckedDate",
+      "sourceTextAsAtDate",
+    ]);
+
     const missing: string[] = [];
-    if (!str(item.documentStatus)) missing.push("documentStatus");
-    if (!toDateOnly(item.statusConfirmedDate)) missing.push("statusConfirmedDate");
+    for (const field of required) {
+      const value = item[field];
+      if (DATE_FIELDS.has(field)) {
+        if (!toDateOnly(value)) missing.push(field);
+      } else if (field === "extent" || field === "application") {
+        if (arr(value).length === 0) missing.push(field);
+      } else if (field === "outstandingEffectsChecked") {
+        // A boolean: `false` is a legitimate value meaning "checked, none
+        // found", so only absence counts as missing.
+        if (typeof value !== "boolean") missing.push(field);
+      } else if (!str(value)) {
+        missing.push(field);
+      }
+    }
+    // Edition is conditional on document class rather than a flat requirement,
+    // so it sits outside the list.
     if (editionRequired && !str(item.currentEdition)) missing.push("currentEdition");
-    if (!toDateOnly(item.editionConfirmedDate)) missing.push("editionConfirmedDate");
-    if (!toDateOnly(item.lastCheckedDate)) missing.push("lastCheckedDate");
-    if (!toDateOnly(item.licenceConfirmedDate)) missing.push("licenceConfirmedDate");
-    if (!str(item.verifiedBy)) missing.push("verifiedBy");
-    if (!str(item.officialReference)) missing.push("officialReference");
-    if (!str(item.publisher)) missing.push("publisher");
-    if (!str(item.officialSourceUrl)) missing.push("officialSourceUrl");
 
     if (missing.length > 0) {
       issues.push(issue(collection, item, "G13", "error",
@@ -925,6 +970,254 @@ export function checkDocumentPublicationGate(
           issues.push(issue(collection, item, "G15", "warning",
             `"${item.slug}" has ${field} ${value}, beyond the ${cycle}-month currency window.`));
         }
+      }
+    }
+  }
+
+  return issues;
+}
+
+// ---------------------------------------------------------------------------
+// L. Legislation (Phase 5A, PR 6).
+//
+// Scoped to the legislation collection, because legislation has a lifecycle,
+// a territorial model and a source-currency model that BSI standards do not.
+// The G-series rules that read `documentStatus` are scoped away from here; the
+// ones that are lifecycle-agnostic (G3 self-supersession, G4 cycles, G7/G8/G11
+// provenance and copyright, G13 the publication gate) still apply.
+// ---------------------------------------------------------------------------
+
+const LEGISLATION = "legislation";
+
+function* eachLegislation(collections: Collections) {
+  for (const item of collections[LEGISLATION] ?? []) yield item;
+}
+
+/** L1–L3, L15 — relation integrity and commencement coherence. */
+export function checkLegislationRelations(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const issues: ValidationIssue[] = [];
+  const items = collections[LEGISLATION] ?? [];
+  const slugs = new Set(items.map((i) => i.slug));
+
+  for (const item of items) {
+    // L1 — every directed and peer reference must resolve. A dangling
+    // reference on a page whose job is to place an instrument in the statutory
+    // scheme is worse than no reference.
+    for (const field of ["relatedLegislation", "amends", "supersededBy"]) {
+      for (const ref of arr(item[field]) as string[]) {
+        if (!slugs.has(ref)) {
+          issues.push(issue(LEGISLATION, item, "L1", "error",
+            `"${item.slug}" has ${field} referencing "${ref}", which does not exist in the legislation collection.`));
+        }
+      }
+    }
+
+    // L3 — self-amendment.
+    if ((arr(item.amends) as string[]).includes(item.slug)) {
+      issues.push(issue(LEGISLATION, item, "L3", "error",
+        `"${item.slug}" lists itself in amends.`));
+    }
+
+    // L2 — cycles in either directed graph.
+    for (const field of ["amends", "supersededBy"]) {
+      if (hasCycleVia(item as never, field, items as never[])) {
+        issues.push(issue(LEGISLATION, item, "L2", "error",
+          `"${item.slug}" is part of a ${field} cycle.`));
+      }
+    }
+
+    // L15 — commencement coherence.
+    const events = arr(item.commencement) as { date?: unknown; scope?: unknown }[];
+    for (const event of events) {
+      const date = toDateOnly(event?.date);
+      if (date && date > now) {
+        issues.push(issue(LEGISLATION, item, "L15", "error",
+          `"${item.slug}" records a commencement event dated ${date}, which is in the future.`));
+      }
+    }
+    const declared = toDateOnly(item.inForceDate);
+    const firstEvent = toDateOnly(events[0]?.date);
+    if (declared && firstEvent && declared !== firstEvent) {
+      issues.push(issue(LEGISLATION, item, "L15", "error",
+        `"${item.slug}" has inForceDate ${declared} but its first commencement event is ${firstEvent}.`));
+    }
+  }
+
+  return issues;
+}
+
+/** L4–L8, L11 — lifecycle, classification and territory coherence. */
+export function checkLegislationCoherence(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachLegislation(collections)) {
+    const force = str(item.forceStatus);
+    const tier = str(item.legislationTier);
+    const form = str(item.instrumentForm);
+    const extent = arr(item.extent) as string[];
+    const application = arr(item.application) as string[];
+
+    // L4 — Acts are repealed, statutory instruments are revoked.
+    if (force && TERMINATION_STATUS_TIER[force] && tier) {
+      const expected = TERMINATION_STATUS_TIER[force];
+      if (expected !== tier) {
+        issues.push(issue(LEGISLATION, item, "L4", "error",
+          `"${item.slug}" has forceStatus "${force}", which applies to ${expected} legislation, but is declared ${tier}. Acts are repealed; statutory instruments are revoked.`));
+      }
+    }
+    if (toDateOnly(item.repealedDate) && tier === "secondary") {
+      issues.push(issue(LEGISLATION, item, "L4", "error",
+        `"${item.slug}" is secondary legislation and carries a repealedDate — secondary legislation is revoked, not repealed.`));
+    }
+    if (toDateOnly(item.revokedDate) && tier === "primary") {
+      issues.push(issue(LEGISLATION, item, "L4", "error",
+        `"${item.slug}" is primary legislation and carries a revokedDate — primary legislation is repealed, not revoked.`));
+    }
+
+    // L5 — secondary legislation must say what power made it.
+    if (tier === "secondary" && !str(item.enablingPower)) {
+      issues.push(issue(LEGISLATION, item, "L5", "error",
+        `"${item.slug}" is secondary legislation but records no enablingPower.`));
+    }
+
+    // L6 — contradictory lifecycle and commencement.
+    const notYet = arr(item.notYetInForce);
+    if (force === "partially-in-force" && notYet.length === 0) {
+      issues.push(issue(LEGISLATION, item, "L6", "error",
+        `"${item.slug}" is partially in force but lists no provisions in notYetInForce — a page must not imply every provision is operative.`));
+    }
+    if (force === "not-yet-in-force" && arr(item.commencement).length > 0) {
+      issues.push(issue(LEGISLATION, item, "L6", "error",
+        `"${item.slug}" is not yet in force but records commencement events.`));
+    }
+    if (
+      force === "partially-repealed" &&
+      !toDateOnly(item.repealedDate) &&
+      !str(item.statusNote)
+    ) {
+      issues.push(issue(LEGISLATION, item, "L6", "error",
+        `"${item.slug}" is partially repealed but records neither a repealedDate nor a statusNote explaining what was repealed and what survives.`));
+    }
+
+    // L7 — extent and application differing must be explained.
+    const differs =
+      extent.length !== application.length ||
+      extent.some((e) => !application.includes(e));
+    if (differs && !str(item.extentNote)) {
+      issues.push(issue(LEGISLATION, item, "L7", "error",
+        `"${item.slug}" has extent [${extent.join(", ")}] and application [${application.join(", ")}], which differ, but records no extentNote. A reader in a jurisdiction the instrument extends to but does not apply in needs that said.`));
+    }
+
+    // L8 — a devolved legislature cannot make law for another jurisdiction.
+    const permitted = form ? FORM_PERMITTED_EXTENTS[form] : undefined;
+    if (permitted) {
+      for (const e of extent) {
+        if (!permitted.includes(e)) {
+          issues.push(issue(LEGISLATION, item, "L8", "error",
+            `"${item.slug}" is a ${form} with extent "${e}" — that form may only extend to ${permitted.join(", ")}.`));
+        }
+      }
+    }
+
+    // L11 — a terminated instrument should say what took its place, or why not.
+    if (
+      (force === "repealed" || force === "revoked") &&
+      arr(item.supersededBy).length === 0 &&
+      !str(item.statusNote)
+    ) {
+      issues.push(issue(LEGISLATION, item, "L11", "warning",
+        `"${item.slug}" is ${force} but names no successor and carries no statusNote.`));
+    }
+  }
+
+  return issues;
+}
+
+/** L9, L10, L12, L13 — source currency, outstanding effects, official source. */
+export function checkLegislationSource(
+  collections: Collections,
+  options: EditorialOptions = {}
+): ValidationIssue[] {
+  const now = options.now ?? today();
+  const cycle = reviewCycleMonths(LEGISLATION);
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachLegislation(collections)) {
+    // L9 — the as-at date is what tells a reader how current the official text
+    // is. Required, and it cannot be in the future.
+    const asAt = toDateOnly(item.sourceTextAsAtDate);
+    if (!asAt) {
+      issues.push(issue(LEGISLATION, item, "L9", "error",
+        `"${item.slug}" records no sourceTextAsAtDate — without it a reader cannot tell how current the official text is.`));
+    } else if (asAt > now) {
+      issues.push(issue(LEGISLATION, item, "L9", "error",
+        `"${item.slug}" has sourceTextAsAtDate ${asAt}, which is in the future.`));
+    }
+
+    // L10 — warns on OUR confirmation going stale, not on the source's own
+    // as-at date being old.
+    //
+    // Those are different things and only one of them is actionable. The Fire
+    // Safety (England) Regulations 2022 are the live case: legislation.gov.uk
+    // itself states its revised text is current only to 13 April 2026. No
+    // amount of re-checking on our part moves that date — it is a fact about
+    // the source, and the only way to "clear" a warning based on it would be
+    // to write a date the source never claimed.
+    //
+    // A rule whose only remedy is falsifying the answer is a rule that gets
+    // switched off, which is the same lesson G5 taught in PR 5. So the warning
+    // tracks what we control, and the gap between the two dates is surfaced to
+    // the reader on the page instead.
+    const confirmed = toDateOnly(item.sourceCurrencyConfirmedDate);
+    if (cycle !== null && confirmed && addMonths(confirmed, cycle) < now) {
+      issues.push(issue(LEGISLATION, item, "L10", "warning",
+        `"${item.slug}" was last confirmed against the official source on ${confirmed}, beyond the ${cycle}-month currency window.`));
+    }
+
+    // L13 — there is exactly one official source for UK legislation.
+    const url = str(item.officialSourceUrl);
+    if (url && !hostMatches(url, [LEGISLATION_OFFICIAL_HOST])) {
+      issues.push(issue(LEGISLATION, item, "L13", "error",
+        `"${item.slug}" has officialSourceUrl "${url}", which is not on ${LEGISLATION_OFFICIAL_HOST}.`));
+    }
+
+    // L12 — a structured warning nobody reads is not a warning.
+    const effects = arr(item.outstandingEffects) as { effect?: unknown }[];
+    if (effects.length > 0) {
+      const body = typeof item.body === "string" ? item.body : "";
+      if (!/outstanding|not yet (been )?(applied|incorporat)|unapplied/i.test(body)) {
+        issues.push(issue(LEGISLATION, item, "L12", "warning",
+          `"${item.slug}" records ${effects.length} outstanding effect(s) but the body does not mention them — the reader should meet the caveat in prose as well as in the banner.`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/** L14 — Guides and Standards left pointing at legislation that no longer stands. */
+export function checkLegislationReferenceCurrency(
+  collections: Collections
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const STALE = new Set(["repealed", "revoked", "not-yet-in-force"]);
+  const forceBySlug = new Map(
+    (collections[LEGISLATION] ?? []).map((i) => [i.slug, str(i.forceStatus)])
+  );
+
+  for (const { collection, item } of eachItem(collections)) {
+    if (collection === LEGISLATION) continue;
+    if (str(item.status) !== "published") continue;
+    const acknowledged = new Set(arr(item.acknowledgedNonCurrentDocuments) as string[]);
+    for (const ref of arr(item.relatedLegislation) as string[]) {
+      const force = forceBySlug.get(ref);
+      if (force && STALE.has(force) && !acknowledged.has(ref)) {
+        issues.push(issue(collection, item, "L14", "warning",
+          `published "${item.slug}" references "${ref}" via relatedLegislation, and that instrument is ${force} — check the page still describes the position accurately, then list the slug in acknowledgedNonCurrentDocuments to record that it was reviewed.`));
       }
     }
   }
@@ -955,5 +1248,9 @@ export function validateEditorialRules(
     ...checkReferencedDocumentCurrency(collections),
     ...checkDocumentProvenance(collections),
     ...checkDocumentPublicationGate(collections, options),
+    ...checkLegislationRelations(collections, options),
+    ...checkLegislationCoherence(collections),
+    ...checkLegislationSource(collections, options),
+    ...checkLegislationReferenceCurrency(collections),
   ];
 }
