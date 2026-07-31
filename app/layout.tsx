@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Fire strategies, fire door inspections, compartmentation, H&S consultancy and training. Led by a Fire Engineer and CMIOSH Chartered health & safety professional.",
+    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Fire strategies, fire door inspections, compartmentation, H&S consultancy and training. Led by a Fire Engineer (MIFireE) and CMIOSH Chartered health & safety professional.",
   keywords: [
     "fire risk assessment London",
     "fire engineer London",

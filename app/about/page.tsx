@@ -10,7 +10,7 @@ import { ASSESSOR, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECO
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer and Chartered Health & Safety Professional (CMIOSH).",
+    "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH).",
   alternates: { canonical: "/about" },
 };
 
@@ -18,7 +18,7 @@ const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, Institution of Fire Engineers membership, an Advanced Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
+    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, membership of the Institution of Fire Engineers (MIFireE), an Advanced Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
   },
   {
     icon: "⚖️",
@@ -45,7 +45,7 @@ export default function AboutPage() {
       <PhotoHero
         eyebrow="About"
         title="Fire engineering, health & safety and fire risk assessment"
-        body="Lion Risk Management Solutions is a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy, led by Batir Turakulov. Batir is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate consultancy that helps organisations manage risk, achieve compliance and protect people, property and business continuity, with every assessment personally undertaken to current UK legislation and recognised industry standards."
+        body="Lion Risk Management Solutions is a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy, led by Batir Turakulov. Batir is a Fire Engineer, a Member of the Institution of Fire Engineers (MIFireE), and a Chartered Health & Safety Professional (CMIOSH) specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He provides pragmatic, proportionate consultancy that helps organisations manage risk, achieve compliance and protect people, property and business continuity, with every assessment personally undertaken to current UK legislation and recognised industry standards."
       />
 
       <section className="bg-white py-20">
@@ -66,8 +66,8 @@ export default function AboutPage() {
                 design stage — means of escape, passive and active fire protection,
                 compartmentation strategy, fire safety compliance, and fire safety
                 design review for new build, refurbishment and change-of-use schemes.
-                Batir holds a Level 5 Diploma in Fire Engineering Design and is an
-                Associate Member of the Institution of Fire Engineers.
+                Batir holds a Level 5 Diploma in Fire Engineering Design and is a
+                Member of the Institution of Fire Engineers (MIFireE).
               </p>
               <p>
                 Fire risk assessment is a core discipline of the consultancy and
@@ -116,7 +116,7 @@ export default function AboutPage() {
               <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-40 sm:w-40">
                 <Image
                   src={ASSESSOR.photo}
-                  alt={`${ASSESSOR.name}, ${ASSESSOR.role} at Lion Risk Management Solutions`}
+                  alt={`${ASSESSOR.name}, ${ASSESSOR.shortRole} at Lion Risk Management Solutions`}
                   width={320}
                   height={320}
                   className="h-full w-full object-cover"

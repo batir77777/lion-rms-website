@@ -251,12 +251,16 @@ export interface Membership {
   /** Full, formal name — used in structured data and any full-text listing. */
   fullName: string;
 }
+// Order here is the order post-nominals are displayed everywhere they appear —
+// the badge strips on the homepage, About and Contact, the footer's first four,
+// and `hasCredential` in the Person JSON-LD all read from this array in
+// sequence. Set to the owner's stated preferred order.
 export const MEMBERSHIPS: Membership[] = [
+  { abbr: "MIFireE", grade: "Member", fullName: "Member of the Institution of Fire Engineers (IFE)" },
   { abbr: "CMIOSH", grade: "Chartered", fullName: "Chartered Member of the Institution of Occupational Safety and Health (IOSH)" },
+  { abbr: "MIFSM", grade: "Member", fullName: "Member of the Institute of Fire Safety Managers (IFSM)" },
   { abbr: "MIIRSM", grade: "Member", fullName: "Member of the International Institute of Risk and Safety Management (IIRSM)" },
   { abbr: "AIEMA", grade: "Associate", fullName: "Associate Member of the Institute of Environmental Management and Assessment (IEMA)" },
-  { abbr: "AIFireE", grade: "Associate", fullName: "Associate Member of the Institution of Fire Engineers (IFE)" },
-  { abbr: "MIFSM", grade: "Member", fullName: "Member of the Institute of Fire Safety Managers (IFSM)" },
 ];
 
 export interface Qualification {
@@ -285,9 +289,18 @@ export const CREDENTIALS: string[] = [
 
 export const ASSESSOR = {
   name: "Batir Turakulov",
-  role: "Fire Engineer & Chartered Health & Safety Professional (CMIOSH)",
+  role: "Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH)",
+  /**
+   * Compact form of `role`, for places where the full form would be unwieldy —
+   * currently the two portrait alt texts. `role` grew past 120 characters when
+   * MIFireE was spelled out in full, which would have pushed those alt strings
+   * to 172 characters; screen-reader guidance puts the practical ceiling around
+   * 125. Same credentials, same order, fewer words. Not a second source of
+   * truth: nothing here is a claim that `role` does not already make.
+   */
+  shortRole: "Fire Engineer (MIFireE) & Chartered Health & Safety Professional (CMIOSH)",
   photo: "/batir-turakulov.jpg",
-  bio: "Batir Turakulov is a Fire Engineer and Chartered Health & Safety Professional (CMIOSH) specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and an Advanced Diploma in Fire Risk Assessment, and is an Associate Member of the Institution of Fire Engineers. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
+  bio: "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and an Advanced Diploma in Fire Risk Assessment. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };
 

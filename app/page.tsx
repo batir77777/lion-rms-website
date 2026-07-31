@@ -8,7 +8,7 @@ import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCES
 export const metadata: Metadata = {
   title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
   description:
-    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
   alternates: { canonical: "/" },
 };
 
@@ -44,7 +44,7 @@ export default function HomePage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                Level 5 Diploma in Fire Engineering Design &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
+                Level 5 Diploma in Fire Engineering Design &bull; MIFireE &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
@@ -76,7 +76,7 @@ export default function HomePage() {
               </div>
 
               <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.45)" }}>
-                Led by Batir Turakulov, Fire Engineer &amp; Chartered Health &amp; Safety Professional (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
+                Led by Batir Turakulov, Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health &amp; Safety Professional (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
               </p>
             </div>
 
@@ -91,7 +91,7 @@ export default function HomePage() {
                 <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety</p>
                 <p className="text-white font-semibold text-lg">H&amp;S consultancy &amp; compliance</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS, policies, and competent person support — practical and proportionate.</p>
-                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>Fire Engineer &amp; Chartered Health &amp; Safety Professional (CMIOSH)</p>
+                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>Fire Engineer (MIFireE) &amp; Chartered Health &amp; Safety Professional (CMIOSH)</p>
               </div>
             </div>
           </div>
@@ -322,7 +322,7 @@ export default function HomePage() {
             </Link>
           </p>
           <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.4)" }}>
-            Batir Turakulov, CMIOSH &bull; Level 4 DipFRA &bull; Level 5 Fire Engineering Design &bull; Lion Risk Management Solutions
+            Batir Turakulov, MIFireE &bull; CMIOSH &bull; Level 4 DipFRA &bull; Level 5 Fire Engineering Design &bull; Lion Risk Management Solutions
           </p>
         </div>
       </section>
