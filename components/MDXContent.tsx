@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import GlossaryLink from "@/components/GlossaryLink";
 import StandardLink from "@/components/StandardLink";
+import LegislationLink from "@/components/LegislationLink";
 import * as jsxRuntime from "react/jsx-runtime";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
@@ -69,6 +70,7 @@ const components: Record<string, unknown> = {
   // and components/StandardLink.tsx.
   GlossaryLink,
   StandardLink,
+  LegislationLink,
 
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 {...props} className="mt-10 scroll-mt-28 text-2xl font-bold text-navy-900" />

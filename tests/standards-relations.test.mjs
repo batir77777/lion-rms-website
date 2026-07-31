@@ -260,15 +260,17 @@ describe("Route-level metadata", () => {
 });
 
 describe("Knowledge Centre navigation", () => {
-  test("all three sections are listed and Legislation is not", async () => {
+  test("all four sections are listed and no later vertical is", async () => {
     const src = fs.readFileSync(
       path.join(repoRoot, "components/KnowledgeCentreNav.tsx"),
       "utf8"
     );
-    for (const href of ["/guides", "/glossary", "/standards"]) {
+    for (const href of ["/guides", "/glossary", "/standards", "/legislation"]) {
       assert.ok(src.includes(`href: "${href}"`), `${href} missing from the section nav`);
     }
-    assert.ok(!src.includes('href: "/legislation"'), "Legislation is PR 6");
+    for (const href of ["/news", "/downloads"]) {
+      assert.ok(!src.includes(`href: "${href}"`), `${href} is a later PR`);
+    }
   });
 
   test("every Knowledge Centre index renders the shared nav", () => {

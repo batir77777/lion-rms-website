@@ -17,8 +17,9 @@ import Link from "next/link";
 // section that cannot be navigated to would have compounded that rather than
 // fixed it.
 //
-// Legislation joins by adding one entry here in PR 6. When the /knowledge hub
-// lands in PR 9 this becomes its child navigation rather than being discarded.
+// Legislation joined in PR 6 by adding one entry — which is exactly the change
+// this component was built to absorb. When the /knowledge hub lands in PR 9
+// this becomes its child navigation rather than being discarded.
 
 export interface KnowledgeSection {
   label: string;
@@ -29,6 +30,7 @@ export const KNOWLEDGE_SECTIONS: KnowledgeSection[] = [
   { label: "Guides", href: "/guides" },
   { label: "Glossary", href: "/glossary" },
   { label: "Standards", href: "/standards" },
+  { label: "Legislation", href: "/legislation" },
 ];
 
 export default function KnowledgeCentreNav({ current }: { current: string }) {

@@ -53,6 +53,20 @@ describe("Velite fixture build scenarios (PR 1 required tests)", () => {
     assert.equal(result.success, true, `expected the valid fixture set to build cleanly, got:\n${result.output}`);
   });
 
+  // Added in Phase 5A PR 6. The launch legislation set contains nothing
+  // repealed or revoked, and the owner's instruction was that a page must not
+  // be added to the live library solely to exercise a lifecycle value — so the
+  // terminating states get their own fixture scenario. Detailed assertions on
+  // what reached Velite's output live in tests/legislation-editorial.test.mjs.
+  test("legislation lifecycle fixture passes", () => {
+    const result = runVeliteFixture("legislation-lifecycle");
+    assert.equal(
+      result.success,
+      true,
+      `expected the repealed/revoked lifecycle fixtures to build cleanly, got:\n${result.output}`
+    );
+  });
+
   test("malformed frontmatter fails", () => {
     const result = runVeliteFixture("malformed-frontmatter");
     assert.equal(result.success, false, "expected a guide fixture missing the required `summary` field to fail the build");

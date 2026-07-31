@@ -8,6 +8,12 @@ import {
   lastModified as standardLastModified,
   STANDARDS_PATH,
 } from "@/lib/standards";
+import {
+  publishedLegislation,
+  isFullyInForce,
+  lastModified as legislationLastModified,
+  LEGISLATION_PATH,
+} from "@/lib/legislation";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.lionrms.uk";
@@ -100,5 +106,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  return [...staticEntries, ...guideEntries, ...glossaryEntries, ...standardEntries];
+  // Phase 5A PR 6. Repealed and revoked instruments STAY in the sitemap: they
+  // are live, canonical, useful pages, and the reader arriving from a 2019
+  // assessment that cites a since-revoked instrument is who they exist for.
+  // Priority drops slightly for anything not wholly in force — an honest signal
+  // of relative importance, not a suppression.
+  const legislationEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${LEGISLATION_PATH}`,
+      lastModified: buildDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    ...publishedLegislation().map((l) => ({
+      url: `${base}${LEGISLATION_PATH}/${l.slug}`,
+      lastModified: new Date(`${(legislationLastModified(l) ?? "").slice(0, 10)}T00:00:00Z`),
+      changeFrequency: "monthly" as const,
+      priority: isFullyInForce(l) ? 0.6 : 0.5,
+    })),
+  ];
+
+  return [
+    ...staticEntries,
+    ...guideEntries,
+    ...glossaryEntries,
+    ...standardEntries,
+    ...legislationEntries,
+  ];
 }

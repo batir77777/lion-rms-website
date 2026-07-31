@@ -218,6 +218,90 @@ export function buildStandardSchema(input: StandardSchemaInput) {
   };
 }
 
+export interface LegislationSchemaInput {
+  headline: string;
+  description: string;
+  path: string;
+  authorId: string;
+  datePublished?: string;
+  dateModified?: string;
+  articleSection?: string;
+  instrument: {
+    /** Short title, e.g. "Fire Safety Act 2021". */
+    name: string;
+    /** Citation, e.g. "2021 c. 24". */
+    identifier: string;
+    /** schema.org LegislationType, e.g. "Act" or "StatutoryInstrument". */
+    legislationType?: string;
+    /** Year, as a date string where known. */
+    legislationDate?: string;
+    /** Where it APPLIES — the operative statement, not extent. */
+    jurisdiction: string;
+    /** InForce | PartiallyInForce | NotInForce, or omitted where neither fits. */
+    legalForce?: string;
+    /** The publishing body. NOT this site. */
+    publisher: string;
+    url: string;
+  };
+}
+
+/**
+ * A Legislation library page (Phase 5A, PR 6).
+ *
+ * Unlike Standards, schema.org has a real type here — `Legislation`, from the
+ * ELI vocabulary — so the `about` node can be precise rather than a generic
+ * CreativeWork.
+ *
+ * The principle is unchanged: this page is Lion RMS's COMMENTARY ON an
+ * instrument, not the instrument. `author` and `publisher` on the outer node
+ * are ours; `publisher` on the inner node is The National Archives. The two
+ * carrying different values is the point of the shape.
+ *
+ * `legislationJurisdiction` uses APPLICATION rather than extent, because
+ * application is the operative statement — where the instrument actually
+ * imposes duties. Saying an instrument's jurisdiction is England and Wales
+ * when it applies only in England would mislead exactly the reader the
+ * distinction exists to protect.
+ *
+ * `legislationLegalForce` is omitted rather than guessed where no schema.org
+ * value fits — "partially repealed" and "spent" have no counterpart, and
+ * mapping them to NotInForce would state something untrue.
+ */
+export function buildLegislationSchema(input: LegislationSchemaInput) {
+  const url = `${SITE_URL}${input.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: input.headline,
+    description: input.description,
+    url,
+    "@id": url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(input.articleSection ? { articleSection: input.articleSection } : {}),
+    author: buildPersonRef(input.authorId),
+    publisher,
+    about: {
+      "@type": "Legislation",
+      name: input.instrument.name,
+      legislationIdentifier: input.instrument.identifier,
+      ...(input.instrument.legislationType
+        ? { legislationType: input.instrument.legislationType }
+        : {}),
+      ...(input.instrument.legislationDate
+        ? { legislationDate: input.instrument.legislationDate }
+        : {}),
+      legislationJurisdiction: input.instrument.jurisdiction,
+      ...(input.instrument.legalForce
+        ? { legislationLegalForce: input.instrument.legalForce }
+        : {}),
+      publisher: { "@type": "Organization", name: input.instrument.publisher },
+      url: input.instrument.url,
+    },
+  };
+}
+
 export interface DefinedTermSetInput {
   name: string;
   description: string;

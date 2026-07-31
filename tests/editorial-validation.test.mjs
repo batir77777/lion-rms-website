@@ -358,17 +358,20 @@ describe("C. taxonomy and people", () => {
     // no honest match in the tag registry, and inventing one would duplicate an
     // existing category and compete with the standard pages themselves.
     assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("standards"), false);
-    assert.deepEqual(
-      [...TAGS_EXPECTED_COLLECTIONS].sort(),
-      ["downloads", "legislation", "news"]
-    );
+    // Legislation left in Phase 5A PR 6, on the evidence PR 5 said would decide
+    // it: six of the eight launch instruments are general duty regimes with no
+    // honest technical tag. Legislation navigates by jurisdiction, tier and
+    // citation, all mandatory and enum-constrained.
+    assert.equal(TAGS_EXPECTED_COLLECTIONS.includes("legislation"), false);
+    assert.deepEqual([...TAGS_EXPECTED_COLLECTIONS].sort(), ["downloads", "news"]);
   });
 
-  test("tagsExpected is false for Guides, Glossary and Standards", () => {
+  test("tagsExpected is false for Guides, Glossary, Standards and Legislation", () => {
     assert.equal(tagsExpected("guides"), false);
     assert.equal(tagsExpected("glossaryTerms"), false);
     assert.equal(tagsExpected("standards"), false);
-    for (const c of ["news", "legislation", "downloads"]) {
+    assert.equal(tagsExpected("legislation"), false);
+    for (const c of ["news", "downloads"]) {
       assert.equal(tagsExpected(c), true, `${c} should expect tags`);
     }
   });

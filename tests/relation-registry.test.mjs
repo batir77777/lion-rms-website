@@ -127,13 +127,13 @@ describe("Registry-backed relations resolve", () => {
   });
 
   test("content-collection relations stay empty until those collections exist", async () => {
-    // relatedStandards left this list in Phase 5A PR 5, which populated it on
-    // every guide. The remaining three point at collections that still have no
-    // content, and a reference into an empty collection would resolve to
-    // nothing and render as nothing.
+    // relatedStandards left this list in Phase 5A PR 5 and relatedLegislation
+    // in PR 6, each of which populated it on every guide. The remaining two
+    // point at collections that still have no content, and a reference into an
+    // empty collection would resolve to nothing and render as nothing.
     const { guides } = await import("../.velite");
     for (const guide of guides) {
-      for (const field of ["relatedArticles", "relatedLegislation", "relatedDownloads"]) {
+      for (const field of ["relatedArticles", "relatedDownloads"]) {
         assert.deepEqual(
           guide[field],
           [],
