@@ -14,6 +14,12 @@ import {
   lastModified as legislationLastModified,
   LEGISLATION_PATH,
 } from "@/lib/legislation";
+import {
+  publishedNews,
+  archiveYears,
+  lastModified as newsLastModified,
+  NEWS_PATH,
+} from "@/lib/news";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.lionrms.uk";
@@ -126,11 +132,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  // News (Phase 5A PR 7). Year archives sit between the listing and the items:
+  // they are real destinations a reader can link to, but the items themselves
+  // are what search should reach first.
+  const newsEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${NEWS_PATH}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    ...archiveYears().map((y) => ({
+      url: `${base}${NEWS_PATH}/${y.year}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...publishedNews().map((n) => ({
+      url: `${base}${NEWS_PATH}/${n.slug}`,
+      lastModified: new Date(newsLastModified(n) ?? new Date()),
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
+  ];
+
   return [
     ...staticEntries,
     ...guideEntries,
     ...glossaryEntries,
     ...standardEntries,
     ...legislationEntries,
+    ...newsEntries,
   ];
 }
