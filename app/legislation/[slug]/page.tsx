@@ -46,6 +46,7 @@ import {
   CTA_SECONDARY_LABEL,
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
+import { newsMentioningLegislation, NEWS_PATH } from "@/lib/news";
 
 export const dynamicParams = false;
 
@@ -193,6 +194,11 @@ export default async function LegislationDetailPage({
   const asAtLabel = formatDate(item.sourceTextAsAtDate);
   const territoryDiffers = extentDiffersFromApplication(item);
   const sourceBehind = sourceTextTrailsConfirmation(item);
+
+  const newsItems = newsMentioningLegislation(item.slug).map((n) => ({
+    label: n.title,
+    href: `${NEWS_PATH}/${n.slug}`,
+  }));
 
   return (
     <article className="bg-white">
@@ -497,6 +503,7 @@ export default async function LegislationDetailPage({
             { heading: "Amends", items: amendsItems },
             { heading: "Amended by", items: amendedByItems },
             { heading: "Related legislation", items: peerItems },
+            { heading: "News about this instrument", items: newsItems },
             { heading: "Related standards", items: standardItems },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
