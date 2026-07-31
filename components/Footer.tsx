@@ -118,7 +118,7 @@ export default function Footer() {
             </Link>
             <span className="text-slate-700" aria-hidden>&middot;</span>
             <p className="text-xs text-slate-400">
-              CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
+              MIFireE &middot; CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
             </p>
           </div>
         </div>

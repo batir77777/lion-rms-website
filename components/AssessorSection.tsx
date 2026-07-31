@@ -30,7 +30,7 @@ export default function AssessorSection() {
               ) : (
                 <Image
                   src={ASSESSOR.photo}
-                  alt={`${ASSESSOR.name}, ${ASSESSOR.role} at Lion Risk Management Solutions`}
+                  alt={`${ASSESSOR.name}, ${ASSESSOR.shortRole} at Lion Risk Management Solutions`}
                   width={320}
                   height={320}
                   className="h-full w-full object-cover"
