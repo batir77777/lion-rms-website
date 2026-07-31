@@ -290,12 +290,12 @@ describe("Standards routes", () => {
   });
 
   test("deferred routes are not built", () => {
-    // Nothing from PR 6 or later leaks in.
+    // Nothing from PR 7 or later leaks in. "legislation" left this list in
+    // PR 6, which launched it; the standards sub-routes remain deferred.
     for (const route of [
       "standards/category",
       "standards/tag",
       "standards/letter",
-      "legislation",
       "news",
       "downloads",
       "knowledge",

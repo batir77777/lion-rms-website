@@ -31,6 +31,9 @@ import {
 } from "../lib/editorial-validation";
 import {
   DOCUMENT_REFERENCE_COLLECTIONS,
+  DOCUMENT_STATUS_COLLECTIONS,
+  PUBLICATION_GATE_FIELDS,
+  usesDocumentStatus,
   EDITION_REQUIRED_CLASSES,
   OFFICIAL_SOURCE_HOSTS,
   NOTICE_MIN_LENGTH,
@@ -548,21 +551,69 @@ describe("G13, G14, G15 — the publication gate", () => {
   });
 });
 
-describe("Scoping — the rules reach Legislation without being rewritten", () => {
-  test("legislation is a document-reference collection", () => {
+describe("Scoping — which collections each rule family governs", () => {
+  // CHANGED IN PHASE 5A PR 6, and only because the approved public model
+  // changed. PR 5 asserted here that the G-series lifecycle rules would fire
+  // unchanged for Legislation. That expectation was withdrawn: a BSI lifecycle
+  // (current / under review / proposed for withdrawal / withdrawn) has no
+  // legislative equivalent, and legislation needs repealed, revoked, partially
+  // in force and partially repealed instead.
+  //
+  // Coverage is not reduced. G1 still fires for Standards, asserted below, and
+  // the legislative equivalent is rule L6, asserted in
+  // tests/legislation-editorial.test.mjs. What moved is which rule owns the
+  // question, not whether it is asked.
+
+  test("both collections are still document-reference collections", () => {
     assert.ok(DOCUMENT_REFERENCE_COLLECTIONS.includes("standards"));
     assert.ok(DOCUMENT_REFERENCE_COLLECTIONS.includes("legislation"));
   });
 
-  test("the same rules fire for a legislation item with no rule changes", () => {
+  test("only Standards carries the documentStatus lifecycle", () => {
+    assert.deepEqual([...DOCUMENT_STATUS_COLLECTIONS], ["standards"]);
+    assert.equal(usesDocumentStatus("standards"), true);
+    assert.equal(usesDocumentStatus("legislation"), false);
+  });
+
+  test("G1 still fires for Standards", () => {
+    const c = wrap(standard({ documentStatus: "superseded", supersededBy: [] }));
+    assert.ok(has(checkDocumentLifecycle(c, { now: NOW }), "G1"));
+  });
+
+  test("the documentStatus rules no longer fire for Legislation", () => {
+    // A legislation item carrying a stray documentStatus must not be judged by
+    // a vocabulary that does not describe it.
     const item = standard({
-      documentClass: "act",
       documentStatus: "superseded",
       supersededBy: [],
       officialSourceUrl: "https://www.legislation.gov.uk/x",
     });
     const issues = checkDocumentLifecycle({ legislation: [item] }, { now: NOW });
-    assert.ok(has(issues, "G1"));
+    for (const rule of ["G1", "G9", "G10", "G12"]) {
+      assert.ok(!has(issues, rule), `${rule} should be scoped to Standards`);
+    }
+  });
+
+  test("the lifecycle-agnostic rules still fire for Legislation", () => {
+    // G3 and G4 are about graph shape, not about vocabulary, so they stay
+    // universal — a self-superseding instrument is wrong in any collection.
+    const a = standard({ slug: "a", supersededBy: ["a"] });
+    const issues = checkDocumentLifecycle({ legislation: [a] }, { now: NOW });
+    assert.ok(has(issues, "G3"));
+  });
+
+  test("the publication gate is per-collection and the Standards list is unchanged", () => {
+    assert.deepEqual([...PUBLICATION_GATE_FIELDS.standards], [
+      "documentStatus",
+      "statusConfirmedDate",
+      "editionConfirmedDate",
+      "lastCheckedDate",
+      "licenceConfirmedDate",
+      "verifiedBy",
+      "officialReference",
+      "publisher",
+      "officialSourceUrl",
+    ]);
   });
 
   test("guides are not treated as a document-reference collection", () => {
