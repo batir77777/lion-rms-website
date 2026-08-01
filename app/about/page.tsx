@@ -6,19 +6,27 @@ import Reveal from "@/components/Reveal";
 import PersonJsonLd from "@/components/PersonJsonLd";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { ASSESSOR, CREDENTIALS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH).",
   alternates: { canonical: "/about" },
+  openGraph: {
+    type: "website",
+    title: "About",
+    description: "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH).",
+    url: "/about",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, membership of the Institution of Fire Engineers (MIFireE), an Advanced Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
+    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, membership of the Institution of Fire Engineers (MIFireE), a Level 4 Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
   },
   {
     icon: "⚖️",
@@ -78,7 +86,7 @@ export default function AboutPage() {
                 understanding of how a building is designed to perform in fire — which
                 is what allows recommendations to be proportionate, addressing the
                 things that genuinely affect life safety rather than defaulting to a
-                checklist. Batir holds an Advanced Diploma in Fire Risk Assessment
+                checklist. Batir holds a Level 4 Diploma in Fire Risk Assessment
                 alongside his fire engineering qualifications.
               </p>
               <p>
