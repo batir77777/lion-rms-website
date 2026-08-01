@@ -46,6 +46,7 @@ import {
   NEWS_DATE_FIELDS,
   NEWS_PUBLICATION_GATE_FIELDS,
   RESOURCE_TYPE_FORMATS,
+  RESOURCE_TYPE_COMPANION_FORMATS,
   FORMAT_EXTENSIONS,
   DOWNLOAD_MAX_BYTES,
   DOWNLOAD_WARN_BYTES,
@@ -1550,7 +1551,10 @@ export function checkDownloadDelivery(collections: Collections): ValidationIssue
           `"${item.slug}" lists "html" as an additional format. HTML delivery is printableHtml, not a file.`));
       }
 
-      if (permitted && !permitted.includes(format)) {
+      const permittedCompanion = resourceType
+        ? (RESOURCE_TYPE_COMPANION_FORMATS[resourceType] ?? permitted)
+        : permitted;
+      if (permittedCompanion && !permittedCompanion.includes(format)) {
         issues.push(issue(DOWNLOADS, item, "R3", "error",
           `"${item.slug}" offers ${format} as an additional format, which is not valid for a ${resourceType}.`));
       }

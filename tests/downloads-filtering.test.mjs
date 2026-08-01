@@ -175,9 +175,16 @@ describe("Against the real launch data", () => {
   });
 
   test("the empty state is reachable by a real combination", async () => {
+    // Both axes are individually populated — there are checklists, and there
+    // are spreadsheets — but no checklist is offered as one. The pair was
+    // logbook + Word until the fire safety logbook began offering an editable
+    // copy alongside its PDF; a combination that stops being empty stops
+    // testing the empty state, so it is replaced rather than propped up.
     const items = await cards();
+    assert.ok(items.some((i) => i.resourceType === "checklist"));
+    assert.ok(items.some((i) => i.formats.includes("xlsx")));
     assert.deepEqual(
-      applyDownloadFilters(items, { resourceType: "logbook", format: "docx" }),
+      applyDownloadFilters(items, { resourceType: "checklist", format: "xlsx" }),
       []
     );
   });
