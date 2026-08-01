@@ -25,6 +25,7 @@ import { buildDefinedTermSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import { SITE, SITE_URL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { newsUsingTerm, NEWS_PATH } from "@/lib/news";
+import { downloadsForTerm, DOWNLOADS_PATH } from "@/lib/downloads";
 
 export const dynamicParams = false;
 
@@ -252,6 +253,13 @@ export default async function GlossaryTermPage({
               items: newsUsingTerm(term.slug).map((n) => ({
                 label: n.title,
                 href: `${NEWS_PATH}/${n.slug}`,
+              })),
+            },
+            {
+              heading: "Checklists and templates",
+              items: downloadsForTerm(term.slug).map((d) => ({
+                label: d.title,
+                href: `${DOWNLOADS_PATH}/${d.slug}`,
               })),
             },
           ]}

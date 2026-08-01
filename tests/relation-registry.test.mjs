@@ -2,17 +2,29 @@
 //
 // PR 1's checkRelations validates only relation fields that point at other
 // Velite collections — relatedArticles, relatedStandards, relatedLegislation,
-// relatedGlossaryTerms, relatedDownloads. It deliberately does not validate
-// relatedServices, relatedSectors or relatedCaseStudies, which point at the
-// TypeScript registries in lib/site.ts and lib/case-studies.ts.
+// relatedGlossaryTerms, relatedDownloads. Registry-backed relations
+// (relatedServices, relatedSectors, relatedCaseStudies) point at the TypeScript
+// registries in lib/site.ts and lib/case-studies.ts instead, and a typo in one
+// produced a silently dropped link rather than a build failure. Closing that
+// inside PR 1's shared validator was out of scope at the time, so it was closed
+// here.
 //
-// That leaves a real gap: a typo in one of those fields produces a silently
-// dropped related link rather than a build failure. Closing it inside PR 1's
-// shared validator is out of this PR's approved scope, so it is closed here
-// instead — same protection, no change to shipped validation code.
+// UPDATE, Phase 5A PR 8A: the shared validator now DOES cover them, as rule
+// G18 in checkRegistryRelations — across every collection, at build time.
 //
-// If a future PR does extend the shared validator to cover registry-backed
-// relations, this file becomes redundant and should be retired with it.
+// This file said it should be retired if that ever happened. It is kept anyway,
+// deliberately, because two of its assertions are not duplicated by G18 and
+// should not be:
+//
+//   - the Guides-specific `hasPage` rule from the PR #12 hotfix. G18 must not
+//     adopt it, because a sector with no page is a known entity that correctly
+//     renders as plain text on other collections — requiring a page globally
+//     would break the optional-link fallback rather than protect it.
+//   - `relatedTerms`, which is a Glossary-only field.
+//
+// What IS now duplicated is the plain existence checking below, and that
+// duplication is cheap and harmless: two independent statements of the same
+// truth, one of which fails the build and one of which fails the suite.
 
 import { test, describe, before } from "node:test";
 import assert from "node:assert/strict";

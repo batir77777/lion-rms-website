@@ -43,7 +43,15 @@ export default function Reveal({
   return (
     <motion.div
       ref={ref}
-      className={className}
+      // "reveal-root" is a hook for the print stylesheet, not a style.
+      //
+      // framer-motion sets opacity as an INLINE style, so anything below the
+      // fold at the moment a reader hits print has opacity: 0 and prints blank.
+      // A class is the only way for CSS to reach it, and `!important` in a
+      // stylesheet does beat an inline declaration. This matters because the
+      // Downloads library treats printing as a real delivery mode: for an
+      // HTML-native resource, what comes out of the printer IS the document.
+      className={`reveal-root ${className}`.trim()}
       initial={{ opacity: 0, y: 26 }}
       whileInView={SHOWN}
       animate={forced ? SHOWN : undefined}

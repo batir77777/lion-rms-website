@@ -72,6 +72,9 @@ const SLATE_400_DARK_ALLOWLIST = {
   // Same CTA panel markup and same #060e1f→#0c1f3f→#082218 gradient again.
   // Measured against all three stops: 7.51:1, 6.38:1 and 6.54:1.
   "app/news/[slug]/page.tsx": 1, // dark gradient CTA panel (PR 7)
+  // Same CTA panel markup and same #060e1f→#0c1f3f→#082218 gradient again.
+  // Measured against all three stops: 7.51:1, 6.38:1 and 6.54:1.
+  "app/downloads/[slug]/page.tsx": 1, // dark gradient CTA panel (PR 8A)
   "app/about/page.tsx": 1, // dark gradient CTA panel
   "app/faq/page.tsx": 1, // dark gradient CTA panel
   "app/case-studies/page.tsx": 1, // dark gradient CTA panel

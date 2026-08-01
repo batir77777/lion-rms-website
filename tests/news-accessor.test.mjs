@@ -326,7 +326,7 @@ describe("News routing", () => {
   });
 
   test("routes deferred to PR 8 and later are not built", () => {
-    for (const route of ["news/category", "news/tag", "news/archive", "downloads", "knowledge", "search"]) {
+    for (const route of ["news/category", "news/tag", "news/archive", "knowledge", "search"]) {
       assert.equal(exists(route), false, `${route} should not exist yet`);
     }
   });

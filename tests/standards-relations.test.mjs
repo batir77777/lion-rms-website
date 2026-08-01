@@ -268,9 +268,10 @@ describe("Knowledge Centre navigation", () => {
     for (const href of ["/guides", "/glossary", "/standards", "/legislation", "/news"]) {
       assert.ok(src.includes(`href: "${href}"`), `${href} missing from the section nav`);
     }
-    for (const href of ["/downloads", "/knowledge"]) {
-      assert.ok(!src.includes(`href: "${href}"`), `${href} is a later PR`);
-    }
+    // "/downloads" left this list in PR 8A, which launched it. "/knowledge"
+    // is the PR 9 hub and is still guarded.
+    assert.ok(src.includes('href: "/downloads"'), "/downloads should be in the nav from PR 8A");
+    assert.ok(!src.includes('href: "/knowledge"'), "/knowledge is a later PR");
   });
 
   test("every Knowledge Centre index renders the shared nav", () => {

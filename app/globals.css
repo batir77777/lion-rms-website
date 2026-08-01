@@ -56,3 +56,82 @@
     animation: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Print (Phase 5A, PR 8A).
+
+   The Downloads library treats printing as a real delivery mode, not a
+   courtesy: an HTML-native resource like the fire safety checklist has no PDF,
+   so what comes out of the printer IS the document. These rules apply site-wide
+   because a reader may print any page, but they exist for that one.
+
+   `print:hidden` utilities on individual components handle what to drop. This
+   handles the things a utility class cannot reach: page margins, orphaned
+   headings, tables split across pages, and link destinations that vanish the
+   moment the page is on paper.
+   --------------------------------------------------------------------------- */
+@media print {
+  @page {
+    margin: 15mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Site chrome never belongs on a printed resource. */
+  header,
+  footer,
+  nav[aria-label="Knowledge Centre sections"] {
+    display: none !important;
+  }
+
+  /* A heading alone at the foot of a page, or one line of a paragraph
+     stranded on the next, makes a checklist harder to follow on paper. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  p,
+  li,
+  tr,
+  dl > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+
+  ul,
+  ol,
+  table {
+    break-inside: auto;
+  }
+
+  /* A link's text is meaningless on paper unless the destination comes with
+     it — but only for real destinations, not in-page anchors or JS handlers. */
+  a[href^="http"]::after,
+  a[href^="/"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  a[href^="#"]::after,
+  a[href^="mailto"]::after,
+  a[href^="tel"]::after {
+    content: "";
+  }
+
+  /* Reveal animates opacity from 0 on scroll. Anything never scrolled into
+     view before printing would otherwise print blank. */
+  .reveal-root {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

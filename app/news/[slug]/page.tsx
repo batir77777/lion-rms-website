@@ -34,6 +34,7 @@ import {
 import { displayTerm, GLOSSARY_PATH } from "@/lib/glossary";
 import { designation, STANDARDS_PATH } from "@/lib/standards";
 import { LEGISLATION_PATH } from "@/lib/legislation";
+import { downloadsForNews, DOWNLOADS_PATH } from "@/lib/downloads";
 import { buildNewsArticleSchema, buildCollectionPageSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 import { getAuthor, getReviewer } from "@/lib/people";
 import { SITE, getCategory, getSector } from "@/lib/site";
@@ -239,6 +240,10 @@ function NewsDetail({ slug }: { slug: string }) {
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
   }));
+  const downloadItems = downloadsForNews(item.slug).map((d) => ({
+    label: d.title,
+    href: `${DOWNLOADS_PATH}/${d.slug}`,
+  }));
 
   const serviceItems = (item.relatedServices ?? [])
     .map((s) => getCategory(s))
@@ -422,6 +427,7 @@ function NewsDetail({ slug }: { slug: string }) {
             { heading: "Legislation mentioned", items: legislationItems },
             { heading: "Related news", items: peerItems },
             { heading: "Later items referring to this", items: followUpItems },
+            { heading: "Checklists and templates", items: downloadItems },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
             { heading: "Related sector", items: sectorItems },

@@ -16,6 +16,46 @@
 // valid shell syntax.
 
 import { execFileSync } from "node:child_process";
+import { readdirSync, readFileSync, existsSync } from "node:fs";
+import path from "node:path";
+
+// Orphaned download assets (Phase 5A, PR 8A).
+//
+// Velite only copies a file that some MDX file references, so an unreferenced
+// document in content/downloads/files/ is not published. It is, however, in a
+// PUBLIC GitHub repository, which is the exposure that actually matters: an
+// unreviewed draft committed "just to have it somewhere" is readable by anyone
+// the moment it lands, whether or not the site ever links to it.
+//
+// This does not fail the audit. It cannot tell a genuine mistake from a file
+// staged a few minutes before the MDX that will reference it, and a check that
+// blocks legitimate work gets switched off. It reports, so the answer is a
+// decision rather than an oversight.
+function reportOrphanedAssets() {
+  const filesDir = path.join(process.cwd(), "content", "downloads", "files");
+  const contentDir = path.join(process.cwd(), "content", "downloads");
+  if (!existsSync(filesDir)) return;
+
+  // README.md documents the directory's own conventions and is not an asset.
+  const assets = readdirSync(filesDir).filter(
+    (f) => !f.startsWith(".") && !f.endsWith(".md")
+  );
+  if (assets.length === 0) return;
+
+  const mdx = readdirSync(contentDir)
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => readFileSync(path.join(contentDir, f), "utf8"))
+    .join("\n");
+
+  const orphans = assets.filter((a) => !mdx.includes(a));
+  if (orphans.length === 0) return;
+
+  console.warn(
+    `\n[audit] ${orphans.length} file(s) in content/downloads/files/ are referenced by no resource:\n` +
+      orphans.map((o) => `  - ${o}`).join("\n") +
+      `\n[audit] These are not published, but they ARE in the public repository.\n`
+  );
+}
 
 const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 
@@ -30,6 +70,7 @@ try {
     }
   );
   process.stdout.write(output);
+  reportOrphanedAssets();
   console.log("\n[audit] PASS — no editorial errors or warnings.\n");
   process.exit(0);
 } catch (error) {

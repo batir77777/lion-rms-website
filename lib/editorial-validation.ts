@@ -45,6 +45,12 @@ import {
   NEWS_CATEGORY_DATES,
   NEWS_DATE_FIELDS,
   NEWS_PUBLICATION_GATE_FIELDS,
+  RESOURCE_TYPE_FORMATS,
+  FORMAT_EXTENSIONS,
+  DOWNLOAD_MAX_BYTES,
+  DOWNLOAD_WARN_BYTES,
+  PUBLISHABLE_ACCESSIBILITY_STATUSES,
+  ADAPTATION_STATEMENT_PATTERNS,
 } from "./editorial-rules";
 import { hasCycleVia } from "./supersession";
 
@@ -1458,5 +1464,305 @@ export function validateEditorialRules(
     ...checkNewsSource(collections, options),
     ...checkNewsImmutability(collections),
     ...checkNewsSlugShape(collections),
+    ...checkDownloadDelivery(collections),
+    ...checkDownloadFileSize(collections, options),
+    ...checkDownloadClaims(collections),
+    ...checkDownloadVersioning(collections),
+    ...checkDownloadHtmlEquivalent(collections),
   ];
+}
+
+// ---------------------------------------------------------------------------
+// R. Downloads (Phase 5A, PR 8A).
+//
+// Three of these rules exist because a download can fail in ways no other
+// content type can: it can promise a file that is not there, promise a file
+// that is not what it says it is, or promise a file nobody can read. The rest
+// are about not making claims we have not checked.
+// ---------------------------------------------------------------------------
+
+const DOWNLOADS = "downloads";
+
+function* eachDownload(collections: Collections) {
+  for (const item of collections[DOWNLOADS] ?? []) yield item;
+}
+
+/** R1-R4, R10 - delivery, formats and extensions. */
+export function checkDownloadDelivery(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachDownload(collections)) {
+    const status = str(item.status);
+    const fileUrl = str(item.fileUrl);
+    const printable = item.printableHtml === true;
+    const resourceType = str(item.resourceType);
+    const declared = str(item.fileFormat);
+    const extras = arr(item.additionalFormats) as Array<Record<string, unknown>>;
+
+    // R1 - the rule that lets fileUrl be optional at all.
+    //
+    // A resource must offer at least ONE working way to obtain it. Expressing
+    // this as a rule rather than a required schema field is what allows the
+    // migrated fire safety checklist — HTML-native, no binary anywhere — to
+    // exist without a placeholder PDF committed purely to satisfy a validator.
+    if (status === "published" && !fileUrl && !printable) {
+      issues.push(issue(DOWNLOADS, item, "R1", "error",
+        `"${item.slug}" is published but offers no way to obtain it: it has no fileUrl and printableHtml is false.`));
+    }
+
+    // R3 - format must suit the kind of resource.
+    const permitted = resourceType ? RESOURCE_TYPE_FORMATS[resourceType] : undefined;
+    if (permitted && declared && !permitted.includes(declared)) {
+      issues.push(issue(DOWNLOADS, item, "R3", "error",
+        `"${item.slug}" is a ${resourceType} declared as ${declared}, which is not one of: ${permitted.join(", ")}.`));
+    }
+
+    // R4 - a declared format that the file itself contradicts. The emitted URL
+    // carries a content hash, so the extension is the only reliable signal, and
+    // a .docx served as "pdf" breaks the reader's software, not just their
+    // expectations.
+    const expected = declared ? FORMAT_EXTENSIONS[declared] : undefined;
+    if (fileUrl && expected && !fileUrl.toLowerCase().endsWith(expected)) {
+      issues.push(issue(DOWNLOADS, item, "R4", "error",
+        `"${item.slug}" declares fileFormat "${declared}" but its file does not end in ${expected}.`));
+    }
+    if (declared === "html" && fileUrl) {
+      issues.push(issue(DOWNLOADS, item, "R4", "error",
+        `"${item.slug}" declares fileFormat "html" but also carries a fileUrl. An HTML resource is delivered by its landing page.`));
+    }
+
+    // R10 - additional formats must be complete, distinct, and not restate the
+    // primary format.
+    const seenFormats = new Set<string>(declared ? [declared] : []);
+    for (const extra of extras) {
+      const format = str(extra.format);
+      const extraUrl = str(extra.fileUrl);
+      if (!format) continue;
+
+      if (seenFormats.has(format)) {
+        issues.push(issue(DOWNLOADS, item, "R10", "error",
+          `"${item.slug}" offers format "${format}" more than once.`));
+      }
+      seenFormats.add(format);
+
+      if (format === "html") {
+        issues.push(issue(DOWNLOADS, item, "R10", "error",
+          `"${item.slug}" lists "html" as an additional format. HTML delivery is printableHtml, not a file.`));
+      }
+
+      if (permitted && !permitted.includes(format)) {
+        issues.push(issue(DOWNLOADS, item, "R3", "error",
+          `"${item.slug}" offers ${format} as an additional format, which is not valid for a ${resourceType}.`));
+      }
+
+      const extraExpected = FORMAT_EXTENSIONS[format];
+      if (extraUrl && extraExpected && !extraUrl.toLowerCase().endsWith(extraExpected)) {
+        issues.push(issue(DOWNLOADS, item, "R4", "error",
+          `"${item.slug}" offers format "${format}" whose file does not end in ${extraExpected}.`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * R5, R13 - file size, verified rather than trusted.
+ *
+ * `sizeOf` is injected rather than imported so this stays a pure function over
+ * plain data, testable without a filesystem — the same discipline every other
+ * rule in this file follows. velite.config.ts supplies the real implementation,
+ * which can stat the emitted asset because Velite writes output BEFORE calling
+ * its `complete` hook.
+ */
+export function checkDownloadFileSize(
+  collections: Collections,
+  options: EditorialOptions & { sizeOf?: (url: string) => number | undefined } = {}
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const sizeOf = options.sizeOf;
+
+  const check = (item: ContentItemLike, url: string | undefined, declared: unknown, label: string) => {
+    if (!url) return;
+    const recorded = typeof declared === "number" ? declared : undefined;
+
+    if (recorded === undefined) {
+      issues.push(issue(DOWNLOADS, item, "R5", "error",
+        `"${item.slug}" has ${label} but no fileSizeBytes, so the landing page cannot state the size.`));
+      return;
+    }
+
+    if (recorded > DOWNLOAD_MAX_BYTES) {
+      issues.push(issue(DOWNLOADS, item, "R13", "error",
+        `"${item.slug}" ${label} is ${recorded} bytes, above the ${DOWNLOAD_MAX_BYTES}-byte ceiling.`));
+    } else if (recorded > DOWNLOAD_WARN_BYTES) {
+      issues.push(issue(DOWNLOADS, item, "R13", "warning",
+        `"${item.slug}" ${label} is ${recorded} bytes, which is large for a document on a mobile connection.`));
+    }
+
+    if (!sizeOf) return;
+    const actual = sizeOf(url);
+    if (actual === undefined) {
+      issues.push(issue(DOWNLOADS, item, "R5", "error",
+        `"${item.slug}" ${label} could not be found on disk at "${url}".`));
+      return;
+    }
+    if (actual !== recorded) {
+      issues.push(issue(DOWNLOADS, item, "R5", "error",
+        `"${item.slug}" records ${label} as ${recorded} bytes but the emitted file is ${actual} bytes. Update the frontmatter to match the file.`));
+    }
+  };
+
+  for (const item of eachDownload(collections)) {
+    check(item, str(item.fileUrl), item.fileSizeBytes, "fileUrl");
+    for (const extra of arr(item.additionalFormats) as Array<Record<string, unknown>>) {
+      check(item, str(extra.fileUrl), extra.fileSizeBytes, `the ${str(extra.format)} file`);
+    }
+  }
+
+  return issues;
+}
+
+/** R6, R7, R12, R15 - claims we must have checked before making. */
+export function checkDownloadClaims(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachDownload(collections)) {
+    const status = str(item.status);
+    const accessibility = str(item.accessibilityStatus);
+
+    // R6 - "unchecked" is a legitimate thing to author and an illegitimate
+    // thing to publish. Nothing in this library may imply an accessibility
+    // property nobody has verified.
+    if (status === "published" && accessibility && !PUBLISHABLE_ACCESSIBILITY_STATUSES.includes(accessibility)) {
+      issues.push(issue(DOWNLOADS, item, "R6", "error",
+        `"${item.slug}" is published with accessibilityStatus "${accessibility}". Check the document and record the result before publishing it.`));
+    }
+
+    // A stated limitation with nothing stated is not a stated limitation.
+    if (accessibility === "checked-limitations" && !str(item.accessibilityNotes)) {
+      issues.push(issue(DOWNLOADS, item, "R6", "error",
+        `"${item.slug}" reports accessibility limitations but accessibilityNotes is empty, so the page cannot say what they are.`));
+    }
+
+    // R7 - permitted use is explicit or it is not permitted.
+    if (status === "published" && !str(item.licence)) {
+      issues.push(issue(DOWNLOADS, item, "R7", "error",
+        `"${item.slug}" is published without a licence.`));
+    }
+
+    // R12 - reusing Crown copyright material under the OGL is fine; doing it
+    // without the attribution the licence requires is not.
+    if (item.thirdPartyMaterial === true && !str(item.thirdPartyAttribution)) {
+      issues.push(issue(DOWNLOADS, item, "R12", "error",
+        `"${item.slug}" is marked as containing third-party material but carries no attribution.`));
+    }
+
+    // R15 - the framing that keeps a template from being read as advice.
+    if (status === "published") {
+      const body = str(item.body) ?? "";
+      const summary = str(item.summary) ?? "";
+      const prose = `${summary}\n${body}`;
+      const stated = ADAPTATION_STATEMENT_PATTERNS.some((p) => p.test(prose));
+      if (!stated) {
+        issues.push(issue(DOWNLOADS, item, "R15", "error",
+          `"${item.slug}" does not state that it is a general template requiring adaptation, or that it does not replace professional assessment.`));
+      }
+    }
+  }
+
+  return issues;
+}
+
+/** R2, R8, R9, R14 - versions, changelog and withdrawal. */
+export function checkDownloadVersioning(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const item of eachDownload(collections)) {
+    const version = str(item.version);
+    const previous = arr(item.previousVersions) as Array<Record<string, unknown>>;
+    const changelog = arr(item.changelog);
+    const status = str(item.status);
+
+    // R2 - a version number that appears twice makes the history unreadable,
+    // and the history is the point: a completed record cites the version it was
+    // printed from.
+    const seen = new Map<string, string>();
+    if (version) seen.set(version, "current");
+    for (const entry of previous) {
+      const v = str(entry.version);
+      if (!v) continue;
+      if (seen.has(v)) {
+        issues.push(issue(DOWNLOADS, item, "R2", "error",
+          `"${item.slug}" uses version "${v}" more than once (already the ${seen.get(v)} version).`));
+      }
+      seen.set(v, "previous");
+    }
+
+    // R8 - a superseded version with no changelog entry is an edit nobody can
+    // account for. Errors rather than warns, for the same reason N8 does on an
+    // immutable round-up: the record is the artefact.
+    if (previous.length > 0 && changelog.length === 0) {
+      issues.push(issue(DOWNLOADS, item, "R8", "error",
+        `"${item.slug}" has ${previous.length} previous version(s) but an empty changelog.`));
+    }
+    if (previous.length > 0 && changelog.length > 0 && changelog.length < previous.length) {
+      issues.push(issue(DOWNLOADS, item, "R8", "warning",
+        `"${item.slug}" has ${previous.length} previous version(s) but only ${changelog.length} changelog entr(y/ies).`));
+    }
+
+    // R9 - a withdrawn resource must say when and why. The page stays 200 so an
+    // old citation still resolves; a 200 that does not explain itself is worse
+    // than a 404.
+    if (status === "archived") {
+      if (!toDateOnly(item.withdrawnDate)) {
+        issues.push(issue(DOWNLOADS, item, "R9", "error",
+          `"${item.slug}" is archived but has no withdrawnDate.`));
+      }
+      if (!str(item.withdrawalReason)) {
+        issues.push(issue(DOWNLOADS, item, "R9", "error",
+          `"${item.slug}" is archived but gives no withdrawalReason.`));
+      }
+    } else if (toDateOnly(item.withdrawnDate) || str(item.withdrawalReason)) {
+      issues.push(issue(DOWNLOADS, item, "R9", "warning",
+        `"${item.slug}" carries withdrawal details but its status is "${status}".`));
+    }
+
+    // R14 - a resource cannot replace itself, and a slug that is only a version
+    // string would be meaningless in a citation.
+    for (const successor of arr(item.supersededBy) as string[]) {
+      if (successor === item.slug) {
+        issues.push(issue(DOWNLOADS, item, "R14", "error",
+          `"${item.slug}" lists itself in supersededBy.`));
+      }
+    }
+    if (/^v?\d+([.-]\d+)*$/.test(str(item.slug) ?? "")) {
+      issues.push(issue(DOWNLOADS, item, "R14", "error",
+        `"${item.slug}" is slugged as a bare version string, which says nothing about what the resource is.`));
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * R11 - a PDF-only resource with no HTML equivalent.
+ *
+ * A warning, not an error, and deliberately so. Sometimes PDF-only is the right
+ * answer — a compiled logbook rendered as a web page would be a poor imitation
+ * of the thing people actually want. What must not happen is PDF-only by
+ * default, unnoticed. `accessibilityNotes` is accepted as the stated reason, so
+ * clearing this warning requires writing down why, not flipping a flag.
+ */
+export function checkDownloadHtmlEquivalent(collections: Collections): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  for (const item of eachDownload(collections)) {
+    if (str(item.status) !== "published") continue;
+    if (item.printableHtml === true) continue;
+    if (str(item.fileFormat) === "html") continue;
+    if (str(item.accessibilityNotes)) continue;
+    issues.push(issue(DOWNLOADS, item, "R11", "warning",
+      `"${item.slug}" is offered only as a file, with no printable HTML equivalent and no note explaining why.`));
+  }
+  return issues;
 }

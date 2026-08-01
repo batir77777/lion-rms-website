@@ -373,3 +373,91 @@ export function buildNewsArticleSchema(input: NewsArticleSchemaInput) {
     publisher,
   };
 }
+
+export interface DigitalDocumentEncoding {
+  /** "pdf" | "docx" | "xlsx" */
+  format: string;
+  /** Site-relative emitted asset URL. */
+  url: string;
+  sizeBytes: number;
+}
+
+export interface DigitalDocumentSchemaInput {
+  name: string;
+  description: string;
+  /** The LANDING PAGE path, never a file path. */
+  path: string;
+  authorId: string;
+  version: string;
+  datePublished?: string;
+  dateModified?: string;
+  encodings?: DigitalDocumentEncoding[];
+  /** Slug-derived paths of Knowledge Centre pages this resource supports. */
+  about?: { name: string; path: string }[];
+}
+
+const MEDIA_TYPES: Record<string, string> = {
+  pdf: "application/pdf",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+};
+
+/**
+ * A downloadable resource (Phase 5A, PR 8A).
+ *
+ * `DigitalDocument` is a `CreativeWork` subtype and the most accurate type
+ * schema.org offers for a checklist or a record form. The alternative worth
+ * naming is `HowTo`, which is deliberately NOT used: a checklist is a set of
+ * things to verify, not an ordered procedure with steps that produce a result,
+ * and claiming otherwise to chase a rich result would be a false description.
+ *
+ * `url` and `@id` are the LANDING PAGE, never the file. The file appears only
+ * inside `encoding`, as the thing the page offers rather than the thing the
+ * page is. That mirrors the indexing split: landing pages are canonical and
+ * indexable, files carry X-Robots-Tag: noindex and never enter the sitemap.
+ *
+ * No `offers` node is emitted under any circumstances. Nothing here is for
+ * sale, and an `offers` node with a zero price still asserts a commercial
+ * transaction that does not exist.
+ */
+export function buildDigitalDocumentSchema(input: DigitalDocumentSchemaInput) {
+  const url = `${SITE_URL}${input.path}`;
+  const encodings = (input.encodings ?? []).filter((e) => MEDIA_TYPES[e.format]);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "DigitalDocument",
+    name: input.name,
+    description: input.description,
+    url,
+    "@id": url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    inLanguage: "en-GB",
+    version: input.version,
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    license: `${SITE_URL}${input.path}#licence`,
+    author: buildPersonRef(input.authorId),
+    publisher,
+    copyrightHolder: publisher,
+    ...(encodings.length > 0
+      ? {
+          encoding: encodings.map((e) => ({
+            "@type": "MediaObject",
+            contentUrl: `${SITE_URL}${e.url}`,
+            encodingFormat: MEDIA_TYPES[e.format],
+            contentSize: `${e.sizeBytes}`,
+          })),
+        }
+      : {}),
+    ...(input.about && input.about.length > 0
+      ? {
+          about: input.about.map((a) => ({
+            "@type": "CreativeWork",
+            name: a.name,
+            url: `${SITE_URL}${a.path}`,
+          })),
+        }
+      : {}),
+  };
+}

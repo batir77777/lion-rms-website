@@ -4,6 +4,7 @@ import GlossaryLink from "@/components/GlossaryLink";
 import StandardLink from "@/components/StandardLink";
 import LegislationLink from "@/components/LegislationLink";
 import NewsLink from "@/components/NewsLink";
+import DownloadLink from "@/components/DownloadLink";
 import * as jsxRuntime from "react/jsx-runtime";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
@@ -73,6 +74,7 @@ const components: Record<string, unknown> = {
   StandardLink,
   LegislationLink,
   NewsLink,
+  DownloadLink,
 
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 {...props} className="mt-10 scroll-mt-28 text-2xl font-bold text-navy-900" />

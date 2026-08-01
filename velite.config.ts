@@ -14,6 +14,9 @@
 // comparison and rationale. No content-collection abstraction beyond what
 // Velite itself provides has been added on top of it.
 
+import { statSync } from "node:fs";
+import path from "node:path";
+
 import { defineConfig, defineCollection } from "velite";
 import {
   articleSchema,
@@ -96,7 +99,24 @@ export default defineConfig({
       downloads: data.downloads as unknown as ContentItemLike[],
     };
 
-    const result = validateContentCollections(collections);
+    // Resolves an emitted asset URL (e.g. "/static/checklist-a1b2c3.pdf") to
+    // its real size on disk, for rule R5.
+    //
+    // Safe to do here precisely because `complete` runs AFTER Velite has
+    // written its output: the copied asset already exists. That same ordering
+    // is why the size cannot be DERIVED here — this hook returns void and
+    // cannot inject a value into the emitted JSON — so the number is authored
+    // in frontmatter and verified against reality instead.
+    const sizeOf = (url: string): number | undefined => {
+      if (!url.startsWith("/static/")) return undefined;
+      try {
+        return statSync(path.join(process.cwd(), "public", url.slice(1))).size;
+      } catch {
+        return undefined;
+      }
+    };
+
+    const result = validateContentCollections(collections, { sizeOf });
 
     // Warnings are reported, never fatal. This is deliberate: editorial
     // observations — an overdue review date, a short meta description — must
