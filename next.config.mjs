@@ -46,6 +46,26 @@ const nextConfig = {
     ],
     qualities: [75, 85],
   },
+  // ---------------------------------------------------------------------
+  // Downloadable assets (Phase 5A, PR 8A).
+  //
+  // The LANDING PAGE is the indexed destination for every resource, never the
+  // file. A PDF that outranks its own landing page strands the reader with the
+  // document and none of the context that makes it safe to use — the version,
+  // the review date, what must be adapted, and the fact that it does not
+  // replace an assessment.
+  //
+  // "follow" rather than "none" so any link inside a document still counts.
+  // ---------------------------------------------------------------------
+  async headers() {
+    return [
+      {
+        source: "/static/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      },
+    ];
+  },
+
   async redirects() {
     return [
       {
@@ -56,6 +76,24 @@ const nextConfig = {
       {
         source: "/areas",
         destination: "/sectors",
+        permanent: true,
+      },
+
+      // ---------------------------------------------------------------------
+      // /resources/fire-safety-checklist -> /downloads (Phase 5A, PR 8A).
+      //
+      // PERMANENT, and therefore one-way. 308 is cached indefinitely by
+      // browsers, so this rule stays in this file even if other parts of PR 8A
+      // are later changed: removing it would not undo the redirect for anyone
+      // who has already followed it, it would only produce a 404 for them.
+      //
+      // ONE HOP. The destination is a real page that is itself never
+      // redirected, and /resources has no page of its own, so there is no
+      // chain to fall into.
+      // ---------------------------------------------------------------------
+      {
+        source: "/resources/fire-safety-checklist",
+        destination: "/downloads/fire-safety-checklist",
         permanent: true,
       },
 
@@ -78,10 +116,11 @@ const nextConfig = {
       // development and therefore verifiable before deploy, and so the map
       // grows where PR 10's redirect consolidation is heading.
       //
-      // Note: /resources/fire-safety-checklist → /downloads/... is deliberately
-      // NOT here. The Downloads vertical does not exist yet, and that rule
-      // would permanently redirect a working page to a 404. It ships with
-      // Downloads.
+      // Note: /resources/fire-safety-checklist → /downloads/... used to be
+      // recorded here as deliberately absent, because the Downloads vertical
+      // did not exist and the rule would have redirected a working page to a
+      // 404. Downloads shipped in PR 8A, so the rule now exists — above, with
+      // the other non-Insights redirects.
       // ---------------------------------------------------------------------
       { source: "/insights", destination: "/guides", permanent: true },
       {
