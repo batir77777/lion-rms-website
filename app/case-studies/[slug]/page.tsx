@@ -30,6 +30,12 @@ export async function generateMetadata({
       url: `/case-studies/${slug}`,
       images: [DEFAULT_OG_IMAGE],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: study.title,
+      description: study.excerpt,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 
