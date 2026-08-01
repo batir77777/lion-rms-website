@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     url: "/about",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "About",
+    description: "Lion Risk Management Solutions — a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH).",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const VALUES = [
@@ -111,7 +117,7 @@ export default function AboutPage() {
               <Reveal key={v.title} delay={i * 60}>
                 <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
                   <div className="mb-3 text-2xl">{v.icon}</div>
-                  <h3 className="mb-2 text-lg font-bold text-navy-900">{v.title}</h3>
+                  <h2 className="mb-2 text-lg font-bold text-navy-900">{v.title}</h2>
                   <p className="text-base leading-relaxed text-slate-500">{v.body}</p>
                 </div>
               </Reveal>
