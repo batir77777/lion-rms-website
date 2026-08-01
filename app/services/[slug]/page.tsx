@@ -9,6 +9,7 @@ import RelatedContent from "@/components/RelatedContent";
 import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { getCaseStudiesForService } from "@/lib/case-studies";
 import { getGuidesForService } from "@/lib/guides";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -26,6 +27,13 @@ export async function generateMetadata({
     title: cat.title,
     description: cat.intro,
     alternates: { canonical: `/services/${slug}` },
+    openGraph: {
+      type: "website",
+      title: cat.title,
+      description: cat.intro,
+      url: `/services/${slug}`,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 
