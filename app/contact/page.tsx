@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import PhotoHero from "@/components/PhotoHero";
 import ContactForm from "@/components/ContactForm";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import WebsiteQRCode from "@/components/WebsiteQRCode";
 import { SITE, CREDENTIALS, COVERAGE_FULL } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
@@ -91,6 +92,14 @@ export default function ContactPage() {
                 support for your team.
               </p>
             </div>
+
+            {/*
+             * Contact page only for now. The component is reusable and takes a
+             * className so it can be placed elsewhere later, but it is
+             * deliberately NOT in the sitewide footer yet — that needs separate
+             * approval.
+             */}
+            <WebsiteQRCode className="mt-5" />
           </div>
 
           {/* Right column: form */}
