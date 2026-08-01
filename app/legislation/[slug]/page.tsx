@@ -47,6 +47,7 @@ import {
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
 import { newsMentioningLegislation, NEWS_PATH } from "@/lib/news";
+import { downloadsForLegislation, DOWNLOADS_PATH } from "@/lib/downloads";
 
 export const dynamicParams = false;
 
@@ -198,6 +199,10 @@ export default async function LegislationDetailPage({
   const newsItems = newsMentioningLegislation(item.slug).map((n) => ({
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
+  }));
+  const downloadItems = downloadsForLegislation(item.slug).map((d) => ({
+    label: d.title,
+    href: `${DOWNLOADS_PATH}/${d.slug}`,
   }));
 
   return (
@@ -504,6 +509,7 @@ export default async function LegislationDetailPage({
             { heading: "Amended by", items: amendedByItems },
             { heading: "Related legislation", items: peerItems },
             { heading: "News about this instrument", items: newsItems },
+            { heading: "Checklists and templates", items: downloadItems },
             { heading: "Related standards", items: standardItems },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
