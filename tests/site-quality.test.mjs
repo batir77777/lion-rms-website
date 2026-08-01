@@ -22,14 +22,9 @@ const read = (p) => fs.readFileSync(path.join(repoRoot, p), "utf8");
 const stripComments = (src) =>
   src.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/^\s*\/\/.*$/gm, " ");
 
-const appFiles = (dir = path.join(repoRoot, "app"), out = []) => {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, e.name);
-    if (e.isDirectory()) appFiles(full, out);
-    else if (e.name === "page.tsx") out.push(path.relative(repoRoot, full));
-  }
-  return out;
-};
+// (appFiles — a source-file walker — was removed with the file-level twitter
+// regex it existed to feed. The replacement asserts on built HTML instead; see
+// the Twitter metadata suite for why source walking was the wrong tool here.)
 
 const builtPages = (dir = outDir, out = []) => {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -219,35 +214,104 @@ describe("Structured data identifies the entity without republishing the address
   });
 });
 
-describe("Twitter metadata is per-page, not inherited from the homepage", () => {
-  const ROUTES = [
-    "about", "services", "sectors", "case-studies", "check", "contact", "faq",
-    "privacy", "company-information", "guides", "glossary", "standards",
-    "legislation", "news", "downloads",
-  ];
+describe("Twitter metadata is per-page, not inherited from the root layout", () => {
+  /*
+   * This suite deliberately does NOT test whether the string "twitter" appears
+   * in a route file. That check passed while /news/2025 and /news/2026 shipped
+   * the homepage card, because app/news/[slug]/page.tsx has TWO metadata
+   * returns — the year-archive branch returns early, and only the news-item
+   * branch below it carried a twitter block. A file-level regex cannot see the
+   * difference between "this file mentions twitter" and "every branch of this
+   * file emits twitter". Nor is a hand-maintained route list enough: neither
+   * year archive was on it, so nothing failed.
+   *
+   * So the rule is expressed against BUILT HTML, over EVERY generated page,
+   * with no list to forget to update:
+   *
+   *   if a page declares its own og:title, it must also declare its own
+   *   twitter:title and twitter:description
+   *
+   * The root layout's values are the inheritance fingerprint. A page emitting
+   * them verbatim did not choose them — it inherited them.
+   */
+  const esc = (s) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-  test("every page.tsx declares a twitter block", () => {
-    for (const f of appFiles()) {
-      assert.match(read(f), /twitter/, `${f} has no twitter block`);
+  const layout = read("app/layout.tsx");
+  const rootBlock = (key) => layout.slice(layout.indexOf(`${key}: {`));
+  const rootValue = (key, field) =>
+    rootBlock(key).match(new RegExp(`${field}:\\s*\\n?\\s*"([^"]+)"`))?.[1];
+
+  const ROOT = {
+    ogTitle: esc(rootValue("openGraph", "title")),
+    twTitle: esc(rootValue("twitter", "title")),
+    twDesc: esc(rootValue("twitter", "description")),
+  };
+
+  test("the root layout fingerprint parsed cleanly", () => {
+    for (const [k, v] of Object.entries(ROOT)) {
+      assert.ok(v && v.length > 10, `could not read root ${k} from app/layout.tsx`);
     }
+    assert.notEqual(ROOT.ogTitle, ROOT.twTitle, "fingerprint is ambiguous");
   });
 
-  for (const route of ROUTES) {
-    test(`/${route} declares its own twitter:title`, () => {
-      const home = meta(html("index"), /name="twitter:title" content="([^"]+)"/);
-      const own = meta(html(route), /name="twitter:title" content="([^"]+)"/);
-      assert.ok(own, `/${route} emits no twitter:title`);
-      assert.notEqual(own, home, `/${route} inherited the homepage twitter:title`);
+  const pageMeta = (file) => {
+    const src = fs.readFileSync(file, "utf8");
+    return {
+      route: path.relative(outDir, file).replace(/\.html$/, ""),
+      ogTitle: meta(src, /property="og:title" content="([^"]+)"/),
+      twTitle: meta(src, /name="twitter:title" content="([^"]+)"/),
+      twDesc: meta(src, /name="twitter:description" content="([^"]+)"/),
+    };
+  };
+
+  /*
+   * _not-found is excluded BY RULE, not by name: it emits the root og:title
+   * because it declares no page-specific Open Graph, so inheriting the root
+   * twitter card alongside it is internally consistent. The 404 redesign is a
+   * separate backlog item. Any page that DOES declare its own og:title is in
+   * scope, so a future 404 with real Open Graph metadata is caught here
+   * automatically rather than needing this comment revisited.
+   */
+  const inScope = () => builtPages().map(pageMeta).filter((p) => p.ogTitle && p.ogTitle !== ROOT.ogTitle);
+
+  test("every built page with page-specific Open Graph is covered", () => {
+    const pages = inScope();
+    assert.ok(pages.length >= 70, `only ${pages.length} pages in scope — sweep is not reaching the build`);
+    const excluded = builtPages().map(pageMeta).filter((p) => !p.ogTitle || p.ogTitle === ROOT.ogTitle);
+    assert.deepEqual(
+      excluded.map((p) => p.route),
+      ["_not-found"],
+      "something other than the 404 stopped declaring its own Open Graph"
+    );
+  });
+
+  test("no in-scope page inherits the root twitter:title", () => {
+    const bad = inScope().filter((p) => !p.twTitle || p.twTitle === ROOT.twTitle);
+    assert.deepEqual(bad.map((p) => p.route), [], "pages inheriting the root twitter:title");
+  });
+
+  test("no in-scope page inherits the root twitter:description", () => {
+    const bad = inScope().filter((p) => !p.twDesc || p.twDesc === ROOT.twDesc);
+    assert.deepEqual(bad.map((p) => p.route), [], "pages inheriting the root twitter:description");
+  });
+
+  test("twitter:title tracks og:title on every in-scope page", () => {
+    const drift = inScope().filter((p) => p.twTitle !== p.ogTitle).map((p) => p.route);
+    assert.deepEqual(drift, [], "twitter:title and og:title disagree");
+  });
+
+  // The two pages the sweep was written for. Named explicitly so a regression
+  // here reads as itself rather than as an anonymous entry in a list.
+  for (const year of ["2025", "2026"]) {
+    test(`/news/${year} carries its own archive twitter card`, () => {
+      const p = pageMeta(path.join(outDir, "news", `${year}.html`));
+      assert.equal(p.twTitle, `${year} news archive`);
+      assert.notEqual(p.twDesc, ROOT.twDesc);
+      assert.match(p.twDesc, new RegExp(`published in ${year}`));
+      assert.equal(p.twTitle, p.ogTitle);
     });
   }
-
-  test("twitter:description is also per-page", () => {
-    const home = meta(html("index"), /name="twitter:description" content="([^"]+)"/);
-    for (const route of ROUTES) {
-      const own = meta(html(route), /name="twitter:description" content="([^"]+)"/);
-      assert.notEqual(own, home, `/${route} inherited the homepage twitter:description`);
-    }
-  });
 
   test("the homepage's own twitter:title matches its title, not the layout default", () => {
     const src = html("index");
