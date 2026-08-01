@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     url: "/case-studies",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Case Studies",
+    description: "Examples of fire safety, health & safety, and compliance management work delivered by Lion RMS for clients across London.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function CaseStudiesPage() {
