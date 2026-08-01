@@ -14,6 +14,35 @@ export const SITE = {
   formspreeId: "meewegnp",
 };
 
+/**
+ * Statutory identity of the legal entity, verified against the Companies House
+ * register (company 13739074) rather than transcribed from memory.
+ *
+ * Two rules govern how this is used, and both are enforced by
+ * tests/site-quality.test.mjs rather than left to discipline:
+ *
+ * 1. `registeredOffice` renders on `/company-information` and NOWHERE else. It
+ *    is a residential address, and the footer, the privacy page and the
+ *    sitewide JSON-LD would each republish it on every page of the site. The
+ *    footer links to the page instead.
+ * 2. `legalName` appears only where the legal entity is being identified — the
+ *    company information page, the privacy policy's legal-identity block, and
+ *    `legalName` in the Organisation structured data. Everything the public
+ *    reads uses `SITE.name`, the trading name, unchanged.
+ *
+ * If the registered office is changed at Companies House, update it here
+ * promptly so the site matches the public register — and only here.
+ */
+export const COMPANY = {
+  legalName: "LION RISK MANAGEMENT SOLUTIONS LTD",
+  tradingName: "Lion Risk Management Solutions",
+  number: "13739074",
+  jurisdiction: "England and Wales",
+  registeredOffice: "Flat 18 Gloster Ridley Court, 12 St. Annes Row, London E14 7GE",
+} as const;
+
+export const COMPANY_INFO_PATH = "/company-information";
+
 export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80",
   fireSafety: "/img/services/fire-5.jpg",
