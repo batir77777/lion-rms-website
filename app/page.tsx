@@ -4,12 +4,20 @@ import AssessorSection from "@/components/AssessorSection";
 import ComplianceCheckBand from "@/components/ComplianceCheckBand";
 import RecentProjects from "@/components/RecentProjects";
 import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
   description:
     "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
   alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
+    description: "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    url: "/",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const SERVICES_FS = [
@@ -322,7 +330,7 @@ export default function HomePage() {
             </Link>
           </p>
           <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.4)" }}>
-            Batir Turakulov, MIFireE &bull; CMIOSH &bull; Level 4 DipFRA &bull; Level 5 Fire Engineering Design &bull; Lion Risk Management Solutions
+            Batir Turakulov, MIFireE &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; Level 5 Diploma in Fire Engineering Design &bull; Lion Risk Management Solutions
           </p>
         </div>
       </section>

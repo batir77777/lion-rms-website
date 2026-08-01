@@ -20,6 +20,7 @@ import {
 } from "@/lib/site";
 import { getCaseStudiesForSector } from "@/lib/case-studies";
 import { getGuidesForSector } from "@/lib/guides";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export function generateStaticParams() {
   return SECTORS.filter((s) => s.hasPage).map((s) => ({ slug: s.slug }));
@@ -37,6 +38,13 @@ export async function generateMetadata({
     title: sector.title,
     description: sector.body ?? sector.summary,
     alternates: { canonical: `/sectors/${slug}` },
+    openGraph: {
+      type: "website",
+      title: sector.title,
+      description: sector.body ?? sector.summary,
+      url: `/sectors/${slug}`,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 

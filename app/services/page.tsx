@@ -6,12 +6,20 @@ import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import { SERVICE_CATEGORIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
     "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
   alternates: { canonical: "/services" },
+  openGraph: {
+    type: "website",
+    title: "Services",
+    description: "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
+    url: "/services",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function ServicesPage() {

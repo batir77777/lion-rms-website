@@ -113,12 +113,21 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
+            {/*
+             * "UK Hosted" and "UK GDPR Compliant" were removed here. The first
+             * was not accurate — the site is statically served from a global
+             * edge network and form submissions go to a third-party processor.
+             * The second was a self-declaration sitting in a row of externally
+             * verifiable credentials, which read as certification. The privacy
+             * policy states the lawful bases and transfer safeguards properly,
+             * so this links there instead of asserting an outcome.
+             */}
             <Link href="/privacy" className="text-xs text-slate-400 transition hover:text-white">
-              Privacy Policy
+              Privacy Policy — how we handle your data
             </Link>
             <span className="text-slate-700" aria-hidden>&middot;</span>
             <p className="text-xs text-slate-400">
-              MIFireE &middot; CMIOSH Chartered &middot; UK Hosted &middot; UK GDPR Compliant
+              MIFireE &middot; CMIOSH Chartered
             </p>
           </div>
         </div>

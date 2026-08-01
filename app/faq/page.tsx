@@ -5,12 +5,20 @@ import FaqAccordion from "@/components/FaqAccordion";
 import FaqJsonLd from "@/components/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { FAQS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Answers to common questions about fire risk assessments, health & safety compliance, and Lion RMS's compliance management service.",
   alternates: { canonical: "/faq" },
+  openGraph: {
+    type: "website",
+    title: "FAQ",
+    description: "Answers to common questions about fire risk assessments, health & safety compliance, and Lion RMS's compliance management service.",
+    url: "/faq",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function FaqPage() {

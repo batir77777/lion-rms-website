@@ -6,12 +6,20 @@ import CaseStudyCard from "@/components/CaseStudyCard";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { CASE_STUDIES, OTHER_CASES } from "@/lib/case-studies";
 import { CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, SITE_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
     "Examples of fire safety, health & safety, and compliance management work delivered by Lion RMS for clients across London.",
   alternates: { canonical: "/case-studies" },
+  openGraph: {
+    type: "website",
+    title: "Case Studies",
+    description: "Examples of fire safety, health & safety, and compliance management work delivered by Lion RMS for clients across London.",
+    url: "/case-studies",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function CaseStudiesPage() {

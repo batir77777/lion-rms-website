@@ -47,7 +47,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sectorLabel: "Residential · Managing Agent",
     sectorSlug: "residential-blocks-hmos",
     excerpt:
-      "Programme of Type 1 and Type 3 fire risk assessments across a residential block portfolio — findings fed directly into an ongoing compliance record, giving the client a prioritised action schedule and audit-ready documentation.",
+      "Programme of Type 1 and Type 4 fire risk assessments across a residential block portfolio — findings fed directly into an ongoing compliance record, giving the client a prioritised action schedule and audit-ready documentation.",
     tags: ["Fire Risk Assessment", "RRO 2005", "Action Tracking", "Audit-Ready Records"],
     keyFacts: {
       sector: "Residential blocks & HMOs",
@@ -55,14 +55,14 @@ export const CASE_STUDIES: CaseStudy[] = [
       location: "London",
       serviceProvided: "Fire Risk Assessment",
       projectType: "Portfolio programme",
-      riskLevel: "Type 1 & Type 3 assessments — findings prioritised by severity",
+      riskLevel: "Type 1 & Type 4 assessments — findings prioritised by severity",
       yearCompleted: "Ongoing",
     },
     overview:
-      "A managing agent responsible for a portfolio of residential blocks needed fire risk assessments carried out consistently across every building, with a way of tracking the resulting actions that didn't rely on filing individual reports away and hoping nothing slipped. We put in place a rolling programme of Type 1 and Type 3 fire risk assessments across the portfolio's common parts, with every finding feeding directly into an ongoing compliance record.",
+      "A managing agent responsible for a portfolio of residential blocks needed fire risk assessments carried out consistently across every building, with a way of tracking the resulting actions that didn't rely on filing individual reports away and hoping nothing slipped. We put in place a rolling programme of fire risk assessments across the portfolio — Type 1 across the common parts, and Type 4 where the building warranted looking inside a sample of flats and opening up construction — with every finding feeding directly into an ongoing compliance record.",
     scopeOfWork: [
-      "Type 1 (non-intrusive) fire risk assessments across the portfolio's common parts",
-      "Type 3 (intrusive) assessments where the construction of common parts required closer inspection",
+      "Type 1 fire risk assessments — common parts, non-destructive — across the portfolio",
+      "Type 4 assessments — common parts and a sample of flats, with destructive inspection — where construction had to be opened up to verify compartmentation",
       "Findings recorded directly into an ongoing compliance record for the client, rather than delivered as standalone reports",
     ],
     challenges: [

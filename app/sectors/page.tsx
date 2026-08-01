@@ -4,12 +4,20 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { SECTORS, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Sectors",
   description:
     "Fire safety and health & safety consultancy across residential, commercial, and construction sectors — with dedicated expertise in residential blocks & HMOs, offices & commercial workplaces, and education.",
   alternates: { canonical: "/sectors" },
+  openGraph: {
+    type: "website",
+    title: "Sectors",
+    description: "Fire safety and health & safety consultancy across residential, commercial, and construction sectors — with dedicated expertise in residential blocks & HMOs, offices & commercial workplaces, and education.",
+    url: "/sectors",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function SectorsPage() {

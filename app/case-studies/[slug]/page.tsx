@@ -5,6 +5,7 @@ import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import CaseStudyDetail from "@/components/CaseStudyDetail";
 import { CASE_STUDIES, getCaseStudy } from "@/lib/case-studies";
 import { SITE, SITE_URL, getCategory, COVERAGE_COUNTIES } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export function generateStaticParams() {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
@@ -22,6 +23,13 @@ export async function generateMetadata({
     title: study.title,
     description: study.excerpt,
     alternates: { canonical: `/case-studies/${slug}` },
+    openGraph: {
+      type: "article",
+      title: study.title,
+      description: study.excerpt,
+      url: `/case-studies/${slug}`,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 
