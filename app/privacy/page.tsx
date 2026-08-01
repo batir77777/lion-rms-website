@@ -2,12 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { SITE } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How Lion Risk Management Solutions collects, uses, and protects your personal data under UK GDPR.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    title: "Privacy Policy",
+    description: "How Lion Risk Management Solutions collects, uses, and protects your personal data under UK GDPR.",
+    url: "/privacy",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const LAST_UPDATED = "27 June 2026";
