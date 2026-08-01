@@ -29,6 +29,7 @@ import { getTerm, displayTerm, GLOSSARY_PATH } from "@/lib/glossary";
 import { getStandard, designation, STANDARDS_PATH } from "@/lib/standards";
 import { getLegislation, LEGISLATION_PATH } from "@/lib/legislation";
 import { newsMentioningGuide, NEWS_PATH } from "@/lib/news";
+import { downloadsForGuide, DOWNLOADS_PATH } from "@/lib/downloads";
 
 // Only published guides are generated, and `dynamicParams = false` means a slug
 // outside that set returns a genuine 404 rather than being rendered on demand —
@@ -147,6 +148,10 @@ export default async function GuidePage({
   const newsItems = newsMentioningGuide(guide.slug).map((n) => ({
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
+  }));
+  const downloadItems = downloadsForGuide(guide.slug).map((d) => ({
+    label: d.title,
+    href: `${DOWNLOADS_PATH}/${d.slug}`,
   }));
 
   return (
@@ -267,6 +272,7 @@ export default async function GuidePage({
             { heading: "Related case study", items: relatedCaseStudies },
             { heading: "Legislation referenced", items: referencedLegislation },
             { heading: "News about this subject", items: newsItems },
+            { heading: "Checklists and templates", items: downloadItems },
             { heading: "Standards referenced", items: referencedStandards },
             { heading: "Terms used in this guide", items: relatedTerms },
           ]}
