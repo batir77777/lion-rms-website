@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     url: "/faq",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "FAQ",
+    description: "Answers to common questions about fire risk assessments, health & safety compliance, and Lion RMS's compliance management service.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function FaqPage() {
