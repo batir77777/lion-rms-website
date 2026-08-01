@@ -18,6 +18,12 @@ export const metadata: Metadata = {
     url: "/sectors",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sectors",
+    description: "Fire safety and health & safety consultancy across residential, commercial, and construction sectors — with dedicated expertise in residential blocks & HMOs, offices & commercial workplaces, and education.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function SectorsPage() {
