@@ -102,8 +102,14 @@ export default function Header() {
           <Logo className="h-12 w-auto" dark />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 xl:flex">
+        {/*
+         * Desktop nav. Labelled because it was the one unnamed navigation
+         * landmark on the site — every other <nav> already carries one
+         * (Breadcrumb, Mobile, Knowledge Centre sections, Jump to letter, News
+         * archive by year). On /guides there are three navigation landmarks,
+         * and the unnamed one was the primary.
+         */}
+        <nav aria-label="Primary" className="hidden items-center gap-1 xl:flex">
           {NAV.map((n) => {
             const active = isActive(n.href);
             return (
