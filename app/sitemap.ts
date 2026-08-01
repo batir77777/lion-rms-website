@@ -15,6 +15,11 @@ import {
   LEGISLATION_PATH,
 } from "@/lib/legislation";
 import {
+  publishedDownloads,
+  lastModified as downloadLastModified,
+  DOWNLOADS_PATH,
+} from "@/lib/downloads";
+import {
   publishedNews,
   archiveYears,
   lastModified as newsLastModified,
@@ -32,7 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/case-studies",
     "/faq",
     "/sectors",
-    "/resources/fire-safety-checklist",
     "/check",
     "/contact",
   ];
@@ -156,6 +160,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  // Downloads (Phase 5A, PR 8A).
+  //
+  // LANDING PAGES ONLY. No /static/ file URL ever appears here: the file is
+  // what the page offers, not a destination in its own right, and it carries
+  // X-Robots-Tag: noindex to match.
+  //
+  // Withdrawn resources are excluded too. Their pages stay at 200 so an old
+  // citation still resolves, but they are noindex, and a sitemap listing a
+  // noindexed URL sends contradictory signals.
+  const downloadEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${DOWNLOADS_PATH}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    ...publishedDownloads().map((d) => ({
+      url: `${base}${DOWNLOADS_PATH}/${d.slug}`,
+      lastModified: new Date(downloadLastModified(d) ?? new Date()),
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
+  ];
+
   return [
     ...staticEntries,
     ...guideEntries,
@@ -163,5 +191,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...standardEntries,
     ...legislationEntries,
     ...newsEntries,
+    ...downloadEntries,
   ];
 }
