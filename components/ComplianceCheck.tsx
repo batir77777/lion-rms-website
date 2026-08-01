@@ -231,6 +231,33 @@ export default function ComplianceCheck() {
             </div>
             <p className="mt-4 text-sm leading-relaxed text-slate-200">{result.body}</p>
 
+            {/*
+             * The result is a score against ten general questions. Without this,
+             * a green band reads as a statement that the premises is compliant,
+             * which nothing here can establish.
+             */}
+            {/*
+             * Opaque bg-navy-950, not a translucent tint. The three band
+             * backgrounds behind this box differ, and a translucent panel
+             * composited over them resolved to roughly #6e797e — which put
+             * slate-300 at 3:1 and failed AA. Solid navy-950 gives 13:1 for the
+             * body and 17.6:1 for the heading on every band.
+             */}
+            <div className="mt-5 rounded-xl border border-white/20 bg-navy-950 p-4">
+              <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-slate-100">
+                What this result is, and is not
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                This is an indicative self-check based on ten general questions. It is
+                not a fire risk assessment, not a health and safety risk assessment, and
+                not a determination of whether your premises complies with any legal
+                requirement. It cannot take account of your building, your activities or
+                your circumstances, and a high score does not mean your duties are
+                satisfied. For an assessment of your premises, speak to a competent
+                person.
+              </p>
+            </div>
+
             {result.band !== "green" && (
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -259,10 +286,22 @@ export default function ComplianceCheck() {
                 </p>
               ) : (
                 <form onSubmit={sendResult} className="flex flex-col gap-3 sm:flex-row">
+                  {/*
+                   * The label is visually hidden rather than absent: a placeholder
+                   * is not an accessible name, and it disappears as soon as the
+                   * field has content. Sending the result is optional — the score
+                   * above is already visible — but the address is required to send
+                   * it, which is what `required` on this form means.
+                   */}
+                  <label htmlFor="check-result-email" className="sr-only">
+                    Your email address, to have this result sent to you (optional)
+                  </label>
                   <input
+                    id="check-result-email"
                     name="email"
                     type="email"
                     required
+                    autoComplete="email"
                     placeholder="Email me this result (optional)"
                     className="flex-1 rounded-full border border-white/15 bg-navy-950/60 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-500 focus:outline-none"
                   />
