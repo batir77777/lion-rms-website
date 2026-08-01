@@ -4,12 +4,20 @@ import PhotoHero from "@/components/PhotoHero";
 import ContactForm from "@/components/ContactForm";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { SITE, CREDENTIALS, COVERAGE_FULL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch about fire engineering, a fire strategy, a fire risk assessment, a health & safety audit, or compliance support. We respond the same day.",
   alternates: { canonical: "/contact" },
+  openGraph: {
+    type: "website",
+    title: "Contact",
+    description: "Get in touch about fire engineering, a fire strategy, a fire risk assessment, a health & safety audit, or compliance support. We respond the same day.",
+    url: "/contact",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function ContactPage() {
