@@ -118,15 +118,21 @@ describe("Guides accessor layer", () => {
     assert.deepEqual(getGuidesForSector("no-such-sector"), []);
   });
 
-  test("breadcrumbs are Home / Knowledge Centre / title, terminal crumb unlinked", async () => {
+  test("breadcrumbs are Home / Knowledge Centre / Guides / title, terminal crumb unlinked", async () => {
+    // Three crumbs until PR 9, when "Knowledge Centre" moved from /guides to
+    // the /knowledge hub. A Guides crumb had been redundant while the label
+    // and the section were the same URL; once they diverged, omitting it would
+    // have left a guide page with no way back to its own section and made
+    // Guides the only section whose trail skips itself.
     const { getGuide, buildGuideBreadcrumbs } = await import("../lib/guides");
     const guide = getGuide("pas-79-methodology-explained");
     const crumbs = buildGuideBreadcrumbs(guide);
-    assert.equal(crumbs.length, 3);
+    assert.equal(crumbs.length, 4);
     assert.deepEqual(crumbs[0], { name: "Home", path: "/" });
-    assert.deepEqual(crumbs[1], { name: "Knowledge Centre", path: "/guides" });
-    assert.equal(crumbs[2].name, guide.title);
-    assert.equal(crumbs[2].path, undefined);
+    assert.deepEqual(crumbs[1], { name: "Knowledge Centre", path: "/knowledge" });
+    assert.deepEqual(crumbs[2], { name: "Guides", path: "/guides" });
+    assert.equal(crumbs[3].name, guide.title);
+    assert.equal(crumbs[3].path, undefined);
   });
 
   test("dates format as British-English long dates", async () => {

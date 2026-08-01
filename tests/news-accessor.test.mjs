@@ -325,8 +325,11 @@ describe("News routing", () => {
     assert.deepEqual(dynamic.map((d) => d.name), ["[slug]"]);
   });
 
-  test("routes deferred to PR 8 and later are not built", () => {
-    for (const route of ["news/category", "news/tag", "news/archive", "knowledge", "search"]) {
+  test("routes deferred beyond PR 9 are not built", () => {
+    // "knowledge" and "search" left this list in PR 9, which launched them.
+    // The news taxonomy and archive routes remain deferred; /news/[slug]
+    // continues to serve the year archives.
+    for (const route of ["news/category", "news/tag", "news/archive"]) {
       assert.equal(exists(route), false, `${route} should not exist yet`);
     }
   });

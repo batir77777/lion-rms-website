@@ -407,13 +407,13 @@ describe("Legislation routing", () => {
     assert.equal(mod.dynamicParams, false);
   });
 
-  test("routes deferred to PR 9 and later are not built", () => {
+  test("routes deferred beyond PR 9 are not built", () => {
+    // "knowledge" and "search" left this list in PR 9, which launched them.
+    // The legislation taxonomy routes remain deferred and are still guarded.
     for (const route of [
       "legislation/jurisdiction",
       "legislation/category",
       "legislation/tag",
-      "knowledge",
-      "search",
     ]) {
       assert.equal(exists(route), false, `${route} should not exist yet`);
     }

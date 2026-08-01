@@ -1,6 +1,7 @@
 import { glossaryTerms as allTerms, guides as allGuides } from "@/.velite";
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated Glossary collection (Phase 5A, PR 4).
@@ -116,12 +117,14 @@ export function tagLabels(term: GlossaryTerm): string[] {
  *
  * Consumed by both the visible Breadcrumbs component and BreadcrumbJsonLd, so
  * the trail and the structured data cannot disagree. "Knowledge Centre" points
- * at /guides for now; it moves to /knowledge when that hub lands in PR 9.
+ * at the /knowledge hub, which landed in PR 9; it pointed at /guides before
+ * that hub existed. The path comes from lib/knowledge-sections so that this
+ * and the primary navigation cannot say different things.
  */
 export function buildTermBreadcrumbs(term: GlossaryTerm): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "Glossary", path: GLOSSARY_PATH },
     { name: displayTerm(term) },
   ];
@@ -129,7 +132,7 @@ export function buildTermBreadcrumbs(term: GlossaryTerm): Crumb[] {
 
 export const GLOSSARY_INDEX_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Knowledge Centre", path: "/guides" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
   { name: "Glossary" },
 ];
 

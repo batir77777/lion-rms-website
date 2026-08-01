@@ -7,6 +7,7 @@ import {
 } from "@/.velite";
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated News collection (Phase 5A, PR 7).
@@ -248,7 +249,7 @@ export function buildNewsBreadcrumbs(item: NewsItem): Crumb[] {
   const year = yearOf(item);
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "News", path: NEWS_PATH },
     ...(year ? [{ name: year, path: `${NEWS_PATH}/${year}` }] : []),
     { name: item.title },
@@ -257,14 +258,14 @@ export function buildNewsBreadcrumbs(item: NewsItem): Crumb[] {
 
 export const NEWS_INDEX_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Knowledge Centre", path: "/guides" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
   { name: "News" },
 ];
 
 export function buildYearBreadcrumbs(year: string): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "News", path: NEWS_PATH },
     { name: year },
   ];

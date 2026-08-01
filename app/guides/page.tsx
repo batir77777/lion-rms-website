@@ -10,6 +10,7 @@ import {
   categoryLabel,
   tagLabels,
   formatDate,
+  GUIDES_INDEX_CRUMBS,
 } from "@/lib/guides";
 import { buildCollectionPageSchema, DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CRUMBS = [{ name: "Home", path: "/" }, { name: "Knowledge Centre" }];
+
 
 export default function GuidesPage() {
   const guides = publishedGuides();
@@ -66,7 +67,7 @@ export default function GuidesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
-      <BreadcrumbJsonLd items={CRUMBS} />
+      <BreadcrumbJsonLd items={GUIDES_INDEX_CRUMBS} />
 
       <PhotoHero
         eyebrow="Knowledge Centre"
@@ -77,7 +78,7 @@ export default function GuidesPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <div className="mb-8">
-            <Breadcrumbs items={CRUMBS} />
+            <Breadcrumbs items={GUIDES_INDEX_CRUMBS} />
           </div>
 
           <KnowledgeCentreNav current="/guides" />

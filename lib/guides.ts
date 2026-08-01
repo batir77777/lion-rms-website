@@ -2,6 +2,7 @@ import { guides as allGuides } from "@/.velite";
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
 import { getSector } from "@/lib/site";
+import { KNOWLEDGE_PATH, GUIDES_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated Guides collection (Phase 5A, PR 3).
@@ -94,17 +95,32 @@ export function tagLabels(guide: Guide): string[] {
  * One trail, consumed by both the visible Breadcrumbs component and
  * BreadcrumbJsonLd, so the two cannot disagree.
  *
- * The trail is Home › Knowledge Centre › [title]. It does not include a
- * category level: category hub routes are deferred out of PR 3, and a crumb
+ * The trail is Home › Knowledge Centre › Guides › [title]. It does not include
+ * a category level: category hub routes are deferred out of PR 3, and a crumb
  * pointing at a route that returns 404 would be worse than no crumb.
+ *
+ * PR 9 added the Guides level. Until then "Knowledge Centre" pointed at
+ * /guides, so a separate Guides crumb would have been the same link twice.
+ * Now that the label points at the /knowledge hub, dropping the Guides crumb
+ * would leave a guide page with no way back to the section it belongs to —
+ * and would make Guides the only section whose trail skips itself, while
+ * Glossary, Standards, Legislation, News and Downloads all carry theirs.
  */
 export function buildGuideBreadcrumbs(guide: Guide): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
+    { name: "Guides", path: GUIDES_PATH },
     { name: guide.title },
   ];
 }
+
+/** Home › Knowledge Centre › Guides — the trail for the section index. */
+export const GUIDES_INDEX_CRUMBS: Crumb[] = [
+  { name: "Home", path: "/" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
+  { name: "Guides" },
+];
 
 /** Formats an ISO date as a British-English long date, e.g. "6 July 2026". */
 export function formatDate(iso: string | undefined): string | undefined {

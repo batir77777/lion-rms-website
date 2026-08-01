@@ -7,6 +7,7 @@ import {
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
 import { relatedVia, inverseVia } from "@/lib/supersession";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated Legislation collection (Phase 5A, PR 6).
@@ -281,7 +282,7 @@ export function tagLabels(item: Legislation): string[] {
 export function buildLegislationBreadcrumbs(item: Legislation): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "Legislation", path: LEGISLATION_PATH },
     { name: item.shortTitle },
   ];
@@ -289,7 +290,7 @@ export function buildLegislationBreadcrumbs(item: Legislation): Crumb[] {
 
 export const LEGISLATION_INDEX_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Knowledge Centre", path: "/guides" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
   { name: "Legislation" },
 ];
 

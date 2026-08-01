@@ -6,6 +6,7 @@ import {
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
 import { successorsOf, predecessorsOf } from "@/lib/supersession";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated Standards collection (Phase 5A, PR 5).
@@ -209,13 +210,13 @@ export function tagLabels(standard: Standard): string[] {
  * DESIGNATION rather than the title: a four-level trail ending in a
  * sixty-character document title is unreadable.
  *
- * "Knowledge Centre" points at /guides for now; it moves to /knowledge when
- * that hub lands in PR 9 — same note as lib/glossary.ts.
+ * "Knowledge Centre" points at the /knowledge hub from PR 9 — same note as
+ * lib/glossary.ts.
  */
 export function buildStandardBreadcrumbs(standard: Standard): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "Standards", path: STANDARDS_PATH },
     { name: designation(standard) },
   ];
@@ -223,7 +224,7 @@ export function buildStandardBreadcrumbs(standard: Standard): Crumb[] {
 
 export const STANDARDS_INDEX_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Knowledge Centre", path: "/guides" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
   { name: "Standards" },
 ];
 
