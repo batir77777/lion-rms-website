@@ -267,7 +267,7 @@ export interface Qualification {
   name: string;
 }
 export const QUALIFICATIONS: Qualification[] = [
-  { name: "DipFRA Advanced" },
+  { name: "Level 4 Diploma in Fire Risk Assessment" },
   { name: "Level 5 Diploma in Fire Engineering Design" },
 ];
 
@@ -300,7 +300,7 @@ export const ASSESSOR = {
    */
   shortRole: "Fire Engineer (MIFireE) & Chartered Health & Safety Professional (CMIOSH)",
   photo: "/batir-turakulov.jpg",
-  bio: "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and an Advanced Diploma in Fire Risk Assessment. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
+  bio: "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and a Level 4 Diploma in Fire Risk Assessment. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };
 
@@ -314,7 +314,7 @@ export const WHO_WE_HELP = [
 export const FAQS = [
   { q: "How often do I need a fire risk assessment?", a: "There is no fixed legal interval, but the Fire Safety Order requires your assessment to be kept up to date. As a rule of thumb, review it annually and carry out a fresh assessment every 1–2 years, or sooner after significant changes to the building, its use, or its occupants.", relatedService: "fire-safety" },
   { q: "Is a fire risk assessment a legal requirement?", a: "Yes. Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person for almost any non-domestic premises — and the common parts of residential blocks — must carry out and maintain a suitable and sufficient fire risk assessment.", relatedService: "fire-safety" },
-  { q: "What is the difference between a Type 1 and Type 4 fire risk assessment?", a: "The types refer to how far the assessment looks into a building. Type 1 is the most common, non-destructive review of common parts. Types 2–4 go progressively further, including destructive inspection and sampling of individual flats, and are used where there is reason to look deeper.", relatedService: "fire-safety" },
+  { q: "What is the difference between a Type 1 and Type 4 fire risk assessment?", a: "Two things set the type: how far into the building the assessment reaches, and whether construction is opened up. Type 1 covers the common parts without destructive inspection and is much the most common. Type 2 covers the common parts with destructive inspection. Type 3 covers the common parts and a sample of flats without destructive inspection. Type 4 covers both, with destructive inspection. Higher types are not simply more thorough — they answer different questions.", relatedService: "fire-safety" },
   { q: "Do I need a fire strategy as well as a fire risk assessment?", a: "Not always. A fire risk assessment evaluates an existing building in use. A fire strategy is a design document for new builds, change-of-use, or complex buildings, setting out the fire safety principles to support planning and Building Regulations. We can advise which you need.", relatedService: "fire-safety" },
   { q: "Who is the 'Responsible Person'?", a: "It is whoever has control of the premises — typically the employer, building owner, landlord, or managing agent. The Responsible Person carries the legal duty to manage fire safety and act on the assessment's findings." },
   { q: "How quickly can you carry out an assessment?", a: "We aim to be responsive and will agree a timescale with you up front, prioritising urgent or enforcement-driven work. Get in touch with your requirements and we'll confirm availability." },
@@ -363,7 +363,7 @@ export const RECENT_PROJECTS = [
   {
     sector: "Residential · Managing Agent",
     title: "Portfolio fire risk assessments, London-wide",
-    body: "A programme of Type 1 and Type 3 assessments across a residential block portfolio, feeding straight into an ongoing, prioritised action schedule.",
+    body: "A programme of Type 1 and Type 4 assessments across a residential block portfolio, feeding straight into an ongoing, prioritised action schedule.",
   },
   {
     sector: "Construction · Principal Contractor",
