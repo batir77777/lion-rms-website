@@ -96,10 +96,14 @@ describe("Guides routing", () => {
 
   test("no content vertical beyond the six launched sections is introduced", () => {
     // glossary left this list in PR 4, standards in PR 5, legislation in PR 6,
-    // news in PR 7 and downloads in PR 8A. The remaining two are still deferred
-    // and this assertion still guards them.
+    // news in PR 7 and downloads in PR 8A. PR 9 adds /knowledge and /search,
+    // which are a hub and a tool rather than a seventh vertical — the six
+    // sections are still the whole of the content.
     for (const route of ["knowledge", "search"]) {
-      assert.equal(exists(route), false, `/${route} must not exist yet`);
+      assert.ok(exists(route), `/${route} should have launched in PR 9`);
+    }
+    for (const route of ["insights", "resources", "topics", "library"]) {
+      assert.equal(exists(route), false, `/${route} must not exist`);
     }
   });
 

@@ -25,6 +25,7 @@ import {
   lastModified as newsLastModified,
   NEWS_PATH,
 } from "@/lib/news";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.lionrms.uk";
@@ -58,6 +59,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: r === "" ? 1 : 0.7,
   }));
+
+  // The Knowledge Centre hub (Phase 5A, PR 9). Weekly, and the highest
+  // priority of any non-home page: it is now the destination of the primary
+  // navigation item and the parent of six sections.
+  //
+  // /search is deliberately absent. It is noindex, and a sitemap listing a
+  // noindexed URL sends two contradictory instructions — the same reasoning
+  // applied to withdrawn downloads in PR 8A.
+  const knowledgeEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${base}${KNOWLEDGE_PATH}`,
+      lastModified: buildDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
 
   // Guides carry a real per-item date — updatedDate falling back to
   // publishedDate — rather than the build timestamp, which tells Google
@@ -186,6 +203,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticEntries,
+    ...knowledgeEntries,
     ...guideEntries,
     ...glossaryEntries,
     ...standardEntries,

@@ -294,10 +294,14 @@ describe("Downloads routing", () => {
     assert.equal(exists("resources/fire-safety-checklist"), false);
   });
 
-  test("routes deferred to PR 9 and later are not built", () => {
-    for (const route of ["downloads/category", "downloads/tag", "knowledge", "search"]) {
+  test("routes deferred beyond PR 9 are not built", () => {
+    // "knowledge" and "search" left this list in PR 9, which launched them.
+    // The downloads taxonomy routes remain deferred and are still guarded.
+    for (const route of ["downloads/category", "downloads/tag"]) {
       assert.equal(exists(route), false, `${route} should not exist yet`);
     }
+    assert.ok(exists("knowledge"), "the PR 9 hub should exist");
+    assert.ok(exists("search"), "the PR 9 search page should exist");
   });
 
   test("every resource's metadata sits inside the editorial ranges and self-canonicalises", async () => {
@@ -597,9 +601,9 @@ describe("Knowledge Centre navigation", () => {
     }
   });
 
-  test("the hub deferred to PR 9 is still not linked", () => {
+  test("the PR 9 hub now heads the section nav", () => {
     const src = fs.readFileSync(path.join(repoRoot, "components/KnowledgeCentreNav.tsx"), "utf8");
-    assert.ok(!src.includes('href: "/knowledge"'), "/knowledge is a later PR");
+    assert.ok(src.includes('href: "/knowledge"'), "/knowledge should be in the nav from PR 9");
   });
 
   test("the downloads index renders the shared nav", () => {

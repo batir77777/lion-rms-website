@@ -59,7 +59,13 @@ export const NAV = [
   { label: "Free Check", href: "/check" },
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Knowledge Centre", href: "/guides" },
+  // Points at the /knowledge hub from PR 9. It pointed at /guides from PR 3
+  // only because there was nowhere else for it to go: the label promised a
+  // Knowledge Centre and delivered one of its six sections, so the Glossary,
+  // Standards, Legislation, News and Downloads were reachable only by noticing
+  // the secondary navigation once you had already landed on Guides. /guides is
+  // unchanged and un-redirected — this is a destination change, not a move.
+  { label: "Knowledge Centre", href: "/knowledge" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];

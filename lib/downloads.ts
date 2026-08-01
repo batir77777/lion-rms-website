@@ -8,6 +8,7 @@ import {
 } from "@/.velite";
 import type { Crumb } from "@/components/BreadcrumbJsonLd";
 import { getContentCategory, getContentTag } from "@/lib/taxonomy";
+import { KNOWLEDGE_PATH } from "@/lib/knowledge-sections";
 
 // ---------------------------------------------------------------------------
 // Accessor layer over the generated Downloads collection (Phase 5A, PR 8A).
@@ -320,7 +321,7 @@ export function recordFacts(item: DownloadResource): RecordFact[] {
 export function buildDownloadBreadcrumbs(item: DownloadResource): Crumb[] {
   return [
     { name: "Home", path: "/" },
-    { name: "Knowledge Centre", path: "/guides" },
+    { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
     { name: "Downloads", path: DOWNLOADS_PATH },
     { name: item.title },
   ];
@@ -328,6 +329,6 @@ export function buildDownloadBreadcrumbs(item: DownloadResource): Crumb[] {
 
 export const DOWNLOADS_INDEX_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Knowledge Centre", path: "/guides" },
+  { name: "Knowledge Centre", path: KNOWLEDGE_PATH },
   { name: "Downloads" },
 ];

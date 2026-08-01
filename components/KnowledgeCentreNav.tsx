@@ -26,7 +26,12 @@ export interface KnowledgeSection {
   href: string;
 }
 
+// PR 9 adds the hub itself at the head of the list, labelled "Overview" rather
+// than "Knowledge Centre": inside a navigation that is already titled
+// "Knowledge Centre sections", repeating the name would read as a link back to
+// the thing you are looking at. "Overview" says what the page is.
 export const KNOWLEDGE_SECTIONS: KnowledgeSection[] = [
+  { label: "Overview", href: "/knowledge" },
   { label: "Guides", href: "/guides" },
   { label: "Glossary", href: "/glossary" },
   { label: "Standards", href: "/standards" },
@@ -35,10 +40,12 @@ export const KNOWLEDGE_SECTIONS: KnowledgeSection[] = [
   { label: "Downloads", href: "/downloads" },
 ];
 
+export const SEARCH_HREF = "/search";
+
 export default function KnowledgeCentreNav({ current }: { current: string }) {
   return (
     <nav aria-label="Knowledge Centre sections" className="mb-10">
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex flex-wrap items-center gap-2">
         {KNOWLEDGE_SECTIONS.map((section) => {
           const isCurrent = section.href === current;
           return (
@@ -65,6 +72,48 @@ export default function KnowledgeCentreNav({ current }: { current: string }) {
             </li>
           );
         })}
+
+        {/*
+          Search sits in the same row but is not a section — it is an action —
+          so it is separated by a rule and carries an icon. The icon is
+          aria-hidden and the word "Search" is always present: an icon-only
+          control here would be smaller than the rest of the row and would rely
+          on a magnifying glass being universally understood.
+
+          Measured at every approved width before it was kept. The row is
+          flex-wrap, so it cannot overflow; the question was whether the extra
+          item crowds. It does not: it joins an existing wrap point rather than
+          creating a new one at 1280, 1024 and 768, and at 375 and 320 the row
+          was already wrapping to multiple lines, where one more pill neither
+          orphans a line nor changes the wrap pattern of the sections above it.
+        */}
+        <li className="ml-1 border-l border-slate-200 pl-3">
+          <Link
+            href={SEARCH_HREF}
+            aria-current={SEARCH_HREF === current ? "page" : undefined}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 ${
+              SEARCH_HREF === current
+                ? "border-teal-700 bg-teal-700 text-white"
+                : "border-slate-200 bg-white text-slate-600 hover:border-teal-200 hover:text-teal-700"
+            }`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              aria-hidden
+              className="shrink-0"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3.5-3.5" />
+            </svg>
+            Search
+          </Link>
+        </li>
       </ul>
     </nav>
   );

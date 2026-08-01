@@ -290,16 +290,10 @@ describe("Standards routes", () => {
   });
 
   test("deferred routes are not built", () => {
-    // Nothing from PR 9 or later leaks in. "legislation" left this list in
-    // PR 6, "news" in PR 7 and "downloads" in PR 8A; the standards sub-routes
-    // remain deferred.
-    for (const route of [
-      "standards/category",
-      "standards/tag",
-      "standards/letter",
-      "knowledge",
-      "search",
-    ]) {
+    // "legislation" left this list in PR 6, "news" in PR 7, "downloads" in
+    // PR 8A and "knowledge"/"search" in PR 9, each of which launched it. The
+    // standards sub-routes remain deferred.
+    for (const route of ["standards/category", "standards/tag", "standards/letter"]) {
       assert.equal(exists(route), false, `${route} should not exist yet`);
     }
   });
