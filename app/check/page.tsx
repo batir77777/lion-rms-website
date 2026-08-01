@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     url: "/check",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Compliance Self-Check — Fire & Health & Safety",
+    description: "Ten yes/no questions covering your fire safety and health & safety duties. Get a red/amber/green score with a plain-English explanation of where you stand — free, no sign-up needed.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function CheckPage() {

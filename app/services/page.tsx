@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     url: "/services",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Services",
+    description: "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function ServicesPage() {

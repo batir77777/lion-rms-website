@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { SITE } from "@/lib/site";
+import { SITE, COMPANY, COMPANY_INFO_PATH } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
     title: "Privacy Policy",
     description: "How Lion Risk Management Solutions collects, uses, and protects your personal data under UK GDPR.",
     url: "/privacy",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy",
+    description: "How Lion Risk Management Solutions collects, uses, and protects your personal data under UK GDPR.",
     images: [DEFAULT_OG_IMAGE],
   },
 };
@@ -50,9 +56,22 @@ export default function PrivacyPage() {
               Lion Risk Management Solutions (&ldquo;Lion RMS&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is the data controller responsible for your personal data.
             </p>
             <p className="mt-3">
-              <strong>Registered business:</strong> Lion Risk Management Solutions<br />
+              <strong>Registered name:</strong> {COMPANY.legalName}<br />
+              <strong>Company number:</strong> {COMPANY.number}<br />
               <strong>Email:</strong> <a href={SITE.emailHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.email}</a><br />
               <strong>Phone:</strong> <a href={SITE.phoneHref} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">{SITE.phone}</a>
+            </p>
+            {/*
+             * The registered office is deliberately NOT repeated here. It is a
+             * residential address and appears on one page only — see
+             * lib/site.ts COMPANY and tests/site-quality.test.mjs, which fails
+             * the build if it appears anywhere else.
+             */}
+            <p className="mt-3">
+              Full statutory particulars, including our registered office, are on our{" "}
+              <Link href={COMPANY_INFO_PATH} className="text-teal-700 underline underline-offset-2 hover:text-teal-800">
+                company information page
+              </Link>.
             </p>
           </Section>
 

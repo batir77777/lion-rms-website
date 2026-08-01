@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CREDENTIALS, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { NAV, SITE, CREDENTIALS, COMPANY_INFO_PATH, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { KNOWLEDGE_SECTIONS } from "@/components/KnowledgeCentreNav";
 
 export default function Footer() {
@@ -31,9 +31,9 @@ export default function Footer() {
 
           {/* Pages */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Pages
-            </h3>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               {NAV.map((n) => (
                 <li key={n.href}>
@@ -69,9 +69,9 @@ export default function Footer() {
 
           {/* Coverage */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Coverage
-            </h3>
+            </h2>
             <p className="text-sm leading-relaxed text-slate-400">{COVERAGE_FULL}</p>
             <Link href="/sectors" className="mt-3 inline-block text-sm font-semibold text-teal-400 transition hover:text-teal-300">
               Sectors we serve &rarr;
@@ -80,9 +80,9 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
               Contact
-            </h3>
+            </h2>
             <ul className="space-y-3 text-sm">
               <li>
                 <a href={SITE.phoneHref} className="text-slate-300 transition hover:text-white font-semibold">
@@ -122,6 +122,19 @@ export default function Footer() {
              * policy states the lawful bases and transfer safeguards properly,
              * so this links there instead of asserting an outcome.
              */}
+            {/*
+             * Links to the statutory particulars rather than printing them. The
+             * registered office is a residential address; rendering it here
+             * would repeat it on every page of the site. COMPANY_INFO_PATH is
+             * the single place that address appears — see lib/site.ts.
+             */}
+            <Link
+              href={COMPANY_INFO_PATH}
+              className="text-xs font-medium text-slate-300 transition hover:text-white"
+            >
+              Company information
+            </Link>
+            <span className="text-slate-700" aria-hidden>&middot;</span>
             <Link href="/privacy" className="text-xs text-slate-400 transition hover:text-white">
               Privacy Policy — how we handle your data
             </Link>

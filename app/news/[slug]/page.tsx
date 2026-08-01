@@ -80,6 +80,20 @@ export async function generateMetadata({
         url: `${NEWS_PATH}/${slug}`,
         images: [DEFAULT_OG_IMAGE],
       },
+      /*
+       * The year archives need their own twitter block for the same reason
+       * every other route does: a page that declares openGraph but not twitter
+       * still inherits the ROOT LAYOUT's twitter card, so /news/2025 shipped
+       * the homepage title and description. This branch returns early, so it
+       * cannot borrow the twitter block on the news-item return below — the
+       * two are separate metadata objects and each needs its own.
+       */
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [DEFAULT_OG_IMAGE],
+      },
     };
   }
 
@@ -109,6 +123,27 @@ export async function generateMetadata({
     },
   };
 }
+
+/*
+ * Relationship de-duplication (site-quality PR).
+ *
+ * A genuine two-way relationship lands in BOTH the generic outbound group and
+ * the derived inverse group, so the same item rendered twice, adjacently, under
+ * headings that did not obviously differ. Measured on production before this
+ * change: four of eight Standards pages repeated legislation this way.
+ *
+ * The specific group is authoritative — "legislation that cites this standard"
+ * says strictly more than "related legislation" — so the duplicate is removed
+ * from the GENERIC group only. Nothing that appears in just one group is
+ * touched, and the direction of the relationship survives.
+ *
+ * tests/site-quality.test.mjs asserts the two sets are disjoint by href for
+ * every published item in all four templates.
+ */
+const withoutDuplicatesOf = (
+  generic: { label: string; href?: string }[],
+  specific: { label: string; href?: string }[],
+) => generic.filter((g) => !specific.some((s) => s.href === g.href));
 
 export default async function NewsRoute({
   params,
@@ -232,7 +267,7 @@ function NewsDetail({ slug }: { slug: string }) {
     label: displayTerm(t),
     href: `${GLOSSARY_PATH}/${t.slug}`,
   }));
-  const peerItems = relatedNewsItems(item).map((n) => ({
+  const peerItemsRaw = relatedNewsItems(item).map((n) => ({
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
   }));
@@ -240,6 +275,7 @@ function NewsDetail({ slug }: { slug: string }) {
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
   }));
+  const peerItems = withoutDuplicatesOf(peerItemsRaw, followUpItems);
   const downloadItems = downloadsForNews(item.slug).map((d) => ({
     label: d.title,
     href: `${DOWNLOADS_PATH}/${d.slug}`,

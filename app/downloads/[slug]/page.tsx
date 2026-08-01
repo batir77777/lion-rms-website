@@ -99,6 +99,27 @@ const ACCESSIBILITY_STATEMENTS: Record<string, string> = {
     "This document has been checked for accessibility and has known limitations, set out below.",
 };
 
+/*
+ * Relationship de-duplication (site-quality PR).
+ *
+ * A genuine two-way relationship lands in BOTH the generic outbound group and
+ * the derived inverse group, so the same item rendered twice, adjacently, under
+ * headings that did not obviously differ. Measured on production before this
+ * change: four of eight Standards pages repeated legislation this way.
+ *
+ * The specific group is authoritative — "legislation that cites this standard"
+ * says strictly more than "related legislation" — so the duplicate is removed
+ * from the GENERIC group only. Nothing that appears in just one group is
+ * touched, and the direction of the relationship survives.
+ *
+ * tests/site-quality.test.mjs asserts the two sets are disjoint by href for
+ * every published item in all four templates.
+ */
+const withoutDuplicatesOf = (
+  generic: { label: string; href?: string }[],
+  specific: { label: string; href?: string }[],
+) => generic.filter((g) => !specific.some((s) => s.href === g.href));
+
 export default async function DownloadRoute({
   params,
 }: {
@@ -139,7 +160,7 @@ export default async function DownloadRoute({
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
   }));
-  const peerItems = relatedDownloadResources(item).map((d) => ({
+  const peerItemsRaw = relatedDownloadResources(item).map((d) => ({
     label: d.title,
     href: `${DOWNLOADS_PATH}/${d.slug}`,
   }));
@@ -147,6 +168,7 @@ export default async function DownloadRoute({
     label: d.title,
     href: `${DOWNLOADS_PATH}/${d.slug}`,
   }));
+  const peerItems = withoutDuplicatesOf(peerItemsRaw, referringItems);
 
   const serviceItems = (item.relatedServices ?? [])
     .map((s) => getCategory(s))

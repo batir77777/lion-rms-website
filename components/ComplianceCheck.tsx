@@ -83,22 +83,30 @@ function scoreBand(yesCount: number): {
   };
 }
 
+/*
+ * Band backgrounds are OPAQUE. At 30% over the white /check wrapper they
+ * composited to roughly #b3c0bd (green) and #c7b6b6 (red), which failed AA for
+ * the band heading (1.02–1.23:1), the body copy (1.52:1) and the Send button
+ * and secondary CTA (1.79–1.86:1). Opaque, the same colours give: heading
+ * 8.5–10.4:1, body 12.1–13.1:1, buttons 12.7–14.1:1. Hue and layout unchanged
+ * — only the alpha is gone. Same defect and same fix as the question cards.
+ */
 const BAND_STYLES = {
   green: {
     ring: "border-emerald-500/50",
-    bg: "bg-emerald-950/30",
+    bg: "bg-emerald-950",
     text: "text-emerald-300",
     dot: "#34d399",
   },
   amber: {
     ring: "border-amber-500/50",
-    bg: "bg-amber-950/30",
+    bg: "bg-amber-950",
     text: "text-amber-300",
     dot: "#fbbf24",
   },
   red: {
     ring: "border-red-500/60",
-    bg: "bg-red-950/30",
+    bg: "bg-red-950",
     text: "text-red-300",
     dot: "#f87171",
   },
@@ -173,7 +181,14 @@ export default function ComplianceCheck() {
         {QUESTIONS.map((item, i) => (
           <li
             key={item.q}
-            className="rounded-2xl border border-white/10 bg-navy-900/60 p-5"
+            /*
+             * Opaque, not bg-navy-900/60. This card sits on the white /check
+             * wrapper, so a translucent dark panel composited to roughly
+             * #6d798c and every text colour chosen for a dark surface failed
+             * AA against it — 50 nodes across the ten questions. Same defect,
+             * and same fix, as the result disclaimer below.
+             */
+            className="rounded-2xl border border-white/10 bg-navy-900 p-5"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
@@ -303,7 +318,7 @@ export default function ComplianceCheck() {
                     required
                     autoComplete="email"
                     placeholder="Email me this result (optional)"
-                    className="flex-1 rounded-full border border-white/15 bg-navy-950/60 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-500 focus:outline-none"
+                    className="flex-1 rounded-full border border-white/15 bg-navy-950 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-500 focus:outline-none"
                   />
                   <button
                     type="submit"

@@ -34,6 +34,12 @@ export async function generateMetadata({
       url: `/services/${slug}`,
       images: [DEFAULT_OG_IMAGE],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: cat.title,
+      description: cat.intro,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 

@@ -18,6 +18,12 @@ export const metadata: Metadata = {
     url: "/",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
+    description: "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const SERVICES_FS = [

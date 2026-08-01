@@ -148,10 +148,14 @@ describe("Standard ↔ Legislation", () => {
   test("the STANDARD route renders the forward direction as real links", () => {
     // PR 5 rendered these as unlinked labels because /legislation did not
     // exist. PR 6 must have turned them into links.
+    //
+    // Heading renamed in the site-quality PR: "Related legislation" was
+    // indistinguishable from the inverse group sitting directly beneath it, and
+    // on four of eight Standards pages the two listed the same instruments.
     const src = source("standards/[slug]/page.tsx");
-    assert.match(src, /heading: "Related legislation"/);
+    assert.match(src, /heading: "Legislation this standard supports"/);
     assert.match(src, /LEGISLATION_PATH/, "the standard route still renders unlinked labels");
-    const block = src.slice(src.indexOf("const legislationItems"));
+    const block = src.slice(src.indexOf("const legislationItemsRaw"));
     assert.match(
       block.slice(0, block.indexOf(";\n")),
       /href:/,
@@ -213,7 +217,10 @@ describe("Legislation ↔ Standard", () => {
   test("the STANDARD route renders the inverse direction", () => {
     const src = source("standards/[slug]/page.tsx");
     assert.match(src, /legislationUsingThis/);
-    assert.match(src, /heading: "Legislation that references this"/);
+    assert.match(src, /heading: "Other legislation that cites this standard"/);
+    // The inverse group is authoritative: a two-way relationship is shown here
+    // and subtracted from the forward group, never rendered in both.
+    assert.match(src, /const legislationItems = withoutDuplicatesOf\(/);
   });
 });
 
