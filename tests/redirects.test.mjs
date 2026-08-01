@@ -121,13 +121,39 @@ describe("Insights to Guides redirect map", () => {
     assert.equal(bySource.get("/areas").destination, "/sectors");
   });
 
-  test("the Downloads redirect has not shipped early", async () => {
+  // Retired and inverted in Phase 5A PR 8A.
+  //
+  // This assertion used to require that /resources/fire-safety-checklist had
+  // NOT been redirected, on the stated condition that it "must keep working
+  // until the Downloads vertical exists". PR 8A is the PR in which that vertical
+  // exists, so the condition is met and the guard becomes its own opposite:
+  // the redirect must now be present, permanent, and a single hop.
+  test("the Downloads redirect has shipped, permanently and in one hop", async () => {
     const rules = await loadRedirects();
-    const early = rules.find((r) => r.source === "/resources/fire-safety-checklist");
+    const rule = rules.find((r) => r.source === "/resources/fire-safety-checklist");
+    assert.ok(rule, "the checklist migration must carry a redirect");
+    assert.equal(rule.destination, "/downloads/fire-safety-checklist");
+    assert.equal(rule.permanent, true);
+
+    // One hop: the destination must not itself be the source of another rule.
+    const sources = new Set(rules.map((r) => r.source));
     assert.equal(
-      early,
-      undefined,
-      "/resources/fire-safety-checklist must keep working until the Downloads vertical exists"
+      sources.has(rule.destination),
+      false,
+      "the destination is also a redirect source, which is a chain"
     );
+  });
+
+  test("no redirect anywhere in the map forms a chain", async () => {
+    const rules = await loadRedirects();
+    const sources = new Set(rules.map((r) => r.source));
+    for (const rule of rules) {
+      if (rule.destination.startsWith("http")) continue;
+      assert.equal(
+        sources.has(rule.destination),
+        false,
+        `${rule.source} -> ${rule.destination} -> ... is a chain`
+      );
+    }
   });
 });

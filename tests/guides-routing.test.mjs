@@ -94,11 +94,11 @@ describe("Guides routing", () => {
     assert.equal(exists("guides/tag"), false, "tag archives are deliberately not built");
   });
 
-  test("no content vertical beyond the five launched sections is introduced", () => {
-    // glossary left this list in PR 4, standards in PR 5, legislation in PR 6
-    // and news in PR 7. The remaining three are still deferred and this
-    // assertion still guards them.
-    for (const route of ["downloads", "knowledge", "search"]) {
+  test("no content vertical beyond the six launched sections is introduced", () => {
+    // glossary left this list in PR 4, standards in PR 5, legislation in PR 6,
+    // news in PR 7 and downloads in PR 8A. The remaining two are still deferred
+    // and this assertion still guards them.
+    for (const route of ["knowledge", "search"]) {
       assert.equal(exists(route), false, `/${route} must not exist yet`);
     }
   });

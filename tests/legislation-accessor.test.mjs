@@ -407,12 +407,11 @@ describe("Legislation routing", () => {
     assert.equal(mod.dynamicParams, false);
   });
 
-  test("routes deferred to PR 7 and later are not built", () => {
+  test("routes deferred to PR 9 and later are not built", () => {
     for (const route of [
       "legislation/jurisdiction",
       "legislation/category",
       "legislation/tag",
-      "downloads",
       "knowledge",
       "search",
     ]) {
