@@ -324,7 +324,7 @@ export const FAQS = [
 
 export const RESOURCES = [
   { title: "Compliance Self-Check", body: "Ten yes/no questions across your fire and H&S duties — instant red/amber/green score, no sign-up needed.", href: "/check", external: false },
-  { title: "Fire Safety Checklist", body: "A quick self-check for landlords and Responsible Persons before your assessment.", href: "/resources/fire-safety-checklist", external: false },
+  { title: "Fire Safety Checklist", body: "A quick self-check for landlords and Responsible Persons before your assessment.", href: "/downloads/fire-safety-checklist", external: false },
 ];
 
 export const STATS = [

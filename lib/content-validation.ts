@@ -14,6 +14,8 @@
 // Velite build to exercise it.
 
 import { isReservedSlug } from "./reserved-slugs";
+import { SERVICE_CATEGORIES, SECTORS } from "./site";
+import { CASE_STUDIES } from "./case-studies";
 import type { Severity } from "./editorial-rules";
 import { validateEditorialRules } from "./editorial-validation";
 
@@ -140,14 +142,94 @@ const RELATION_TARGET_COLLECTIONS: Record<string, string> = {
 // check in PR 6 with no change here.
 const SELF_RELATION_FIELDS: readonly string[] = ["supersededBy"];
 
+// Relation fields that point at a hand-maintained TypeScript REGISTRY rather
+// than at a Velite collection (Phase 5A, PR 8A).
+//
+// These could not simply be added to RELATION_TARGET_COLLECTIONS above,
+// because that map resolves slugs against collections in the current build and
+// services, sectors and case studies are plain arrays in lib/site.ts and
+// lib/case-studies.ts that never pass through Velite at all.
+//
+// What changes here, precisely. These three were never validated at BUILD time:
+// every page component maps the slug through `getCategory()` / `getSector()` /
+// `getCaseStudy()` and then `.filter(Boolean)`, so an unknown slug produced no
+// broken link and no error — it produced SILENT OMISSION. The related service
+// simply never appeared, and nothing said why. That is a worse failure than a
+// broken link, because a broken link at least has a symptom.
+//
+// They were not wholly unguarded, though, and the earlier comment on
+// `checkRelations` pointing at "the existing PR #12-derived pattern" was
+// pointing at something real: tests/relation-registry.test.mjs has covered
+// them since PR 3, and says in its own header that it should be retired if the
+// shared validator ever takes the job over. It is NOT retired here, because it
+// still carries two things this rule deliberately does not — a Guides-specific
+// `hasPage` assertion from the PR #12 hotfix, and `relatedTerms` — so the two
+// are complementary rather than duplicative.
+//
+// This rule covers every collection rather than only Guides, and moves the
+// check from test time to build time, which is where a typo needs to be caught
+// to never reach production.
+//
+// It deliberately does NOT require the target to have a live page. A sector
+// with no page of its own is a known entity that legitimately renders as plain
+// text — RelatedContent supports a label with no href precisely for that — and
+// requiring a page here would break the optional-link fallback rather than
+// protect it. The runtime `.filter(Boolean)` also stays exactly where it is, as
+// defence in depth. What this stops is a MISTAKE hiding inside a mechanism
+// built for a legitimate case.
+const SERVICE_CATEGORY_SLUGS: readonly string[] = SERVICE_CATEGORIES.map((c) => c.slug);
+const SECTOR_SLUGS: readonly string[] = SECTORS.map((x) => x.slug);
+const CASE_STUDY_SLUGS: readonly string[] = CASE_STUDIES.map((c) => c.slug);
+
+const REGISTRY_TARGET_FIELDS: Record<string, { label: string; slugs: readonly string[] }> = {
+  relatedServices: { label: "service category", slugs: SERVICE_CATEGORY_SLUGS },
+  relatedSectors: { label: "sector", slugs: SECTOR_SLUGS },
+  relatedCaseStudies: { label: "case study", slugs: CASE_STUDY_SLUGS },
+};
+
+/**
+ * Registry-relation validation (Phase 5A, PR 8A).
+ *
+ * Applies to every collection, not only Downloads: the defect it fixes is
+ * sitewide, and Guides have carried `relatedServices` since PR 3.
+ */
+export function checkRegistryRelations(
+  collections: Record<string, ContentItemLike[]>
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  for (const [collectionName, items] of Object.entries(collections)) {
+    for (const item of items ?? []) {
+      for (const [field, target] of Object.entries(REGISTRY_TARGET_FIELDS)) {
+        const value = item[field];
+        if (!Array.isArray(value) || value.length === 0) continue;
+        const known = new Set(target.slugs);
+        for (const referencedSlug of value as string[]) {
+          if (!known.has(referencedSlug)) {
+            issues.push({
+              collection: collectionName,
+              slug: item.slug,
+              id: item.id,
+              rule: "G18",
+              message: `"${item.slug}" has ${field} referencing "${referencedSlug}", which is not a known ${target.label}. It would be silently dropped at render time.`,
+            });
+          }
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
 /**
  * Cross-collection relation validation. For every relation field this
  * platform's content model defines that points at another *content*
- * collection (not the pre-existing lib/site.ts services/sectors/case
- * studies, which are out of scope for this validator — they're validated
- * by the existing PR #12-derived pattern), confirm the referenced slug
- * actually exists in that target collection, where that target collection
- * is part of the current build.
+ * collection, confirm the referenced slug actually exists in that target
+ * collection, where that target collection is part of the current build.
+ *
+ * Relations pointing at the lib/site.ts and lib/case-studies.ts registries are
+ * handled by `checkRegistryRelations` above, for the reason set out there.
  */
 export function checkRelations(
   collections: Record<string, ContentItemLike[]>
@@ -240,12 +322,27 @@ export function checkRelations(
  */
 export function validateContentCollections(
   collections: Record<string, ContentItemLike[]>,
-  options: { now?: string } = {}
+  options: {
+    now?: string;
+    /**
+     * Resolves an emitted asset URL to its real size in bytes, or undefined if
+     * it is not on disk (Phase 5A, PR 8A).
+     *
+     * Injected rather than imported so this module stays free of filesystem
+     * access and every rule remains unit-testable without one. The real
+     * implementation lives in velite.config.ts, which can stat the file because
+     * Velite writes its output BEFORE invoking the `complete` hook that calls
+     * this — the same ordering that makes deriving the size in that hook
+     * impossible makes verifying it there reliable.
+     */
+    sizeOf?: (url: string) => number | undefined;
+  } = {}
 ): ValidationResult {
   const issues: ValidationIssue[] = [
     ...checkReservedSlugs(collections),
     ...checkDuplicateIds(collections),
     ...checkRelations(collections),
+    ...checkRegistryRelations(collections),
     ...validateEditorialRules(collections, options),
   ];
 

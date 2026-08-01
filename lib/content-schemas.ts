@@ -695,18 +695,165 @@ export const glossaryTermSchema = s.object({
 // DownloadResource (/downloads)
 // ---------------------------------------------------------------------------
 
+/**
+ * Downloadable asset reference (Phase 5A, PR 8A).
+ *
+ * `allowNonRelativePath: false` is the whole point of this helper and must
+ * never be relaxed. Velite's `s.file()` opens with:
+ *
+ *     if (allowNonRelativePath && !isRelativePath(value)) return value
+ *
+ * and that flag DEFAULTS TO TRUE. So `fileUrl: "/static/checklist.pdf"` is
+ * returned verbatim — not resolved, not copied, and above all not checked for
+ * existence. The build stays green and the reader gets a 404, which is exactly
+ * the failure this collection exists to make impossible.
+ *
+ * With the flag off, only a relative path is accepted, every path is resolved
+ * against the MDX file that declared it, the asset is copied into the output
+ * directory with a content hash, and a missing file is a fatal build issue.
+ */
+const downloadAsset = () => s.file({ allowNonRelativePath: false });
+
+/**
+ * Formats a resource may be delivered in.
+ *
+ * "html" is not a file format here — it marks a resource whose delivery IS the
+ * landing page, read on screen or printed from the browser. The migrated fire
+ * safety checklist is the first of these and has no binary at all.
+ */
+export const DOWNLOAD_FILE_FORMATS = ["pdf", "docx", "xlsx", "html"] as const;
+
 export const downloadResourceSchema = s.object({
   ...baseFields,
   contentType: s.literal("download"),
   slug: s.slug("downloads"),
-  resourceType: s.enum(["checklist", "template", "inspection-form", "logbook", "guidance-document"]),
-  fileFormat: s.enum(["pdf", "docx", "xlsx"]),
-  fileUrl: s.string().min(1),
-  version: s.string().min(1),
-  previousVersions: s
-    .array(s.object({ version: s.string().min(1), fileUrl: s.string().min(1), supersededDate: s.isodate() }))
+  resourceType: s.enum([
+    "checklist",
+    "template",
+    "inspection-form",
+    // Added in PR 8A. A weekly alarm test record is not an inspection form: it
+    // is a ruled grid completed repeatedly over a year and retained, which
+    // drives a different format decision (print-first PDF, spreadsheet
+    // companion) and a different set of rules.
+    "record-form",
+    "logbook",
+    "guidance-document",
+  ]),
+  fileFormat: s.enum([...DOWNLOAD_FILE_FORMATS]),
+
+  /**
+   * Optional, because a resource is not required to have a binary.
+   *
+   * The migrated fire safety checklist is HTML-native: its delivery is the
+   * landing page plus the print stylesheet. Requiring a file here would have
+   * forced a placeholder PDF into the repository purely to satisfy a schema,
+   * which is how content ends up shaped by its validator rather than by the
+   * world. The real constraint — every published resource must offer at least
+   * one working way to obtain it — is rule R1, which can say so in a sentence
+   * a human can act on.
+   */
+  fileUrl: downloadAsset().optional(),
+
+  /**
+   * Authored, then verified byte-for-byte against the emitted asset by rule R5.
+   *
+   * Not derived, and deliberately so. Velite types its `complete` hook as
+   * returning void and runs it after the output has been written, so it cannot
+   * inject a derived value into the emitted JSON — the obvious approach simply
+   * does not work. What that same ordering does give us is a guarantee that the
+   * copied asset is on disk by the time validation runs, so R5 can stat it and
+   * fail the build the moment the frontmatter and the file disagree. The number
+   * is hand-written once and can never silently rot.
+   */
+  fileSizeBytes: s.number().int().positive().optional(),
+
+  pageCount: s.number().int().positive().optional(),
+
+  /**
+   * Additional formats offered from the same landing page.
+   *
+   * One resource, one URL, several ways to take it away — a PDF to print and an
+   * XLSX to fill in. Giving each format its own page would split the inbound
+   * links and create near-duplicates competing with each other.
+   */
+  additionalFormats: s
+    .array(
+      s.object({
+        format: s.enum([...DOWNLOAD_FILE_FORMATS]),
+        fileUrl: downloadAsset(),
+        fileSizeBytes: s.number().int().positive(),
+      })
+    )
     .default([]),
-  gated: s.boolean().default(false),
-  generationMethod: s.enum(["generated-from-template", "uploaded-document"]),
+
+  version: s.string().min(1),
+
+  previousVersions: s
+    .array(
+      s.object({
+        version: s.string().min(1),
+        fileUrl: downloadAsset(),
+        supersededDate: s.isodate(),
+      })
+    )
+    .default([]),
+
+  /**
+   * How honest we can be about this document's accessibility.
+   *
+   * "unchecked" is a legitimate state to author and an illegitimate state to
+   * publish (rule R6). "checked-limitations" exists so a document with a known,
+   * stated shortcoming can still ship with the shortcoming visible on the page,
+   * rather than the library quietly rounding it up to accessible.
+   */
+  accessibilityStatus: s.enum([
+    "html-native",
+    "checked-accessible",
+    "checked-limitations",
+    "unchecked",
+  ]),
+  accessibilityNotes: s.string().optional(),
+
+  licence: s.literal("lion-rms-permitted-use"),
+
+  thirdPartyMaterial: s.boolean().default(false),
+  thirdPartyAttribution: s.string().optional(),
+
+  /** The landing page carries a print-optimised view of the resource itself. */
+  printableHtml: s.boolean().default(false),
+
+  /**
+   * A one-line explanation shown above the changelog when a version corrected
+   * something rather than merely extending it. Same field and same rendering
+   * as News (PR 7), so `CorrectionHistory` needs no change to serve both.
+   */
+  correctionNote: s.string().optional(),
+
+  // Withdrawal (status: "archived"). The page stays 200 — a withdrawn URL may
+  // be cited in a client's fire safety file, and 404ing it would destroy the
+  // record rather than correct it.
+  withdrawnDate: s.isodate().optional(),
+  withdrawalReason: s.string().optional(),
+  /**
+   * An array rather than a single slug, so it inherits the existing
+   * `SELF_RELATION_FIELDS` check (rule G2) with no new code — a replacement
+   * naming a resource that does not exist is the worst possible failure on a
+   * page whose only remaining job is to point somewhere better. An empty array
+   * is legitimate: sometimes nothing replaces a withdrawn resource.
+   */
+  supersededBy: s.array(s.string()).default([]),
+
+  /**
+   * "generated-from-template" was removed in PR 8A.
+   *
+   * Automated PDF generation is out of scope, and a value nothing can
+   * legitimately carry is an invitation to carry it wrongly. It returns as a
+   * new value if and when a generation pipeline arrives with the accessibility
+   * evidence to justify calling its output accessible.
+   */
+  generationMethod: s.enum(["uploaded-document", "html-native"]),
+
+  schemaType: s.literal("DigitalDocument"),
+
   body: s.mdx(),
 });

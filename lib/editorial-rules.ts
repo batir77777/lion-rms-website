@@ -453,3 +453,77 @@ export const NEWS_PUBLICATION_GATE_FIELDS: readonly string[] = [
   "sourceOrganisation",
   "sourceCheckedDate",
 ];
+
+// ---------------------------------------------------------------------------
+// Downloads constants (Phase 5A, PR 8A).
+//
+// The rule prefix is R, not D. D1-D7 were taken in PR 2 by the editorial
+// heuristics that apply to EVERY collection (title and description length,
+// duplicate titles, canonical shape, noindex), and reusing the letter would
+// make "which D3 failed?" an ambiguous question in audit output.
+// ---------------------------------------------------------------------------
+
+/**
+ * Which delivery formats make sense for each kind of resource.
+ *
+ * This is a deliberate narrowing, not a taxonomy. A logbook delivered as a bare
+ * DOCX is a worse artefact than a laid-out PDF, and a record form delivered
+ * only as HTML cannot do the job it exists for — being filled in on paper,
+ * repeatedly, and kept. Where a format is genuinely useful as a COMPANION it
+ * belongs in `additionalFormats`, which this map also governs.
+ */
+export const RESOURCE_TYPE_FORMATS: Record<string, readonly string[]> = {
+  checklist: ["pdf", "html", "docx"],
+  template: ["pdf", "docx", "html"],
+  "inspection-form": ["pdf", "docx"],
+  "record-form": ["pdf", "xlsx", "docx"],
+  logbook: ["pdf", "xlsx"],
+  "guidance-document": ["pdf", "html"],
+};
+
+/** Maps a declared format to the file extension it must actually have. */
+export const FORMAT_EXTENSIONS: Record<string, string> = {
+  pdf: ".pdf",
+  docx: ".docx",
+  xlsx: ".xlsx",
+};
+
+/**
+ * Hard ceiling, in bytes. An error, not a warning.
+ *
+ * A resource above this is not merely large: on a phone, on site, on a poor
+ * connection — which is exactly where a fire door checklist gets opened — it is
+ * effectively undeliverable. 15 MB is generous for a text-and-tables document
+ * and small enough that exceeding it means something has gone wrong, usually an
+ * unoptimised image.
+ */
+export const DOWNLOAD_MAX_BYTES = 15 * 1024 * 1024;
+
+/** Above this, worth a look; below the ceiling, never blocking. */
+export const DOWNLOAD_WARN_BYTES = 10 * 1024 * 1024;
+
+/** Accessibility states a published resource may hold. */
+export const PUBLISHABLE_ACCESSIBILITY_STATUSES: readonly string[] = [
+  "html-native",
+  "checked-accessible",
+  "checked-limitations",
+];
+
+/**
+ * Phrases that satisfy the mandatory adaptation statement (rule R15).
+ *
+ * Every resource in this library is a general template, and the single most
+ * likely way it causes harm is being treated as premises-specific professional
+ * advice — a completed checklist mistaken for a suitable and sufficient fire
+ * risk assessment. That framing is not left to authorial memory: R15 fails the
+ * build without it.
+ *
+ * Matching is on any ONE of these, so the wording can suit the document rather
+ * than being boilerplate stamped identically onto seven pages.
+ */
+export const ADAPTATION_STATEMENT_PATTERNS: readonly RegExp[] = [
+  /general template/i,
+  /adapt(ed|ation)?\s+(it\s+)?to\s+(your|the|their)\s+(own\s+)?premises/i,
+  /does not replace/i,
+  /is not a substitute for/i,
+];
