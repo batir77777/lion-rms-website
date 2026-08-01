@@ -80,6 +80,20 @@ export async function generateMetadata({
         url: `${NEWS_PATH}/${slug}`,
         images: [DEFAULT_OG_IMAGE],
       },
+      /*
+       * The year archives need their own twitter block for the same reason
+       * every other route does: a page that declares openGraph but not twitter
+       * still inherits the ROOT LAYOUT's twitter card, so /news/2025 shipped
+       * the homepage title and description. This branch returns early, so it
+       * cannot borrow the twitter block on the news-item return below — the
+       * two are separate metadata objects and each needs its own.
+       */
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [DEFAULT_OG_IMAGE],
+      },
     };
   }
 
