@@ -88,6 +88,27 @@ export async function generateMetadata({
   };
 }
 
+/*
+ * Relationship de-duplication (site-quality PR).
+ *
+ * A genuine two-way relationship lands in BOTH the generic outbound group and
+ * the derived inverse group, so the same item rendered twice, adjacently, under
+ * headings that did not obviously differ. Measured on production before this
+ * change: four of eight Standards pages repeated legislation this way.
+ *
+ * The specific group is authoritative — "legislation that cites this standard"
+ * says strictly more than "related legislation" — so the duplicate is removed
+ * from the GENERIC group only. Nothing that appears in just one group is
+ * touched, and the direction of the relationship survives.
+ *
+ * tests/site-quality.test.mjs asserts the two sets are disjoint by href for
+ * every published item in all four templates.
+ */
+const withoutDuplicatesOf = (
+  generic: { label: string; href?: string }[],
+  specific: { label: string; href?: string }[],
+) => generic.filter((g) => !specific.some((s) => s.href === g.href));
+
 export default async function StandardPage({
   params,
 }: {
@@ -165,7 +186,7 @@ export default async function StandardPage({
 
   // Phase 5A PR 6: legislation pages now exist, so these resolve to real links
   // rather than the unlinked labels PR 5 rendered.
-  const legislationItems = (standard.relatedLegislation ?? [])
+  const legislationItemsRaw = (standard.relatedLegislation ?? [])
     .map((s) => getLegislation(s))
     .filter((l): l is NonNullable<typeof l> => Boolean(l))
     .map((l) => ({ label: l.shortTitle, href: `${LEGISLATION_PATH}/${l.slug}` }));
@@ -175,6 +196,7 @@ export default async function StandardPage({
     label: l.shortTitle,
     href: `${LEGISLATION_PATH}/${l.slug}`,
   }));
+  const legislationItems = withoutDuplicatesOf(legislationItemsRaw, legislationUsingThis);
 
   const withdrawnLabel = formatDate(standard.withdrawnDate);
 
@@ -381,8 +403,8 @@ export default async function StandardPage({
             { heading: "Guides that reference this document", items: guideItems },
             { heading: "Replaces", items: predecessorItems },
             { heading: "Related standards", items: peerItems },
-            { heading: "Related legislation", items: legislationItems },
-            { heading: "Legislation that references this", items: legislationUsingThis },
+            { heading: "Legislation this standard supports", items: legislationItems },
+            { heading: "Other legislation that cites this standard", items: legislationUsingThis },
             { heading: "News mentioning this document", items: newsItems },
             { heading: "Checklists and templates", items: downloadItems },
             { heading: "Terms used on this page", items: termItems },
