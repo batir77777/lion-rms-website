@@ -18,6 +18,12 @@ export const metadata: Metadata = {
     url: "/contact",
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact",
+    description: "Get in touch about fire engineering, a fire strategy, a fire risk assessment, a health & safety audit, or compliance support. We respond the same day.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function ContactPage() {
