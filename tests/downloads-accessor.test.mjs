@@ -58,10 +58,25 @@ function buildFixture(name) {
 describe("Downloads accessor", () => {
   test("exposes the migrated checklist, published", async () => {
     const { publishedDownloads } = await import("../lib/downloads");
+    const { downloads: raw } = await import("../.velite");
     const items = publishedDownloads();
-    assert.equal(items.length, 1);
-    assert.equal(items[0].slug, "fire-safety-checklist");
-    assert.equal(items[0].status, "published");
+
+    /*
+     * This asserted `items.length === 1` until PR 8B added six resources.
+     * A hard-coded total is not what this test is for: it breaks every time
+     * the library grows, and a passing count says nothing about whether the
+     * right items came back. What matters is that the accessor returns
+     * exactly the published set and nothing else, so that is what is checked
+     * — against Velite's own output rather than against a number someone has
+     * to remember to update.
+     */
+    const expected = raw.filter((d) => d.status === "published").map((d) => d.slug).sort();
+    assert.deepEqual(items.map((d) => d.slug).sort(), expected);
+    for (const item of items) assert.equal(item.status, "published");
+
+    const checklist = items.find((d) => d.slug === "fire-safety-checklist");
+    assert.ok(checklist, "the migrated checklist should still be published");
+    assert.equal(checklist.status, "published");
   });
 
   test("excludes anything not published from the listing", async () => {

@@ -470,7 +470,8 @@ export const NEWS_PUBLICATION_GATE_FIELDS: readonly string[] = [
  * DOCX is a worse artefact than a laid-out PDF, and a record form delivered
  * only as HTML cannot do the job it exists for — being filled in on paper,
  * repeatedly, and kept. Where a format is genuinely useful as a COMPANION it
- * belongs in `additionalFormats`, which this map also governs.
+ * belongs in `additionalFormats`, governed by `RESOURCE_TYPE_COMPANION_FORMATS`
+ * below — which falls back to this map wherever the two do not differ.
  */
 export const RESOURCE_TYPE_FORMATS: Record<string, readonly string[]> = {
   checklist: ["pdf", "html", "docx"],
@@ -479,6 +480,23 @@ export const RESOURCE_TYPE_FORMATS: Record<string, readonly string[]> = {
   "record-form": ["pdf", "xlsx", "docx"],
   logbook: ["pdf", "xlsx"],
   "guidance-document": ["pdf", "html"],
+};
+
+/**
+ * Which formats may be offered ALONGSIDE the primary delivery.
+ *
+ * Only a resource type whose companion list genuinely differs from its primary
+ * list appears here; everything else falls back to `RESOURCE_TYPE_FORMATS`.
+ *
+ * The logbook is the one case where the two diverge. A logbook delivered as a
+ * bare DOCX is still a worse artefact than a laid-out PDF, and R3 continues to
+ * reject that as a primary format. But a logbook is a general template that its
+ * user is expected to adapt to their premises — role names, section headings,
+ * premises details — and an editable copy offered next to the PDF is exactly
+ * the companion case the narrowing above was never meant to catch.
+ */
+export const RESOURCE_TYPE_COMPANION_FORMATS: Record<string, readonly string[]> = {
+  logbook: ["pdf", "xlsx", "docx"],
 };
 
 /** Maps a declared format to the file extension it must actually have. */
