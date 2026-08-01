@@ -43,6 +43,7 @@ import {
   CTA_SECONDARY_HREF,
 } from "@/lib/site";
 import { newsMentioningStandard, NEWS_PATH } from "@/lib/news";
+import { downloadsForStandard, DOWNLOADS_PATH } from "@/lib/downloads";
 
 // Only published standards are generated, and `dynamicParams = false` means a
 // slug outside that set returns a genuine 404 rather than being rendered on
@@ -180,6 +181,10 @@ export default async function StandardPage({
   const newsItems = newsMentioningStandard(standard.slug).map((n) => ({
     label: n.title,
     href: `${NEWS_PATH}/${n.slug}`,
+  }));
+  const downloadItems = downloadsForStandard(standard.slug).map((d) => ({
+    label: d.title,
+    href: `${DOWNLOADS_PATH}/${d.slug}`,
   }));
 
   return (
@@ -379,6 +384,7 @@ export default async function StandardPage({
             { heading: "Related legislation", items: legislationItems },
             { heading: "Legislation that references this", items: legislationUsingThis },
             { heading: "News mentioning this document", items: newsItems },
+            { heading: "Checklists and templates", items: downloadItems },
             { heading: "Terms used on this page", items: termItems },
             { heading: "Related service", items: serviceItems },
             { heading: "Related sector", items: sectorItems },
