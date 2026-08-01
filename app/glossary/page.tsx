@@ -31,6 +31,12 @@ export const metadata: Metadata = {
     url: GLOSSARY_PATH,
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function GlossaryPage() {
