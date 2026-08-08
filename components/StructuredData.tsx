@@ -1,45 +1,30 @@
-import { ASSESSOR, SITE, SITE_URL, COVERAGE_COUNTIES, COMPANY } from "@/lib/site";
+import { ASSESSOR, SITE, COVERAGE_COUNTIES, COMPANY } from "@/lib/site";
+import { buildOrganisationSchema } from "@/lib/content-jsonld";
 
-// LocalBusiness JSON-LD — helps Google show the business for local searches.
+/*
+ * The sitewide ProfessionalService node, rendered once in the root layout and
+ * therefore emitted on every page.
+ *
+ * The object itself now comes from lib/content-jsonld.ts (Phase 5A, PR 10),
+ * which is where every other piece of structured data on this site is already
+ * built. This component's only remaining job is to render it — which is the
+ * point: there is now exactly one module to read if you want to know what this
+ * site tells search engines.
+ *
+ * The emitted JSON is unchanged, field for field. tests/jsonld-migration
+ * asserts that against a snapshot taken before the move.
+ */
 export default function StructuredData() {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: SITE.name,
-    /*
-     * `name` stays the trading name — it is what the public reads. `legalName`
-     * identifies the registered entity, and `identifier` carries the company
-     * number using schema.org's existing PropertyValue pattern rather than a
-     * bespoke identity model.
-     *
-     * The registered office is deliberately absent from `address` below. This
-     * node renders on EVERY page, so putting a residential address here would
-     * republish it sitewide — the exact thing /company-information exists to
-     * avoid. `address` stays the service locality.
-     */
+  const data = buildOrganisationSchema({
+    siteName: SITE.name,
     legalName: COMPANY.legalName,
-    identifier: {
-      "@type": "PropertyValue",
-      name: "UK company number",
-      value: COMPANY.number,
-    },
+    companyNumber: COMPANY.number,
     description:
       "Fire engineering, health & safety and fire risk assessment consultancy serving London, the Home Counties and the wider UK by arrangement. Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation assessments, health & safety consultancy, compliance auditing and professional training.",
-    url: SITE_URL,
     telephone: "+447766317818",
     email: SITE.email,
-    founder: {
-      "@type": "Person",
-      name: ASSESSOR.name,
-      jobTitle: ASSESSOR.role,
-      description: ASSESSOR.bio,
-      url: `${SITE_URL}/about`,
-    },
-    areaServed: [
-      { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
-      ...COVERAGE_COUNTIES.map((c) => ({ "@type": "AdministrativeArea", name: c })),
-    ],
-    address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
+    founder: { name: ASSESSOR.name, role: ASSESSOR.role, bio: ASSESSOR.bio },
+    counties: COVERAGE_COUNTIES,
     knowsAbout: [
       "Fire Engineering",
       "Fire Safety Engineering",
@@ -65,7 +50,8 @@ export default function StructuredData() {
       "Health & Safety Consultancy",
       "Compliance Management Support",
     ],
-  };
+  });
+
   return (
     <script
       type="application/ld+json"

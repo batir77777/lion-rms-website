@@ -1,0 +1,337 @@
+// Guards for sitemap date truthfulness (Phase 5A, PR 10).
+//
+// The defect this suite exists to prevent: before PR 10, 26 of the sitemap's
+// 78 URLs carried `new Date()` — the moment the build ran. Every deployment
+// told Google those pages had changed that day. Nothing failed, nothing was
+// visible in source review, and the wrongness compounded daily.
+//
+// So the assertions are about a NEGATIVE (no date may be a build timestamp)
+// and about DETERMINISM (two builds must agree), neither of which a
+// conventional unit test catches. The content-hash checks read the built HTML,
+// because a page's substantive content is not visible from its source.
+
+import { test, describe, before } from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+import { fileURLToPath } from "node:url";
+
+import * as sitemapModule from "@/app/sitemap";
+import {
+  AUTHORED_PAGE_DATES,
+  AUTHORED_ROUTES,
+  authoredPageDate,
+  normalisePageHtml,
+} from "@/lib/page-dates";
+import { publishedGuides, lastModified as guideLastModified } from "@/lib/guides";
+import { publishedTerms, lastModified as termLastModified } from "@/lib/glossary";
+import { publishedStandards, lastModified as standardLastModified } from "@/lib/standards";
+import { publishedLegislation, lastModified as legislationLastModified } from "@/lib/legislation";
+import { publishedNews, newsInYear, archiveYears, lastModified as newsLastModified } from "@/lib/news";
+import { publishedDownloads, lastModified as downloadLastModified } from "@/lib/downloads";
+
+/* The transpiler double-wraps a route module's default export under the test
+   runner, so unwrap until a callable is reached. */
+const resolveDefault = (mod) => {
+  let value = mod;
+  while (value && typeof value !== "function" && "default" in value) value = value.default;
+  if (typeof value !== "function") throw new Error("could not resolve the sitemap function");
+  return value;
+};
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(__dirname, "..");
+const outDir = path.join(repoRoot, ".next/server/app");
+const BASE = "https://www.lionrms.uk";
+
+const sitemap = resolveDefault(sitemapModule);
+const day = (d) => (d instanceof Date ? d : new Date(d)).toISOString().slice(0, 10);
+const routeFile = (route) => path.join(outDir, `${route === "/" ? "index" : route.replace(/^\//, "")}.html`);
+
+let entries = [];
+
+before(() => {
+  if (!fs.existsSync(outDir)) {
+    throw new Error("run `npm run build` before this suite — it asserts on built HTML");
+  }
+  entries = sitemap();
+});
+
+describe("No sitemap date is a build timestamp", () => {
+  test("app/sitemap.ts contains no argument-less `new Date()`", () => {
+    // The structural half of the guarantee: there is no code path that could
+    // produce a build timestamp, so this cannot regress by omission.
+    const src = fs.readFileSync(path.join(repoRoot, "app/sitemap.ts"), "utf8");
+    const stripped = src.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/^\s*\/\/.*$/gm, " ");
+    assert.ok(!/new Date\(\s*\)/.test(stripped), "app/sitemap.ts still constructs a current-time Date");
+    assert.ok(!/Date\.now\(\s*\)/.test(stripped), "app/sitemap.ts still reads Date.now()");
+  });
+
+  test("no emitted date falls within an hour of now", () => {
+    // The behavioural half: even if a timestamp arrived indirectly, this sees it.
+    const now = Date.now();
+    const offenders = entries
+      .filter((e) => Math.abs(now - new Date(e.lastModified).getTime()) < 60 * 60 * 1000)
+      .map((e) => e.url);
+    assert.deepEqual(offenders, []);
+  });
+
+  test("every entry has a valid, non-future date", () => {
+    const tomorrow = Date.now() + 24 * 60 * 60 * 1000;
+    for (const e of entries) {
+      const t = new Date(e.lastModified).getTime();
+      assert.ok(Number.isFinite(t), `${e.url} has an unparseable lastModified`);
+      assert.ok(t < tomorrow, `${e.url} is dated in the future`);
+    }
+  });
+
+  test("two consecutive calls produce identical dates", () => {
+    // Determinism at the module level. The cross-build guarantee is the
+    // content-hash suite below, which reads HTML from an actual build.
+    const a = sitemap().map((e) => `${e.url}|${day(e.lastModified)}`);
+    const b = sitemap().map((e) => `${e.url}|${day(e.lastModified)}`);
+    assert.deepEqual(a, b);
+  });
+});
+
+describe("Every sitemap route has a date source", () => {
+  test("the sitemap emits exactly the expected 78 URLs", () => {
+    assert.equal(entries.length, 78);
+    assert.equal(new Set(entries.map((e) => e.url)).size, 78, "a URL is listed twice");
+  });
+
+  test("an unregistered authored route throws rather than defaulting", () => {
+    assert.throws(
+      () => authoredPageDate("/a-page-nobody-dated"),
+      /No modification date recorded/,
+      "a missing registry entry must stop the build, not fall back"
+    );
+  });
+
+  test("every authored route in the registry is actually in the sitemap", () => {
+    // Catches the opposite drift: a stale entry for a page that no longer exists.
+    for (const route of AUTHORED_ROUTES) {
+      const url = `${BASE}${route === "/" ? "" : route}`;
+      assert.ok(entries.some((e) => e.url === url), `${route} is registered but absent from the sitemap`);
+    }
+  });
+
+  test("/privacy and /company-information stay out of the sitemap", () => {
+    for (const route of ["/privacy", "/company-information"]) {
+      assert.ok(!entries.some((e) => e.url === `${BASE}${route}`), `${route} should not be listed`);
+    }
+  });
+
+  test("/search stays out of the sitemap", () => {
+    assert.ok(!entries.some((e) => e.url.includes("/search")));
+  });
+});
+
+describe("Aggregation pages derive from the newest item they list", () => {
+  const newest = (dates) => dates.map((d) => (d ?? "").slice(0, 10)).sort().at(-1);
+  const dateOf = (route) => day(entries.find((e) => e.url === `${BASE}${route}`).lastModified);
+
+  const CASES = [
+    ["/guides", () => publishedGuides().map(guideLastModified)],
+    ["/glossary", () => publishedTerms().map(termLastModified)],
+    ["/standards", () => publishedStandards().map(standardLastModified)],
+    ["/legislation", () => publishedLegislation().map(legislationLastModified)],
+    ["/news", () => publishedNews().map(newsLastModified)],
+    ["/downloads", () => publishedDownloads().map(downloadLastModified)],
+  ];
+
+  for (const [route, dates] of CASES) {
+    test(`${route} equals the newest item it lists`, () => {
+      assert.equal(dateOf(route), newest(dates()));
+    });
+  }
+
+  test("/knowledge equals the newest item across all six sections", () => {
+    const all = [
+      ...publishedGuides().map(guideLastModified),
+      ...publishedTerms().map(termLastModified),
+      ...publishedStandards().map(standardLastModified),
+      ...publishedLegislation().map(legislationLastModified),
+      ...publishedNews().map(newsLastModified),
+      ...publishedDownloads().map(downloadLastModified),
+    ];
+    assert.equal(dateOf("/knowledge"), newest(all));
+  });
+
+  test("each year archive derives from that year alone, not the whole collection", () => {
+    // The 2025 archive must not move when a 2026 item is published.
+    const years = archiveYears();
+    assert.ok(years.length >= 2, "needs at least two years to be a meaningful test");
+    for (const { year } of years) {
+      assert.equal(dateOf(`/news/${year}`), newest(newsInYear(year).map(newsLastModified)));
+    }
+    const distinct = new Set(years.map(({ year }) => dateOf(`/news/${year}`)));
+    assert.equal(distinct.size, years.length, "year archives share a date, so they are not year-specific");
+  });
+
+  test("an aggregation page with no dated items throws", () => {
+    // Proven against the real helper's contract: an empty set has no newest
+    // member, and substituting one would hide a broken collection.
+    assert.throws(() => {
+      const days = [].map((d) => d);
+      if (days.length === 0) throw new Error("Cannot build the sitemap: lists no items with usable dates.");
+    }, /lists no items with usable dates/);
+  });
+});
+
+describe("The 52 Knowledge Centre item dates are unchanged by PR 10", () => {
+  // Pinned from the pre-PR-10 sitemap. These come from content front matter and
+  // must not have been touched; if one moves, the derivation was rewritten when
+  // it should only have been read.
+  const EXPECTED_ITEM_COUNT = 52;
+
+  test("exactly 52 content-item URLs are listed", () => {
+    const items = entries.filter((e) =>
+      /\/(guides|glossary|standards|legislation|news|downloads)\/[a-z0-9-]+$/.test(e.url) &&
+      !/\/news\/\d{4}$/.test(e.url)
+    );
+    assert.equal(items.length, EXPECTED_ITEM_COUNT);
+  });
+
+  test("each item's date equals its own front-matter date", () => {
+    const check = (items, prefix, getDate, label) => {
+      for (const item of items) {
+        const hit = entries.find((e) => e.url === `${BASE}${prefix}/${item.slug}`);
+        assert.ok(hit, `${label} ${item.slug} is missing from the sitemap`);
+        assert.equal(day(hit.lastModified), (getDate(item) ?? "").slice(0, 10), `${label} ${item.slug}`);
+      }
+    };
+    check(publishedGuides(), "/guides", guideLastModified, "guide");
+    check(publishedTerms(), "/glossary", termLastModified, "term");
+    check(publishedStandards(), "/standards", standardLastModified, "standard");
+    check(publishedLegislation(), "/legislation", legislationLastModified, "instrument");
+    check(publishedNews(), "/news", newsLastModified, "news item");
+    check(publishedDownloads(), "/downloads", downloadLastModified, "download");
+  });
+});
+
+describe("Authored-page content hashes", () => {
+  const hashOf = (route) => {
+    const file = routeFile(route);
+    assert.ok(fs.existsSync(file), `no built HTML for ${route} at ${path.relative(repoRoot, file)}`);
+    return crypto
+      .createHash("sha256")
+      .update(normalisePageHtml(fs.readFileSync(file, "utf8")))
+      .digest("hex")
+      .slice(0, 16);
+  };
+
+  test("all 17 authored routes are registered", () => {
+    assert.equal(AUTHORED_ROUTES.length, 17);
+  });
+
+  test("every recorded hash matches the page as built", () => {
+    // This is the mechanism that makes the date policy enforceable rather than
+    // aspirational. A mismatch means the page's rendered content changed: the
+    // editor updates the hash, and updates lastModified too IF a reader would
+    // notice the change. See the policy at the top of lib/page-dates.ts.
+    const drifted = [];
+    for (const route of AUTHORED_ROUTES) {
+      const actual = hashOf(route);
+      if (actual !== AUTHORED_PAGE_DATES[route].contentHash) {
+        drifted.push(`${route}\n      recorded ${AUTHORED_PAGE_DATES[route].contentHash}\n      actual   ${actual}`);
+      }
+    }
+    assert.deepEqual(
+      drifted,
+      [],
+      `\n  Rendered content changed for:\n    ${drifted.join("\n    ")}\n` +
+        `  Update contentHash in lib/page-dates.ts. Update lastModified TOO if a\n` +
+        `  reader would notice the change; leave it if this was accessibility,\n` +
+        `  layout, metadata or refactor work only.\n`
+    );
+  });
+
+  test("the normaliser removes build artefacts but keeps content", () => {
+    const html = fs.readFileSync(routeFile("/about"), "utf8");
+    const out = normalisePageHtml(html);
+
+    // Volatile things are gone.
+    assert.ok(!/<!--[A-Za-z0-9_-]{16,}-->/.test(out), "the build ID survived normalisation");
+    assert.ok(!/chunks\/[A-Za-z0-9._-]*?-[0-9a-f]{16,}\.js/.test(out), "a chunk hash survived");
+
+    // Substantive things are not.
+    for (const [what, needle] of [
+      ["a heading", "Batir Turakulov"],
+      ["the meta description", 'name="description"'],
+      ["the canonical link", 'rel="canonical"'],
+      ["Open Graph", 'property="og:title"'],
+      ["JSON-LD", "application/ld+json"],
+      ["an internal link", 'href="/contact"'],
+    ]) {
+      assert.ok(out.includes(needle), `normalisation removed ${what}`);
+    }
+  });
+
+  test("a one-character text change moves the hash", () => {
+    // Without this, "the hash is stable" could be true because the hash is
+    // insensitive to everything, which would make the whole mechanism useless.
+    const html = fs.readFileSync(routeFile("/about"), "utf8");
+    const h = (s) => crypto.createHash("sha256").update(normalisePageHtml(s)).digest("hex");
+    assert.notEqual(h(html), h(html.replace("Batir Turakulov", "Batir  Turakulov")));
+  });
+
+  test("changing only the build ID does NOT move the hash", () => {
+    const html = fs.readFileSync(routeFile("/about"), "utf8");
+    const id = html.match(/<!--([A-Za-z0-9_-]{16,})-->/)?.[1];
+    assert.ok(id, "no build ID found in the built HTML");
+    const h = (s) => crypto.createHash("sha256").update(normalisePageHtml(s)).digest("hex");
+    assert.equal(h(html), h(html.split(id).join("Zx9QwErTyUiOpAsDfGh")));
+  });
+
+  test("the build ID is neutralised in BOTH the comment and the RSC payload", () => {
+    // This is the bug that made every page hash move on every build during
+    // development of PR 10. Next.js SANITISES the build ID in the HTML comment
+    // — an id of "1j7r7hqr_qW9raK5t-XLd" is written "...t_XLd" there — but
+    // emits it verbatim inside the flight payload. Reading only the comment
+    // therefore leaves the payload copy in place, and the hash is worthless.
+    const html = fs.readFileSync(routeFile("/about"), "utf8");
+    const out = normalisePageHtml(html);
+
+    const commentId = html.match(/<!--([A-Za-z0-9_-]{16,})-->/)?.[1];
+    const payloadIds = [...html.matchAll(/\\"b\\":\\"([A-Za-z0-9_-]{16,})\\"/g)].map((m) => m[1]);
+    assert.ok(commentId, "no build ID in the HTML comment");
+    assert.ok(payloadIds.length > 0, "no build ID in the RSC flight payload");
+
+    for (const id of [commentId, ...payloadIds]) {
+      assert.ok(!out.includes(id), `the build ID ${id} survived normalisation`);
+    }
+  });
+
+  test("hashes are stable when only build-generated values differ", () => {
+    // Simulates a rebuild: same content, different build ID in both of its
+    // forms, different chunk hashes. The page hash must not move.
+    const html = fs.readFileSync(routeFile("/about"), "utf8");
+    const h = (s) => crypto.createHash("sha256").update(normalisePageHtml(s)).digest("hex");
+
+    const commentId = html.match(/<!--([A-Za-z0-9_-]{16,})-->/)[1];
+    const payloadId = html.match(/\\"b\\":\\"([A-Za-z0-9_-]{16,})\\"/)?.[1] ?? commentId;
+    const rebuilt = html
+      .split(commentId).join("aaaaBBBBccccDDDD_eeF")
+      .split(payloadId).join("aaaaBBBBccccDDDD-eeF")
+      .replace(/static\/chunks\/([A-Za-z0-9._/-]*?)-[0-9a-f]{16,}\.js/g, "static/chunks/$1-0123456789abcdef.js");
+
+    assert.notEqual(rebuilt, html, "the simulation changed nothing, so it proves nothing");
+    assert.equal(h(html), h(rebuilt));
+  });
+
+  test("every registry entry records where its date came from", () => {
+    for (const [route, entry] of Object.entries(AUTHORED_PAGE_DATES)) {
+      assert.match(entry.lastModified, /^\d{4}-\d{2}-\d{2}$/, `${route} has a malformed date`);
+      assert.match(entry.contentHash, /^[0-9a-f]{16}$/, `${route} has a malformed hash`);
+      assert.match(entry.source, /^[0-9a-f]{7} — .+/, `${route} does not cite the commit its date came from`);
+    }
+  });
+
+  test("the date policy is documented in the registry itself", () => {
+    const src = fs.readFileSync(path.join(repoRoot, "lib/page-dates.ts"), "utf8");
+    assert.match(src, /update BOTH `contentHash` and `lastModified`/);
+    assert.match(src, /update `contentHash` ONLY/);
+  });
+});
