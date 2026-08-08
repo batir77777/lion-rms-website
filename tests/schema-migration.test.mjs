@@ -331,11 +331,20 @@ describe("News: the sourceType split weakened nothing", () => {
     assert.match(src, /relatedNews: "news"/);
   });
 
-  test("the tag registry grew by exactly the four approved additions", async () => {
+  test("the tag registry has grown only by approved additions", async () => {
+    // A ratchet on registry size, not on this PR's four tags alone. It fired as
+    // designed when F2 added `safety-management-systems` and
+    // `workplace-inspections`, which is the whole point: the count moves only
+    // when someone deliberately edits this number alongside the registry.
+    //
+    // 10 at PR 3  →  14 at PR 6 (the four below)  →  16 at F2 (the two below).
     const { CONTENT_TAG_SLUGS } = await import("../lib/taxonomy");
     for (const slug of ["sprinklers-suppression", "external-wall-systems", "smoke-control", "asbestos"]) {
       assert.ok(CONTENT_TAG_SLUGS.includes(slug), `${slug} missing from the registry`);
     }
-    assert.equal(CONTENT_TAG_SLUGS.length, 14, "the registry grew beyond the four approved tags");
+    for (const slug of ["safety-management-systems", "workplace-inspections"]) {
+      assert.ok(CONTENT_TAG_SLUGS.includes(slug), `${slug} missing from the registry`);
+    }
+    assert.equal(CONTENT_TAG_SLUGS.length, 16, "the registry grew beyond the approved tags");
   });
 });
