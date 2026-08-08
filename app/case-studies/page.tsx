@@ -4,7 +4,7 @@ import PhotoHero from "@/components/PhotoHero";
 import Reveal from "@/components/Reveal";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { CASE_STUDIES, OTHER_CASES } from "@/lib/case-studies";
+import { CASE_STUDIES } from "@/lib/case-studies";
 import { CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, SITE_URL } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
@@ -66,16 +66,24 @@ export default function CaseStudiesPage() {
                 delay={i * 60}
               />
             ))}
-            {OTHER_CASES.map((c, i) => (
-              <CaseStudyCard
-                key={c.title}
-                sectorLabel={c.sector}
-                title={c.title}
-                body={c.body}
-                tags={c.tags}
-                delay={(CASE_STUDIES.length + i) * 60}
-              />
-            ))}
+            {/*
+              OTHER_CASES is deliberately NOT rendered.
+
+              Three summary-only entries — RAMS & construction phase plans,
+              the property management company, and the consultancy firm — used
+              to appear here through the same CaseStudyCard as the three real
+              case studies. They carried the identical card styling and the
+              identical hover lift, but no `href`, so they rendered as
+              <article> rather than <a>: they rose under the cursor, could not
+              be focused by keyboard, and led nowhere. A card that behaves like
+              a link and is not one is worse than an absent card.
+
+              The data stays in lib/case-studies.ts. Restoring any of these is
+              a matter of writing its detail page and adding it to
+              CASE_STUDIES — not of rendering a destination-less card again.
+              tests/case-studies-cards.test.mjs fails if one comes back
+              without somewhere to go.
+            */}
           </div>
 
           <Reveal>

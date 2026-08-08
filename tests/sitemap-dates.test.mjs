@@ -49,6 +49,26 @@ const sitemap = resolveDefault(sitemapModule);
 const day = (d) => (d instanceof Date ? d : new Date(d)).toISOString().slice(0, 10);
 const routeFile = (route) => path.join(outDir, `${route === "/" ? "index" : route.replace(/^\//, "")}.html`);
 
+/*
+ * Accepted provenance forms — exactly two, and no third.
+ *
+ *   "<7-hex> — what changed"
+ *       A date traced back through history. The original form, and still the
+ *       normal one.
+ *
+ *   "change-record: YYYY-MM-DD — what changed"
+ *       A date SET BY the change that records it. The commit form cannot
+ *       express this: the SHA does not exist until the commit is written, and
+ *       amending the entry afterwards changes the SHA again. /case-studies is
+ *       the first such entry.
+ *
+ * Deliberately NOT a general "something with a date in it". A free-form dated
+ * string would accept "updated recently, 2026-08-08" and the guard would stop
+ * meaning anything. Both forms below are anchored, both require a separator,
+ * and both require a description after it. See the malformed-input test.
+ */
+const PROVENANCE = /^(?:[0-9a-f]{7} — .+|change-record: \d{4}-\d{2}-\d{2} — .+)$/;
+
 let entries = [];
 
 before(() => {
@@ -452,7 +472,64 @@ describe("Dynamic-route chunk paths are percent-encoded, and must still normalis
     for (const [route, entry] of Object.entries(AUTHORED_PAGE_DATES)) {
       assert.match(entry.lastModified, /^\d{4}-\d{2}-\d{2}$/, `${route} has a malformed date`);
       assert.match(entry.contentHash, /^[0-9a-f]{16}$/, `${route} has a malformed hash`);
-      assert.match(entry.source, /^[0-9a-f]{7} — .+/, `${route} does not cite the commit its date came from`);
+      assert.match(
+        entry.source,
+        PROVENANCE,
+        `${route} does not record where its date came from in an accepted form`
+      );
+    }
+  });
+
+  test("malformed provenance is rejected", () => {
+    // The guard is only worth having if it refuses things. Widening it to
+    // admit `change-record:` must not widen it to admit anything with a date
+    // in it — these are the shapes that were tempting and are still refused.
+    const REJECTED = [
+      "",
+      "remove three unpublished summary case-study cards",
+      "2026-08-08 — remove three unpublished summary case-study cards",
+      "updated 8 Aug 2026 — cards removed",
+      "change-record: 8 August 2026 — cards removed",
+      "change-record: 2026-08-08",
+      "change-record: 2026-08-08 — ",
+      "change-record — cards removed",
+      "changerecord: 2026-08-08 — cards removed",
+      "zzzzzzz — not a commit",
+      "574519 — a six-character sha",
+      "574519ff — an eight-character sha",
+      "574519f- no em dash",
+      " 574519f — leading space",
+      "see the PR",
+    ];
+    for (const bad of REJECTED) {
+      assert.equal(PROVENANCE.test(bad), false, `provenance guard wrongly accepts: "${bad}"`);
+    }
+
+    const ACCEPTED = [
+      "574519f — Type 3 corrected to Type 4",
+      "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
+    ];
+    for (const good of ACCEPTED) {
+      assert.equal(PROVENANCE.test(good), true, `provenance guard wrongly rejects: "${good}"`);
+    }
+  });
+
+  test("the change-record form is used sparingly", () => {
+    // It exists for dates a commit cannot cite. If it starts appearing on
+    // entries that could have named a commit, the guard has been routed
+    // around rather than satisfied.
+    const records = Object.entries(AUTHORED_PAGE_DATES).filter(([, e]) =>
+      e.source.startsWith("change-record:")
+    );
+    assert.ok(
+      records.length <= 3,
+      `${records.length} entries use change-record provenance; prefer a commit SHA where one exists`
+    );
+    for (const [route, entry] of records) {
+      assert.ok(
+        entry.source.includes(entry.lastModified),
+        `${route}: the change-record date should match lastModified (${entry.lastModified})`
+      );
     }
   });
 
