@@ -320,6 +320,133 @@ describe("Authored-page content hashes", () => {
     assert.notEqual(rebuilt, html, "the simulation changed nothing, so it proves nothing");
     assert.equal(h(html), h(rebuilt));
   });
+});
+
+// ---------------------------------------------------------------------------
+
+describe("Dynamic-route chunk paths are percent-encoded, and must still normalise", () => {
+  /*
+   * THE DEFECT THIS GROUP EXISTS TO PREVENT.
+   *
+   * A dynamic route's chunk path is URL-encoded — the [slug] segment is
+   * emitted as %5Bslug%5D:
+   *
+   *     /_next/static/chunks/app/services/%5Bslug%5D/page-8956bb85faa40be5.js
+   *
+   * The original normaliser's filename class was [A-Za-z0-9._/-], which has no
+   * "%", so the match failed at "%5B" and the content hash was left in the
+   * page. Nine routes were affected — the three /services, three /sectors and
+   * three /case-studies detail pages — and their recorded contentHash moved
+   * whenever that chunk's contents changed, with nothing about the pages
+   * themselves having changed at all.
+   *
+   * It stayed hidden because it is invisible on any machine whose node_modules
+   * still produce the chunk hash that was present when the values were first
+   * recorded. It surfaced only on a clean clone with a fresh `npm ci`. The
+   * static routes were never affected, which made the failure look at first
+   * like real content drift on nine pages.
+   *
+   * The pre-existing rebuild simulation above did not catch it either: its own
+   * substitution regex used the same class, so it never rewrote a
+   * percent-encoded chunk and never exercised the case.
+   */
+
+  /** The nine routes whose built HTML contains a percent-encoded chunk path. */
+  const DYNAMIC_ROUTES = [
+    "/services/fire-safety",
+    "/services/health-safety",
+    "/services/compliance-support",
+    "/sectors/residential-blocks-hmos",
+    "/sectors/offices-commercial-workplaces",
+    "/sectors/education",
+    "/case-studies/residential-portfolio-fire-risk-assessment",
+    "/case-studies/mixed-use-fire-strategy-change-of-use",
+    "/case-studies/multi-site-commercial-compliance-management",
+  ];
+
+  const h = (s) => crypto.createHash("sha256").update(normalisePageHtml(s)).digest("hex");
+
+  test("a percent-encoded chunk path is normalised", () => {
+    // The narrowest possible statement of the bug, with no build involved.
+    const before =
+      '<script src="/_next/static/chunks/app/services/%5Bslug%5D/page-8956bb85faa40be5.js" async=""></script>';
+    const after =
+      '<script src="/_next/static/chunks/app/services/%5Bslug%5D/page-bf2d0d54da3c8552.js" async=""></script>';
+    assert.equal(h(before), h(after), "two builds of the same dynamic page disagree");
+    assert.match(
+      normalisePageHtml(before),
+      /chunks\/app\/services\/%5Bslug%5D\/page-HASH\.js/,
+      "the path was not rewritten to the HASH placeholder"
+    );
+  });
+
+  test("it is normalised in the RSC flight payload too, where there is no /_next/ prefix", () => {
+    const before = '"static/chunks/app/sectors/%5Bslug%5D/page-8956bb85faa40be5.js"';
+    const after = '"static/chunks/app/sectors/%5Bslug%5D/page-0000000000000000.js"';
+    assert.equal(h(before), h(after));
+  });
+
+  test("the nine dynamic routes really do contain a percent-encoded chunk", () => {
+    // If Next.js ever stops percent-encoding these, this test fails and the
+    // group above becomes a guard against a case that no longer exists —
+    // which is worth knowing rather than silently carrying.
+    for (const route of DYNAMIC_ROUTES) {
+      const html = fs.readFileSync(routeFile(route), "utf8");
+      assert.match(
+        html,
+        /static\/chunks\/[A-Za-z0-9._%/-]*%5B[A-Za-z]+%5D[A-Za-z0-9._%/-]*-[0-9a-f]{16,}\.js/,
+        `${route} has no percent-encoded chunk path`
+      );
+    }
+  });
+
+  test("no chunk hash survives normalisation on any authored route", () => {
+    // The general form. The earlier "removes build artefacts" test checks only
+    // /about, a static route, with a pattern that excludes both "/" and "%" —
+    // so it could not have caught this.
+    const survivors = [];
+    for (const route of AUTHORED_ROUTES) {
+      const out = normalisePageHtml(fs.readFileSync(routeFile(route), "utf8"));
+      const found = out.match(/static\/chunks\/[A-Za-z0-9._%/-]*?-[0-9a-f]{16,}\.js/g);
+      if (found) survivors.push(`${route}: ${[...new Set(found)].join(", ")}`);
+    }
+    assert.deepEqual(
+      survivors,
+      [],
+      `\n  A chunk hash survived normalisation:\n    ${survivors.join("\n    ")}\n`
+    );
+  });
+
+  test("changing only a dynamic route's chunk hash does not move its page hash", () => {
+    // The rebuild simulation the original lacked, run against real built HTML
+    // for all nine routes. Note the substitution class includes "%" — using
+    // the defective class here is precisely how the gap went unnoticed.
+    for (const route of DYNAMIC_ROUTES) {
+      const html = fs.readFileSync(routeFile(route), "utf8");
+      const rebuilt = html.replace(
+        /static\/chunks\/([A-Za-z0-9._%/-]*?)-[0-9a-f]{16,}\.js/g,
+        "static/chunks/$1-0123456789abcdef.js"
+      );
+      assert.notEqual(rebuilt, html, `${route}: the simulation changed nothing`);
+      assert.equal(h(html), h(rebuilt), `${route}: the page hash moved with only chunk hashes`);
+    }
+  });
+
+  test("a real content change on a dynamic route still moves its hash", () => {
+    // The other half. A normaliser that has become insensitive would satisfy
+    // every assertion above and be worthless.
+    for (const route of DYNAMIC_ROUTES) {
+      const html = fs.readFileSync(routeFile(route), "utf8");
+      const match = html.match(/<h1[^>]*>([^<]{8,})</);
+      assert.ok(match, `${route}: no <h1> text to perturb`);
+      const changed = html.replace(match[1], `${match[1]} X`);
+      assert.notEqual(
+        h(html),
+        h(changed),
+        `${route}: editing the page's own <h1> did not move the hash`
+      );
+    }
+  });
 
   test("every registry entry records where its date came from", () => {
     for (const [route, entry] of Object.entries(AUTHORED_PAGE_DATES)) {

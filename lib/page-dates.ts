@@ -68,6 +68,27 @@
 // or "Audit fixes: … OG" change, and taking those would have dated the whole
 // site to the day the Open Graph sweep ran. The commit recorded against each
 // entry is the most recent one that changed something a reader sees.
+//
+// ---------------------------------------------------------------------------
+// WHY NINE HASHES WERE RE-RECORDED WITHOUT ANY CONTENT CHANGING
+// ---------------------------------------------------------------------------
+//
+// The nine dynamic routes — three /services, three /sectors, three
+// /case-studies detail pages — carry hashes recorded AFTER a normaliser fix,
+// not after an edit. Their original values were computed by a normaliser that
+// could not strip the chunk hash out of a percent-encoded path, so they had a
+// build artefact baked into them. See the note on the chunk regex in
+// normalisePageHtml() for the mechanism.
+//
+// The consequence is worth stating plainly, because it is the reason the fix
+// mattered: those nine values were only ever valid on a machine whose
+// node_modules happened to produce the same chunk hash. Anywhere else — a
+// fresh clone, CI, a colleague's laptop — the guard reported nine pages as
+// content-changed when nothing had changed, which is precisely the kind of
+// false alarm that teaches people to ignore a failing test.
+//
+// No `lastModified` was touched. Not one word a reader sees changed; only the
+// measurement did.
 // ---------------------------------------------------------------------------
 
 export interface PageDate {
@@ -97,17 +118,17 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services/fire-safety": {
     lastModified: "2026-07-29",
-    contentHash: "1e9a6000a1f687df",
+    contentHash: "ce335f4ec7a959bd",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
-    contentHash: "c4596397e2475d20",
+    contentHash: "d837ce62613f6503",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "fdfdf7a5d7f5d967",
+    contentHash: "b021c847d7df14ed",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
@@ -117,17 +138,17 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "736a0b4df30d79f6",
+    contentHash: "4c1f3b09dfe5f9b3",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "d81e16ab99437b64",
+    contentHash: "70f9f0ecb0a140d5",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "7873d1c53b576574",
+    contentHash: "8e141b1155834682",
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
@@ -137,17 +158,17 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "fe01bb5c1ce5fbac",
+    contentHash: "9689466e205cc612",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "88b7a6d13404f0f6",
+    contentHash: "3189dd6b53ce695e",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "066f51a8d934dd5a",
+    contentHash: "e2e221ce9479a7e0",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
@@ -210,8 +231,23 @@ export function normalisePageHtml(html: string): string {
      * payload. The "/_next/" prefix is therefore optional. Names may also be
      * nested — "chunks/app/about/page-<hash>.js" as well as
      * "chunks/255-<hash>.js" — so the name part admits slashes.
+     *
+     * The name part also admits "%", because a DYNAMIC route's chunk path is
+     * percent-encoded: the [slug] segment is emitted as
+     *
+     *     static/chunks/app/services/%5Bslug%5D/page-<hash>.js
+     *
+     * Without "%" in the class the match failed at "%5B", the hash was left in
+     * place, and the recorded contentHash for every dynamic route moved
+     * whenever that chunk's contents changed — nine routes in all: the three
+     * /services, three /sectors and three /case-studies detail pages. This was
+     * invisible on any machine whose node_modules still produced the chunk
+     * hash present when the values were first recorded, and only surfaced on a
+     * clean clone with a fresh `npm ci`, where the chunk hash differed. The
+     * static routes were never affected, which is what made it look for a
+     * while like a content change rather than a normalisation gap.
      */
-    .replace(/(\/_next\/)?static\/chunks\/([A-Za-z0-9._/-]*?)-[0-9a-f]{16,}\.js/g, "$1static/chunks/$2-HASH.js")
+    .replace(/(\/_next\/)?static\/chunks\/([A-Za-z0-9._%/-]*?)-[0-9a-f]{16,}\.js/g, "$1static/chunks/$2-HASH.js")
     .replace(/(\/_next\/)?static\/css\/[0-9a-f]{8,}\.css/g, "$1static/css/HASH.css");
 }
 
