@@ -456,12 +456,40 @@ export default async function DownloadRoute({
           >
             Licence and permitted use
           </h2>
+          {/*
+            THE canonical licence statement for every Downloads page.
+            ---------------------------------------------------------------
+            Until F1 this block was rendered on all seven landing pages AND six
+            of them carried their own "## Licence and permitted use" section in
+            MDX prose, so those six showed the licence twice, under two <h2>
+            headings with the same text. The prose versions had drifted into
+            five different wordings — one of them ("Free to use and adapt for
+            your own premises. Not for resale or republication.") stating the
+            terms considerably more loosely than the block sitting beside it.
+
+            The six prose sections were removed rather than harmonised. Six
+            copies kept in step by hand drift again at the first edit; one copy
+            cannot. `fire-safety-checklist` had always worked this way, so this
+            makes the other six match it rather than inventing a pattern.
+
+            The "No registration, payment or attribution" sentence is the one
+            thing the prose said that this block did not, so it moved here
+            rather than being lost.
+
+            The DigitalDocument JSON-LD points `license` at this section's
+            #licence anchor, which is now the only licence block on the page.
+
+            The PDF, DOCX and XLSX footers carry a shorter summary. That is
+            deliberate and out of F1's scope: they are published artefacts and
+            regenerating them is a separate decision.
+          */}
           <p className="text-sm leading-relaxed text-slate-600">
             © {SITE.name}. You may download, print, complete and adapt this resource for
             use in your own premises or organisation, including by your staff and
-            contractors working on those premises. You may not resell it, license it,
-            distribute it for a fee, republish it elsewhere, present an adapted version as
-            our work, or remove the attribution.
+            contractors working on those premises. No registration, payment or attribution
+            is required for that use. You may not resell it, license it, distribute it for
+            a fee, republish it elsewhere, present an adapted version as our work, or
+            remove the attribution.
           </p>
           {item.thirdPartyMaterial && item.thirdPartyAttribution && (
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
