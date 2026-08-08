@@ -138,6 +138,67 @@ export const CONTENT_TAGS: ContentTag[] = [
   { slug: "external-wall-systems", label: "External Wall Systems" },
   { slug: "smoke-control", label: "Smoke Control" },
   { slug: "asbestos", label: "Asbestos" },
+  // Added in F2 (health & safety taxonomy extension).
+  //
+  // THE DEFECT THIS FIXES. Of the fourteen tags above, exactly two describe
+  // anything other than fire: `asbestos` and `cdm`. The other twelve are
+  // building fabric, life-safety systems or evacuation. The consequence was
+  // visible in the content: the workplace health and safety inspection
+  // checklist — a seven-section general walk-round covering housekeeping,
+  // welfare, electrical, substances, people, emergency arrangements and
+  // contractors — was tagged `means-of-escape` and `fire-doors` and nothing
+  // else, and HSG65, the Health and Safety at Work Act and the Management
+  // Regulations carried no tags at all. This is a tri-disciplinary practice
+  // whose taxonomy could only describe one of the disciplines.
+  //
+  // ONLY TWO ADDED, and deliberately so. Eight further candidates were
+  // considered and rejected — electrical-safety, manual-handling,
+  // slips-trips-falls, work-at-height, coshh-hazardous-substances,
+  // welfare-facilities, risk-assessment and hse-enforcement. The first six
+  // each correspond to one section of one checklist and to nothing else on the
+  // site; `risk-assessment` would collide with the fire-risk-assessments
+  // category, the fire-risk-assessment technical domain and the glossary term
+  // of the same name; `hse-enforcement` duplicates the `enforcement` and
+  // `prosecution` values of `newsCategory`, which is the pattern PR 3 and PR 5
+  // both rejected. `competence` was proposed and DEFERRED at the owner's
+  // decision until there is a stronger body of H&S content behind it.
+  //
+  // `fire-extinguishers` and `sprinklers-suppression` above are used by zero
+  // content items. They are why tests/taxonomy-health-safety.test.mjs requires
+  // EVERY tag added here to be in use, rather than the "at least half" bar the
+  // PR 6 batch was allowed.
+
+  // Four uses: HSG65 (Plan-Do-Check-Act), MHSWR 1999 reg 5 (arrangements),
+  // HSWA 1974 s.2(3) (the safety policy duty), and the workplace inspection
+  // checklist (the monitoring limb of the same cycle).
+  //
+  // Named for the concept, not for the section. A tag called "health-safety"
+  // would duplicate the category slug of that name and compete in search with
+  // the very pages it classifies. The dormant technical domain
+  // `health-safety-management-systems` is the SAME idea under a longer name —
+  // if that field is ever populated, these two should be reconciled, not
+  // treated as two axes.
+  //
+  // NOT applied to the fire corpus. Fire safety is legally a subset of health
+  // and safety, so this tag could be argued onto a dozen fire documents — at
+  // which point it would mean "compliance" and mean nothing.
+  { slug: "safety-management-systems", label: "Safety Management Systems" },
+
+  // Two uses: the workplace inspection checklist, and the 2026 HSE asbestos
+  // inspection campaign. Thin, and knowingly so — the concept is load-bearing
+  // enough to carry it. The checklist devotes a whole section to the
+  // distinction this tag marks: an inspection checks whether the controls you
+  // already decided on are actually happening, whereas a risk assessment
+  // decides what those controls should be. They are routinely confused, and
+  // the taxonomy had no way to say which a document was.
+  //
+  // Distinct from the Downloads `resourceType` value `inspection-form`, which
+  // describes a document's SHAPE rather than its subject.
+  //
+  // WHEN TAXONOMY ROUTES SHIP: two items is below any sensible thin-content
+  // threshold for an archive page. Apply the threshold rule from the
+  // architecture plan (Section 6) rather than generating a page per slug.
+  { slug: "workplace-inspections", label: "Workplace Inspections" },
 ];
 
 export const CONTENT_TAG_SLUGS = CONTENT_TAGS.map((t) => t.slug) as [string, ...string[]];
