@@ -1,29 +1,24 @@
-import { SITE_URL } from "@/lib/site";
+import { buildBreadcrumbListSchema, type BreadcrumbItem } from "@/lib/content-jsonld";
 
-export interface Crumb {
-  name: string;
-  /** Path relative to the site root, e.g. "/services". Omit for the current page. */
-  path?: string;
-}
+/*
+ * BreadcrumbList JSON-LD, mirroring the visible breadcrumb trail.
+ *
+ * Used by 25 pages, so the component stays exactly as it was from the caller's
+ * point of view; only the object construction moved to lib/content-jsonld.ts
+ * in Phase 5A PR 10, alongside every other schema on the site.
+ *
+ * Crumb is re-exported rather than redefined: it is imported by name from this
+ * module in seven accessor files, and having the type live in one place while
+ * the builder lives in another would be the kind of split that drifts.
+ */
+export type Crumb = BreadcrumbItem;
 
-// BreadcrumbList JSON-LD — reflects the visible breadcrumb trail on a page.
-// Pass the full trail starting with Home; the current page can omit `path`
-// (schema.org allows the terminal item's URL to be omitted).
+// Pass the full trail starting with Home; the current page omits `path`.
 export default function BreadcrumbJsonLd({ items }: { items: Crumb[] }) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: item.name,
-      ...(item.path ? { item: `${SITE_URL}${item.path}` } : {}),
-    })),
-  };
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbListSchema(items)) }}
     />
   );
 }

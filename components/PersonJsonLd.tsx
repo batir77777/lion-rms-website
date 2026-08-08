@@ -1,37 +1,25 @@
-import { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, SITE, SITE_URL } from "@/lib/site";
+import { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, SITE } from "@/lib/site";
+import { buildPersonProfileSchema } from "@/lib/content-jsonld";
 
-// Person JSON-LD for Batir Turakulov — every field below is sourced directly
-// from lib/site.ts (the same data already rendered on the homepage and About
-// page), so nothing here can drift out of sync with what visitors actually see.
-// No `sameAs` (no verified social/professional profile links exist in the
-// codebase) and no awards/registrations beyond the credentials already shown.
+/*
+ * Person JSON-LD for Batir Turakulov, rendered on the About page.
+ *
+ * Every field is sourced from lib/site.ts — the same data the About page and
+ * homepage already display — so the structured data cannot claim a credential
+ * the visible page does not show. Object construction moved to
+ * lib/content-jsonld.ts in Phase 5A PR 10; the emitted JSON is unchanged.
+ */
 export default function PersonJsonLd() {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "Person",
+  const data = buildPersonProfileSchema({
     name: ASSESSOR.name,
-    jobTitle: ASSESSOR.role,
-    description: ASSESSOR.bio,
-    image: `${SITE_URL}${ASSESSOR.photo}`,
-    url: `${SITE_URL}/about`,
-    worksFor: {
-      "@type": "Organization",
-      name: SITE.name,
-      url: SITE_URL,
-    },
-    hasCredential: [
-      ...MEMBERSHIPS.map((m) => ({
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "Professional Membership",
-        name: m.fullName,
-      })),
-      ...QUALIFICATIONS.map((q) => ({
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "Qualification",
-        name: q.name,
-      })),
-    ],
-  };
+    role: ASSESSOR.role,
+    bio: ASSESSOR.bio,
+    photo: ASSESSOR.photo,
+    siteName: SITE.name,
+    memberships: MEMBERSHIPS,
+    qualifications: QUALIFICATIONS,
+  });
+
   return (
     <script
       type="application/ld+json"

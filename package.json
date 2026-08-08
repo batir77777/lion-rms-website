@@ -11,7 +11,8 @@
     "content:validate": "velite build --strict --clean",
     "content:audit": "node scripts/content-audit.mjs",
     "test": "node --import tsx --test tests/*.test.mjs",
-    "search:index": "node scripts/build-search-index.mjs"
+    "search:index": "node scripts/build-search-index.mjs",
+    "sitemap:hashes": "node scripts/sitemap-hashes.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

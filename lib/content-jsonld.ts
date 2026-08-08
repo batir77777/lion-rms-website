@@ -5,12 +5,12 @@ import { getAuthor } from "@/lib/people";
 // Structured-data builders for Knowledge Centre content pages
 // (Phase 5A, PR 3).
 //
-// Scope note: this module is used ONLY by the new /guides routes. The five
-// existing scattered JSON-LD components (StructuredData, PersonJsonLd,
-// BreadcrumbJsonLd, FaqJsonLd, plus inline per-page objects) are deliberately
-// NOT migrated here — that refactor touches structured data across the whole
-// existing site and belongs to the separately-scoped PR 10. These builders are
-// written in a shape PR 10 can adopt wholesale rather than replace.
+// Scope note, updated in PR 10: this module is now the ONLY place structured
+// data is built. It began as builders for the /guides routes, with the note
+// that StructuredData, PersonJsonLd, BreadcrumbJsonLd and FaqJsonLd would
+// follow in a separately-scoped PR. They did — see the sitewide builders at the
+// foot of this file. Nothing outside this module constructs a schema object,
+// and tests/jsonld-migration sweeps components/ to keep it that way.
 //
 // The correction worth calling out: the previous Article JSON-LD hardcoded the
 // author as the literal string "Batir Turakulov". Every content item carries a
@@ -459,5 +459,167 @@ export function buildDigitalDocumentSchema(input: DigitalDocumentSchemaInput) {
           })),
         }
       : {}),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Sitewide builders migrated from standalone components (Phase 5A, PR 10).
+//
+// Until this PR, four JSON-LD surfaces lived as components that each built
+// their own object inline: StructuredData, BreadcrumbJsonLd, PersonJsonLd and
+// FaqJsonLd. Everything else on the site had already moved to this module, so
+// these were the last places where "what we tell search engines" was defined
+// somewhere other than here.
+//
+// The migration is deliberately a PURE REFACTOR. Every object below emits
+// byte-identical JSON to what the components produced — asserted by
+// tests/jsonld-migration.test.mjs, which deep-compares all 234 emitted objects
+// across all 82 routes against a snapshot taken before the change. Field order
+// is preserved exactly, because JSON.stringify is order-sensitive and a
+// reordered object would be a needless diff in every page's HTML.
+//
+// The components remain, reduced to rendering what these functions return, so
+// no page had to change.
+// ---------------------------------------------------------------------------
+
+export interface OrganisationSchemaInput {
+  siteName: string;
+  legalName: string;
+  companyNumber: string;
+  description: string;
+  telephone: string;
+  email: string;
+  founder: { name: string; role: string; bio: string };
+  counties: readonly string[];
+  knowsAbout: readonly string[];
+  serviceType: readonly string[];
+}
+
+/**
+ * The sitewide ProfessionalService node, rendered in the root layout and
+ * therefore present on every page.
+ *
+ * The registered office is deliberately absent from `address`. This node is on
+ * EVERY page, so putting a residential address here would republish it
+ * sitewide — the exact thing /company-information exists to avoid. `address`
+ * stays the service locality; `legalName` and `identifier` carry the
+ * registered identity without the address.
+ */
+export function buildOrganisationSchema(input: OrganisationSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: input.siteName,
+    legalName: input.legalName,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "UK company number",
+      value: input.companyNumber,
+    },
+    description: input.description,
+    url: SITE_URL,
+    telephone: input.telephone,
+    email: input.email,
+    founder: {
+      "@type": "Person",
+      name: input.founder.name,
+      jobTitle: input.founder.role,
+      description: input.founder.bio,
+      url: `${SITE_URL}/about`,
+    },
+    areaServed: [
+      { "@type": "City", name: "London", "@id": "https://www.wikidata.org/wiki/Q84" },
+      ...input.counties.map((c) => ({ "@type": "AdministrativeArea", name: c })),
+    ],
+    address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
+    knowsAbout: [...input.knowsAbout],
+    serviceType: [...input.serviceType],
+  };
+}
+
+export interface BreadcrumbItem {
+  name: string;
+  /** Path relative to the site root, e.g. "/services". Omit for the current page. */
+  path?: string;
+}
+
+/**
+ * BreadcrumbList mirroring the visible trail.
+ *
+ * The terminal item omits `item` — schema.org permits it, and a link to the
+ * page you are already on is noise. Built from the same Crumb[] the visible
+ * Breadcrumbs component renders, so the two cannot disagree.
+ */
+export function buildBreadcrumbListSchema(items: readonly BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      ...(item.path ? { item: `${SITE_URL}${item.path}` } : {}),
+    })),
+  };
+}
+
+export interface PersonProfileInput {
+  name: string;
+  role: string;
+  bio: string;
+  photo: string;
+  siteName: string;
+  memberships: readonly { fullName: string }[];
+  qualifications: readonly { name: string }[];
+}
+
+/**
+ * The Person node for the About page.
+ *
+ * Every field is sourced from the same data the page itself renders, so the
+ * structured data cannot claim a credential the visible page does not show.
+ * No `sameAs`: no verified professional profile links exist in the codebase,
+ * and inventing them would be the one field here that could not be checked
+ * against the page.
+ */
+export function buildPersonProfileSchema(input: PersonProfileInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: input.name,
+    jobTitle: input.role,
+    description: input.bio,
+    image: `${SITE_URL}${input.photo}`,
+    url: `${SITE_URL}/about`,
+    worksFor: {
+      "@type": "Organization",
+      name: input.siteName,
+      url: SITE_URL,
+    },
+    hasCredential: [
+      ...input.memberships.map((m) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional Membership",
+        name: m.fullName,
+      })),
+      ...input.qualifications.map((q) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Qualification",
+        name: q.name,
+      })),
+    ],
+  };
+}
+
+/** FAQPage built from the same FAQS array the page renders. */
+export function buildFaqPageSchema(faqs: readonly { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
   };
 }
