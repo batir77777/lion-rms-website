@@ -181,17 +181,17 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-08-09",
     contentHash: "898dc6eaad92c78c",
-    source: "change-record: 2026-08-09 — Fire Engineering added as its own service card (repositioning PR1)",
+    source: "c9c3ae9 — Fire Engineering added as its own service card (repositioning PR1)",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-09",
     contentHash: "ea93070bf29da32f",
-    source: "change-record: 2026-08-09 — retitled and restructured into Fire Risk Assessments and Fire Safety Consultancy sections (repositioning PR1)",
+    source: "c9c3ae9 — retitled and restructured into Fire Risk Assessments and Fire Safety Consultancy sections (repositioning PR1)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
     contentHash: "7a6b1a8db081d303",
-    source: "change-record: 2026-08-09 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
+    source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
