@@ -91,6 +91,30 @@
 // wherever a commit can honestly be named.
 //
 // ---------------------------------------------------------------------------
+// WHY ALL SEVENTEEN HASHES MOVED WHEN app/not-found.tsx WAS ADDED
+// ---------------------------------------------------------------------------
+//
+// Adding a custom 404 changed the rendered bytes of EVERY page on the site,
+// and the reason is not obvious: the root layout's `notFound` slot is
+// serialised into each page's RSC flight payload. Before, that payload carried
+// Next.js's built-in default 404 markup; now it carries ours. The React
+// reference numbering in the payload shifts with it, which cascades through
+// the rest of the document.
+//
+// So seventeen hashes were re-recorded and NOT ONE `lastModified` moved. The
+// 404 is a new page; nothing on the other seventeen changed for a reader. That
+// is the policy's second case, applied at scale.
+//
+// (/case-studies carries 2026-08-08 from the change before this one, where
+// three summary-only cards were withdrawn. That date is not this change's.)
+//
+// Worth knowing before the next change of this kind: any edit to something the
+// root layout renders — the header, the footer, the 404 slot — will move all
+// seventeen. That is the mechanism working, not a fault, but it means the
+// question "which of these did a reader actually notice?" has to be answered
+// deliberately rather than by re-recording the lot and moving on.
+//
+// ---------------------------------------------------------------------------
 // WHY NINE HASHES WERE RE-RECORDED WITHOUT ANY CONTENT CHANGING
 // ---------------------------------------------------------------------------
 //
@@ -124,87 +148,87 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-08-01",
-    contentHash: "a7415563b2f56f22",
+    contentHash: "1949f89c4f4e177d",
     source: "3e0e37e — homepage credentials wording rewritten",
   },
   "/about": {
     lastModified: "2026-08-01",
-    contentHash: "9d8dfca6adcb3ca9",
+    contentHash: "a0718dbac8fd2f6f",
     source: "d43d809 — 'Advanced Diploma' corrected to 'Level 4 Diploma'",
   },
   "/services": {
     lastModified: "2026-07-28",
-    contentHash: "d0b71f695d2c0688",
+    contentHash: "ad08d443211f953d",
     source: "0a97294 — tri-disciplinary hero copy",
   },
   "/services/fire-safety": {
     lastModified: "2026-07-29",
-    contentHash: "ce335f4ec7a959bd",
+    contentHash: "a09273ffb775fe28",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
-    contentHash: "d837ce62613f6503",
+    contentHash: "c399b58b812d1cdd",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "b021c847d7df14ed",
+    contentHash: "d12566a876717df3",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-07-26",
-    contentHash: "7b1872a3c6c174c7",
+    contentHash: "aa21b193b623839b",
     source: "04ae4c7 — page authored",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "4c1f3b09dfe5f9b3",
+    contentHash: "5e34ab8a5aedbf26",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "70f9f0ecb0a140d5",
+    contentHash: "15561f60f7fe1ce8",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "8e141b1155834682",
+    contentHash: "724ca4d8e5071d2d",
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "f1c9b8aae69145fc",
+    contentHash: "22a1e9643c2d50b8",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "9689466e205cc612",
+    contentHash: "5721a4267afcaa3f",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "3189dd6b53ce695e",
+    contentHash: "95b3ef4172d8dad1",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "e2e221ce9479a7e0",
+    contentHash: "3efdf7fa7233a777",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "a975878eef167abc",
+    contentHash: "dcc9a3cf31372c22",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "ea65bdef39301fd5",
+    contentHash: "897cd3797a3031bf",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-08-01",
-    contentHash: "7af306b0e185dc88",
+    contentHash: "01fdc55a7c42d1ab",
     source: "238a0c5 — QR code block added",
   },
 };

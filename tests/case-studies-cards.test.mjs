@@ -148,41 +148,42 @@ describe("Structured data and dates", () => {
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const entry = AUTHORED_PAGE_DATES["/case-studies"];
     assert.equal(entry.lastModified, "2026-08-08");
-    assert.equal(entry.contentHash, "f1c9b8aae69145fc");
+    // The hash is pinned in tests/not-found.test.mjs, which is where it last moved.
     assert.match(entry.source, /^change-record: 2026-08-08 — remove three unpublished summary case-study cards$/);
   });
 
-  test("no other authored-page entry is touched by this change", async () => {
-    // The whole point of splitting this work: /case-studies is the only
-    // registry entry that moves here. The 404 — which moves all seventeen,
-    // because its markup lives in every page's RSC payload — is a separate
-    // change with a separate PR.
+  test("no other authored-page DATE is touched", async () => {
+    // This pinned the other sixteen hashes as well when the card removal
+    // stood alone. The branded 404 legitimately moves all seventeen — its
+    // markup lives in every page's RSC payload — so the hashes are now pinned
+    // in tests/not-found.test.mjs, at the values that change produced.
+    //
+    // What stays here is the part the 404 must NOT disturb: the dates. Only
+    // /case-studies moved, and only because three visible cards went away.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
-    const UNCHANGED = {
-      "/": ["2026-08-01", "a7415563b2f56f22"],
-      "/about": ["2026-08-01", "9d8dfca6adcb3ca9"],
-      "/services": ["2026-07-28", "d0b71f695d2c0688"],
-      "/services/fire-safety": ["2026-07-29", "ce335f4ec7a959bd"],
-      "/services/health-safety": ["2026-07-29", "d837ce62613f6503"],
-      "/services/compliance-support": ["2026-07-29", "b021c847d7df14ed"],
-      "/sectors": ["2026-07-26", "7b1872a3c6c174c7"],
-      "/sectors/residential-blocks-hmos": ["2026-07-29", "4c1f3b09dfe5f9b3"],
-      "/sectors/offices-commercial-workplaces": ["2026-07-29", "70f9f0ecb0a140d5"],
-      "/sectors/education": ["2026-07-29", "8e141b1155834682"],
-      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "9689466e205cc612"],
-      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "3189dd6b53ce695e"],
-      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "e2e221ce9479a7e0"],
-      "/faq": ["2026-08-01", "a975878eef167abc"],
-      "/check": ["2026-08-01", "ea65bdef39301fd5"],
-      "/contact": ["2026-08-01", "7af306b0e185dc88"],
+    const DATES = {
+      "/": "2026-08-01",
+      "/about": "2026-08-01",
+      "/services": "2026-07-28",
+      "/services/fire-safety": "2026-07-29",
+      "/services/health-safety": "2026-07-29",
+      "/services/compliance-support": "2026-07-29",
+      "/sectors": "2026-07-26",
+      "/sectors/residential-blocks-hmos": "2026-07-29",
+      "/sectors/offices-commercial-workplaces": "2026-07-29",
+      "/sectors/education": "2026-07-29",
+      "/case-studies/residential-portfolio-fire-risk-assessment": "2026-08-01",
+      "/case-studies/mixed-use-fire-strategy-change-of-use": "2026-08-01",
+      "/case-studies/multi-site-commercial-compliance-management": "2026-08-01",
+      "/faq": "2026-08-01",
+      "/check": "2026-08-01",
+      "/contact": "2026-08-01",
     };
-    const drifted = [];
-    for (const [route, [date, hash]] of Object.entries(UNCHANGED)) {
-      const e = AUTHORED_PAGE_DATES[route];
-      if (e.lastModified !== date || e.contentHash !== hash) drifted.push(route);
-    }
+    const drifted = Object.entries(DATES)
+      .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
+      .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(UNCHANGED).length, 16);
+    assert.equal(Object.keys(DATES).length, 16);
   });
 
   test("the three detail pages keep their own dates", async () => {
