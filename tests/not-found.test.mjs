@@ -173,17 +173,25 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      * route, /services/fire-engineering. See the change-record comments in
      * lib/page-dates.ts.
      *
+     * Repositioning PR2 (2026-08-09) moved two more, on its own: `/` was
+     * rewritten to present both disciplines as co-equal (date moved too),
+     * and `/services/health-safety` gained a stable anchor id on one item
+     * so the homepage's new Construction Health & Safety card could
+     * deep-link to it (date did not move — nothing a reader sees changed).
+     * See the "WHY TWO HASHES MOVED FOR REPOSITIONING PR2" comment in
+     * lib/page-dates.ts.
+     *
      * The table is written out in full so that a future change which moves
      * one of these has to say which, rather than re-recording the lot.
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-08-01", "3b85380d6d706d1c"],
+      "/": ["2026-08-09", "a4a37f76909319a3"],
       "/about": ["2026-08-01", "2f84329cc3f1c7c4"],
       "/services": ["2026-08-09", "898dc6eaad92c78c"],
       "/services/fire-safety": ["2026-08-09", "ea93070bf29da32f"],
       "/services/fire-engineering": ["2026-08-09", "7a6b1a8db081d303"],
-      "/services/health-safety": ["2026-07-29", "bc2dac0ca1416556"],
+      "/services/health-safety": ["2026-07-29", "26ac271507408cef"],
       "/services/compliance-support": ["2026-07-29", "2fde28de9bcf493e"],
       "/sectors": ["2026-07-26", "cce0c3648c7eecd7"],
       "/sectors/residential-blocks-hmos": ["2026-07-29", "00b99fafd9f83bd5"],

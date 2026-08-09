@@ -137,7 +137,28 @@ export default async function ServiceDetailPage({
             <div className="grid gap-6 sm:grid-cols-2">
               {(cat.items ?? []).map((item, i) => (
                 <Reveal key={item.name} delay={i * 50}>
-                  <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
+                  {/*
+                    `item.id` (repositioning PR2) exists only on the
+                    "RAMS and Construction Phase Plans" item today — the
+                    homepage's Construction Health & Safety card deep-links
+                    here rather than to a page that doesn't exist yet.
+                    `scroll-mt-28` matches the anchor convention used
+                    elsewhere on this site (see the ServiceSection note above)
+                    so the linked item isn't hidden under the fixed header.
+
+                    The `id` prop is spread in only when present, rather than
+                    written as `id={item.id}`, so that items without one don't
+                    serialise an explicit `"id":"$undefined"` into the RSC
+                    payload — that would move every other flat-item category's
+                    (fire-engineering, compliance-support) recorded content
+                    hash in lib/page-dates.ts for no reader-visible reason.
+                    With the spread, only health-safety's payload changes,
+                    which is the one page that legitimately gained an anchor.
+                  */}
+                  <div
+                    {...(item.id ? { id: item.id } : {})}
+                    className={`h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100${item.id ? " scroll-mt-28" : ""}`}
+                  >
                     <h2 className="mb-2 text-lg font-bold text-navy-900">{item.name}</h2>
                     <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
                   </div>

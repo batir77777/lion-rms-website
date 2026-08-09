@@ -157,6 +157,32 @@
 // gone from here because they moved to the new `/services/fire-engineering`,
 // not because they were cut.
 // ---------------------------------------------------------------------------
+// WHY TWO HASHES MOVED FOR REPOSITIONING PR2 (HOMEPAGE), AND ONLY TWO
+// ---------------------------------------------------------------------------
+//
+// PR2 rewrote the homepage's hero, trust strip, credentials-strip intro line
+// and services section to present Fire Safety & Fire Engineering and Health
+// & Safety & Construction Safety as co-equal disciplines. That is a
+// substantive, reader-visible change, so `/` gets both a new hash and a new
+// `lastModified`.
+//
+// `/services/health-safety` also gets a new hash, for a narrower reason: its
+// "RAMS and Construction Phase Plans" item gained a stable `id` so the
+// homepage's new Construction Health & Safety card can deep-link to it. The
+// `id` attribute itself renders nothing a reader sees — no visible text,
+// styling, or layout changed — so `lastModified` stays at 2026-07-29.
+//
+// Two other flat-item category pages, `/services/fire-engineering` and
+// `/services/compliance-support`, share the same page component
+// (app/services/[slug]/page.tsx) that gained this `id`-rendering logic, and a
+// first version of the change moved their hashes too, for no reader-visible
+// reason at all: React was serialising an explicit `"id":"$undefined"` into
+// the RSC payload for every item without one. The fix spreads `id` in only
+// when the item actually has one (see the comment at the call site), which
+// keeps those two pages' hashes exactly where they were. Only the one page
+// whose markup genuinely changed — health-safety, which now has a real `id`
+// on one item — moved.
+// ---------------------------------------------------------------------------
 
 export interface PageDate {
   /** ISO date, YYYY-MM-DD. The last substantive user-facing content change. */
@@ -169,9 +195,9 @@ export interface PageDate {
 
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
-    lastModified: "2026-08-01",
-    contentHash: "3b85380d6d706d1c",
-    source: "3e0e37e — homepage credentials wording rewritten",
+    lastModified: "2026-08-09",
+    contentHash: "a4a37f76909319a3",
+    source: "change-record: 2026-08-09 — homepage repositioned to two co-equal disciplines (repositioning PR2)",
   },
   "/about": {
     lastModified: "2026-08-01",
@@ -195,7 +221,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
-    contentHash: "bc2dac0ca1416556",
+    contentHash: "26ac271507408cef",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/compliance-support": {
