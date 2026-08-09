@@ -60,12 +60,37 @@ before(() => {
   }
 });
 
+// Routes and content changes introduced since the PR 10 snapshot was taken.
+// This fixture proves PR 10 itself was a pure refactor; it was never meant to
+// freeze the site's JSON-LD forever. Each entry below is a real, reader-visible
+// content change from a later PR, documented here rather than silently
+// re-baselined, so an UNDOCUMENTED change still fails loudly.
+//
+// Repositioning PR1 (2026-08-09) added /services/fire-engineering as a new
+// page, and retitled /services/fire-safety so Fire Risk Assessments leads
+// ("Fire Risk Assessments & Fire Safety Consultancy | ..."). The retitled
+// name and description feed straight into that page's own Service and
+// BreadcrumbList JSON-LD, and into the serviceType of every sector and case
+// study whose servicesProvided list references the fire-safety category —
+// exactly the propagation a shared title should have.
+const ROUTES_ADDED_SINCE_PR10 = ["services/fire-engineering"];
+const CONTENT_CHANGED_SINCE_PR10 = new Set([
+  "services/fire-safety → Service",
+  "services/fire-safety → BreadcrumbList",
+  "sectors/education → Service",
+  "sectors/offices-commercial-workplaces → Service",
+  "sectors/residential-blocks-hmos → Service",
+  "case-studies/mixed-use-fire-strategy-change-of-use → Service",
+  "case-studies/residential-portfolio-fire-risk-assessment → Service",
+]);
+
 describe("Emitted JSON-LD is unchanged by the migration", () => {
-  test("the same routes emit JSON-LD as before", () => {
-    assert.deepEqual(Object.keys(emitted).sort(), Object.keys(fixture).sort());
+  test("the same routes emit JSON-LD as before, plus routes documented as added since", () => {
+    const expectedRoutes = [...Object.keys(fixture), ...ROUTES_ADDED_SINCE_PR10].sort();
+    assert.deepEqual(Object.keys(emitted).sort(), expectedRoutes);
   });
 
-  test("every route emits the same number of objects, in the same order", () => {
+  test("every pre-existing route emits the same number of objects, in the same order", () => {
     for (const route of Object.keys(fixture)) {
       assert.deepEqual(
         emitted[route].map((o) => o["@type"]),
@@ -75,7 +100,7 @@ describe("Emitted JSON-LD is unchanged by the migration", () => {
     }
   });
 
-  test("all 234 objects are byte-identical to the pre-migration snapshot", () => {
+  test("only the documented routes changed since PR 10; everything else is byte-identical", () => {
     const changed = [];
     for (const [route, expected] of Object.entries(fixture)) {
       expected.forEach((f, i) => {
@@ -83,7 +108,20 @@ describe("Emitted JSON-LD is unchanged by the migration", () => {
         if (actual !== f.hash) changed.push(`${route} → ${f.type}`);
       });
     }
-    assert.deepEqual(changed, [], `\n  JSON-LD changed for:\n    ${changed.join("\n    ")}\n`);
+    const undocumented = changed.filter((c) => !CONTENT_CHANGED_SINCE_PR10.has(c));
+    assert.deepEqual(
+      undocumented,
+      [],
+      `\n  Undocumented JSON-LD change:\n    ${undocumented.join("\n    ")}\n`
+    );
+    // The other direction: every documented exclusion must actually have
+    // changed, or it is stale bookkeeping hiding a revert.
+    const notActuallyChanged = [...CONTENT_CHANGED_SINCE_PR10].filter((c) => !changed.includes(c));
+    assert.deepEqual(
+      notActuallyChanged,
+      [],
+      `\n  Documented as changed since PR10 but matches the snapshot again — remove from the exclusion list:\n    ${notActuallyChanged.join("\n    ")}\n`
+    );
   });
 
   test("the snapshot covers the four migrated schemas", () => {

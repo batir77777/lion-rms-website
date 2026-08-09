@@ -27,7 +27,15 @@ if (!fs.existsSync(OUT_DIR)) {
 
 /* Duplicated from lib/page-dates.ts, which is TypeScript and cannot be
    imported by a plain Node script. tests/sitemap-dates.test.mjs asserts the two
-   agree by checking the recorded hashes against this same build output. */
+   agree by checking the recorded hashes against this same build output.
+   The name part must include "%": a DYNAMIC route's chunk path is
+   percent-encoded (static/chunks/app/services/%5Bslug%5D/page-<hash>.js).
+   This copy fell out of sync with lib/page-dates.ts's normalisePageHtml when
+   PR10 added "%" there and not here — discovered during repositioning PR1
+   when this script reported /services/fire-safety and
+   /services/fire-engineering as changed while the real, test-suite-enforced
+   normaliser agreed they had not. Fixed here so this reporting tool matches
+   the function that actually governs the registry again. */
 const normalisePageHtml = (html) => {
   const candidates = new Set();
   const comment = html.match(/<!--([A-Za-z0-9_-]{16,})-->/)?.[1];
@@ -36,7 +44,7 @@ const normalisePageHtml = (html) => {
   let out = html;
   for (const id of candidates) out = out.split(id).join("BUILD_ID");
   return out
-    .replace(/(\/_next\/)?static\/chunks\/([A-Za-z0-9._/-]*?)-[0-9a-f]{16,}\.js/g, "$1static/chunks/$2-HASH.js")
+    .replace(/(\/_next\/)?static\/chunks\/([A-Za-z0-9._%/-]*?)-[0-9a-f]{16,}\.js/g, "$1static/chunks/$2-HASH.js")
     .replace(/(\/_next\/)?static\/css\/[0-9a-f]{8,}\.css/g, "$1static/css/HASH.css");
 };
 

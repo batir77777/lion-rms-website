@@ -160,12 +160,18 @@ describe("Structured data and dates", () => {
     //
     // What stays here is the part the 404 must NOT disturb: the dates. Only
     // /case-studies moved, and only because three visible cards went away.
+    //
+    // /services and /services/fire-safety are deliberately absent from this
+    // list as of repositioning PR1 (2026-08-09): that change retitled and
+    // restructured both pages, which a reader would notice, so their dates
+    // legitimately moved too. Pinning "no date drift at all" would defeat the
+    // date policy's own first case (see lib/page-dates.ts) rather than guard
+    // it. What PR1 must not do — untouched dates on every other authored
+    // route — is asserted below.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
       "/": "2026-08-01",
       "/about": "2026-08-01",
-      "/services": "2026-07-28",
-      "/services/fire-safety": "2026-07-29",
       "/services/health-safety": "2026-07-29",
       "/services/compliance-support": "2026-07-29",
       "/sectors": "2026-07-26",
@@ -183,7 +189,7 @@ describe("Structured data and dates", () => {
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 16);
+    assert.equal(Object.keys(DATES).length, 14);
   });
 
   test("the three detail pages keep their own dates", async () => {

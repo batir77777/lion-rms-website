@@ -157,3 +157,51 @@ describe("Insights to Guides redirect map", () => {
     }
   });
 });
+
+// Repositioning PR1: the SEO migration decision ("Option C" — see
+// lion-rms-final-implementation-plan.md) is that Fire Risk Assessments stays
+// at /services/fire-safety permanently. No URL move happens in PR1, so no
+// redirect may exist for this path. This guard exists so a future PR cannot
+// introduce one by accident before Search Console query/page data and
+// external backlink data have been reviewed and a separate decision made.
+describe("/services/fire-safety carries no redirect (SEO migration Option C)", () => {
+  test("no rule's source is /services/fire-safety", async () => {
+    const rules = await loadRedirects();
+    const rule = rules.find((r) => r.source === "/services/fire-safety");
+    assert.equal(rule, undefined, "a redirect now exists for /services/fire-safety — this must not happen until the URL-move decision is made separately");
+  });
+
+  test("no wildcard or pattern rule covers /services/fire-safety", async () => {
+    const rules = await loadRedirects();
+    for (const rule of rules) {
+      if (!/[:*]/.test(rule.source)) continue;
+      // Convert the small set of Next.js path-to-regexp tokens actually used
+      // in this config (":slug", "*") into a regex and check it doesn't
+      // happen to also match the fire-safety path.
+      const pattern = new RegExp(
+        "^" +
+          rule.source
+            .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+            .replace(/:[A-Za-z0-9_]+\*/g, ".*")
+            .replace(/:[A-Za-z0-9_]+/g, "[^/]+")
+            .replace(/\*/g, ".*") +
+          "$"
+      );
+      assert.equal(
+        pattern.test("/services/fire-safety"),
+        false,
+        `pattern rule ${rule.source} unexpectedly matches /services/fire-safety`
+      );
+    }
+  });
+
+  test("/services/fire-safety remains canonical and indexable, not a redirect target either", async () => {
+    // Belt and braces: it must not appear as anyone's redirect destination.
+    // A page that is only ever reached via a 3xx is a weaker signal than one
+    // that is a direct link target — and this page is meant to keep its
+    // existing direct inbound links exactly as they are.
+    const rules = await loadRedirects();
+    const asDestination = rules.find((r) => r.destination === "/services/fire-safety");
+    assert.equal(asDestination, undefined, "/services/fire-safety should not be any rule's destination either");
+  });
+});
