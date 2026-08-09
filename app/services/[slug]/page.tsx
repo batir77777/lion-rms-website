@@ -90,17 +90,61 @@ export default async function ServiceDetailPage({
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
-          {/* Service items grid */}
-          <div className="grid gap-6 sm:grid-cols-2">
-            {cat.items.map((item, i) => (
-              <Reveal key={item.name} delay={i * 50}>
-                <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
-                  <h2 className="mb-2 text-lg font-bold text-navy-900">{item.name}</h2>
-                  <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
+          {/*
+           * Two render paths. Most categories carry a flat `items` list and
+           * render as before — a single grid, each item an <h2>. A category
+           * with `sections` (currently only fire-safety, see ServiceSection
+           * in lib/site.ts) renders each section as its own <h2> with a
+           * stable, deep-linkable `id`, and its items as <h3> children —
+           * correct heading nesting for a page that now covers two distinct
+           * propositions rather than one. `scroll-mt-28` matches the anchor
+           * convention already used for in-page headings in
+           * components/MDXContent.tsx, so a linked section isn't hidden
+           * under the fixed header when the browser jumps to it.
+           */}
+          {cat.sections ? (
+            <div className="space-y-14">
+              {cat.sections.map((section) => (
+                <div key={section.id} id={section.id} className="scroll-mt-28">
+                  <div className="mb-6 max-w-2xl">
+                    <p className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
+                      {section.eyebrow}
+                    </p>
+                    <h2 className="text-2xl font-extrabold text-navy-900">{section.title}</h2>
+                    <p className="mt-3 text-base leading-relaxed text-slate-500">{section.intro}</p>
+                  </div>
+                  <div className={section.featured ? "grid gap-6" : "grid gap-6 sm:grid-cols-2"}>
+                    {section.items.map((item, i) => (
+                      <Reveal key={item.name} delay={i * 50}>
+                        <div
+                          className={`h-full rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:shadow-md hover:border-teal-100 ${
+                            section.featured ? "p-8" : "p-7"
+                          }`}
+                        >
+                          <h3 className={section.featured ? "mb-2 text-xl font-bold text-navy-900" : "mb-2 text-lg font-bold text-navy-900"}>
+                            {item.name}
+                          </h3>
+                          <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {(cat.items ?? []).map((item, i) => (
+                <Reveal key={item.name} delay={i * 50}>
+                  <div className="h-full rounded-2xl border border-slate-100 bg-white p-7 shadow-sm transition hover:shadow-md hover:border-teal-100">
+                    <h2 className="mb-2 text-lg font-bold text-navy-900">{item.name}</h2>
+                    <p className="text-base leading-relaxed text-slate-500">{item.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
 
           {/* Other services */}
           <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">

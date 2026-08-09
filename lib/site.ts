@@ -46,6 +46,7 @@ export const COMPANY_INFO_PATH = "/company-information";
 export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80",
   fireSafety: "/img/services/fire-5.jpg",
+  fireEngineering: "/img/services/fire-3.jpg",
   healthSafety: "/img/services/hs-5.jpg",
   digital: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
   city: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=80",
@@ -91,19 +92,58 @@ export const CTA_PRIMARY_LABEL = "Request a Quote";
 export const CTA_SECONDARY_LABEL = "Free Compliance Check";
 export const CTA_SECONDARY_HREF = "/check";
 
-// Company positioning — Lion RMS is presented across three co-equal
-// disciplines: Fire Engineering, Health & Safety, and Fire Risk Assessment.
-// Fire risk assessment is deliberately kept prominent rather than subordinate:
-// it is both a core discipline and the highest-intent search term for the
-// business. Coverage wording stays "London, the Home Counties, and the wider
-// UK by arrangement" — never an unrestricted UK-wide claim (see COVERAGE_FULL).
+// Company positioning (repositioning PR1, August 2026) — Lion RMS is
+// presented as TWO co-equal disciplines rather than a fire practice that also
+// offers health & safety: Fire Safety & Fire Engineering, and Health & Safety
+// & Construction Safety. Within Fire, three propositions stand at equal
+// billing (Fire Risk Assessments, Fire Engineering, Fire Safety Consultancy);
+// within Health & Safety, two (Health & Safety Consultancy, Construction
+// Health & Safety — the latter arrives in PR5). Parity is at the discipline
+// level, not forced page-for-page: fire genuinely has three distinct
+// propositions and H&S genuinely has two, and neither side is padded to match
+// the other's count. Fire risk assessment is named first among the fire
+// services deliberately — it is the highest-intent search term for the
+// business and PR1 keeps it at `/services/fire-safety`, unmoved (see the note
+// on `sections` below). Coverage wording stays "London, the Home Counties, and
+// the wider UK by arrangement" — never an unrestricted UK-wide claim (see
+// COVERAGE_FULL).
 export const POSITIONING =
-  "Lion Risk Management Solutions is a Fire Engineering, Health & Safety and Fire Risk Assessment Consultancy, providing fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation assessments, health & safety consultancy, compliance auditing and professional training across London, the Home Counties, and the wider UK by arrangement.";
+  "Lion Risk Management Solutions is a fire safety and fire engineering consultancy, and a health & safety and construction safety consultancy — two disciplines, one adviser. We provide fire risk assessments, fire engineering advice and fire safety consultancy, alongside health & safety consultancy, workplace inspections, risk assessments, and RAMS and construction phase plans for construction clients, across London, the Home Counties, and the wider UK by arrangement.";
 
 export interface ServiceItem {
   name: string;
   desc: string;
 }
+
+/**
+ * A grouped, anchor-linkable subsection within one service page — used only
+ * where two or more genuinely distinct propositions share a single URL.
+ *
+ * `/services/fire-safety` is the first and, for now, only case: Fire Risk
+ * Assessments and Fire Safety Consultancy are two of the five services in the
+ * approved architecture, but the FRA URL is deliberately NOT being moved (see
+ * the SEO migration note — external backlink equity to `/services/fire-safety`
+ * is still unknown, and moving the URL is off the table until it is). Fire
+ * Safety Consultancy gets its own URL in PR3; until then both sections live
+ * here, each independently linkable via `id`.
+ *
+ * `featured` renders a section's items as a single wide card rather than the
+ * standard two-column grid — the mechanism used to make Fire Risk Assessments
+ * visually lead the page, per the "retitle/reposition so FRA clearly lead"
+ * instruction, without shortening or diminishing the Fire Safety Consultancy
+ * content that still shares the page.
+ */
+export interface ServiceSection {
+  /** Anchor id — must be stable. Referenced from the homepage, the footer,
+   * and any external link, so changing it breaks those on the next deploy. */
+  id: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  items: ServiceItem[];
+  featured?: boolean;
+}
+
 export interface ServiceCategory {
   slug: string;
   image: string;
@@ -112,7 +152,16 @@ export interface ServiceCategory {
   title: string;
   short: string;
   intro: string;
-  items: ServiceItem[];
+  /**
+   * A flat list of services rendered as a single grid. Mutually exclusive
+   * with `sections` below — a category has one or the other. Omitted (rather
+   * than left as `[]`) for a category that uses `sections`, so a future
+   * reader importing `.items` directly gets `undefined` and a type error
+   * rather than a silently empty page.
+   */
+  items?: ServiceItem[];
+  /** See `ServiceSection`. Present only on `fire-safety` for now. */
+  sections?: ServiceSection[];
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -120,22 +169,70 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "fire-safety",
     image: IMAGES.fireSafety,
     imageAlt: "Protected escape corridor with fire doors, emergency lighting and illuminated exit signage",
+    eyebrow: "Fire Safety",
+    title: "Fire Risk Assessments & Fire Safety Consultancy",
+    short: "Fire risk assessments informed by recognised guidance, including PAS 79 where appropriate — plus fire safety consultancy: fire door inspections, compartmentation, training and duty-holder advice.",
+    // Fire risk assessment is a core discipline of the consultancy and
+    // represents a substantial part of its work — wording carried over from
+    // the About page rather than newly written, so the page's framing of FRA
+    // matches what the site already says about it elsewhere.
+    intro: "Fire risk assessment is a core discipline of the consultancy and represents a substantial part of its work. Assessments are undertaken with reference to relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction. Alongside assessment, we provide ongoing fire safety consultancy for buildings already in use — fire door inspections, compartmentation surveys, training, and clear advice for landlords, duty holders and Responsible Persons.",
+    // Repositioning PR1 (August 2026). Restructured from a single flat list
+    // into two anchor-linkable sections so Fire Risk Assessments and Fire
+    // Safety Consultancy — two of the five services in the approved
+    // architecture — can each be linked to directly while they still share
+    // this URL. See ServiceSection above for why the URL is not yet split.
+    //
+    // Two items moved OUT of this page to the new /services/fire-engineering
+    // page: "Fire Engineering" and "Fire Strategies". The remaining items are
+    // unchanged from before this PR, redistributed rather than rewritten,
+    // with one exception: the "Fire Safety Consultancy" item's description
+    // no longer says "design-stage input", which is now Fire Engineering's
+    // territory and would otherwise be claimed on two live pages at once.
+    sections: [
+      {
+        id: "fire-risk-assessments",
+        eyebrow: "Primary service — buildings in use",
+        title: "Fire Risk Assessments",
+        intro: "Thorough, prioritised fire risk assessments for residential, commercial and complex premises.",
+        featured: true,
+        items: [
+          { name: "Fire Risk Assessments", desc: "Thorough assessments that identify fire hazards, evaluate risk to occupants, and provide clear, prioritised recommendations informed by relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction." },
+        ],
+      },
+      {
+        id: "fire-safety-consultancy",
+        eyebrow: "Ongoing management & operational support",
+        title: "Fire Safety Consultancy",
+        intro: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+        items: [
+          { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, building owners and managing agents — fire safety management arrangements, regulatory interpretation, remedial strategy and ongoing compliance support." },
+          { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
+          { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
+          { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
+          { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
+        ],
+      },
+    ],
+  },
+  {
+    // Repositioning PR1 (August 2026) — new page. Carved out of what was
+    // `fire-safety`'s original intro and its "Fire Engineering" and "Fire
+    // Strategies" items, which is why the wording below is close to what
+    // fire-safety used to say: this page is where that copy actually
+    // belonged all along. PR3 gives this page its full approved depth (means
+    // of escape, Building Regulations advice, design review and change-of-use
+    // support as standalone items); PR1 moves only what already existed.
+    slug: "fire-engineering",
+    image: IMAGES.fireEngineering,
+    imageAlt: "Fire engineer in a hard hat reviewing plans on a tablet in a protected stairwell with illuminated exit signage",
     eyebrow: "Fire Engineering",
-    title: "Fire Engineering & Fire Safety Services",
-    short: "Fire engineering, fire safety consultancy, fire risk assessments, fire strategies, fire door inspections, compartmentation, and fire safety training.",
-    intro: "Fire engineering led, from design-stage advice through to buildings in use. We help duty holders and project teams meet their obligations under the Regulatory Reform (Fire Safety) Order 2005 and the Building Regulations, with clear, prioritised, and proportionate fire safety advice for residential, commercial, and complex premises.",
-    // Ordered to the approved service hierarchy: fire engineering first, with
-    // fire risk assessment positioned as one service within the broader
-    // offering rather than the headline discipline.
+    title: "Fire Engineering",
+    short: "Applied fire engineering — means of escape, passive and active fire protection, compartmentation strategy, fire safety design review and fire strategies for new build, refurbishment and change-of-use projects.",
+    intro: "Fire engineering led, from design-stage advice through to buildings in use. We help project teams and duty holders meet their obligations under the Building Regulations and the Regulatory Reform (Fire Safety) Order 2005, with clear, proportionate fire engineering advice for new build, refurbishment, and change-of-use projects.",
     items: [
-      { name: "Fire Engineering", desc: "Applied fire engineering across building fire safety — means of escape, passive and active fire protection, compartmentation strategy, and fire safety design review for new build, refurbishment and change-of-use projects." },
-      { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, project teams and building owners — from design-stage input and regulatory interpretation through to remedial strategy and ongoing compliance support." },
-      { name: "Fire Risk Assessments", desc: "Thorough assessments that identify fire hazards, evaluate risk to occupants, and provide clear, prioritised recommendations informed by relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction." },
+      { name: "Fire Engineering Consultancy", desc: "Applied fire engineering across building fire safety — means of escape, passive and active fire protection, compartmentation strategy, and fire safety design review for new build, refurbishment and change-of-use projects." },
       { name: "Fire Strategies", desc: "Bespoke fire strategies for new developments, change-of-use projects, and complex buildings — supporting planning and Building Regulations compliance." },
-      { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
-      { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
-      { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
-      { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
     ],
   },
   {
@@ -177,6 +274,37 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
 export function getCategory(slug: string): ServiceCategory | undefined {
   return SERVICE_CATEGORIES.find((c) => c.slug === slug);
 }
+
+/**
+ * The footer's Services column (repositioning PR1). Hand-ordered rather than
+ * derived by flatMap over `SERVICE_CATEGORIES`, because a category's
+ * `sections` are declared together but need to interleave with sibling
+ * categories in the list a reader actually wants: Fire Risk Assessments,
+ * Fire Engineering, Fire Safety Consultancy, then Health & Safety, then
+ * Compliance Management. Labels are read from the data so the footer cannot
+ * drift from the pages it links to; only the ORDER is hand-set here.
+ *
+ * Construction Health & Safety is deliberately absent until PR5 creates its
+ * page — a footer link with no destination is worse than no link.
+ */
+export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
+  const fireSafety = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety");
+  const fra = fireSafety?.sections?.find((s) => s.id === "fire-risk-assessments");
+  const fsc = fireSafety?.sections?.find((s) => s.id === "fire-safety-consultancy");
+  const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
+  const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
+  const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
+
+  const links = [
+    fra && { label: fra.title, href: `/services/fire-safety#${fra.id}` },
+    fireEngineering && { label: fireEngineering.title, href: `/services/${fireEngineering.slug}` },
+    fsc && { label: fsc.title, href: `/services/fire-safety#${fsc.id}` },
+    healthSafety && { label: healthSafety.title, href: `/services/${healthSafety.slug}` },
+    complianceSupport && { label: complianceSupport.title, href: `/services/${complianceSupport.slug}` },
+  ].filter((l): l is { label: string; href: string } => Boolean(l));
+
+  return links;
+})();
 
 // The nine approved sectors (Phase 4B PR 1). Three have dedicated pages
 // (`hasPage: true`); the remaining six are represented on the homepage and

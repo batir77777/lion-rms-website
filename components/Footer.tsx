@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CREDENTIALS, COMPANY_INFO_PATH, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { NAV, SITE, CREDENTIALS, COMPANY_INFO_PATH, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, FOOTER_SERVICE_LINKS } from "@/lib/site";
 import { KNOWLEDGE_SECTIONS } from "@/components/KnowledgeCentreNav";
 
 export default function Footer() {
@@ -8,14 +8,14 @@ export default function Footer() {
     <footer style={{ background: "#060e1f" }} className="text-slate-400">
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6">
         {/* Top strip */}
-        <div className="mb-12 grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="mb-12 grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           {/* Brand column */}
           <div>
             <div className="mb-4">
               <Logo className="h-12 w-auto" dark />
             </div>
             <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Fire engineering, health &amp; safety and fire risk assessment consultancy across London and the Home Counties.
+              Fire safety, fire engineering, health &amp; safety and construction safety consultancy across London and the Home Counties.
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
@@ -27,6 +27,28 @@ export default function Footer() {
                 </span>
               ))}
             </div>
+          </div>
+
+          {/*
+           * Services (repositioning PR1). FOOTER_SERVICE_LINKS is derived
+           * from SERVICE_CATEGORIES in lib/site.ts — labels and hrefs cannot
+           * drift from the pages they link to. Two of the five links are
+           * anchors into /services/fire-safety rather than dedicated pages;
+           * see the ServiceSection note in lib/site.ts for why.
+           */}
+          <div>
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+              Services
+            </h2>
+            <ul className="space-y-2.5 text-sm">
+              {FOOTER_SERVICE_LINKS.map((s) => (
+                <li key={s.href}>
+                  <Link href={s.href} className="text-slate-400 transition hover:text-white">
+                    {s.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Pages */}

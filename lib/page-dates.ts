@@ -135,6 +135,28 @@
 // No `lastModified` was touched. Not one word a reader sees changed; only the
 // measurement did.
 // ---------------------------------------------------------------------------
+// WHY FIFTEEN HASHES MOVED WHEN THE FOOTER GAINED A SERVICES COLUMN
+// ---------------------------------------------------------------------------
+//
+// Repositioning PR1 (9 August 2026) added a Services column to the footer —
+// see FOOTER_SERVICE_LINKS in lib/site.ts. The footer is rendered by the root
+// layout, so — exactly as when app/not-found.tsx was added — every page's
+// rendered bytes changed and every hash moved. Three routes ALSO changed
+// `lastModified`, because their own content genuinely changed for a reader,
+// not just their footer: `/services` (a new Fire Engineering card appeared),
+// `/services/fire-safety` (retitled and restructured — see below), and the
+// new `/services/fire-engineering`. The other fifteen entries below have new
+// hashes and unchanged dates, for the same reason the seventeen did after the
+// 404: nothing on those fifteen pages moved except the footer underneath them.
+//
+// `/services/fire-safety` is also the first page to carry PR1's two-section
+// restructuring — see the ServiceSection type and its comment in lib/site.ts.
+// Fire Risk Assessments now leads the page as a featured section; Fire Safety
+// Consultancy follows as a second, separately anchored section. The two items
+// that used to open the page — "Fire Engineering" and "Fire Strategies" — are
+// gone from here because they moved to the new `/services/fire-engineering`,
+// not because they were cut.
+// ---------------------------------------------------------------------------
 
 export interface PageDate {
   /** ISO date, YYYY-MM-DD. The last substantive user-facing content change. */
@@ -148,87 +170,92 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-08-01",
-    contentHash: "1949f89c4f4e177d",
+    contentHash: "3b85380d6d706d1c",
     source: "3e0e37e — homepage credentials wording rewritten",
   },
   "/about": {
     lastModified: "2026-08-01",
-    contentHash: "a0718dbac8fd2f6f",
+    contentHash: "2f84329cc3f1c7c4",
     source: "d43d809 — 'Advanced Diploma' corrected to 'Level 4 Diploma'",
   },
   "/services": {
-    lastModified: "2026-07-28",
-    contentHash: "ad08d443211f953d",
-    source: "0a97294 — tri-disciplinary hero copy",
+    lastModified: "2026-08-09",
+    contentHash: "898dc6eaad92c78c",
+    source: "c9c3ae9 — Fire Engineering added as its own service card (repositioning PR1)",
   },
   "/services/fire-safety": {
-    lastModified: "2026-07-29",
-    contentHash: "a09273ffb775fe28",
-    source: "2caa255 — service pages link related guides instead of insights",
+    lastModified: "2026-08-09",
+    contentHash: "ea93070bf29da32f",
+    source: "c9c3ae9 — retitled and restructured into Fire Risk Assessments and Fire Safety Consultancy sections (repositioning PR1)",
+  },
+  "/services/fire-engineering": {
+    lastModified: "2026-08-09",
+    contentHash: "7a6b1a8db081d303",
+    source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
-    contentHash: "c399b58b812d1cdd",
+    contentHash: "bc2dac0ca1416556",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "d12566a876717df3",
+    contentHash: "2fde28de9bcf493e",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-07-26",
-    contentHash: "aa21b193b623839b",
+    contentHash: "cce0c3648c7eecd7",
     source: "04ae4c7 — page authored",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "5e34ab8a5aedbf26",
+    contentHash: "00b99fafd9f83bd5",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "15561f60f7fe1ce8",
+    contentHash: "7059ab794e295340",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "724ca4d8e5071d2d",
+    contentHash: "21fb2808b98ff9eb",
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "22a1e9643c2d50b8",
+    contentHash: "e2af93cff03c5603",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "5721a4267afcaa3f",
+    contentHash: "209d6c60e284006b",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "95b3ef4172d8dad1",
+    contentHash: "c67ecad0553b7f12",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "3efdf7fa7233a777",
+    contentHash: "2d2114a8255d8d5e",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "dcc9a3cf31372c22",
+    contentHash: "4857d13ee7dc83c0",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "897cd3797a3031bf",
+    contentHash: "0be1d5880c15ee63",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-08-01",
-    contentHash: "01fdc55a7c42d1ab",
+    contentHash: "583cbdf107740266",
     source: "238a0c5 — QR code block added",
   },
 };

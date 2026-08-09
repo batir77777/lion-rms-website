@@ -384,7 +384,9 @@ describe("Relationship groups are disjoint", () => {
 describe("Accessibility corrections", () => {
   test("footer column headings are h2, so pages without an h2 do not skip a level", () => {
     const src = read("components/Footer.tsx");
-    assert.equal((src.match(/<h2 /g) ?? []).length, 3);
+    // 4 as of repositioning PR1 (2026-08-09): Services, Pages, Coverage,
+    // Contact. The Brand column has no heading of its own.
+    assert.equal((src.match(/<h2 /g) ?? []).length, 4);
     assert.ok(!/<h3/.test(src), "a footer heading is still h3");
   });
 

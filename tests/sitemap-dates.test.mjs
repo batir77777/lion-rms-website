@@ -116,9 +116,9 @@ describe("No sitemap date is a build timestamp", () => {
 });
 
 describe("Every sitemap route has a date source", () => {
-  test("the sitemap emits exactly the expected 78 URLs", () => {
-    assert.equal(entries.length, 78);
-    assert.equal(new Set(entries.map((e) => e.url)).size, 78, "a URL is listed twice");
+  test("the sitemap emits exactly the expected 79 URLs", () => {
+    assert.equal(entries.length, 79);
+    assert.equal(new Set(entries.map((e) => e.url)).size, 79, "a URL is listed twice");
   });
 
   test("an unregistered authored route throws rather than defaulting", () => {
@@ -242,8 +242,8 @@ describe("Authored-page content hashes", () => {
       .slice(0, 16);
   };
 
-  test("all 17 authored routes are registered", () => {
-    assert.equal(AUTHORED_ROUTES.length, 17);
+  test("all 18 authored routes are registered", () => {
+    assert.equal(AUTHORED_ROUTES.length, 18);
   });
 
   test("every recorded hash matches the page as built", () => {
@@ -371,9 +371,14 @@ describe("Dynamic-route chunk paths are percent-encoded, and must still normalis
    * percent-encoded chunk and never exercised the case.
    */
 
-  /** The nine routes whose built HTML contains a percent-encoded chunk path. */
+  /**
+   * The routes whose built HTML contains a percent-encoded chunk path.
+   * /services/fire-engineering joined this list in repositioning PR1 — it is
+   * a new page under the same dynamic /services/[slug] route.
+   */
   const DYNAMIC_ROUTES = [
     "/services/fire-safety",
+    "/services/fire-engineering",
     "/services/health-safety",
     "/services/compliance-support",
     "/sectors/residential-blocks-hmos",
@@ -406,7 +411,7 @@ describe("Dynamic-route chunk paths are percent-encoded, and must still normalis
     assert.equal(h(before), h(after));
   });
 
-  test("the nine dynamic routes really do contain a percent-encoded chunk", () => {
+  test("the dynamic routes really do contain a percent-encoded chunk", () => {
     // If Next.js ever stops percent-encoding these, this test fails and the
     // group above becomes a guard against a case that no longer exists —
     // which is worth knowing rather than silently carrying.
@@ -439,7 +444,7 @@ describe("Dynamic-route chunk paths are percent-encoded, and must still normalis
 
   test("changing only a dynamic route's chunk hash does not move its page hash", () => {
     // The rebuild simulation the original lacked, run against real built HTML
-    // for all nine routes. Note the substitution class includes "%" — using
+    // for every dynamic route. Note the substitution class includes "%" — using
     // the defective class here is precisely how the gap went unnoticed.
     for (const route of DYNAMIC_ROUTES) {
       const html = fs.readFileSync(routeFile(route), "utf8");
