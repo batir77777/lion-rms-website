@@ -70,6 +70,27 @@
 // entry is the most recent one that changed something a reader sees.
 //
 // ---------------------------------------------------------------------------
+// PROVENANCE: TWO FORMS, AND ONLY TWO
+// ---------------------------------------------------------------------------
+//
+// `source` normally cites the commit a date was traced to:
+//
+//     "574519f — Type 3 corrected to Type 4 and explanations rewritten"
+//
+// That form cannot express a date SET BY the change that records it. The SHA
+// does not exist until the commit is written, and amending the entry
+// afterwards changes the SHA again. For those, and only those, use:
+//
+//     "change-record: YYYY-MM-DD — what changed"
+//
+// /case-studies is the first. Its date is the day three summary-only cards
+// were withdrawn from the index, by the change that wrote this line.
+//
+// tests/sitemap-dates accepts these two shapes and nothing else — not a bare
+// date, not a free-form sentence with a date in it. Prefer the commit form
+// wherever a commit can honestly be named.
+//
+// ---------------------------------------------------------------------------
 // WHY NINE HASHES WERE RE-RECORDED WITHOUT ANY CONTENT CHANGING
 // ---------------------------------------------------------------------------
 //
@@ -152,9 +173,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
-    lastModified: "2026-08-01",
-    contentHash: "11d77e32864ccde1",
-    source: "574519f — FRA type copy corrected in lib/case-studies.ts, rendered on the index",
+    lastModified: "2026-08-08",
+    contentHash: "f1c9b8aae69145fc",
+    source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",

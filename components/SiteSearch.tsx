@@ -104,25 +104,61 @@ export default function SiteSearch({
   const pagefind = useRef<PagefindModule | null>(null);
   const requestId = useRef(0);
   const initialised = useRef(false);
+  /* The single in-flight load. See the note in `load` below. */
+  const loading = useRef<Promise<PagefindModule | null> | null>(null);
 
-  const load = useCallback(async () => {
-    if (pagefind.current || status === "loading" || status === "unavailable") return pagefind.current;
+  /*
+   * THE DEFECT THIS SHAPE EXISTS TO PREVENT.
+   *
+   * This used to guard on `status`:
+   *
+   *     if (pagefind.current || status === "loading" || ...) return pagefind.current;
+   *
+   * which returns NULL while a load is in flight — and `run` below then did
+   * `if (!engine) return;`, abandoning the search without setting any state
+   * and without scheduling a retry.
+   *
+   * Focusing the field starts the load. So anyone who typed a query and
+   * submitted it before the engine had finished loading got nothing at all:
+   * no results, no empty state, and an empty live region, while the separate
+   * ?q= effect updated the address bar regardless. That is why it looked like
+   * "Enter does not work but the button does" — Enter arrives during the load
+   * window, whereas moving the mouse to the button takes long enough that the
+   * load has usually settled. Both controls always shared one submit handler;
+   * the key was never the variable.
+   *
+   * Now every caller awaits the SAME promise, so a search issued mid-load
+   * resolves against the engine the moment it is ready. The promise is held in
+   * a ref rather than derived from `status`, because state is asynchronous and
+   * two calls in one tick would both read the stale value.
+   */
+  const load = useCallback((): Promise<PagefindModule | null> => {
+    if (pagefind.current) return Promise.resolve(pagefind.current);
+    if (status === "unavailable") return Promise.resolve(null);
+    if (loading.current) return loading.current;
+
     setStatus("loading");
-    try {
-      const engine = (await import(
-        /* webpackIgnore: true */ "/pagefind/pagefind.js"
-      )) as unknown as PagefindModule;
-      await engine.init();
-      pagefind.current = engine;
-      setStatus("ready");
-      return engine;
-    } catch {
-      /* The index is absent in `next dev`, where nothing has run the build
-         step. Say so plainly rather than leaving a field that silently does
-         nothing. */
-      setStatus("unavailable");
-      return null;
-    }
+    loading.current = (async () => {
+      try {
+        const engine = (await import(
+          /* webpackIgnore: true */ "/pagefind/pagefind.js"
+        )) as unknown as PagefindModule;
+        await engine.init();
+        pagefind.current = engine;
+        setStatus("ready");
+        return engine;
+      } catch {
+        /* The index is absent in `next dev`, where nothing has run the build
+           step. Say so plainly rather than leaving a field that silently does
+           nothing. */
+        setStatus("unavailable");
+        /* Cleared so a later attempt can retry rather than being permanently
+           bound to a rejected load. */
+        loading.current = null;
+        return null;
+      }
+    })();
+    return loading.current;
   }, [status]);
 
   const run = useCallback(
@@ -210,6 +246,16 @@ export default function SiteSearch({
   const showing = results.length;
   const hasMore = total > showing;
 
+  /*
+   * Busy means: the reader has asked for something and we are either still
+   * fetching the index or still searching it. Before the load race was fixed
+   * this window produced silence — no results, no empty state and an empty
+   * live region — so a screen-reader user had no way to tell a slow search
+   * from a broken one. It is announced, and it clears the moment results or
+   * the empty state are ready, because `status` leaves these two values then.
+   */
+  const busy = query.trim() !== "" && (status === "loading" || status === "searching");
+
   const countMessage = !searched
     ? ""
     : total === 0
@@ -217,6 +263,10 @@ export default function SiteSearch({
       : `${total} ${total === 1 ? "result" : "results"} for ${query.trim()}${
           hasMore ? `, showing the first ${showing}` : ""
         }.`;
+
+  /* One region, one message at a time. Announcing a stale count underneath a
+     "Searching…" would be worse than saying nothing. */
+  const liveMessage = busy ? "Searching…" : countMessage;
 
   return (
     <div className={isCompact ? "" : "mt-2"}>
@@ -276,11 +326,23 @@ export default function SiteSearch({
         arriving in the same tick.
       */}
       <p aria-live="polite" className="sr-only">
-        {countMessage}
+        {liveMessage}
       </p>
       <p aria-live="assertive" className="sr-only">
         {status === "unavailable" ? "Search is unavailable on this page." : ""}
       </p>
+
+      {/*
+        The visible counterpart, aria-hidden because the region above already
+        announces it — rendering both to assistive technology would say
+        "Searching…" twice. Plain text rather than a spinner: it needs no
+        dependency, no animation, and it survives reduced-motion settings.
+      */}
+      {busy && (
+        <p className="mt-6 text-sm font-semibold text-slate-500" aria-hidden>
+          Searching…
+        </p>
+      )}
 
       {status === "unavailable" && (
         <p className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
