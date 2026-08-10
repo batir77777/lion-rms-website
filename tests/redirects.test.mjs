@@ -164,6 +164,12 @@ describe("Insights to Guides redirect map", () => {
 // redirect may exist for this path. This guard exists so a future PR cannot
 // introduce one by accident before Search Console query/page data and
 // external backlink data have been reviewed and a separate decision made.
+//
+// Repositioning PR3 confirms the same thing from the other direction: Fire
+// Safety Consultancy moves OUT of this page to its own route, but FRA's own
+// URL still does not move, and still carries no redirect. The anchor it
+// leaves behind (#fire-safety-consultancy) becomes a pointer block, not a
+// redirect — see ServicePointer in lib/site.ts.
 describe("/services/fire-safety carries no redirect (SEO migration Option C)", () => {
   test("no rule's source is /services/fire-safety", async () => {
     const rules = await loadRedirects();

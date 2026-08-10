@@ -73,7 +73,13 @@ before(() => {
 // BreadcrumbList JSON-LD, and into the serviceType of every sector and case
 // study whose servicesProvided list references the fire-safety category —
 // exactly the propagation a shared title should have.
-const ROUTES_ADDED_SINCE_PR10 = ["services/fire-engineering"];
+//
+// Repositioning PR3 (2026-08-10) added /services/fire-safety-consultancy as
+// a new page, and retitled /services/fire-safety again — this time to drop
+// the Fire Safety Consultancy content entirely ("Fire Risk Assessments" on
+// its own) — so its Service and BreadcrumbList JSON-LD change again for the
+// same reason PR1's did.
+const ROUTES_ADDED_SINCE_PR10 = ["services/fire-engineering", "services/fire-safety-consultancy"];
 const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "services/fire-safety → Service",
   "services/fire-safety → BreadcrumbList",

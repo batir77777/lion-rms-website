@@ -133,7 +133,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const mod = await import("../app/sitemap.ts");
     const fn = typeof mod.default === "function" ? mod.default : mod.default.default;
     const entries = await fn();
-    assert.equal(entries.length, 79, `the sitemap should still list 79 URLs, found ${entries.length}`);
+    assert.equal(entries.length, 80, `the sitemap should still list 80 URLs, found ${entries.length}`);
     const offenders = entries
       .map((e) => new URL(e.url).pathname)
       .filter((p) => /not-found|404/.test(p));
@@ -142,7 +142,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
 
   test("_not-found is not registered as an authored route", async () => {
     const { AUTHORED_ROUTES } = await import("../lib/page-dates");
-    assert.equal(AUTHORED_ROUTES.length, 18);
+    assert.equal(AUTHORED_ROUTES.length, 19);
     assert.equal(
       AUTHORED_ROUTES.some((r) => /not-found|404/.test(r)),
       false
@@ -181,33 +181,44 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      * See the "WHY TWO HASHES MOVED FOR REPOSITIONING PR2" comment in
      * lib/page-dates.ts.
      *
+     * Repositioning PR3 (2026-08-10) moved every hash again — Fire Safety
+     * Consultancy's footer link changed from an anchor to a real route, and
+     * the footer renders on every page — and added a nineteenth authored
+     * route, /services/fire-safety-consultancy. Three dates moved because a
+     * reader genuinely notices something different: /services/fire-safety
+     * (the Fire Safety Consultancy section replaced by a one-sentence
+     * pointer), /services (a fifth service card), and the new page itself.
+     * See the "WHY EVERY HASH MOVED AGAIN FOR REPOSITIONING PR3" comment in
+     * lib/page-dates.ts.
+     *
      * The table is written out in full so that a future change which moves
      * one of these has to say which, rather than re-recording the lot.
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-08-09", "a4a37f76909319a3"],
-      "/about": ["2026-08-01", "2f84329cc3f1c7c4"],
-      "/services": ["2026-08-09", "898dc6eaad92c78c"],
-      "/services/fire-safety": ["2026-08-09", "ea93070bf29da32f"],
-      "/services/fire-engineering": ["2026-08-09", "7a6b1a8db081d303"],
-      "/services/health-safety": ["2026-07-29", "26ac271507408cef"],
-      "/services/compliance-support": ["2026-07-29", "2fde28de9bcf493e"],
-      "/sectors": ["2026-07-26", "cce0c3648c7eecd7"],
-      "/sectors/residential-blocks-hmos": ["2026-07-29", "00b99fafd9f83bd5"],
-      "/sectors/offices-commercial-workplaces": ["2026-07-29", "7059ab794e295340"],
-      "/sectors/education": ["2026-07-29", "21fb2808b98ff9eb"],
+      "/": ["2026-08-09", "b33d2e1c3efe852d"],
+      "/about": ["2026-08-01", "fe55527586cb8d24"],
+      "/services": ["2026-08-10", "55f3a78d4436724f"],
+      "/services/fire-safety": ["2026-08-10", "a60f82e9b998a832"],
+      "/services/fire-safety-consultancy": ["2026-08-10", "ab6ebd2d28d1c976"],
+      "/services/fire-engineering": ["2026-08-09", "3c2d4b9e8da84dff"],
+      "/services/health-safety": ["2026-07-29", "789ac90f96df8cd0"],
+      "/services/compliance-support": ["2026-07-29", "7995d2690912d3f2"],
+      "/sectors": ["2026-07-26", "51f00cfe3da4bebf"],
+      "/sectors/residential-blocks-hmos": ["2026-07-29", "ae09567549ceddf9"],
+      "/sectors/offices-commercial-workplaces": ["2026-07-29", "2fd5fdcbc929da3f"],
+      "/sectors/education": ["2026-07-29", "aee48874a1e76020"],
       // 2026-08-08 arrived with the card removal, not with this change.
-      "/case-studies": ["2026-08-08", "e2af93cff03c5603"],
-      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "209d6c60e284006b"],
-      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "c67ecad0553b7f12"],
-      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "2d2114a8255d8d5e"],
-      "/faq": ["2026-08-01", "4857d13ee7dc83c0"],
-      "/check": ["2026-08-01", "0be1d5880c15ee63"],
-      "/contact": ["2026-08-01", "583cbdf107740266"],
+      "/case-studies": ["2026-08-08", "86eb631bc824dad4"],
+      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "5987edd67fa93a79"],
+      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "1d76ac13fdfd2e13"],
+      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "af0470cee297147d"],
+      "/faq": ["2026-08-01", "3b346b013cb6f372"],
+      "/check": ["2026-08-01", "244780ae093b8a07"],
+      "/contact": ["2026-08-01", "66846e9070d8321f"],
     };
-    assert.equal(Object.keys(EXPECTED).length, 18);
-    assert.equal(AUTHORED_ROUTES.length, 18);
+    assert.equal(Object.keys(EXPECTED).length, 19);
+    assert.equal(AUTHORED_ROUTES.length, 19);
 
     const wrong = [];
     for (const [route, [date, hash]] of Object.entries(EXPECTED)) {

@@ -82,9 +82,20 @@ describe("Guides accessor layer", () => {
 
   test("service derivation returns the guides that declare that service", async () => {
     const { getGuidesForService, publishedGuides } = await import("../lib/guides");
+    // Repositioning PR3: fire-door-inspections-explained moved from
+    // fire-safety to fire-safety-consultancy — it's about fire door
+    // inspections, which is Fire Safety Consultancy content, not Fire Risk
+    // Assessment content, and fire-safety no longer covers it. Count drops
+    // from 6 to 5; the guide reappears below under its new service.
     const fireSafety = getGuidesForService("fire-safety");
-    assert.equal(fireSafety.length, 6);
+    assert.equal(fireSafety.length, 5);
     for (const g of fireSafety) assert.ok(g.relatedServices.includes("fire-safety"));
+
+    const fireSafetyConsultancy = getGuidesForService("fire-safety-consultancy");
+    assert.deepEqual(
+      fireSafetyConsultancy.map((g) => g.slug),
+      ["fire-door-inspections-explained"]
+    );
 
     const compliance = getGuidesForService("compliance-support");
     assert.deepEqual(
