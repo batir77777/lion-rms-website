@@ -272,12 +272,12 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-08-10",
     contentHash: "cfb5152ed716736e",
-    source: "change-record: 2026-08-10 — credentials strip and AssessorSection gain the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
+    source: "5367330 — credentials strip and AssessorSection gain the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
   "/about": {
     lastModified: "2026-08-10",
     contentHash: "38421aad0f908d6e",
-    source: "change-record: 2026-08-10 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
+    source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
     lastModified: "2026-08-10",
@@ -362,7 +362,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/contact": {
     lastModified: "2026-08-10",
     contentHash: "f6be5b7bca5bf705",
-    source: "change-record: 2026-08-10 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
+    source: "5367330 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
 };
 
