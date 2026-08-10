@@ -3,35 +3,37 @@ import Link from "next/link";
 import AssessorSection from "@/components/AssessorSection";
 import ComplianceCheckBand from "@/components/ComplianceCheckBand";
 import RecentProjects from "@/components/RecentProjects";
-import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import WhoWeHelp from "@/components/WhoWeHelp";
+import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, POSITIONING, HOMEPAGE_SERVICE_CLUSTERS } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
+// Homepage metadata (repositioning PR2, August 2026) — rebalanced from the
+// old fire-first, three-noun title/description to name both co-equal
+// disciplines explicitly. This is a homepage-only change: the root layout's
+// default metadata in app/layout.tsx, used by every other page, is untouched
+// (out of scope for PR2 — see the "sitewide metadata" note agreed for this
+// PR; a candidate for PR8's SEO/consolidation pass).
 export const metadata: Metadata = {
-  title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
+  title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
   description:
-    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
-    description: "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
+    description:
+      "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
     url: "/",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fire Engineering, H&S & Fire Risk Assessment London — Lion RMS",
-    description: "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
+    description:
+      "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
     images: [DEFAULT_OG_IMAGE],
   },
 };
-
-const SERVICES_FS = [
-  { icon: "📐", title: "Fire Engineering", desc: "Building fire safety, means of escape, passive and active fire protection, and fire safety design review across new build, refurbishment and change-of-use." },
-  { icon: "🔥", title: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders and project teams — regulatory interpretation, fire strategies, remedial strategy, and ongoing compliance support." },
-  { icon: "📄", title: "Fire Risk Assessments", desc: "Fire risk assessments informed by recognised guidance, including PAS 79 where appropriate, for residential and commercial premises — clear, prioritised, and proportionate." },
-  { icon: "🏗️", title: "Health & Safety Consultancy", desc: "Risk assessments, audits, RAMS, policies, and competent person support." },
-];
 
 export default function HomePage() {
   return (
@@ -62,15 +64,15 @@ export default function HomePage() {
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
-                Fire Engineering, Health &amp; Safety and{" "}
+                Fire Safety &amp; Fire Engineering,{" "}
                 <span style={{ background: "linear-gradient(100deg,#00c9a7 0%,#5be3c0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Fire Risk Assessment Consultancy.
+                  Health &amp; Safety &amp; Construction Safety.
                 </span>
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                Fire engineering consultancy, fire risk assessments, fire strategies, fire door inspections, compartmentation, health &amp; safety consultancy and training —
-                clear, proportionate advice for landlords, managing agents, businesses, and developers across London and the Home Counties.
+                Fire risk assessments, fire engineering and fire safety consultancy, alongside health &amp; safety consultancy and construction health &amp; safety support —
+                clear, proportionate advice for landlords, managing agents, businesses, and construction clients across London and the Home Counties.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -94,18 +96,26 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Right — service pillars */}
+            {/*
+              Right — the two co-equal discipline pillars (repositioning
+              PR2). Previously the fire card named only Fire Engineering and
+              Fire Safety Consultancy — omitting Fire Risk Assessments, the
+              lead fire proposition since PR1 — while the H&S card had no
+              construction line at all. Both cards now name all of their
+              side's propositions explicitly, and the trailing credential
+              line that used to sit only under the H&S card has been removed
+              so neither card carries content the other lacks.
+            */}
             <div className="hidden lg:grid grid-cols-1 gap-4">
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.08)" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Engineering</p>
-                <p className="text-white font-semibold text-lg">Fire Engineering &amp; Fire Safety Consultancy</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Building fire safety, fire strategies, passive and active fire protection, fire risk assessments informed by recognised guidance including PAS 79 where appropriate, door inspections, compartmentation, and training.</p>
-                              </div>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Safety &amp; Fire Engineering</p>
+                <p className="text-white font-semibold text-lg">Fire Risk Assessments, Fire Engineering &amp; Fire Safety Consultancy</p>
+                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Fire risk assessments informed by recognised guidance including PAS 79 where appropriate, building fire safety, fire strategies, passive and active fire protection, fire door inspections, compartmentation, and training.</p>
+              </div>
               <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(255,255,255,0.04)" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety</p>
-                <p className="text-white font-semibold text-lg">H&amp;S consultancy &amp; compliance</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS, policies, and competent person support — practical and proportionate.</p>
-                <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(186,230,253,0.6)" }}>Fire Engineer (MIFireE) &amp; Chartered Health &amp; Safety Professional (CMIOSH)</p>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety &amp; Construction Safety</p>
+                <p className="text-white font-semibold text-lg">Health &amp; Safety Consultancy &amp; Construction Health &amp; Safety</p>
+                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS and construction phase plans, policies, and competent person support for businesses and construction clients — practical and proportionate.</p>
               </div>
             </div>
           </div>
@@ -115,18 +125,29 @@ export default function HomePage() {
       {/* ── COMPLIANCE CHECK PROMO ── */}
       <ComplianceCheckBand />
 
-      {/* ── TRUST STATEMENT ── */}
-<div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
-  <p className="text-sm text-slate-500">
-    Trusted by landlords, managing agents, commercial organisations and developers across London and the Home Counties.
-  </p>
-</div>
+      {/*
+        ── INTRODUCTORY / INDEPENDENT-ADVISER STATEMENT ──
+        Repositioning PR2. Replaces the old one-line "Trusted by..." trust
+        strip in the same slot, at the same visual weight, rather than adding
+        a new section. Text is POSITIONING from lib/site.ts — see the comment
+        there for why: it names both disciplines, the four homepage-facing
+        service areas (fire safety, fire engineering, health & safety,
+        compliance — Compliance Management is deliberately named here rather
+        than given its own homepage card, see the same note), the client
+        types, and "independent adviser" as a plain positioning word rather
+        than a new claim.
+      */}
+      <div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
+        <p className="mx-auto max-w-3xl px-5 text-sm text-slate-500 sm:px-6">
+          {POSITIONING}
+        </p>
+      </div>
 
-{/* ── CREDENTIALS STRIP ── */}
+      {/* ── CREDENTIALS STRIP ── */}
       <div className="border-y border-slate-100 bg-slate-50">
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
           <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-            Delivered by qualified UK compliance professionals
+            Delivered by qualified fire and health &amp; safety professionals
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
             {CREDENTIALS.map((c) => (
@@ -136,24 +157,47 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── SERVICES ── */}
+      {/*
+        ── SERVICES ──
+        Repositioning PR2. Cards are grouped into the two approved discipline
+        clusters (HOMEPAGE_SERVICE_CLUSTERS, lib/site.ts) rather than one flat
+        row, and sourced from SERVICE_CATEGORIES instead of the hand-typed
+        array this section used to keep locally — that array had already
+        drifted (it was missing Compliance Management's own card). Compliance
+        Management is not a card here by design; it's named in the
+        introductory statement above as cross-cutting support rather than
+        promoted to a sixth headline service — see the note on POSITIONING.
+      */}
       <section className="py-20 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Our Services</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
-              Fire Engineering, Health &amp; Safety and Fire Risk Assessment
+              Two Disciplines, Five Services
             </h2>
             <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
-              Practical, proportionate consultancy — from fire engineering and design-stage advice through to assessment and ongoing compliance management.
+              Fire Safety &amp; Fire Engineering, and Health &amp; Safety &amp; Construction Safety — practical, proportionate consultancy from design-stage advice through to assessment and ongoing compliance management.
             </p>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-10">
-            {SERVICES_FS.map((s) => (
-              <div key={s.title} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm hover:shadow-md transition hover:-translate-y-0.5">
-                <span className="text-2xl">{s.icon}</span>
-                <h3 className="mt-3 text-sm font-bold text-slate-800">{s.title}</h3>
-                <p className="mt-2 text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+          <div className="space-y-10 mb-10">
+            {HOMEPAGE_SERVICE_CLUSTERS.map((cluster) => (
+              <div key={cluster.label}>
+                <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.14em] text-teal-700 sm:text-left">
+                  {cluster.label}
+                </p>
+                <div className={`grid gap-5 ${cluster.cards.length >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2"}`}>
+                  {cluster.cards.map((s) => (
+                    <Link
+                      key={s.title}
+                      href={s.href}
+                      className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-100 hover:shadow-md"
+                    >
+                      <span className="text-2xl">{s.icon}</span>
+                      <h3 className="mt-3 text-sm font-bold text-slate-800">{s.title}</h3>
+                      <p className="mt-2 text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+                    </Link>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -168,6 +212,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── WHO WE HELP ── */}
+      <WhoWeHelp />
 
       {/* ── STATS ── */}
       <section className="border-b border-slate-100 bg-slate-50 py-14">

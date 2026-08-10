@@ -168,9 +168,14 @@ describe("Structured data and dates", () => {
     // date policy's own first case (see lib/page-dates.ts) rather than guard
     // it. What PR1 must not do — untouched dates on every other authored
     // route — is asserted below.
+    //
+    // "/" is also deliberately absent as of repositioning PR2 (2026-08-09):
+    // the homepage was rewritten to present Fire Safety & Fire Engineering
+    // and Health & Safety & Construction Safety as co-equal disciplines,
+    // which a reader would notice, so its date legitimately moved too. See
+    // lib/page-dates.ts for the full account.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
-      "/": "2026-08-01",
       "/about": "2026-08-01",
       "/services/health-safety": "2026-07-29",
       "/services/compliance-support": "2026-07-29",
@@ -189,7 +194,7 @@ describe("Structured data and dates", () => {
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 14);
+    assert.equal(Object.keys(DATES).length, 13);
   });
 
   test("the three detail pages keep their own dates", async () => {

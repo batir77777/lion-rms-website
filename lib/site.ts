@@ -92,27 +92,52 @@ export const CTA_PRIMARY_LABEL = "Request a Quote";
 export const CTA_SECONDARY_LABEL = "Free Compliance Check";
 export const CTA_SECONDARY_HREF = "/check";
 
-// Company positioning (repositioning PR1, August 2026) — Lion RMS is
-// presented as TWO co-equal disciplines rather than a fire practice that also
-// offers health & safety: Fire Safety & Fire Engineering, and Health & Safety
-// & Construction Safety. Within Fire, three propositions stand at equal
-// billing (Fire Risk Assessments, Fire Engineering, Fire Safety Consultancy);
-// within Health & Safety, two (Health & Safety Consultancy, Construction
-// Health & Safety — the latter arrives in PR5). Parity is at the discipline
-// level, not forced page-for-page: fire genuinely has three distinct
-// propositions and H&S genuinely has two, and neither side is padded to match
-// the other's count. Fire risk assessment is named first among the fire
-// services deliberately — it is the highest-intent search term for the
-// business and PR1 keeps it at `/services/fire-safety`, unmoved (see the note
-// on `sections` below). Coverage wording stays "London, the Home Counties, and
-// the wider UK by arrangement" — never an unrestricted UK-wide claim (see
-// COVERAGE_FULL).
+// Company positioning (repositioning PR1, August 2026; brought onto the
+// homepage in PR2) — Lion RMS is presented as TWO co-equal disciplines rather
+// than a fire practice that also offers health & safety: Fire Safety & Fire
+// Engineering, and Health & Safety & Construction Safety. Within Fire, three
+// propositions stand at equal billing (Fire Risk Assessments, Fire
+// Engineering, Fire Safety Consultancy); within Health & Safety, two (Health
+// & Safety Consultancy, Construction Health & Safety). Construction Health &
+// Safety does not have its own service page yet (that is PR5's job) — PR2
+// represents it on the homepage using content that already exists elsewhere
+// on the site (RAMS and Construction Phase Plans, competent-person support),
+// deep-linked into `/services/health-safety`. Compliance Management is
+// deliberately NOT one of the five homepage propositions: it is cross-cutting
+// support that underpins both disciplines rather than a headline service in
+// its own right, so it is named once here rather than given a sixth card.
+// Parity is at the discipline level, not forced page-for-page: fire genuinely
+// has three distinct propositions and H&S genuinely has two, and neither side
+// is padded to match the other's count. Fire risk assessment is named first
+// among the fire services deliberately — it is the highest-intent search term
+// for the business and PR1 keeps it at `/services/fire-safety`, unmoved (see
+// the note on `sections` below). Coverage wording stays "London, the Home
+// Counties, and the wider UK by arrangement" — never an unrestricted UK-wide
+// claim (see COVERAGE_FULL).
+//
+// PR2 renders this sentence directly on the homepage (the introductory /
+// independent-adviser statement, replacing the old one-line trust strip) —
+// it is no longer documentation-only. "Independent adviser" is a plain
+// positioning word, not a claim tied to any specific accreditation or
+// membership body; nothing else in this sentence asserts a qualification,
+// certification or scope of work beyond what the rest of the site already
+// states.
 export const POSITIONING =
-  "Lion Risk Management Solutions is a fire safety and fire engineering consultancy, and a health & safety and construction safety consultancy — two disciplines, one adviser. We provide fire risk assessments, fire engineering advice and fire safety consultancy, alongside health & safety consultancy, workplace inspections, risk assessments, and RAMS and construction phase plans for construction clients, across London, the Home Counties, and the wider UK by arrangement.";
+  "Lion Risk Management Solutions is an independent adviser supporting residential, commercial and construction clients across fire safety, fire engineering, health & safety and compliance — one consultancy, two disciplines, working across London, the Home Counties, and the wider UK by arrangement.";
 
 export interface ServiceItem {
   name: string;
   desc: string;
+  /**
+   * Optional stable anchor id for an item inside a flat (non-`sections`)
+   * category's item grid — added for `health-safety`'s "RAMS and Construction
+   * Phase Plans" item in repositioning PR2, so the homepage's Construction
+   * Health & Safety card can deep-link to it without a dedicated page. Only
+   * set where something outside the page links to this specific item; most
+   * items have none. Referenced from the homepage — changing it breaks that
+   * link on the next deploy.
+   */
+  id?: string;
 }
 
 /**
@@ -246,7 +271,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     items: [
       { name: "Health and Safety Risk Assessments", desc: "Clear, suitable and sufficient risk assessments tailored to your activities, premises, and workforce." },
       { name: "Workplace Inspections and Audits", desc: "Structured inspections and audits that surface real issues and give you a practical action plan." },
-      { name: "RAMS and Construction Phase Plans", desc: "Risk assessments, method statements, and construction phase plans developed alongside your project team." },
+      { name: "RAMS and Construction Phase Plans", id: "rams-construction-phase-plans", desc: "Risk assessments, method statements, and construction phase plans developed alongside your project team." },
       { name: "Policies and Procedures", desc: "Health and safety policies and documented procedures written in plain English and fit for your organisation." },
       { name: "Competent Person Support", desc: "Ongoing competent-person support, giving you access to qualified advice whenever you need it." },
       { name: "Training and Compliance Services", desc: "Training and day-to-day guidance to keep your team informed and your obligations met." },
@@ -304,6 +329,79 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   ].filter((l): l is { label: string; href: string } => Boolean(l));
 
   return links;
+})();
+
+export interface HomepageServiceCard {
+  icon: string;
+  title: string;
+  desc: string;
+  href: string;
+}
+
+export interface HomepageServiceCluster {
+  /** Cluster label, rendered above its cards — the two co-equal disciplines. */
+  label: string;
+  cards: HomepageServiceCard[];
+}
+
+/**
+ * Homepage service-card data (repositioning PR2, August 2026) — replaces a
+ * hand-typed, independently-drifting array that used to live in `app/page.tsx`
+ * (it had already gone stale: it was missing Compliance Management entirely).
+ * Every card's title and description is read from `SERVICE_CATEGORIES` /
+ * `ServiceSection`, not retyped, so the homepage cannot silently diverge from
+ * the pages it links to — the same discipline PR1 applied to
+ * `FOOTER_SERVICE_LINKS` above.
+ *
+ * Five cards in two clusters, matching the approved architecture:
+ *   Fire Safety & Fire Engineering — Fire Risk Assessments, Fire Engineering,
+ *   Fire Safety Consultancy (three propositions, equal billing since PR1).
+ *   Health & Safety & Construction Safety — Health & Safety Consultancy,
+ *   Construction Health & Safety.
+ *
+ * Compliance Management is NOT a sixth card here — see the note on
+ * `POSITIONING` above for why. It keeps its own page and its own footer link;
+ * it is just not promoted to homepage-headline status.
+ *
+ * Construction Health & Safety has no dedicated page yet (PR5). Its card
+ * description below is assembled from two sentences that already exist
+ * verbatim elsewhere in this file — the health-safety category's "RAMS and
+ * Construction Phase Plans" and "Competent Person Support" items — recombined,
+ * not newly claimed. Its link deep-links to the stable `id` added to the RAMS
+ * item above, so the destination is real rather than a page that doesn't
+ * exist. Wording is kept to advisory language (assessments, plans, support
+ * "alongside" the project team) — it does not say or imply that Lion RMS acts
+ * as Principal Designer or Principal Contractor.
+ */
+export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
+  const fireSafety = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety");
+  const fra = fireSafety?.sections?.find((s) => s.id === "fire-risk-assessments");
+  const fsc = fireSafety?.sections?.find((s) => s.id === "fire-safety-consultancy");
+  const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
+  const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
+
+  const fireCards: (HomepageServiceCard | false | undefined)[] = [
+    fra && { icon: "📄", title: fra.title, desc: fra.intro, href: `/services/fire-safety#${fra.id}` },
+    fireEngineering && { icon: "📐", title: fireEngineering.title, desc: fireEngineering.short, href: `/services/${fireEngineering.slug}` },
+    fsc && { icon: "🔥", title: fsc.title, desc: fsc.intro, href: `/services/fire-safety#${fsc.id}` },
+  ];
+
+  const healthSafetyCards: (HomepageServiceCard | false | undefined)[] = [
+    healthSafety && { icon: "🏗️", title: healthSafety.title, desc: healthSafety.short, href: `/services/${healthSafety.slug}` },
+    {
+      icon: "🦺",
+      title: "Construction Health & Safety",
+      desc: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
+      href: "/services/health-safety#rams-construction-phase-plans",
+    },
+  ];
+
+  const isCard = (c: HomepageServiceCard | false | undefined): c is HomepageServiceCard => Boolean(c);
+
+  return [
+    { label: "Fire Safety & Fire Engineering", cards: fireCards.filter(isCard) },
+    { label: "Health & Safety & Construction Safety", cards: healthSafetyCards.filter(isCard) },
+  ];
 })();
 
 // The nine approved sectors (Phase 4B PR 1). Three have dedicated pages
