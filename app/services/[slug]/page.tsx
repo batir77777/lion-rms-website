@@ -167,6 +167,38 @@ export default async function ServiceDetailPage({
             </div>
           )}
 
+          {/*
+           * The "also available" pointer (repositioning PR3) — present only
+           * on `fire-safety`, at the anchor Fire Safety Consultancy used to
+           * occupy when it shared this page. Deliberately NOT a section: one
+           * summary sentence and a link, never the item cards that used to
+           * render here, so this block cannot drift into duplicating the
+           * content that now lives at `cat.pointer.href`. See ServicePointer
+           * in lib/site.ts.
+           */}
+          {cat.pointer && (
+            <div id={cat.pointer.id} className="mt-14 scroll-mt-28">
+              <Reveal>
+                <div className="flex flex-col items-start gap-4 rounded-2xl border border-teal-100 bg-teal-50/60 p-7 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="mb-1.5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
+                      {cat.pointer.eyebrow}
+                    </p>
+                    <h2 className="text-lg font-bold text-navy-900">{cat.pointer.title}</h2>
+                    <p className="mt-1.5 max-w-xl text-base leading-relaxed text-slate-600">{cat.pointer.body}</p>
+                  </div>
+                  <Link
+                    href={cat.pointer.href}
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800"
+                  >
+                    {cat.pointer.linkLabel} &rarr;
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+          )}
+
           {/* Other services */}
           <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
             <p className="text-sm font-medium text-slate-500">Also available:</p>

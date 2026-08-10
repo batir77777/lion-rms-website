@@ -183,6 +183,40 @@
 // whose markup genuinely changed — health-safety, which now has a real `id`
 // on one item — moved.
 // ---------------------------------------------------------------------------
+// WHY EVERY HASH MOVED AGAIN FOR REPOSITIONING PR3 (FIRE SAFETY CONSULTANCY
+// ROUTE SEPARATION), AND WHICH THREE ALSO CHANGED DATE
+// ---------------------------------------------------------------------------
+//
+// PR3 gives Fire Safety Consultancy its own page, `/services/fire-safety-
+// consultancy`, carved out of the section it used to share with Fire Risk
+// Assessments on `/services/fire-safety` (see ServiceSection, ServicePointer
+// and the new SERVICE_CATEGORIES entry in lib/site.ts). Splitting it out
+// changes FOOTER_SERVICE_LINKS's entry for Fire Safety Consultancy from an
+// anchor into a real route. The footer renders on every page via the root
+// layout, so — exactly as with the branded 404 and PR1's footer Services
+// column — every authored and dynamic route's hash moves again, even though
+// almost none of those pages' own visible content changed.
+//
+// Three routes ALSO changed `lastModified`, because a reader genuinely
+// notices something different on them, not just their footer:
+//
+//   - `/services/fire-safety` — the Fire Safety Consultancy section (five
+//     items) is gone from the page, replaced by a one-sentence pointer at the
+//     anchor it used to occupy. The title, short description and intro were
+//     also rewritten to lead with Fire Risk Assessments alone.
+//   - `/services` — a fifth service card (Fire Safety Consultancy) appears,
+//     same precedent as PR1 adding the Fire Engineering card.
+//   - `/services/fire-safety-consultancy` — new page.
+//
+// The homepage's Fire Safety Consultancy card changes `href` (from the old
+// anchor to the new page) with its title and description text unchanged —
+// treated as hash-only, the same call made for the `id` attribute in PR2,
+// since no visible text, styling or layout on `/` itself changed.
+//
+// Everything else below — every sector, case study, and the other two
+// service pages — has a new hash and an UNCHANGED date: nothing on those
+// pages moved except the footer underneath them.
+// ---------------------------------------------------------------------------
 
 export interface PageDate {
   /** ISO date, YYYY-MM-DD. The last substantive user-facing content change. */
@@ -196,92 +230,97 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-08-09",
-    contentHash: "a4a37f76909319a3",
+    contentHash: "b33d2e1c3efe852d",
     source: "change-record: 2026-08-09 — homepage repositioned to two co-equal disciplines (repositioning PR2)",
   },
   "/about": {
     lastModified: "2026-08-01",
-    contentHash: "2f84329cc3f1c7c4",
+    contentHash: "fe55527586cb8d24",
     source: "d43d809 — 'Advanced Diploma' corrected to 'Level 4 Diploma'",
   },
   "/services": {
-    lastModified: "2026-08-09",
-    contentHash: "898dc6eaad92c78c",
-    source: "c9c3ae9 — Fire Engineering added as its own service card (repositioning PR1)",
+    lastModified: "2026-08-10",
+    contentHash: "55f3a78d4436724f",
+    source: "change-record: 2026-08-10 — Fire Safety Consultancy added as its own service card (repositioning PR3)",
   },
   "/services/fire-safety": {
-    lastModified: "2026-08-09",
-    contentHash: "ea93070bf29da32f",
-    source: "c9c3ae9 — retitled and restructured into Fire Risk Assessments and Fire Safety Consultancy sections (repositioning PR1)",
+    lastModified: "2026-08-10",
+    contentHash: "a60f82e9b998a832",
+    source: "change-record: 2026-08-10 — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
+  },
+  "/services/fire-safety-consultancy": {
+    lastModified: "2026-08-10",
+    contentHash: "ab6ebd2d28d1c976",
+    source: "change-record: 2026-08-10 — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "7a6b1a8db081d303",
+    contentHash: "3c2d4b9e8da84dff",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-07-29",
-    contentHash: "26ac271507408cef",
+    contentHash: "789ac90f96df8cd0",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "2fde28de9bcf493e",
+    contentHash: "7995d2690912d3f2",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-07-26",
-    contentHash: "cce0c3648c7eecd7",
+    contentHash: "51f00cfe3da4bebf",
     source: "04ae4c7 — page authored",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "00b99fafd9f83bd5",
+    contentHash: "ae09567549ceddf9",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "7059ab794e295340",
+    contentHash: "2fd5fdcbc929da3f",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "21fb2808b98ff9eb",
+    contentHash: "aee48874a1e76020",
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "e2af93cff03c5603",
+    contentHash: "86eb631bc824dad4",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "209d6c60e284006b",
+    contentHash: "5987edd67fa93a79",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "c67ecad0553b7f12",
+    contentHash: "1d76ac13fdfd2e13",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "2d2114a8255d8d5e",
+    contentHash: "af0470cee297147d",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "4857d13ee7dc83c0",
+    contentHash: "3b346b013cb6f372",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "0be1d5880c15ee63",
+    contentHash: "244780ae093b8a07",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-08-01",
-    contentHash: "583cbdf107740266",
+    contentHash: "66846e9070d8321f",
     source: "238a0c5 — QR code block added",
   },
 };

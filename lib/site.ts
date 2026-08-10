@@ -47,6 +47,7 @@ export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80",
   fireSafety: "/img/services/fire-5.jpg",
   fireEngineering: "/img/services/fire-3.jpg",
+  fireSafetyConsultancy: "/img/services/fire-1.jpg",
   healthSafety: "/img/services/hs-5.jpg",
   digital: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
   city: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=80",
@@ -144,19 +145,23 @@ export interface ServiceItem {
  * A grouped, anchor-linkable subsection within one service page — used only
  * where two or more genuinely distinct propositions share a single URL.
  *
- * `/services/fire-safety` is the first and, for now, only case: Fire Risk
- * Assessments and Fire Safety Consultancy are two of the five services in the
- * approved architecture, but the FRA URL is deliberately NOT being moved (see
- * the SEO migration note — external backlink equity to `/services/fire-safety`
- * is still unknown, and moving the URL is off the table until it is). Fire
- * Safety Consultancy gets its own URL in PR3; until then both sections live
- * here, each independently linkable via `id`.
+ * Repositioning PR1 introduced this for `/services/fire-safety`, which then
+ * carried both Fire Risk Assessments and Fire Safety Consultancy — the FRA
+ * URL was deliberately not moved (external backlink equity to it was, and
+ * remains, unknown), so Fire Safety Consultancy shared the page behind its
+ * own anchor until it had a URL of its own.
+ *
+ * Repositioning PR3 gives Fire Safety Consultancy that URL
+ * (`/services/fire-safety-consultancy`), so `fire-safety` now declares only
+ * one section. The type stays multi-entry (`ServiceSection[]`) rather than
+ * collapsing to a single optional section, because a single-entry array is a
+ * smaller, more mechanical diff than changing the shape category-wide, and it
+ * keeps the `featured`-wide-card rendering path this section already uses.
  *
  * `featured` renders a section's items as a single wide card rather than the
  * standard two-column grid — the mechanism used to make Fire Risk Assessments
  * visually lead the page, per the "retitle/reposition so FRA clearly lead"
- * instruction, without shortening or diminishing the Fire Safety Consultancy
- * content that still shares the page.
+ * instruction from PR1. It still applies now that FRA is the only section.
  */
 export interface ServiceSection {
   /** Anchor id — must be stable. Referenced from the homepage, the footer,
@@ -167,6 +172,32 @@ export interface ServiceSection {
   intro: string;
   items: ServiceItem[];
   featured?: boolean;
+}
+
+/**
+ * A minimal "also available" pointer block — NOT a section. Renders as a
+ * single short summary and a link, never as item cards, so it can carry
+ * forward an anchor that used to hold a full section without duplicating the
+ * content that moved out from under it.
+ *
+ * Repositioning PR3: `/services/fire-safety-consultancy` is a new, separate
+ * page, but `/services/fire-safety#fire-safety-consultancy` was a real,
+ * stable, previously-shared anchor — external bookmarks and any inbound links
+ * to it deserve to land somewhere relevant, not on a missing element or the
+ * top of the page. This is that landing spot: one sentence (reused verbatim
+ * from the Fire Safety Consultancy category's own copy, not rewritten) and a
+ * link to the page that now carries the full content. Keeping it to one
+ * sentence — never the item list that used to live here — is what stops the
+ * two pages becoming near-duplicates of each other.
+ */
+export interface ServicePointer {
+  /** Anchor id — must be stable, for the same reason as `ServiceSection.id`. */
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  href: string;
+  linkLabel: string;
 }
 
 export interface ServiceCategory {
@@ -187,6 +218,8 @@ export interface ServiceCategory {
   items?: ServiceItem[];
   /** See `ServiceSection`. Present only on `fire-safety` for now. */
   sections?: ServiceSection[];
+  /** See `ServicePointer`. Present only on `fire-safety` (repositioning PR3). */
+  pointer?: ServicePointer;
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -195,25 +228,18 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     image: IMAGES.fireSafety,
     imageAlt: "Protected escape corridor with fire doors, emergency lighting and illuminated exit signage",
     eyebrow: "Fire Safety",
-    title: "Fire Risk Assessments & Fire Safety Consultancy",
-    short: "Fire risk assessments informed by recognised guidance, including PAS 79 where appropriate — plus fire safety consultancy: fire door inspections, compartmentation, training and duty-holder advice.",
-    // Fire risk assessment is a core discipline of the consultancy and
-    // represents a substantial part of its work — wording carried over from
-    // the About page rather than newly written, so the page's framing of FRA
-    // matches what the site already says about it elsewhere.
-    intro: "Fire risk assessment is a core discipline of the consultancy and represents a substantial part of its work. Assessments are undertaken with reference to relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction. Alongside assessment, we provide ongoing fire safety consultancy for buildings already in use — fire door inspections, compartmentation surveys, training, and clear advice for landlords, duty holders and Responsible Persons.",
-    // Repositioning PR1 (August 2026). Restructured from a single flat list
-    // into two anchor-linkable sections so Fire Risk Assessments and Fire
-    // Safety Consultancy — two of the five services in the approved
-    // architecture — can each be linked to directly while they still share
-    // this URL. See ServiceSection above for why the URL is not yet split.
-    //
-    // Two items moved OUT of this page to the new /services/fire-engineering
-    // page: "Fire Engineering" and "Fire Strategies". The remaining items are
-    // unchanged from before this PR, redistributed rather than rewritten,
-    // with one exception: the "Fire Safety Consultancy" item's description
-    // no longer says "design-stage input", which is now Fire Engineering's
-    // territory and would otherwise be claimed on two live pages at once.
+    // Repositioning PR3 (August 2026): title, short and intro rewritten to
+    // lead with Fire Risk Assessments alone, now that Fire Safety Consultancy
+    // has moved to its own page — this page no longer covers it in full, so
+    // it should not still claim to in its own metadata and heading copy.
+    title: "Fire Risk Assessments",
+    short: "Fire risk assessments informed by recognised guidance, including PAS 79 where appropriate, for residential, commercial and complex premises.",
+    // First two sentences carried over unchanged from the About page wording
+    // (see the PR1 note this replaces). The third sentence, which used to
+    // describe Fire Safety Consultancy in full here, is gone — that content
+    // now lives at its own URL; see `pointer` below for how this page still
+    // points to it.
+    intro: "Fire risk assessment is a core discipline of the consultancy and represents a substantial part of its work. Assessments are undertaken with reference to relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction.",
     sections: [
       {
         id: "fire-risk-assessments",
@@ -225,20 +251,20 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           { name: "Fire Risk Assessments", desc: "Thorough assessments that identify fire hazards, evaluate risk to occupants, and provide clear, prioritised recommendations informed by relevant recognised guidance, including PAS 79 where appropriate, and the applicable fire safety legislation for the premises and jurisdiction." },
         ],
       },
-      {
-        id: "fire-safety-consultancy",
-        eyebrow: "Ongoing management & operational support",
-        title: "Fire Safety Consultancy",
-        intro: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
-        items: [
-          { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, building owners and managing agents — fire safety management arrangements, regulatory interpretation, remedial strategy and ongoing compliance support." },
-          { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
-          { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
-          { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
-          { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
-        ],
-      },
     ],
+    // Repositioning PR3: the anchor Fire Safety Consultancy used to occupy
+    // when it shared this page. Body text is reused verbatim from the new
+    // fire-safety-consultancy category's own `short` below — not retyped —
+    // so the two pages cannot silently drift apart on what this sentence
+    // claims.
+    pointer: {
+      id: "fire-safety-consultancy",
+      eyebrow: "Also Available",
+      title: "Fire Safety Consultancy",
+      body: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+      href: "/services/fire-safety-consultancy",
+      linkLabel: "View Fire Safety Consultancy",
+    },
   },
   {
     // Repositioning PR1 (August 2026) — new page. Carved out of what was
@@ -258,6 +284,41 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     items: [
       { name: "Fire Engineering Consultancy", desc: "Applied fire engineering across building fire safety — means of escape, passive and active fire protection, compartmentation strategy, and fire safety design review for new build, refurbishment and change-of-use projects." },
       { name: "Fire Strategies", desc: "Bespoke fire strategies for new developments, change-of-use projects, and complex buildings — supporting planning and Building Regulations compliance." },
+    ],
+  },
+  {
+    // Repositioning PR3 (August 2026) — new page, carved out of `fire-safety`'s
+    // former "Fire Safety Consultancy" section (see the ServiceSection and
+    // ServicePointer notes above). Every item below is moved, not rewritten —
+    // same names, same descriptions, same order — so nothing that already
+    // ranked or was bookmarked on the old anchor changes shape on arrival at
+    // its new URL. `/services/fire-safety` keeps a one-sentence pointer at the
+    // anchor this used to occupy; see `pointer` on that category.
+    //
+    // Positioned in this array between Fire Engineering and Health & Safety,
+    // matching the reading order already established by FOOTER_SERVICE_LINKS
+    // (Fire Risk Assessments, Fire Engineering, Fire Safety Consultancy,
+    // Health & Safety, Compliance Management) — so the /services index grid
+    // and the "Also available" cross-links on every other service page read
+    // in that same order without extra hand-ordering logic.
+    slug: "fire-safety-consultancy",
+    image: IMAGES.fireSafetyConsultancy,
+    imageAlt: "Consultant inspecting a fire door closer in a commercial corridor, holding a tablet",
+    eyebrow: "Fire Safety",
+    title: "Fire Safety Consultancy",
+    short: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+    // Reused verbatim from the sentence that used to introduce this content on
+    // /services/fire-safety (repositioning PR1), minus its leading "Alongside
+    // assessment, we provide" clause — that clause described this content's
+    // relationship to Fire Risk Assessments from the FRA page's point of view,
+    // which no longer applies now this is its own page.
+    intro: "Ongoing fire safety consultancy for buildings already in use — fire door inspections, compartmentation surveys, training, and clear advice for landlords, duty holders and Responsible Persons.",
+    items: [
+      { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, building owners and managing agents — fire safety management arrangements, regulatory interpretation, remedial strategy and ongoing compliance support." },
+      { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
+      { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
+      { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
+      { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
     ],
   },
   {
@@ -309,21 +370,27 @@ export function getCategory(slug: string): ServiceCategory | undefined {
  * Compliance Management. Labels are read from the data so the footer cannot
  * drift from the pages it links to; only the ORDER is hand-set here.
  *
+ * Repositioning PR3: Fire Safety Consultancy is now looked up as its own
+ * category (it has its own page) rather than as a section of `fire-safety`,
+ * and its link is a real route rather than an anchor. Fire Risk Assessments
+ * stays an anchor lookup — `fire-safety` still uses `sections` for its one
+ * remaining section.
+ *
  * Construction Health & Safety is deliberately absent until PR5 creates its
  * page — a footer link with no destination is worse than no link.
  */
 export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   const fireSafety = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety");
   const fra = fireSafety?.sections?.find((s) => s.id === "fire-risk-assessments");
-  const fsc = fireSafety?.sections?.find((s) => s.id === "fire-safety-consultancy");
   const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
+  const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
   const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
 
   const links = [
     fra && { label: fra.title, href: `/services/fire-safety#${fra.id}` },
     fireEngineering && { label: fireEngineering.title, href: `/services/${fireEngineering.slug}` },
-    fsc && { label: fsc.title, href: `/services/fire-safety#${fsc.id}` },
+    fsc && { label: fsc.title, href: `/services/${fsc.slug}` },
     healthSafety && { label: healthSafety.title, href: `/services/${healthSafety.slug}` },
     complianceSupport && { label: complianceSupport.title, href: `/services/${complianceSupport.slug}` },
   ].filter((l): l is { label: string; href: string } => Boolean(l));
@@ -372,18 +439,24 @@ export interface HomepageServiceCluster {
  * exist. Wording is kept to advisory language (assessments, plans, support
  * "alongside" the project team) — it does not say or imply that Lion RMS acts
  * as Principal Designer or Principal Contractor.
+ *
+ * Repositioning PR3: the Fire Safety Consultancy card now reads its title and
+ * description from its own category (it has its own page) rather than from a
+ * section of `fire-safety`, and links straight to that page rather than to an
+ * anchor. The card's visible text is unchanged — `short` carries the same
+ * sentence the old section's `intro` did — only the destination moves.
  */
 export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
   const fireSafety = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety");
   const fra = fireSafety?.sections?.find((s) => s.id === "fire-risk-assessments");
-  const fsc = fireSafety?.sections?.find((s) => s.id === "fire-safety-consultancy");
   const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
+  const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
 
   const fireCards: (HomepageServiceCard | false | undefined)[] = [
     fra && { icon: "📄", title: fra.title, desc: fra.intro, href: `/services/fire-safety#${fra.id}` },
     fireEngineering && { icon: "📐", title: fireEngineering.title, desc: fireEngineering.short, href: `/services/${fireEngineering.slug}` },
-    fsc && { icon: "🔥", title: fsc.title, desc: fsc.intro, href: `/services/fire-safety#${fsc.id}` },
+    fsc && { icon: "🔥", title: fsc.title, desc: fsc.short, href: `/services/${fsc.slug}` },
   ];
 
   const healthSafetyCards: (HomepageServiceCard | false | undefined)[] = [
