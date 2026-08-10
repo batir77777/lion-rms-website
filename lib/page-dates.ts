@@ -241,17 +241,17 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-08-10",
     contentHash: "55f3a78d4436724f",
-    source: "change-record: 2026-08-10 — Fire Safety Consultancy added as its own service card (repositioning PR3)",
+    source: "b9df1fa — Fire Safety Consultancy added as its own service card (repositioning PR3)",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
     contentHash: "a60f82e9b998a832",
-    source: "change-record: 2026-08-10 — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
+    source: "b9df1fa — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-08-10",
     contentHash: "ab6ebd2d28d1c976",
-    source: "change-record: 2026-08-10 — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
+    source: "b9df1fa — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
