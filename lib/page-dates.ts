@@ -217,6 +217,47 @@
 // service pages — has a new hash and an UNCHANGED date: nothing on those
 // pages moved except the footer underneath them.
 // ---------------------------------------------------------------------------
+// WHY ONLY THREE HASHES MOVED FOR REPOSITIONING PR4 (QUALIFICATIONS &
+// PROFESSIONAL CREDIBILITY) — NOT EVERY PAGE, THIS TIME
+// ---------------------------------------------------------------------------
+//
+// PR4 adds a third qualification (Level 6 Diploma in Applied Health and
+// Safety) and a new "professional card" category (CSCS Professionally
+// Qualified Person) — see QUALIFICATIONS and the new PROFESSIONAL_CARDS in
+// lib/site.ts. Unlike PR1's footer column and PR3's footer-link change,
+// neither of which could avoid touching every page, this change was
+// deliberately kept out of anything the root layout renders on every route.
+// ASSESSOR.bio — which feeds both PersonJsonLd's description on /about AND,
+// via StructuredData.tsx, the sitewide ProfessionalService JSON-LD's
+// founder.description on every page — was checked and deliberately NOT
+// extended with the new credentials, precisely to avoid that cascade; see
+// the comment on ASSESSOR.bio in lib/site.ts. The three pages that actually
+// render CREDENTIALS/QUALIFICATIONS/PROFESSIONAL_CARDS directly are the only
+// ones affected:
+//
+//   - `/` — the credentials strip and the AssessorSection badge row both gain
+//     two new badges (the Level 6 Diploma and CSCS Professionally Qualified
+//     Person). The hero eyebrow badge, hero sub-line and bottom CTA line are
+//     deliberately left unchanged — kept concise, per the owner's explicit
+//     instruction not to expand the hero into a long list of three diplomas.
+//   - `/about` — a new paragraph on health & safety competence (naming the
+//     Level 6 Diploma, CMIOSH, MIIRSM, AIEMA and CSCS Professionally
+//     Qualified Person), the "Competence" value card rewritten to cover both
+//     disciplines, and the credentials badge row gains the same two entries.
+//     Person JSON-LD's hasCredential also gains a "Professional Card"
+//     category — sourced from PROFESSIONAL_CARDS directly, not from bio.
+//   - `/contact` — the "Qualifications" badge block gains the same two
+//     entries.
+//
+// Every other authored route, and Footer.tsx itself, is untouched — verified
+// by rebuilding after the ASSESSOR.bio decision above and confirming all
+// sixteen other hashes matched their PR3-recorded values exactly.
+//
+// No award date, grade or expiry appears anywhere in this file, in
+// lib/site.ts, or in any rendered page or structured data — per the owner's
+// explicit instruction, only the qualification title and the card's printed
+// category are recorded.
+// ---------------------------------------------------------------------------
 
 export interface PageDate {
   /** ISO date, YYYY-MM-DD. The last substantive user-facing content change. */
@@ -229,14 +270,14 @@ export interface PageDate {
 
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
-    lastModified: "2026-08-09",
-    contentHash: "b33d2e1c3efe852d",
-    source: "change-record: 2026-08-09 — homepage repositioned to two co-equal disciplines (repositioning PR2)",
+    lastModified: "2026-08-10",
+    contentHash: "cfb5152ed716736e",
+    source: "change-record: 2026-08-10 — credentials strip and AssessorSection gain the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
   "/about": {
-    lastModified: "2026-08-01",
-    contentHash: "fe55527586cb8d24",
-    source: "d43d809 — 'Advanced Diploma' corrected to 'Level 4 Diploma'",
+    lastModified: "2026-08-10",
+    contentHash: "38421aad0f908d6e",
+    source: "change-record: 2026-08-10 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
     lastModified: "2026-08-10",
@@ -319,9 +360,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
-    lastModified: "2026-08-01",
-    contentHash: "66846e9070d8321f",
-    source: "238a0c5 — QR code block added",
+    lastModified: "2026-08-10",
+    contentHash: "f6be5b7bca5bf705",
+    source: "change-record: 2026-08-10 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
 };
 

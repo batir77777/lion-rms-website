@@ -1,4 +1,4 @@
-import { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, SITE } from "@/lib/site";
+import { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, PROFESSIONAL_CARDS, SITE } from "@/lib/site";
 import { buildPersonProfileSchema } from "@/lib/content-jsonld";
 
 /*
@@ -18,6 +18,7 @@ export default function PersonJsonLd() {
     siteName: SITE.name,
     memberships: MEMBERSHIPS,
     qualifications: QUALIFICATIONS,
+    professionalCards: PROFESSIONAL_CARDS,
   });
 
   return (

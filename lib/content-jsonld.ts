@@ -571,6 +571,7 @@ export interface PersonProfileInput {
   siteName: string;
   memberships: readonly { fullName: string }[];
   qualifications: readonly { name: string }[];
+  professionalCards: readonly { fullName: string }[];
 }
 
 /**
@@ -606,6 +607,11 @@ export function buildPersonProfileSchema(input: PersonProfileInput) {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Qualification",
         name: q.name,
+      })),
+      ...input.professionalCards.map((c) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional Card",
+        name: c.fullName,
       })),
     ],
   };

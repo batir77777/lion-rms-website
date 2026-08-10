@@ -79,6 +79,14 @@ before(() => {
 // the Fire Safety Consultancy content entirely ("Fire Risk Assessments" on
 // its own) — so its Service and BreadcrumbList JSON-LD change again for the
 // same reason PR1's did.
+//
+// Repositioning PR4 (2026-08-10) added a third qualification and a new
+// "professional card" credential category (see QUALIFICATIONS and
+// PROFESSIONAL_CARDS in lib/site.ts). PersonJsonLd passes both straight into
+// hasCredential, so about → Person changes. Nothing else does: ASSESSOR.bio
+// (which feeds the sitewide ProfessionalService node's founder description
+// on every route) was deliberately left unchanged, specifically so this PR
+// would not need to document a change on every route in this fixture.
 const ROUTES_ADDED_SINCE_PR10 = ["services/fire-engineering", "services/fire-safety-consultancy"];
 const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "services/fire-safety → Service",
@@ -88,6 +96,7 @@ const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "sectors/residential-blocks-hmos → Service",
   "case-studies/mixed-use-fire-strategy-change-of-use → Service",
   "case-studies/residential-portfolio-fire-risk-assessment → Service",
+  "about → Person",
 ]);
 
 describe("Emitted JSON-LD is unchanged by the migration", () => {

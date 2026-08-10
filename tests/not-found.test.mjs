@@ -191,13 +191,26 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      * See the "WHY EVERY HASH MOVED AGAIN FOR REPOSITIONING PR3" comment in
      * lib/page-dates.ts.
      *
+     * Repositioning PR4 (2026-08-10) moved only three hashes — a deliberate
+     * departure from PR1 and PR3, which both had to touch the footer (and
+     * therefore every page). PR4 keeps ASSESSOR.bio, and therefore the
+     * sitewide ProfessionalService JSON-LD's founder description, unchanged;
+     * only the three pages that render CREDENTIALS/QUALIFICATIONS/
+     * PROFESSIONAL_CARDS directly moved: `/` (credentials strip and
+     * AssessorSection gain two badges — the hero copy is deliberately left
+     * unchanged), `/about` (new health & safety paragraph, rewritten
+     * Competence card, two new badges, and Person JSON-LD's hasCredential
+     * gains a Professional Card entry), and `/contact` (Qualifications badge
+     * block gains two entries). See the "WHY ONLY THREE HASHES MOVED FOR
+     * REPOSITIONING PR4" comment in lib/page-dates.ts.
+     *
      * The table is written out in full so that a future change which moves
      * one of these has to say which, rather than re-recording the lot.
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-08-09", "b33d2e1c3efe852d"],
-      "/about": ["2026-08-01", "fe55527586cb8d24"],
+      "/": ["2026-08-10", "cfb5152ed716736e"],
+      "/about": ["2026-08-10", "38421aad0f908d6e"],
       "/services": ["2026-08-10", "55f3a78d4436724f"],
       "/services/fire-safety": ["2026-08-10", "a60f82e9b998a832"],
       "/services/fire-safety-consultancy": ["2026-08-10", "ab6ebd2d28d1c976"],
@@ -215,7 +228,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "af0470cee297147d"],
       "/faq": ["2026-08-01", "3b346b013cb6f372"],
       "/check": ["2026-08-01", "244780ae093b8a07"],
-      "/contact": ["2026-08-01", "66846e9070d8321f"],
+      "/contact": ["2026-08-10", "f6be5b7bca5bf705"],
     };
     assert.equal(Object.keys(EXPECTED).length, 19);
     assert.equal(AUTHORED_ROUTES.length, 19);
