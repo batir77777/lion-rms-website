@@ -282,7 +282,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-08-11",
     contentHash: "0ee52b7f57fb9756",
-    source: "change-record: 2026-08-11 — Construction Health & Safety added as its own service card, sixth service (repositioning PR5)",
+    source: "8d96c71 — Construction Health & Safety added as its own service card, sixth service (repositioning PR5)",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -302,12 +302,12 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services/health-safety": {
     lastModified: "2026-08-11",
     contentHash: "df6977068ff84c82",
-    source: "change-record: 2026-08-11 — RAMS and Construction Phase Plans moved to its own page, replaced by a one-sentence pointer (repositioning PR5)",
+    source: "8d96c71 — RAMS and Construction Phase Plans moved to its own page, replaced by a one-sentence pointer (repositioning PR5)",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-08-11",
     contentHash: "4d5c6cc06a2d7592",
-    source: "change-record: 2026-08-11 — new page, carved out of health-safety's former RAMS and Construction Phase Plans and Competent Person Support items (repositioning PR5)",
+    source: "8d96c71 — new page, carved out of health-safety's former RAMS and Construction Phase Plans and Competent Person Support items (repositioning PR5)",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
