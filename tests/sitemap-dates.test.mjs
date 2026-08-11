@@ -116,9 +116,10 @@ describe("No sitemap date is a build timestamp", () => {
 });
 
 describe("Every sitemap route has a date source", () => {
-  test("the sitemap emits exactly the expected 80 URLs", () => {
-    assert.equal(entries.length, 80);
-    assert.equal(new Set(entries.map((e) => e.url)).size, 80, "a URL is listed twice");
+  test("the sitemap emits exactly the expected 81 URLs", () => {
+    // 80 before repositioning PR5, +1 for the new /services/construction-health-safety.
+    assert.equal(entries.length, 81);
+    assert.equal(new Set(entries.map((e) => e.url)).size, 81, "a URL is listed twice");
   });
 
   test("an unregistered authored route throws rather than defaulting", () => {
@@ -242,8 +243,8 @@ describe("Authored-page content hashes", () => {
       .slice(0, 16);
   };
 
-  test("all 19 authored routes are registered", () => {
-    assert.equal(AUTHORED_ROUTES.length, 19);
+  test("all 20 authored routes are registered", () => {
+    assert.equal(AUTHORED_ROUTES.length, 20);
   });
 
   test("every recorded hash matches the page as built", () => {

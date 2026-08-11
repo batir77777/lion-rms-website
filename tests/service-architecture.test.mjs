@@ -230,3 +230,145 @@ describe("Guides and downloads about Fire Safety Consultancy content follow it t
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// Repositioning PR5 — the same split, applied a second time:
+// /services/construction-health-safety is carved out of /services/health-safety's
+// former "RAMS and Construction Phase Plans" and "Competent Person Support"
+// items. /services/health-safety keeps the #rams-construction-phase-plans
+// anchor it always had, now as a ServicePointer rather than a full item.
+//
+// These tests mirror the Fire Safety Consultancy suites above exactly, so a
+// future edit that breaks this split is caught the same way.
+// ---------------------------------------------------------------------------
+
+const HS_ITEM_NAMES = ["RAMS and Construction Phase Plans", "Competent Person Support"];
+
+describe("/services/health-safety carries its remaining items in full", () => {
+  const page = html("services/health-safety");
+
+  test("the page title leads with Health & Safety Consultancy", () => {
+    const title = page.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+    // "&" is serialised as "&amp;" inside the <title> element's HTML.
+    assert.match(title, /^Health &amp; Safety Consultancy/, `title does not lead with Health & Safety Consultancy: "${title}"`);
+  });
+
+  test("Health and Safety Risk Assessments, Workplace Inspections and Audits, Policies and Procedures, and Training and Compliance Services are all still present", () => {
+    const bodyOnly = page.replace(/<script[^>]*>[\s\S]*?<\/script>/g, "");
+    for (const name of [
+      "Health and Safety Risk Assessments",
+      "Workplace Inspections and Audits",
+      "Policies and Procedures",
+      "Training and Compliance Services",
+    ]) {
+      assert.ok(bodyOnly.includes(name), `expected "${name}" to remain on /services/health-safety, not found`);
+    }
+  });
+});
+
+describe("/services/health-safety#rams-construction-phase-plans is a pointer, not a dead anchor or a duplicate", () => {
+  const page = html("services/health-safety");
+
+  test("#rams-construction-phase-plans exists exactly once", () => {
+    const matches = page.match(/id="rams-construction-phase-plans"/g) ?? [];
+    assert.equal(matches.length, 1, `expected exactly one element with id="rams-construction-phase-plans", found ${matches.length}`);
+  });
+
+  test("#rams-construction-phase-plans is offset for the fixed header (scroll-mt-28)", () => {
+    const match = page.match(/id="rams-construction-phase-plans"[^>]*class="([^"]*)"/);
+    assert.ok(match, `id="rams-construction-phase-plans" not found with a class attribute`);
+    assert.match(match[1], /\bscroll-mt-28\b/, `#rams-construction-phase-plans is missing scroll-mt-28`);
+  });
+
+  test("the pointer links to the dedicated Construction Health & Safety page", () => {
+    assert.match(page, /href="\/services\/construction-health-safety"/, "no link to /services/construction-health-safety found");
+  });
+
+  test("neither of the two original item names is duplicated here", () => {
+    // Checked against the visible body only, with every <script> block
+    // stripped first — see the equivalent Fire Safety Consultancy guard above
+    // for why (the sitewide Organisation JSON-LD's knowsAbout list is not a
+    // page-content duplicate).
+    const bodyOnly = page.replace(/<script[^>]*>[\s\S]*?<\/script>/g, "");
+    const offenders = HS_ITEM_NAMES.filter((name) => bodyOnly.includes(name));
+    assert.deepEqual(offenders, [], `Construction Health & Safety item content still duplicated on health-safety: ${offenders.join(", ")}`);
+  });
+});
+
+describe("/services/construction-health-safety is a real, separate, indexable page", () => {
+  const page = html("services/construction-health-safety");
+
+  test("it is not the same document as /services/health-safety", () => {
+    const healthSafety = html("services/health-safety");
+    assert.notEqual(page, healthSafety);
+  });
+
+  test("its canonical URL self-references", () => {
+    assert.match(page, /<link rel="canonical" href="https:\/\/www\.lionrms\.uk\/services\/construction-health-safety"/);
+  });
+
+  test("it is not marked noindex", () => {
+    const robots = page.match(/name="robots" content="([^"]*)"/)?.[1] ?? "";
+    assert.equal(/noindex/.test(robots), false, `robots meta unexpectedly restrictive: "${robots}"`);
+  });
+
+  test("the title leads with Construction Health & Safety", () => {
+    const title = page.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+    // "&" is serialised as "&amp;" inside the <title> element's HTML.
+    assert.match(title, /^Construction Health &amp; Safety/, `title does not lead with Construction Health & Safety: "${title}"`);
+  });
+
+  test("both original items are present in full", () => {
+    for (const name of HS_ITEM_NAMES) {
+      assert.ok(page.includes(name), `expected "${name}" on the dedicated page, not found`);
+    }
+  });
+});
+
+describe("Footer links resolve to the new Construction Health & Safety page", () => {
+  test("FOOTER_SERVICE_LINKS carries a real, built route for Construction Health & Safety", async () => {
+    const { FOOTER_SERVICE_LINKS } = await import("../lib/site.ts");
+    const link = FOOTER_SERVICE_LINKS.find((l) => l.label === "Construction Health & Safety");
+    assert.ok(link, "no Construction Health & Safety entry in FOOTER_SERVICE_LINKS");
+    assert.equal(link.href, "/services/construction-health-safety");
+    const file = path.join(outDir, `${link.href.replace(/^\//, "")}.html`);
+    assert.ok(fs.existsSync(file), `footer links to ${link.href}, which was not built`);
+  });
+});
+
+describe("The homepage's Construction Health & Safety card points at the dedicated page", () => {
+  test("HOMEPAGE_SERVICE_CLUSTERS links straight to /services/construction-health-safety", async () => {
+    const { HOMEPAGE_SERVICE_CLUSTERS } = await import("../lib/site.ts");
+    const allCards = HOMEPAGE_SERVICE_CLUSTERS.flatMap((cluster) => cluster.cards);
+    const card = allCards.find((c) => c.title === "Construction Health & Safety");
+    assert.ok(card, "no Construction Health & Safety card found on the homepage");
+    assert.equal(card.href, "/services/construction-health-safety");
+  });
+
+  test("the built homepage links to the dedicated page, not the old anchor", () => {
+    const page = html("index");
+    assert.match(page, /href="\/services\/construction-health-safety"/);
+    assert.equal(
+      page.includes('href="/services/health-safety#rams-construction-phase-plans"'),
+      false,
+      "homepage still links to the retired anchor"
+    );
+  });
+
+  test("the homepage card's visible wording is unchanged from before the split", () => {
+    const page = html("index");
+    assert.match(
+      page,
+      /Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients\./,
+      "homepage Construction Health & Safety card wording has changed"
+    );
+  });
+});
+
+describe("Services index carries six services", () => {
+  test("/services lists Construction Health & Safety alongside the other five", () => {
+    const page = html("services");
+    // "&" is serialised as "&amp;" inside the rendered HTML.
+    assert.match(page, /Construction Health &amp; Safety/, "Construction Health & Safety card not found on /services");
+  });
+});

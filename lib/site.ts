@@ -100,13 +100,14 @@ export const CTA_SECONDARY_HREF = "/check";
 // propositions stand at equal billing (Fire Risk Assessments, Fire
 // Engineering, Fire Safety Consultancy); within Health & Safety, two (Health
 // & Safety Consultancy, Construction Health & Safety). Construction Health &
-// Safety does not have its own service page yet (that is PR5's job) — PR2
-// represents it on the homepage using content that already exists elsewhere
-// on the site (RAMS and Construction Phase Plans, competent-person support),
-// deep-linked into `/services/health-safety`. Compliance Management is
-// deliberately NOT one of the five homepage propositions: it is cross-cutting
+// Safety has its own service page as of repositioning PR5, carved out of
+// `health-safety`'s former RAMS/Construction Phase Plans and Competent Person
+// Support items — see the ServicePointer note on the `health-safety` category
+// in SERVICE_CATEGORIES for how the old anchor still resolves. Compliance
+// Management is deliberately NOT one of the six homepage propositions: it is
+// cross-cutting
 // support that underpins both disciplines rather than a headline service in
-// its own right, so it is named once here rather than given a sixth card.
+// its own right, so it is named once here rather than given its own card.
 // Parity is at the discipline level, not forced page-for-page: fire genuinely
 // has three distinct propositions and H&S genuinely has two, and neither side
 // is padded to match the other's count. Fire risk assessment is named first
@@ -218,7 +219,12 @@ export interface ServiceCategory {
   items?: ServiceItem[];
   /** See `ServiceSection`. Present only on `fire-safety` for now. */
   sections?: ServiceSection[];
-  /** See `ServicePointer`. Present only on `fire-safety` (repositioning PR3). */
+  /**
+   * See `ServicePointer`. Present on `fire-safety` (repositioning PR3, pointing
+   * to `fire-safety-consultancy`) and on `health-safety` (repositioning PR5,
+   * pointing to `construction-health-safety`) — the same mechanism reused for
+   * a second split, not a new one.
+   */
   pointer?: ServicePointer;
 }
 
@@ -327,15 +333,68 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
     eyebrow: "Health & Safety",
     title: "Health & Safety Consultancy",
-    short: "Risk assessments, audits, inspections, RAMS, policies, competent person support, and compliance advice.",
+    // Repositioning PR5: "RAMS" dropped from this summary sentence now that
+    // RAMS and Construction Phase Plans has its own page — see `pointer`
+    // below. The rest of this sentence is unchanged.
+    short: "Risk assessments, audits, inspections, policies, competent person support, and compliance advice.",
     intro: "Practical health and safety support that helps businesses, landlords, and contractors meet their obligations under the Health and Safety at Work etc. Act 1974 and associated regulations — without unnecessary complexity.",
     items: [
       { name: "Health and Safety Risk Assessments", desc: "Clear, suitable and sufficient risk assessments tailored to your activities, premises, and workforce." },
       { name: "Workplace Inspections and Audits", desc: "Structured inspections and audits that surface real issues and give you a practical action plan." },
-      { name: "RAMS and Construction Phase Plans", id: "rams-construction-phase-plans", desc: "Risk assessments, method statements, and construction phase plans developed alongside your project team." },
       { name: "Policies and Procedures", desc: "Health and safety policies and documented procedures written in plain English and fit for your organisation." },
-      { name: "Competent Person Support", desc: "Ongoing competent-person support, giving you access to qualified advice whenever you need it." },
       { name: "Training and Compliance Services", desc: "Training and day-to-day guidance to keep your team informed and your obligations met." },
+    ],
+    // Repositioning PR5: RAMS and Construction Phase Plans, AND Competent
+    // Person Support, both moved to their own page — carved out of this
+    // category exactly as Fire Safety Consultancy was carved out of
+    // `fire-safety` in PR3 (see the ServicePointer note on that category,
+    // above). `id` is kept identical to the anchor this
+    // content used to occupy — "rams-construction-phase-plans" — so the
+    // existing bookmarked/inbound URL
+    // `/services/health-safety#rams-construction-phase-plans` still resolves
+    // to a real, visible element rather than becoming a dead fragment. Body
+    // text is reused verbatim from the new construction-health-safety
+    // category's own `short` below — not retyped.
+    pointer: {
+      id: "rams-construction-phase-plans",
+      eyebrow: "Also Available",
+      title: "Construction Health & Safety",
+      body: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
+      href: "/services/construction-health-safety",
+      linkLabel: "View Construction Health & Safety",
+    },
+  },
+  {
+    // Repositioning PR5 (August 2026) — new page, carved out of
+    // `health-safety`'s former "RAMS and Construction Phase Plans" and
+    // "Competent Person Support" items (see the ServicePointer note on
+    // `health-safety`, above). Both items below are moved, not rewritten —
+    // same names, same descriptions — matching the "moved, not rewritten"
+    // discipline used for the Fire Safety Consultancy split in PR3.
+    //
+    // The intro's final sentence is newly drafted for this page, but cites
+    // only verified, already-public credentials recorded elsewhere in this
+    // file (see CREDENTIALS / PROFESSIONAL_CARDS below) — no card number,
+    // grade, or expiry, matching the rule already documented there. It does
+    // not name or imply either CDM dutyholder role: the wording stays to
+    // "alongside your project team" / "competent-person support," never
+    // "as Principal Designer" or "as Principal Contractor" — see
+    // tests/dutyholder-boundary.test.mjs for the regression guard.
+    //
+    // Positioned in this array immediately after Health & Safety, matching
+    // the reading order established by FOOTER_SERVICE_LINKS and
+    // HOMEPAGE_SERVICE_CLUSTERS below (Health & Safety Consultancy, then
+    // Construction Health & Safety).
+    slug: "construction-health-safety",
+    image: IMAGES.healthSafety,
+    imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
+    eyebrow: "Construction Safety",
+    title: "Construction Health & Safety",
+    short: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
+    intro: "Risk assessments, method statements, and construction phase plans developed alongside your project team. Ongoing competent-person support gives you access to qualified advice whenever you need it, from a CSCS Professionally Qualified Person holding a Level 6 Diploma in Applied Health and Safety.",
+    items: [
+      { name: "RAMS and Construction Phase Plans", desc: "Risk assessments, method statements, and construction phase plans developed alongside your project team." },
+      { name: "Competent Person Support", desc: "Ongoing competent-person support, giving you access to qualified advice whenever you need it." },
     ],
   },
   {
@@ -376,8 +435,10 @@ export function getCategory(slug: string): ServiceCategory | undefined {
  * stays an anchor lookup — `fire-safety` still uses `sections` for its one
  * remaining section.
  *
- * Construction Health & Safety is deliberately absent until PR5 creates its
- * page — a footer link with no destination is worse than no link.
+ * Repositioning PR5: Construction Health & Safety is added the same way Fire
+ * Safety Consultancy was in PR3 — looked up as its own category, linked as a
+ * real route, positioned immediately after Health & Safety to match the
+ * reading order used on the homepage clusters below.
  */
 export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   const fireSafety = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety");
@@ -385,6 +446,7 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
   const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
+  const constructionHealthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "construction-health-safety");
   const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
 
   const links = [
@@ -392,6 +454,7 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
     fireEngineering && { label: fireEngineering.title, href: `/services/${fireEngineering.slug}` },
     fsc && { label: fsc.title, href: `/services/${fsc.slug}` },
     healthSafety && { label: healthSafety.title, href: `/services/${healthSafety.slug}` },
+    constructionHealthSafety && { label: constructionHealthSafety.title, href: `/services/${constructionHealthSafety.slug}` },
     complianceSupport && { label: complianceSupport.title, href: `/services/${complianceSupport.slug}` },
   ].filter((l): l is { label: string; href: string } => Boolean(l));
 
@@ -420,25 +483,30 @@ export interface HomepageServiceCluster {
  * the pages it links to — the same discipline PR1 applied to
  * `FOOTER_SERVICE_LINKS` above.
  *
- * Five cards in two clusters, matching the approved architecture:
+ * Six cards in two clusters, matching the approved architecture (five before
+ * repositioning PR5 gave Construction Health & Safety its own page and card):
  *   Fire Safety & Fire Engineering — Fire Risk Assessments, Fire Engineering,
  *   Fire Safety Consultancy (three propositions, equal billing since PR1).
  *   Health & Safety & Construction Safety — Health & Safety Consultancy,
- *   Construction Health & Safety.
+ *   Construction Health & Safety (two propositions, equal billing since PR5).
  *
  * Compliance Management is NOT a sixth card here — see the note on
  * `POSITIONING` above for why. It keeps its own page and its own footer link;
  * it is just not promoted to homepage-headline status.
  *
- * Construction Health & Safety has no dedicated page yet (PR5). Its card
- * description below is assembled from two sentences that already exist
- * verbatim elsewhere in this file — the health-safety category's "RAMS and
- * Construction Phase Plans" and "Competent Person Support" items — recombined,
- * not newly claimed. Its link deep-links to the stable `id` added to the RAMS
- * item above, so the destination is real rather than a page that doesn't
- * exist. Wording is kept to advisory language (assessments, plans, support
- * "alongside" the project team) — it does not say or imply that Lion RMS acts
- * as Principal Designer or Principal Contractor.
+ * Repositioning PR5: Construction Health & Safety now has its own dedicated
+ * page, and this card reads its title, description and link from that
+ * category — the same treatment PR3 gave the Fire Safety Consultancy card
+ * below. The card's visible text is UNCHANGED: `construction.short` is set to
+ * the exact sentence this card always showed (assembled, before PR5, from the
+ * health-safety category's "RAMS and Construction Phase Plans" and
+ * "Competent Person Support" items — see that category's former item text).
+ * Only the destination moves, from the `#rams-construction-phase-plans`
+ * anchor on `/services/health-safety` to the new page's own URL — the same
+ * "wording unchanged, destination moves" pattern PR3 used. Wording stays
+ * advisory (assessments, plans, support "alongside" the project team) — it
+ * does not say or imply that Lion RMS acts as Principal Designer or Principal
+ * Contractor.
  *
  * Repositioning PR3: the Fire Safety Consultancy card now reads its title and
  * description from its own category (it has its own page) rather than from a
@@ -452,6 +520,7 @@ export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
   const fireEngineering = SERVICE_CATEGORIES.find((c) => c.slug === "fire-engineering");
   const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
+  const constructionHealthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "construction-health-safety");
 
   const fireCards: (HomepageServiceCard | false | undefined)[] = [
     fra && { icon: "📄", title: fra.title, desc: fra.intro, href: `/services/fire-safety#${fra.id}` },
@@ -461,11 +530,11 @@ export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
 
   const healthSafetyCards: (HomepageServiceCard | false | undefined)[] = [
     healthSafety && { icon: "🏗️", title: healthSafety.title, desc: healthSafety.short, href: `/services/${healthSafety.slug}` },
-    {
+    constructionHealthSafety && {
       icon: "🦺",
-      title: "Construction Health & Safety",
-      desc: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
-      href: "/services/health-safety#rams-construction-phase-plans",
+      title: constructionHealthSafety.title,
+      desc: constructionHealthSafety.short,
+      href: `/services/${constructionHealthSafety.slug}`,
     },
   ];
 

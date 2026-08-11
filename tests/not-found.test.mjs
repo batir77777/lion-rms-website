@@ -133,7 +133,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const mod = await import("../app/sitemap.ts");
     const fn = typeof mod.default === "function" ? mod.default : mod.default.default;
     const entries = await fn();
-    assert.equal(entries.length, 80, `the sitemap should still list 80 URLs, found ${entries.length}`);
+    assert.equal(entries.length, 81, `the sitemap should still list 81 URLs, found ${entries.length}`);
     const offenders = entries
       .map((e) => new URL(e.url).pathname)
       .filter((p) => /not-found|404/.test(p));
@@ -142,7 +142,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
 
   test("_not-found is not registered as an authored route", async () => {
     const { AUTHORED_ROUTES } = await import("../lib/page-dates");
-    assert.equal(AUTHORED_ROUTES.length, 19);
+    assert.equal(AUTHORED_ROUTES.length, 20);
     assert.equal(
       AUTHORED_ROUTES.some((r) => /not-found|404/.test(r)),
       false
@@ -204,34 +204,45 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      * block gains two entries). See the "WHY ONLY THREE HASHES MOVED FOR
      * REPOSITIONING PR4" comment in lib/page-dates.ts.
      *
+     * Repositioning PR5 (2026-08-11) moved every hash again — Construction
+     * Health & Safety's footer link is new, and the footer renders on every
+     * page — and added a twentieth authored route,
+     * /services/construction-health-safety. Three dates moved because a
+     * reader genuinely notices something different: /services/health-safety
+     * (RAMS and Construction Phase Plans replaced by a one-sentence pointer),
+     * /services (a sixth service card), and the new page itself. `/` stays
+     * hash-only: only the Construction Health & Safety card's destination
+     * changed, not its visible wording, so a reader sees nothing different.
+     *
      * The table is written out in full so that a future change which moves
      * one of these has to say which, rather than re-recording the lot.
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-08-10", "cfb5152ed716736e"],
-      "/about": ["2026-08-10", "38421aad0f908d6e"],
-      "/services": ["2026-08-10", "55f3a78d4436724f"],
-      "/services/fire-safety": ["2026-08-10", "a60f82e9b998a832"],
-      "/services/fire-safety-consultancy": ["2026-08-10", "ab6ebd2d28d1c976"],
-      "/services/fire-engineering": ["2026-08-09", "3c2d4b9e8da84dff"],
-      "/services/health-safety": ["2026-07-29", "789ac90f96df8cd0"],
-      "/services/compliance-support": ["2026-07-29", "7995d2690912d3f2"],
-      "/sectors": ["2026-07-26", "51f00cfe3da4bebf"],
-      "/sectors/residential-blocks-hmos": ["2026-07-29", "ae09567549ceddf9"],
-      "/sectors/offices-commercial-workplaces": ["2026-07-29", "2fd5fdcbc929da3f"],
-      "/sectors/education": ["2026-07-29", "aee48874a1e76020"],
+      "/": ["2026-08-10", "97078772af6b4696"],
+      "/about": ["2026-08-10", "d9363eeca22b34dd"],
+      "/services": ["2026-08-11", "0ee52b7f57fb9756"],
+      "/services/fire-safety": ["2026-08-10", "e299625369acef01"],
+      "/services/fire-safety-consultancy": ["2026-08-10", "2e0611d1ccf98fd0"],
+      "/services/fire-engineering": ["2026-08-09", "eb7bfd3b8f604106"],
+      "/services/health-safety": ["2026-08-11", "df6977068ff84c82"],
+      "/services/construction-health-safety": ["2026-08-11", "4d5c6cc06a2d7592"],
+      "/services/compliance-support": ["2026-07-29", "4001ce6fe3c8aad3"],
+      "/sectors": ["2026-07-26", "992a2c038a98f14f"],
+      "/sectors/residential-blocks-hmos": ["2026-07-29", "ed720862dfc7c469"],
+      "/sectors/offices-commercial-workplaces": ["2026-07-29", "48f35993e7679e10"],
+      "/sectors/education": ["2026-07-29", "e2ffbf404f33bebe"],
       // 2026-08-08 arrived with the card removal, not with this change.
-      "/case-studies": ["2026-08-08", "86eb631bc824dad4"],
-      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "5987edd67fa93a79"],
-      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "1d76ac13fdfd2e13"],
-      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "af0470cee297147d"],
-      "/faq": ["2026-08-01", "3b346b013cb6f372"],
-      "/check": ["2026-08-01", "244780ae093b8a07"],
-      "/contact": ["2026-08-10", "f6be5b7bca5bf705"],
+      "/case-studies": ["2026-08-08", "c49978b675b4fbcd"],
+      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "0114d39268efe9d8"],
+      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "b57b2039f6568da0"],
+      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "47b939920271aff4"],
+      "/faq": ["2026-08-01", "14275f062531e90e"],
+      "/check": ["2026-08-01", "7ec5e829baaf4729"],
+      "/contact": ["2026-08-10", "34cd4e9b0e84ceaa"],
     };
-    assert.equal(Object.keys(EXPECTED).length, 19);
-    assert.equal(AUTHORED_ROUTES.length, 19);
+    assert.equal(Object.keys(EXPECTED).length, 20);
+    assert.equal(AUTHORED_ROUTES.length, 20);
 
     const wrong = [];
     for (const [route, [date, hash]] of Object.entries(EXPECTED)) {
