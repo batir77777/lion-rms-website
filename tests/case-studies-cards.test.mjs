@@ -174,9 +174,15 @@ describe("Structured data and dates", () => {
     // and Health & Safety & Construction Safety as co-equal disciplines,
     // which a reader would notice, so its date legitimately moved too. See
     // lib/page-dates.ts for the full account.
+    //
+    // "/about" and "/contact" are deliberately absent as of repositioning
+    // PR4 (2026-08-10): both gained visible new qualification badges (the
+    // Level 6 Diploma in Applied Health and Safety, CSCS Professionally
+    // Qualified Person), and /about also gained a new paragraph and a
+    // rewritten value card — changes a reader would notice, so both dates
+    // legitimately moved too.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
-      "/about": "2026-08-01",
       "/services/health-safety": "2026-07-29",
       "/services/compliance-support": "2026-07-29",
       "/sectors": "2026-07-26",
@@ -188,13 +194,12 @@ describe("Structured data and dates", () => {
       "/case-studies/multi-site-commercial-compliance-management": "2026-08-01",
       "/faq": "2026-08-01",
       "/check": "2026-08-01",
-      "/contact": "2026-08-01",
     };
     const drifted = Object.entries(DATES)
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 13);
+    assert.equal(Object.keys(DATES).length, 11);
   });
 
   test("the three detail pages keep their own dates", async () => {

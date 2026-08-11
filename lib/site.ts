@@ -600,9 +600,36 @@ export const MEMBERSHIPS: Membership[] = [
 export interface Qualification {
   name: string;
 }
+// Level 6 Diploma in Applied Health and Safety (repositioning PR4) — public
+// data model deliberately holds only the qualification title. No award date
+// and no grade are stored here, in a comment, or anywhere else in the
+// codebase (owner instruction) — the title alone is the verified, publishable
+// fact.
 export const QUALIFICATIONS: Qualification[] = [
   { name: "Level 4 Diploma in Fire Risk Assessment" },
   { name: "Level 5 Diploma in Fire Engineering Design" },
+  { name: "Level 6 Diploma in Applied Health and Safety" },
+];
+
+// A professional card/status — distinct from a Membership (a body you belong
+// to) and a Qualification (a diploma you were awarded). `abbr` + `status`
+// combine to form the exact public wording; `fullName` is the longer form
+// used in structured data only (repositioning PR4).
+export interface ProfessionalCard {
+  abbr: string;
+  status: string;
+  fullName: string;
+}
+// Construction Skills Certification Scheme (CSCS) card. No expiry date, card
+// number or registration/candidate number is stored here or anywhere else in
+// the codebase — none of that is ever rendered publicly or in structured
+// data.
+export const PROFESSIONAL_CARDS: ProfessionalCard[] = [
+  {
+    abbr: "CSCS",
+    status: "Professionally Qualified Person",
+    fullName: "Construction Skills Certification Scheme (CSCS) — Professionally Qualified Person",
+  },
 ];
 
 export interface Assurance {
@@ -618,6 +645,7 @@ export const ASSURANCES: Assurance[] = [
 export const CREDENTIALS: string[] = [
   ...MEMBERSHIPS.map((m) => `${m.abbr} — ${m.grade}`),
   ...QUALIFICATIONS.map((q) => q.name),
+  ...PROFESSIONAL_CARDS.map((c) => `${c.abbr} ${c.status}`),
   ...ASSURANCES.map((a) => a.name),
 ];
 
@@ -634,6 +662,18 @@ export const ASSESSOR = {
    */
   shortRole: "Fire Engineer (MIFireE) & Chartered Health & Safety Professional (CMIOSH)",
   photo: "/batir-turakulov.jpg",
+  /*
+   * Deliberately NOT extended with the Level 6 Diploma or CSCS status
+   * (repositioning PR4). This string feeds both PersonJsonLd's description
+   * (About page only) and, via StructuredData.tsx, the sitewide
+   * ProfessionalService JSON-LD's founder.description — rendered on every
+   * page by the root layout. Naming the new credentials here would move
+   * every route's content hash for an invisible JSON-LD field, when the
+   * About page's own dedicated paragraph already states them visibly. The
+   * new credentials still reach structured data correctly: PersonJsonLd
+   * passes QUALIFICATIONS and PROFESSIONAL_CARDS into hasCredential
+   * independently of this bio string.
+   */
   bio: "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and a Level 4 Diploma in Fire Risk Assessment. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };

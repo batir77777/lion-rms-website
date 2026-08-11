@@ -32,7 +32,7 @@ const VALUES = [
   {
     icon: "🎯",
     title: "Competence",
-    body: "Fire engineering and assessment work grounded in UK legislation, a Level 5 Diploma in Fire Engineering Design, membership of the Institution of Fire Engineers (MIFireE), a Level 4 Diploma in Fire Risk Assessment, and CMIOSH Chartered status in health & safety.",
+    body: "Fire and health & safety work grounded in UK legislation — a Level 5 Diploma in Fire Engineering Design, a Level 4 Diploma in Fire Risk Assessment and MIFireE membership on the fire side; a Level 6 Diploma in Applied Health and Safety, CMIOSH Chartered status and CSCS Professionally Qualified Person status on the health & safety side.",
   },
   {
     icon: "⚖️",
@@ -94,6 +94,17 @@ export default function AboutPage() {
                 things that genuinely affect life safety rather than defaulting to a
                 checklist. Batir holds a Level 4 Diploma in Fire Risk Assessment
                 alongside his fire engineering qualifications.
+              </p>
+              <p>
+                Health &amp; safety consultancy is delivered to the same standard.
+                Batir holds a Level 6 Diploma in Applied Health and Safety from NCRQ
+                (National Compliance and Risk Qualifications), is a Chartered Member
+                of the Institution of Occupational Safety and Health (CMIOSH), a
+                Member of the International Institute of Risk and Safety Management
+                (MIIRSM), and an Associate Member of the Institute of Environmental
+                Management and Assessment (AIEMA). He also holds CSCS Professionally
+                Qualified Person status, recognising his qualifications and
+                experience for construction-sector site work.
               </p>
               <p>
                 Our work is grounded in UK fire safety legislation — including the
