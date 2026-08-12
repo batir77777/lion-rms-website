@@ -133,7 +133,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const mod = await import("../app/sitemap.ts");
     const fn = typeof mod.default === "function" ? mod.default : mod.default.default;
     const entries = await fn();
-    assert.equal(entries.length, 81, `the sitemap should still list 81 URLs, found ${entries.length}`);
+    assert.equal(entries.length, 82, `the sitemap should still list 82 URLs, found ${entries.length}`);
     const offenders = entries
       .map((e) => new URL(e.url).pathname)
       .filter((p) => /not-found|404/.test(p));
@@ -261,11 +261,12 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     assert.ok(dates.size >= 4, "the registry has collapsed to too few distinct dates");
   });
 
-  test("the index still holds exactly 52 pages", () => {
+  test("the index still holds exactly 53 pages", () => {
     // The 404 is emitted into the same directory the index is built from, so
     // this is the number that would move if the allow-list ever stopped
-    // filtering it.
+    // filtering it. 52 through PR6; +1 for the new
+    // guides/fire-compartmentation-survey-explained page.
     const fragments = fs.readdirSync(path.join(repoRoot, "public/pagefind/fragment"));
-    assert.equal(fragments.length, 52, `expected 52 indexed pages, found ${fragments.length}`);
+    assert.equal(fragments.length, 53, `expected 53 indexed pages, found ${fragments.length}`);
   });
 });
