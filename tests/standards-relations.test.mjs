@@ -70,14 +70,18 @@ describe("Guide ↔ Standard — data", () => {
     }
   });
 
-  test("only the health-and-safety document lacks a Guide, and that is recorded", async () => {
-    // Pinning the exception so it cannot quietly grow. If a second standard
-    // ends up with no Guide, this fails and the gap gets looked at.
+  test("no standard lacks a Guide any longer", async () => {
+    // hsg65-managing-for-health-and-safety was the one pinned exception here —
+    // see the comment on the previous test — and PR 7 is exactly the "Guide to
+    // fill the gap" that comment called for:
+    // guides/health-and-safety-risk-assessment-explained references it via
+    // relatedStandards. Pinning the now-empty list so a future orphan is
+    // caught rather than silently tolerated.
     const { publishedStandards, guidesReferencing } = await import("../lib/standards");
     const withoutGuide = publishedStandards()
       .filter((s) => guidesReferencing(s.slug).length === 0)
       .map((s) => s.slug);
-    assert.deepEqual(withoutGuide, ["hsg65-managing-for-health-and-safety"]);
+    assert.deepEqual(withoutGuide, []);
   });
 
   test("every declared reference resolves to a real standard", async () => {
