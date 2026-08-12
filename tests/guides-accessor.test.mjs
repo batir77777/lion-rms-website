@@ -39,10 +39,14 @@ const EXPECTED_SLUGS = [
   // article rather than a migrated one — the seven above are all migration
   // survivors, this one is genuinely new content.
   "fire-compartmentation-survey-explained",
+  // PR 7: health-and-safety-risk-assessment-explained, the Health & Safety
+  // counterpart to PR6's fire guide — the first guide in the health-safety
+  // category.
+  "health-and-safety-risk-assessment-explained",
 ];
 
 describe("Guides accessor layer", () => {
-  test("exposes exactly the eight published guides", async () => {
+  test("exposes exactly the nine published guides", async () => {
     const { publishedGuides } = await import("../lib/guides");
     const guides = publishedGuides();
     assert.equal(guides.length, EXPECTED_SLUGS.length);
@@ -80,8 +84,9 @@ describe("Guides accessor layer", () => {
     const total = cats.reduce((n, c) => n + c.count, 0);
     assert.equal(total, publishedGuides().length);
     for (const c of cats) assert.ok(c.count > 0, `${c.slug} has a zero count`);
-    // health-safety and business-duty-holder-guidance carry no migrated guide.
-    assert.equal(cats.some((c) => c.slug === "health-safety"), false);
+    // business-duty-holder-guidance still carries no guide. health-safety did
+    // not either until PR 7 added the first one.
+    assert.equal(cats.some((c) => c.slug === "health-safety"), true);
   });
 
   test("service derivation returns the guides that declare that service", async () => {

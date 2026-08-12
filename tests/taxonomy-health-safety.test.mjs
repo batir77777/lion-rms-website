@@ -226,13 +226,21 @@ describe("Health & safety content is described as health & safety", () => {
     }
   });
 
-  test("every published item in the health-safety category carries a health & safety tag", async () => {
+  test("every published item in the health-safety category carries a health & safety tag, in collections where tags are expected", async () => {
     // The standing invariant, and the one that stops this recurring: publish an
     // H&S item tagged only from the fire vocabulary and the build fails here.
-    const { guides, news, standards, legislation, glossaryTerms, downloads } = await import(
-      "../.velite"
-    );
-    const all = [...guides, ...news, ...standards, ...legislation, ...glossaryTerms, ...downloads];
+    //
+    // Guides are excluded, not exempted from scrutiny. TAGS_EXPECTED_COLLECTIONS
+    // (lib/editorial-rules.ts) is just ["news", "downloads"] — tags were never
+    // expected on Guides, and per "no Guide or Glossary term is retagged" above,
+    // the two tags this check looks for are specifically forbidden on Guides
+    // (Guides render tag chips; F2 must stay metadata-only). A Guide's domain is
+    // carried by its `category` field alone, which is already health-safety —
+    // there is no fire-vocabulary tag it could be wrongly carrying instead.
+    // No guide sat in category "health-safety" when this test was written; PR 7
+    // (health-and-safety-risk-assessment-explained) is the first.
+    const { news, standards, legislation, glossaryTerms, downloads } = await import("../.velite");
+    const all = [...news, ...standards, ...legislation, ...glossaryTerms, ...downloads];
     const offenders = all
       .filter((i) => i.status === "published" && i.category === "health-safety")
       .filter((i) => !(i.tags ?? []).some((t) => HS_TAGS.has(t)))
@@ -381,8 +389,12 @@ describe("Nothing outside the tags line moved", () => {
   test("no retagged file gained or lost a front-matter line", () => {
     // The tags line is edited in place; a line count that moved means a field
     // was added or removed alongside it.
+    //
+    // The checklist's count moved once more, outside F2: PR 7 added a third
+    // relatedArticles entry (health-and-safety-risk-assessment-explained), a
+    // genuine, approved one-line relation addition, not tag drift. 52 -> 53.
     const EXPECTED_LINES = {
-      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 52,
+      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 53,
       "content/standards/hsg65-managing-for-health-and-safety.mdx": 39,
       "content/legislation/health-and-safety-at-work-act-1974.mdx": 67,
       "content/legislation/management-of-health-and-safety-at-work-regulations-1999.mdx": 64,

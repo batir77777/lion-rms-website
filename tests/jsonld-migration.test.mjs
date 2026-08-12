@@ -111,11 +111,24 @@ before(() => {
 // array — and therefore its hash — changes whenever the set of published
 // guides changes; this is the first PR to add a guide since the PR10
 // snapshot was taken.
+//
+// PR 7 (Health & Safety Knowledge Centre guide, 2026-08-12) added a second
+// new guide, guides/health-and-safety-risk-assessment-explained — again the
+// same generic per-guide Article + BreadcrumbList JSON-LD, no new builder.
+// guides → CollectionPage is already listed below from PR 6 and does not
+// need a second entry; its `items` array simply gains one more member.
+// It also edited the existing Workplace Health & Safety Inspection
+// Checklist's relatedArticles to reference the new guide (an approved,
+// genuine cross-link, not incidental drift). That download's own
+// DigitalDocument JSON-LD builds its `about` array from
+// guidesReferencedBy(item) (app/downloads/[slug]/page.tsx), so gaining a
+// referenced guide changes that one route's hash.
 const ROUTES_ADDED_SINCE_PR10 = [
   "services/fire-engineering",
   "services/fire-safety-consultancy",
   "services/construction-health-safety",
   "guides/fire-compartmentation-survey-explained",
+  "guides/health-and-safety-risk-assessment-explained",
 ];
 const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "services/fire-safety → Service",
@@ -127,6 +140,7 @@ const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "case-studies/residential-portfolio-fire-risk-assessment → Service",
   "about → Person",
   "guides → CollectionPage",
+  "downloads/workplace-health-safety-inspection-checklist → DigitalDocument",
 ]);
 
 describe("Emitted JSON-LD is unchanged by the migration", () => {
