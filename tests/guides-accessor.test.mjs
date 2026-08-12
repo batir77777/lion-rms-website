@@ -35,10 +35,14 @@ const EXPECTED_SLUGS = [
   "commercial-fire-safety-compliance",
   "block-management-fire-safety-guidance",
   "pas-9970-bsi-consultation-fire-safety-construction",
+  // PR 6: fire-compartmentation-survey-explained, a new Knowledge Centre
+  // article rather than a migrated one — the seven above are all migration
+  // survivors, this one is genuinely new content.
+  "fire-compartmentation-survey-explained",
 ];
 
 describe("Guides accessor layer", () => {
-  test("exposes exactly the seven migrated guides, all published", async () => {
+  test("exposes exactly the eight published guides", async () => {
     const { publishedGuides } = await import("../lib/guides");
     const guides = publishedGuides();
     assert.equal(guides.length, EXPECTED_SLUGS.length);
@@ -91,10 +95,14 @@ describe("Guides accessor layer", () => {
     assert.equal(fireSafety.length, 5);
     for (const g of fireSafety) assert.ok(g.relatedServices.includes("fire-safety"));
 
+    // PR 6 adds fire-compartmentation-survey-explained under the same
+    // service. publishedGuides() orders most-recent-first, so the new guide
+    // (published 2026-08-12) sorts ahead of fire-door-inspections-explained
+    // (published 2026-07-13).
     const fireSafetyConsultancy = getGuidesForService("fire-safety-consultancy");
     assert.deepEqual(
       fireSafetyConsultancy.map((g) => g.slug),
-      ["fire-door-inspections-explained"]
+      ["fire-compartmentation-survey-explained", "fire-door-inspections-explained"]
     );
 
     const compliance = getGuidesForService("compliance-support");

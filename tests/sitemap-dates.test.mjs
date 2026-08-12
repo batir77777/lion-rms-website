@@ -116,10 +116,11 @@ describe("No sitemap date is a build timestamp", () => {
 });
 
 describe("Every sitemap route has a date source", () => {
-  test("the sitemap emits exactly the expected 81 URLs", () => {
+  test("the sitemap emits exactly the expected 82 URLs", () => {
     // 80 before repositioning PR5, +1 for the new /services/construction-health-safety.
-    assert.equal(entries.length, 81);
-    assert.equal(new Set(entries.map((e) => e.url)).size, 81, "a URL is listed twice");
+    // 81 before PR6, +1 for the new /guides/fire-compartmentation-survey-explained.
+    assert.equal(entries.length, 82);
+    assert.equal(new Set(entries.map((e) => e.url)).size, 82, "a URL is listed twice");
   });
 
   test("an unregistered authored route throws rather than defaulting", () => {
@@ -201,13 +202,18 @@ describe("Aggregation pages derive from the newest item they list", () => {
   });
 });
 
-describe("The 52 Knowledge Centre item dates are unchanged by PR 10", () => {
+describe("The 53 Knowledge Centre item dates are unchanged by PR 10", () => {
   // Pinned from the pre-PR-10 sitemap. These come from content front matter and
   // must not have been touched; if one moves, the derivation was rewritten when
   // it should only have been read.
-  const EXPECTED_ITEM_COUNT = 52;
+  //
+  // 52 through PR6; +1 for fire-compartmentation-survey-explained, the new
+  // guide PR 6 adds. The count itself is expected to grow with genuine
+  // content — what this suite still guards is that PR 10's date-sourcing
+  // behaviour (front matter only, never a build timestamp) is unchanged.
+  const EXPECTED_ITEM_COUNT = 53;
 
-  test("exactly 52 content-item URLs are listed", () => {
+  test("exactly 53 content-item URLs are listed", () => {
     const items = entries.filter((e) =>
       /\/(guides|glossary|standards|legislation|news|downloads)\/[a-z0-9-]+$/.test(e.url) &&
       !/\/news\/\d{4}$/.test(e.url)

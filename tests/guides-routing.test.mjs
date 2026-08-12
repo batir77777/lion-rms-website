@@ -35,7 +35,7 @@ describe("Guides routing", () => {
       params.map((p) => p.slug).sort(),
       publishedGuides().map((g) => g.slug).sort()
     );
-    assert.equal(params.length, 7);
+    assert.equal(params.length, 8);
   });
 
   test("dynamicParams is false, so an unknown slug 404s rather than rendering", async () => {

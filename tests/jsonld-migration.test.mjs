@@ -101,10 +101,21 @@ before(() => {
 // but its `name`/`description` inputs are unchanged — the item removed from
 // its page is not part of that page's own JSON-LD — so it is NOT added to
 // CONTENT_CHANGED_SINCE_PR10 below.
+//
+// PR 6 (Knowledge Centre, 2026-08-12) added a new guide,
+// guides/fire-compartmentation-survey-explained. It emits the same generic
+// per-guide Article/TechArticle + BreadcrumbList JSON-LD every guide detail
+// page emits from buildArticleSchema — no new schema type or builder. The
+// guide index page's own CollectionPage JSON-LD (app/guides/page.tsx, via
+// buildCollectionPageSchema) is built from `guides.map(...)`, so its `items`
+// array — and therefore its hash — changes whenever the set of published
+// guides changes; this is the first PR to add a guide since the PR10
+// snapshot was taken.
 const ROUTES_ADDED_SINCE_PR10 = [
   "services/fire-engineering",
   "services/fire-safety-consultancy",
   "services/construction-health-safety",
+  "guides/fire-compartmentation-survey-explained",
 ];
 const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "services/fire-safety → Service",
@@ -115,6 +126,7 @@ const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "case-studies/mixed-use-fire-strategy-change-of-use → Service",
   "case-studies/residential-portfolio-fire-risk-assessment → Service",
   "about → Person",
+  "guides → CollectionPage",
 ]);
 
 describe("Emitted JSON-LD is unchanged by the migration", () => {
