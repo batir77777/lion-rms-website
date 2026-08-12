@@ -87,7 +87,25 @@ before(() => {
 // (which feeds the sitewide ProfessionalService node's founder description
 // on every route) was deliberately left unchanged, specifically so this PR
 // would not need to document a change on every route in this fixture.
-const ROUTES_ADDED_SINCE_PR10 = ["services/fire-engineering", "services/fire-safety-consultancy"];
+//
+// Repositioning PR5 (2026-08-11) added /services/construction-health-safety
+// as a new page, carved out of /services/health-safety's former "RAMS and
+// Construction Phase Plans" and "Competent Person Support" items. It emits
+// the same generic per-category Service + BreadcrumbList JSON-LD every
+// /services/[slug] page emits (app/services/[slug]/page.tsx builds this
+// inline object from `cat.title`/`cat.intro`/`cat.slug`, not from anything
+// hardcoded per category — see Research B's finding that no dedicated
+// buildServiceSchema exists, deliberately not introduced by this PR either).
+// /services/health-safety's own Service/BreadcrumbList JSON-LD is
+// content-identical in shape (still built from the same generic template)
+// but its `name`/`description` inputs are unchanged — the item removed from
+// its page is not part of that page's own JSON-LD — so it is NOT added to
+// CONTENT_CHANGED_SINCE_PR10 below.
+const ROUTES_ADDED_SINCE_PR10 = [
+  "services/fire-engineering",
+  "services/fire-safety-consultancy",
+  "services/construction-health-safety",
+];
 const CONTENT_CHANGED_SINCE_PR10 = new Set([
   "services/fire-safety → Service",
   "services/fire-safety → BreadcrumbList",

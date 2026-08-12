@@ -181,9 +181,18 @@ describe("Structured data and dates", () => {
     // Qualified Person), and /about also gained a new paragraph and a
     // rewritten value card — changes a reader would notice, so both dates
     // legitimately moved too.
+    //
+    // "/services" and "/services/health-safety" are deliberately absent as of
+    // repositioning PR5 (2026-08-11): /services gained a sixth card
+    // (Construction Health & Safety), and /services/health-safety lost its
+    // RAMS and Construction Phase Plans item in favour of a one-sentence
+    // pointer to the new /services/construction-health-safety page — both
+    // changes a reader would notice, so both dates legitimately moved too.
+    // /services/construction-health-safety is a brand new authored route, so
+    // it has no prior date to have "kept" in the first place, and is likewise
+    // absent from this pin list.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
-      "/services/health-safety": "2026-07-29",
       "/services/compliance-support": "2026-07-29",
       "/sectors": "2026-07-26",
       "/sectors/residential-blocks-hmos": "2026-07-29",
@@ -199,7 +208,7 @@ describe("Structured data and dates", () => {
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 11);
+    assert.equal(Object.keys(DATES).length, 10);
   });
 
   test("the three detail pages keep their own dates", async () => {
