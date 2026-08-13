@@ -393,8 +393,10 @@ describe("Nothing outside the tags line moved", () => {
     // The checklist's count moved once more, outside F2: PR 7 added a third
     // relatedArticles entry (health-and-safety-risk-assessment-explained), a
     // genuine, approved one-line relation addition, not tag drift. 52 -> 53.
+    // PR 8 added a fourth (coshh-assessment-explained), the same kind of
+    // genuine relation addition. 53 -> 54.
     const EXPECTED_LINES = {
-      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 53,
+      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 54,
       "content/standards/hsg65-managing-for-health-and-safety.mdx": 39,
       "content/legislation/health-and-safety-at-work-act-1974.mdx": 67,
       "content/legislation/management-of-health-and-safety-at-work-regulations-1999.mdx": 64,

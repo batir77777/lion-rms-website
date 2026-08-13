@@ -43,10 +43,14 @@ const EXPECTED_SLUGS = [
   // counterpart to PR6's fire guide — the first guide in the health-safety
   // category.
   "health-and-safety-risk-assessment-explained",
+  // PR 8: coshh-assessment-explained, a supporting guide beneath PR 7's
+  // pillar (clusterId: health-and-safety-risk-assessment-explained), not a
+  // second pillar in its own right.
+  "coshh-assessment-explained",
 ];
 
 describe("Guides accessor layer", () => {
-  test("exposes exactly the nine published guides", async () => {
+  test("exposes exactly the ten published guides", async () => {
     const { publishedGuides } = await import("../lib/guides");
     const guides = publishedGuides();
     assert.equal(guides.length, EXPECTED_SLUGS.length);
