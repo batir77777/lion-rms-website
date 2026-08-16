@@ -199,6 +199,40 @@ export const CONTENT_TAGS: ContentTag[] = [
   // threshold for an archive page. Apply the threshold rule from the
   // architecture plan (Section 6) rather than generating a page per slug.
   { slug: "workplace-inspections", label: "Workplace Inspections" },
+
+  // Added in PR 8 (COSHH Knowledge Centre guide).
+  //
+  // `coshh-hazardous-substances` was one of the eight candidates considered
+  // and REJECTED at F2, on the stated ground that it "corresponds to one
+  // section of one checklist and to nothing else on the site" — see the F2
+  // comment above. That was true at the time: the only content touching
+  // hazardous substances was the "substances and materials" section of the
+  // workplace inspection checklist, one section among seven in a general
+  // document.
+  //
+  // The factual basis has changed, not the governance rule. PR 8 adds two
+  // items that are wholly and specifically about hazardous substances, not
+  // one section of a general document: the L5 Approved Code of Practice
+  // (standards) and the Control of Substances Hazardous to Health
+  // Regulations 2002 (legislation). Two dedicated, tag-eligible items is
+  // exactly the "genuinely technical, recurs across the site" bar the PR 6
+  // News batch was held to, and above the F2 rejection's own stated test.
+  //
+  // Two uses: l5-control-of-substances-hazardous-to-health,
+  // control-of-substances-hazardous-to-health-regulations-2002.
+  //
+  // NOT applied to the workplace inspection checklist. Retagging it here
+  // would repeat the exact defect this tag was rejected for at F2 — one
+  // section of a seven-section general document does not make the whole
+  // document "about" hazardous substances, any more than the fire-doors
+  // section makes it a document about fire doors.
+  //
+  // NOT applied to the COSHH guide (coshh-assessment-explained). Guides
+  // carry no domain tags at all — confirmed by
+  // tests/taxonomy-health-safety.test.mjs, which explicitly excludes Guides
+  // from the "carries a health & safety tag" requirement and forbids tag
+  // chips on Guide pages. A Guide's domain is carried by `category` alone.
+  { slug: "coshh-hazardous-substances", label: "COSHH & Hazardous Substances" },
 ];
 
 export const CONTENT_TAG_SLUGS = CONTENT_TAGS.map((t) => t.slug) as [string, ...string[]];

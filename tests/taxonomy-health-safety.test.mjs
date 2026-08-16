@@ -45,8 +45,16 @@ const outDir = path.join(repoRoot, ".next/server/app");
 /** The two tags F2 adds. Every guard below is written against this list. */
 const NEW_TAGS = ["safety-management-systems", "workplace-inspections"];
 
-/** The tags that describe health & safety rather than fire, after F2. */
-const HS_TAGS = new Set([...NEW_TAGS, "asbestos", "cdm"]);
+/**
+ * The tags that describe health & safety rather than fire.
+ *
+ * `...NEW_TAGS`, `"asbestos"` and `"cdm"` are the F2 set. `coshh-hazardous-
+ * substances` is a separate, later addition (PR 8) — deliberately not folded
+ * into `NEW_TAGS`, which several subtests below use specifically to mean
+ * "exactly the two tags F2 added"; conflating the two would make this file
+ * start asserting things about PR 8's tag that were never true of F2's.
+ */
+const HS_TAGS = new Set([...NEW_TAGS, "asbestos", "cdm", "coshh-hazardous-substances"]);
 
 /**
  * Every file F2 retags, with the tag array it must end up with.
@@ -393,8 +401,10 @@ describe("Nothing outside the tags line moved", () => {
     // The checklist's count moved once more, outside F2: PR 7 added a third
     // relatedArticles entry (health-and-safety-risk-assessment-explained), a
     // genuine, approved one-line relation addition, not tag drift. 52 -> 53.
+    // PR 8 added a fourth (coshh-assessment-explained), the same kind of
+    // genuine relation addition. 53 -> 54.
     const EXPECTED_LINES = {
-      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 53,
+      "content/downloads/workplace-health-safety-inspection-checklist.mdx": 54,
       "content/standards/hsg65-managing-for-health-and-safety.mdx": 39,
       "content/legislation/health-and-safety-at-work-act-1974.mdx": 67,
       "content/legislation/management-of-health-and-safety-at-work-regulations-1999.mdx": 64,
