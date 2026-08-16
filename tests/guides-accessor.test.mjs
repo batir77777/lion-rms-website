@@ -47,10 +47,14 @@ const EXPECTED_SLUGS = [
   // pillar (clusterId: health-and-safety-risk-assessment-explained), not a
   // second pillar in its own right.
   "coshh-assessment-explained",
+  // PR 9: workplace-health-and-safety-inspections-and-audits-explained, a
+  // second supporting guide beneath the same pillar as PR 8's COSHH guide —
+  // distinguishes inspections/audits from the risk assessment process itself.
+  "workplace-health-and-safety-inspections-and-audits-explained",
 ];
 
 describe("Guides accessor layer", () => {
-  test("exposes exactly the ten published guides", async () => {
+  test("exposes exactly the eleven published guides", async () => {
     const { publishedGuides } = await import("../lib/guides");
     const guides = publishedGuides();
     assert.equal(guides.length, EXPECTED_SLUGS.length);
