@@ -337,7 +337,11 @@ describe("News: the sourceType split weakened nothing", () => {
     // `workplace-inspections`, which is the whole point: the count moves only
     // when someone deliberately edits this number alongside the registry.
     //
-    // 10 at PR 3  →  14 at PR 6 (the four below)  →  16 at F2 (the two below).
+    // 10 at PR 3  →  14 at PR 6 (the four below)  →  16 at F2 (the two below)
+    // →  17 at PR 8 (coshh-hazardous-substances, added once PR 8's own COSHH
+    // standard and legislation entries gave the previously F2-rejected tag a
+    // genuine, non-thin body of content to describe — see the comment in
+    // lib/taxonomy.ts immediately above that entry for the full reasoning).
     const { CONTENT_TAG_SLUGS } = await import("../lib/taxonomy");
     for (const slug of ["sprinklers-suppression", "external-wall-systems", "smoke-control", "asbestos"]) {
       assert.ok(CONTENT_TAG_SLUGS.includes(slug), `${slug} missing from the registry`);
@@ -345,6 +349,7 @@ describe("News: the sourceType split weakened nothing", () => {
     for (const slug of ["safety-management-systems", "workplace-inspections"]) {
       assert.ok(CONTENT_TAG_SLUGS.includes(slug), `${slug} missing from the registry`);
     }
-    assert.equal(CONTENT_TAG_SLUGS.length, 16, "the registry grew beyond the approved tags");
+    assert.ok(CONTENT_TAG_SLUGS.includes("coshh-hazardous-substances"), "coshh-hazardous-substances missing from the registry");
+    assert.equal(CONTENT_TAG_SLUGS.length, 17, "the registry grew beyond the approved tags");
   });
 });

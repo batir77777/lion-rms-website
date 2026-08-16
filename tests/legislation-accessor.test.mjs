@@ -44,13 +44,17 @@ const EXPECTED_SLUGS = [
   "health-and-safety-at-work-act-1974",
   "management-of-health-and-safety-at-work-regulations-1999",
   "regulatory-reform-fire-safety-order-2005",
+  // PR 8: control-of-substances-hazardous-to-health-regulations-2002, added
+  // to give the COSHH guide and the L5 standard a genuine relatedLegislation
+  // entry, per tests/legislation-relations.test.mjs.
+  "control-of-substances-hazardous-to-health-regulations-2002",
 ];
 
 describe("Legislation accessor", () => {
-  test("exposes exactly the eight launch instruments, all published", async () => {
+  test("exposes exactly the nine launch instruments, all published", async () => {
     const { publishedLegislation } = await import("../lib/legislation");
     const items = publishedLegislation();
-    assert.equal(items.length, 8);
+    assert.equal(items.length, 9);
     assert.deepEqual(items.map((i) => i.slug).sort(), [...EXPECTED_SLUGS].sort());
     for (const i of items) assert.equal(i.status, "published");
   });
@@ -398,7 +402,7 @@ describe("Legislation routing", () => {
   test("generateStaticParams returns exactly the published instruments", async () => {
     const mod = await import("../app/legislation/[slug]/page.tsx");
     const params = mod.generateStaticParams();
-    assert.equal(params.length, 8);
+    assert.equal(params.length, 9);
     assert.deepEqual(params.map((p) => p.slug).sort(), [...EXPECTED_SLUGS].sort());
   });
 
@@ -575,7 +579,7 @@ describe("Legislation structured data", () => {
       path: "/legislation",
       items: items.map((i) => ({ name: i.shortTitle, path: `/legislation/${i.slug}` })),
     });
-    assert.equal(json.mainEntity.itemListElement.length, 8);
+    assert.equal(json.mainEntity.itemListElement.length, 9);
     for (const el of json.mainEntity.itemListElement) {
       assert.ok(el.name.length > 0 && el.name.length <= 75, `over-long ItemList name: ${el.name}`);
       assert.match(el.url, /^https:\/\/www\.lionrms\.uk\/legislation\//);

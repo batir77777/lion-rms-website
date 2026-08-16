@@ -45,8 +45,16 @@ const outDir = path.join(repoRoot, ".next/server/app");
 /** The two tags F2 adds. Every guard below is written against this list. */
 const NEW_TAGS = ["safety-management-systems", "workplace-inspections"];
 
-/** The tags that describe health & safety rather than fire, after F2. */
-const HS_TAGS = new Set([...NEW_TAGS, "asbestos", "cdm"]);
+/**
+ * The tags that describe health & safety rather than fire.
+ *
+ * `...NEW_TAGS`, `"asbestos"` and `"cdm"` are the F2 set. `coshh-hazardous-
+ * substances` is a separate, later addition (PR 8) — deliberately not folded
+ * into `NEW_TAGS`, which several subtests below use specifically to mean
+ * "exactly the two tags F2 added"; conflating the two would make this file
+ * start asserting things about PR 8's tag that were never true of F2's.
+ */
+const HS_TAGS = new Set([...NEW_TAGS, "asbestos", "cdm", "coshh-hazardous-substances"]);
 
 /**
  * Every file F2 retags, with the tag array it must end up with.

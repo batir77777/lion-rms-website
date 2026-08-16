@@ -41,13 +41,17 @@ const EXPECTED_SLUGS = [
   "hsg65-managing-for-health-and-safety",
   "pas-79-1-fire-risk-assessment-non-housing",
   "pas-79-2-fire-risk-assessment-housing",
+  // PR 8: l5-control-of-substances-hazardous-to-health, the COSHH Approved
+  // Code of Practice — added specifically to give the COSHH guide a genuine
+  // relatedStandards entry, per tests/standards-relations.test.mjs.
+  "l5-control-of-substances-hazardous-to-health",
 ];
 
 describe("Standards accessor", () => {
-  test("exposes exactly the eight launch documents, all published", async () => {
+  test("exposes exactly the nine launch documents, all published", async () => {
     const { publishedStandards } = await import("../lib/standards");
     const standards = publishedStandards();
-    assert.equal(standards.length, 8);
+    assert.equal(standards.length, 9);
     assert.deepEqual(standards.map((s) => s.slug).sort(), [...EXPECTED_SLUGS].sort());
     for (const s of standards) assert.equal(s.status, "published");
   });
@@ -286,7 +290,7 @@ describe("Standards routes", () => {
     assert.match(src, /export const dynamicParams = false/);
     assert.match(src, /generateStaticParams/);
     const { publishedStandards } = await import("../lib/standards");
-    assert.equal(publishedStandards().length, 8);
+    assert.equal(publishedStandards().length, 9);
   });
 
   test("deferred routes are not built", () => {
