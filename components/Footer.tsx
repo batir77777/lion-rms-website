@@ -6,7 +6,19 @@ import { KNOWLEDGE_SECTIONS } from "@/components/KnowledgeCentreNav";
 export default function Footer() {
   return (
     <footer style={{ background: "#060e1f" }} className="text-slate-400">
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-32 sm:px-6 md:pb-10">
+        {/*
+         * pb-32 (mobile only, reverting to the original pb-10 at md: and
+         * up): the floating Contact/WhatsApp buttons in FloatingContact.tsx
+         * are `fixed bottom-4 right-4` and `md:hidden`, so on mobile they sit
+         * outside document flow and overlap whatever is scrolled to the
+         * bottom of the page — which, without this, is the footer's bottom
+         * bar (Company information / Privacy Policy / Lion Digital links).
+         * Extra bottom padding here keeps that content clear of the fixed
+         * buttons' footprint (~124px of stacked 56px buttons + gap, from
+         * 16px off the bottom) so every footer link stays fully tappable.
+         * Desktop is untouched: the buttons don't render there at all.
+         */}
         {/* Top strip */}
         <div className="mb-12 grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           {/* Brand column */}
