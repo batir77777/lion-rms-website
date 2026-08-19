@@ -164,6 +164,23 @@ export default function Footer() {
             <p className="text-xs text-slate-400">
               MIFireE &middot; CMIOSH Chartered
             </p>
+            <span className="text-slate-700" aria-hidden>&middot;</span>
+            {/*
+             * Discreet cross-link to Lion Digital, our separate sister
+             * business (AI/software). Deliberately placed in the bottom bar
+             * rather than the Services or Pages columns, and not added to
+             * NAV, so it reads as an administrative/related-business link
+             * rather than part of the Lion RMS service offering — see
+             * LION_DIGITAL_FOOTER_LINK_INVESTIGATION.md for the rationale.
+             */}
+            <a
+              href="https://www.liondigital.solutions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-slate-400 transition hover:text-white"
+            >
+              Digital &amp; AI solutions — visit Lion Digital &rarr;
+            </a>
           </div>
         </div>
       </div>

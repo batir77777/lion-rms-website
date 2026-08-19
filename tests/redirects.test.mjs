@@ -117,7 +117,7 @@ describe("Insights to Guides redirect map", () => {
   test("the pre-existing redirects are untouched", async () => {
     const rules = await loadRedirects();
     const bySource = new Map(rules.map((r) => [r.source, r]));
-    assert.equal(bySource.get("/ai-automation").destination, "https://www.liondigital.org");
+    assert.equal(bySource.get("/ai-automation").destination, "https://www.liondigital.solutions");
     assert.equal(bySource.get("/areas").destination, "/sectors");
   });
 

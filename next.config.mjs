@@ -70,7 +70,7 @@ const nextConfig = {
     return [
       {
         source: "/ai-automation",
-        destination: "https://www.liondigital.org",
+        destination: "https://www.liondigital.solutions",
         permanent: true,
       },
       {
