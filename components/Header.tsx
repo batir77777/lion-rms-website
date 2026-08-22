@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CTA_PRIMARY_LABEL } from "@/lib/site";
+import { NAV, SITE, CTA_PRIMARY_LABEL, LION_DIGITAL_URL } from "@/lib/site";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -137,6 +137,27 @@ export default function Header() {
 
         {/* Desktop right */}
         <div className="hidden items-center gap-5 xl:flex">
+          {/*
+           * Cross-link to Lion Digital, our separate sister business
+           * (bespoke software / AI automation). Deliberately kept OUT of the
+           * `NAV`-driven Primary nav above — that nav is Lion RMS's own page
+           * structure (Services, Sectors, etc.), and adding Lion Digital
+           * there would read as a Lion RMS service and would also propagate
+           * into the footer's "Pages" column, which is driven by the same
+           * `NAV` array. This sits beside it instead: visible at a glance,
+           * but styled as an outlined pill rather than the solid CTA
+           * gradient, so it doesn't compete with "Request a Quote" or read
+           * as part of the Lion RMS service offering. Opens in a new tab so
+           * a visitor never loses their place on the Lion RMS site.
+           */}
+          <a
+            href={LION_DIGITAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-teal-200 hover:text-teal-700"
+          >
+            Digital Solutions &#8599;
+          </a>
           <a
             href={SITE.phoneHref}
             className="whitespace-nowrap text-[15px] font-semibold text-slate-700 transition hover:text-teal-700"
@@ -208,6 +229,21 @@ export default function Header() {
                   {n.label}
                 </Link>
               ))}
+              {/*
+               * Same cross-link as the desktop right-side pill, and the same
+               * reasoning for keeping it out of the NAV-driven list above it:
+               * visible on mobile, but visually distinct from Lion RMS's own
+               * page links rather than mixed into them.
+               */}
+              <a
+                href={LION_DIGITAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="mt-3 flex items-center justify-center gap-1.5 rounded-full border border-slate-200 py-3 text-[15px] font-semibold text-slate-600 hover:border-teal-200 hover:text-teal-700"
+              >
+                Digital Solutions &#8599;
+              </a>
               <div className="flex items-center justify-between pb-4 pt-4">
                 <a
                   href={SITE.phoneHref}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CREDENTIALS, COMPANY_INFO_PATH, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, FOOTER_SERVICE_LINKS } from "@/lib/site";
+import { NAV, SITE, CREDENTIALS, COMPANY_INFO_PATH, COVERAGE_FULL, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, FOOTER_SERVICE_LINKS, LION_DIGITAL_URL } from "@/lib/site";
 import { KNOWLEDGE_SECTIONS } from "@/components/KnowledgeCentreNav";
 
 export default function Footer() {
@@ -186,7 +186,7 @@ export default function Footer() {
              * LION_DIGITAL_FOOTER_LINK_INVESTIGATION.md for the rationale.
              */}
             <a
-              href="https://www.liondigital.solutions"
+              href={LION_DIGITAL_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-slate-400 transition hover:text-white"

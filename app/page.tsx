@@ -4,7 +4,7 @@ import AssessorSection from "@/components/AssessorSection";
 import ComplianceCheckBand from "@/components/ComplianceCheckBand";
 import RecentProjects from "@/components/RecentProjects";
 import WhoWeHelp from "@/components/WhoWeHelp";
-import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, POSITIONING, HOMEPAGE_SERVICE_CLUSTERS } from "@/lib/site";
+import { CREDENTIALS, TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, POSITIONING, HOMEPAGE_SERVICE_CLUSTERS, LION_DIGITAL_URL } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 // Homepage metadata (repositioning PR2, August 2026) — rebalanced from the
@@ -300,6 +300,44 @@ export default function HomePage() {
                 <p className="mt-2 text-xs text-slate-500 leading-relaxed">{w.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/*
+        ── LION DIGITAL CROSS-BRAND CARD ──
+        A single small, understated card cross-linking to Lion Digital, our
+        separate sister business (bespoke software / AI automation) —
+        deliberately placed here, below the main Services section (line
+        ~171) and the core service/sector/proof content, rather than
+        anywhere near the top of the page. This keeps Lion RMS's own fire
+        safety and health & safety positioning uncontested for every visitor
+        who doesn't scroll this far, while still giving the link real
+        visibility for those who do — a step up from the footer-only link,
+        without competing with it (that link stays, unchanged, in
+        Footer.tsx). Styled as a plain bordered card, not the navy/teal
+        gradient used for primary Lion RMS CTAs, so it reads as a distinct,
+        related business rather than another Lion RMS service.
+      */}
+      <section className="border-b border-slate-100 bg-white py-14">
+        <div className="mx-auto max-w-4xl px-5 sm:px-6">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200 bg-slate-50/60 p-8 sm:flex-row sm:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                A separate business from Lion RMS
+              </p>
+              <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600">
+                Looking for digital compliance software or AI automation? Lion Digital develops bespoke business platforms, compliance systems, workflow automation and AI-assisted digital solutions.
+              </p>
+            </div>
+            <a
+              href={LION_DIGITAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-teal-200 hover:text-teal-700"
+            >
+              Visit Lion Digital &rarr;
+            </a>
           </div>
         </div>
       </section>

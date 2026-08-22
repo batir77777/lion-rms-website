@@ -43,6 +43,17 @@ export const COMPANY = {
 
 export const COMPANY_INFO_PATH = "/company-information";
 
+/**
+ * Lion Digital — a separate sister business (bespoke software / AI
+ * automation), not a Lion RMS service. Single source of truth for the URL so
+ * the header nav item, the homepage cross-brand card, and the footer link
+ * (Footer.tsx) can never drift onto different destinations. Deliberately not
+ * added to `NAV`: Lion Digital is cross-linked, not part of Lion RMS's own
+ * page structure — see the header and footer for how each surface keeps that
+ * distinction visually.
+ */
+export const LION_DIGITAL_URL = "https://www.liondigital.solutions";
+
 export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80",
   fireSafety: "/img/services/fire-5.jpg",
