@@ -26,8 +26,11 @@ export default function Footer() {
             <div className="mb-4">
               <Logo className="h-12 w-auto" dark />
             </div>
-            <p className="mb-5 max-w-xs text-sm leading-relaxed text-slate-400">
+            <p className="mb-2 max-w-xs text-sm leading-relaxed text-slate-400">
               Fire safety, fire engineering, health &amp; safety and construction safety consultancy across London and the Home Counties.
+            </p>
+            <p className="mb-5 max-w-xs text-sm font-semibold text-slate-300">
+              Lion Risk Management Solutions Limited
             </p>
             <div className="flex flex-wrap gap-2">
               {CREDENTIALS.slice(0, 4).map((c) => (
@@ -143,8 +146,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-start justify-between gap-3 border-t border-slate-800 pt-8 sm:flex-row sm:items-center">
-          <p className="text-xs text-slate-400">
-            &copy; {new Date().getFullYear()} Lion Risk Management Solutions. All rights reserved.
+          <p className="text-sm text-slate-400">
+            &copy; {new Date().getFullYear()} Lion Risk Management Solutions Limited. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {/*
@@ -164,16 +167,16 @@ export default function Footer() {
              */}
             <Link
               href={COMPANY_INFO_PATH}
-              className="text-xs font-medium text-slate-300 transition hover:text-white"
+              className="text-sm font-medium text-slate-300 transition hover:text-white"
             >
               Company information
             </Link>
             <span className="text-slate-700" aria-hidden>&middot;</span>
-            <Link href="/privacy" className="text-xs text-slate-400 transition hover:text-white">
+            <Link href="/privacy" className="text-sm text-slate-400 transition hover:text-white">
               Privacy Policy — how we handle your data
             </Link>
             <span className="text-slate-700" aria-hidden>&middot;</span>
-            <p className="text-xs text-slate-400">
+            <p className="text-sm text-slate-400">
               MIFireE &middot; CMIOSH Chartered
             </p>
             <span className="text-slate-700" aria-hidden>&middot;</span>
@@ -189,7 +192,7 @@ export default function Footer() {
               href={LION_DIGITAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-slate-400 transition hover:text-white"
+              className="text-sm text-slate-400 transition hover:text-white"
             >
               Digital &amp; AI solutions — visit Lion Digital &rarr;
             </a>

@@ -6,6 +6,19 @@ import Link from "next/link";
 import Reveal from "./Reveal";
 import { ASSESSOR } from "@/lib/site";
 
+// Homepage-only trim of the shared ASSESSOR.bio: the bio's opening clause
+// ("Batir Turakulov is a Fire Engineer, Member of the Institution of Fire
+// Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH),")
+// repeats ASSESSOR.role, shown immediately above it here. No content or
+// credibility information is removed — only the repeated opening clause —
+// and ASSESSOR.bio itself is untouched (About page, PersonJsonLd and
+// lib/people.ts all read the full original string).
+const HOMEPAGE_BIO_PREFIX =
+  "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in";
+const homepageBio = ASSESSOR.bio.startsWith(HOMEPAGE_BIO_PREFIX)
+  ? `Specialising in${ASSESSOR.bio.slice(HOMEPAGE_BIO_PREFIX.length)}`
+  : ASSESSOR.bio;
+
 export default function AssessorSection() {
   const [imgFailed, setImgFailed] = useState(false);
   const initials = ASSESSOR.name
@@ -50,7 +63,7 @@ export default function AssessorSection() {
                 Meet {ASSESSOR.name}
               </h2>
               <p className="mt-1 text-sm font-medium text-teal-700">{ASSESSOR.role}</p>
-              <p className="mt-4 text-base leading-relaxed text-slate-500">{ASSESSOR.bio}</p>
+              <p className="mt-4 text-base leading-relaxed text-slate-500">{homepageBio}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {ASSESSOR.credentials.map((c) => (
                   <span key={c} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-navy-700">
