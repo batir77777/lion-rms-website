@@ -76,7 +76,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                Independent fire safety, fire engineering and health &amp; safety consultancy for residential, commercial and construction clients across London and the UK.
+                Independent fire safety, fire engineering and health &amp; safety consultancy, supported by digital compliance and AI solutions for organisations across London and the UK.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
