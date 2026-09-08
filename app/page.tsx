@@ -93,6 +93,52 @@ export default function HomePage() {
               <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.45)" }}>
                 Led by Batir Turakulov, Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health &amp; Safety Professional (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
               </p>
+
+              {/*
+                Mobile/tablet version of the three hero-side cards (hidden on
+                lg: the desktop grid at line ~108 handles that breakpoint and
+                up, unchanged). Same three categories, more compact: tighter
+                padding, shorter body copy (title line only, no full
+                paragraph) so the hero doesn't get excessively long on a
+                phone. Digital card keeps its quieter styling and the
+                "Explore Lion Digital" link; the other two intentionally
+                have no link, matching the desktop cards.
+              */}
+              <div className="mt-8 grid grid-cols-1 gap-3 lg:hidden">
+                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(0,201,167,0.08)" }}>
+                  <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#00c9a7" }}>Fire Safety &amp; Fire Engineering</p>
+                  <p className="mt-1 text-sm font-semibold text-white">Fire Risk Assessments, Fire Engineering &amp; Fire Safety Consultancy</p>
+                </div>
+                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-blue-200/60">Health &amp; Safety &amp; Construction Safety</p>
+                  <p className="mt-1 text-sm font-semibold text-white">Health &amp; Safety Consultancy &amp; Construction Health &amp; Safety</p>
+                </div>
+                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(0,201,167,0.05)" }}>
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full"
+                      style={{ background: "rgba(0,201,167,0.18)", color: "#5be3c0" }}
+                      aria-hidden
+                    >
+                      <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                        <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
+                      </svg>
+                    </span>
+                    <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#5be3c0" }}>Digital Compliance &amp; AI Solutions</p>
+                  </div>
+                  <p className="mt-1 text-sm font-semibold text-white">AI, Automation &amp; Digital Compliance Platforms</p>
+                  <a
+                    href={LION_DIGITAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold transition hover:opacity-80"
+                    style={{ color: "#5be3c0" }}
+                  >
+                    Explore Lion Digital &rarr;
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/*
