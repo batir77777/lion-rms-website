@@ -58,9 +58,14 @@ export default function HomePage() {
 
             {/* Left */}
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                MIFireE &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
+              <span className="inline-flex flex-col gap-1 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
+                <span className="flex items-center gap-2 tracking-[0.12em]" style={{ color: "#5be3c0" }}>
+                  <span className="h-1.5 w-1.5 flex-shrink-0 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
+                  Lion Risk Management Solutions Limited
+                </span>
+                <span className="pl-3.5 text-white/90">
+                  MIFireE &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
+                </span>
               </span>
 
               <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
