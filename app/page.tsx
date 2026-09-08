@@ -116,6 +116,42 @@ export default function HomePage() {
                 <p className="text-white font-semibold text-lg">Health &amp; Safety Consultancy &amp; Construction Health &amp; Safety</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS and construction phase plans, policies, and competent person support for businesses and construction clients — practical and proportionate.</p>
               </div>
+
+              {/*
+                Third hero card for Lion Digital — deliberately the same
+                rounded-2xl/border/padding shape as the two discipline cards
+                above so it reads as part of the same card group, but kept
+                visually quieter (smaller icon-badge treatment, a muted
+                teal-tinted background rather than the brighter fire-card
+                tint, and a plain text link instead of the cards' bold
+                lead-in style) so Fire Safety / H&S stay the primary focus.
+              */}
+              <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.05)" }}>
+                <div className="mb-3 flex items-center gap-2">
+                  <span
+                    className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full"
+                    style={{ background: "rgba(0,201,167,0.18)", color: "#5be3c0" }}
+                    aria-hidden
+                  >
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                      <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
+                    </svg>
+                  </span>
+                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5be3c0" }}>Digital Compliance &amp; AI Solutions</p>
+                </div>
+                <p className="text-white font-semibold text-lg">AI, Automation &amp; Digital Compliance Platforms</p>
+                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Bespoke compliance systems, workflow automation and AI-assisted business tools designed to improve efficiency, reporting and compliance.</p>
+                <a
+                  href={LION_DIGITAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-semibold transition hover:opacity-80"
+                  style={{ color: "#5be3c0" }}
+                >
+                  Explore Lion Digital &rarr;
+                </a>
+              </div>
             </div>
           </div>
         </div>
