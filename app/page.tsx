@@ -306,11 +306,24 @@ export default function HomePage() {
       */}
       <section className="border-b border-slate-100 bg-white py-14">
         <div className="mx-auto max-w-4xl px-5 sm:px-6">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-teal-100 bg-teal-50/40 p-8 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-teal-200 border-l-4 border-l-teal-500 bg-teal-50/70 p-8 sm:flex-row sm:items-center">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
-                Digital compliance &amp; AI solutions
-              </p>
+              <div className="flex items-center gap-2">
+                <span
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700"
+                  aria-hidden
+                >
+                  {/* Simple chip/circuit icon — signals "digital / AI" without competing
+                     with the emoji icons used for Lion RMS's own services above. */}
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                    <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
+                  </svg>
+                </span>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
+                  Digital compliance &amp; AI solutions
+                </p>
+              </div>
               <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600">
                 Looking for more than consultancy? Lion Digital develops bespoke compliance platforms, workflow automation and AI-assisted business tools for organisations looking to improve efficiency and compliance.
               </p>
