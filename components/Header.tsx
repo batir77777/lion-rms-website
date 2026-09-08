@@ -156,7 +156,7 @@ export default function Header() {
             rel="noopener noreferrer"
             className="whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-teal-200 hover:text-teal-700"
           >
-            Digital Solutions &#8599;
+            AI &amp; Digital Solutions &#8599;
           </a>
           <a
             href={SITE.phoneHref}
@@ -242,7 +242,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="mt-3 flex items-center justify-center gap-1.5 rounded-full border border-slate-200 py-3 text-[15px] font-semibold text-slate-600 hover:border-teal-200 hover:text-teal-700"
               >
-                Digital Solutions &#8599;
+                AI &amp; Digital Solutions &#8599;
               </a>
               <div className="flex items-center justify-between pb-4 pt-4">
                 <a

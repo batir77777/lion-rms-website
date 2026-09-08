@@ -306,13 +306,13 @@ export default function HomePage() {
       */}
       <section className="border-b border-slate-100 bg-white py-14">
         <div className="mx-auto max-w-4xl px-5 sm:px-6">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200 bg-slate-50/60 p-8 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-teal-100 bg-teal-50/40 p-8 sm:flex-row sm:items-center">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
-                A separate business from Lion RMS
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
+                Digital compliance &amp; AI solutions
               </p>
               <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600">
-                Looking for digital compliance software or AI automation? Lion Digital develops bespoke business platforms, compliance systems, workflow automation and AI-assisted digital solutions.
+                Looking for more than consultancy? Lion Digital develops bespoke compliance platforms, workflow automation and AI-assisted business tools for organisations looking to improve efficiency and compliance.
               </p>
             </div>
             <a
