@@ -422,6 +422,64 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/*
+        ── LION RMS COMPLIANCE PLATFORM ──
+        Lion RMS's own digital compliance platform for clients — distinct
+        from the Lion Digital cross-link immediately above (a separate
+        sister business selling bespoke software/AI to any organisation).
+        This section is about a capability of Lion RMS itself, so it gets
+        a full section rather than a small card, but stays visually calmer
+        than "What Clients Receive"/"Services" above it (bg-slate-50,
+        checklist rather than icon cards, secondary-styled button) so it
+        reads as an additional capability, not a competing core service.
+        No public platform URL exists yet, so the CTA goes to /contact.
+      */}
+      <section className="py-20 border-b border-slate-100 bg-slate-50">
+        <div className="mx-auto max-w-5xl px-5 sm:px-6">
+          <div className="text-center mb-12">
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Lion RMS Compliance Platform</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
+              Manage compliance, actions and evidence in one place
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              A practical digital platform designed to help organisations manage risk assessments, inspections, actions, training records, compliance documents and reporting from one central system.
+            </p>
+          </div>
+
+          <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+            {[
+              "Risk assessments and action tracking",
+              "Inspections and audits",
+              "Training and competency records",
+              "Compliance documents and evidence",
+              "Outstanding action reminders",
+              "Dashboards and reporting",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center gap-3">
+                <span
+                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700"
+                  aria-hidden
+                >
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="4 12 9.5 17.5 20 6.5" />
+                  </svg>
+                </span>
+                <p className="text-sm font-medium text-slate-700">{feature}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/contact"
+              className="inline-flex items-center whitespace-nowrap rounded-full border border-teal-600 px-7 py-3 text-sm font-semibold text-teal-700 transition hover:bg-teal-50"
+            >
+              Explore the Lion RMS Platform &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── HOW IT WORKS ── */}
       <section className="py-20 bg-slate-50 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
