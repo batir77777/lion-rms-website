@@ -64,7 +64,7 @@ export default function HomePage() {
                   Lion Risk Management Solutions Limited
                 </span>
                 <span className="pl-3.5 text-white/90">
-                  MIFireE &bull; CMIOSH &bull; Level 4 Diploma in Fire Risk Assessment &bull; {COVERAGE_SHORT}
+                  {COVERAGE_SHORT}
                 </span>
               </span>
 
