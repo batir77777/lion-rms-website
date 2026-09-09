@@ -76,7 +76,29 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                Independent fire safety, fire engineering and health &amp; safety consultancy, supported by digital compliance and AI solutions for organisations across London and the UK.
+                Independent fire safety, fire engineering and health &amp; safety consultancy, supported by{" "}
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-semibold"
+                  style={{ background: "rgba(0,201,167,0.14)", color: "#5be3c0" }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="flex-shrink-0"
+                    aria-hidden
+                  >
+                    <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                    <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
+                  </svg>
+                  digital compliance and AI solutions
+                </span>{" "}
+                for organisations across London and the UK.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
