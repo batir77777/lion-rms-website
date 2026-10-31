@@ -506,7 +506,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       title: "Digital Inspections, Audit Records and Corrective-Action Tracking",
       body: "Every inspection, audit and investigation we carry out is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
       href: "/contact",
-      linkLabel: "Talk to us about the platform",
+      linkLabel: "Enquire about our digital platform",
     },
   },
   {
