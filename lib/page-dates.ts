@@ -270,9 +270,9 @@ export interface PageDate {
 
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
-    lastModified: "2026-08-10",
-    contentHash: "7dd1778f2d9f6442",
-    source: "5367330 — credentials strip and AssessorSection gain the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
+    lastModified: "2026-10-31",
+    contentHash: "157c80beeaf35d66",
+    source: "aa35f69 — the Industrial & Warehousing sector card retitled Manufacturing, Industrial & Warehousing, its summary rewritten, and the card now links to a page",
   },
   "/about": {
     lastModified: "2026-08-10",
@@ -281,55 +281,52 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services": {
     lastModified: "2026-10-31",
-    contentHash: "12da3dfdcee3a2a8",
+    contentHash: "8b49925f99fa0d4c",
     source: "aa35f69 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
-    contentHash: "da662be8fe44c42a",
+    contentHash: "fcdb3fbac2a53e40",
     source: "b9df1fa — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-08-10",
-    contentHash: "4db2dacd52750a35",
+    contentHash: "65d70cc3ff327e3d",
     source: "b9df1fa — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "d11016d686910b83",
+    contentHash: "c30bf8bef99ce5d1",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "97844ee625e75b84",
+    contentHash: "db3e99eee685a54b",
     source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "b64de1d782672c20",
+    contentHash: "2fc6cc8776cf88c9",
     source: "08a563d — the audits-monitoring section moved to /services/independent-health-safety-audits, replaced by a pointer at the same anchor; seven sections remain plus the digital-records pointer",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
-    contentHash: "0c4c1d9b5c67dd1d",
+    contentHash: "e31cf5cabbc3a767",
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
-  // PLACEHOLDER HASH — all-zero so it fails loudly. Google Fonts is
-  // unreachable from the verification environment, so no real build can be
-  // produced there. Regenerate with `npm run build && npm run sitemap:hashes`.
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-10-31",
-    contentHash: "0000000000000000",
+    contentHash: "b64c7840c6a0f369",
     source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "f0d97ec44610d770",
+    contentHash: "99c6ea3440095c26",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-10-31",
-    contentHash: "28358d919b568005",
+    contentHash: "3b3f024e4dd06ee2",
     source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
@@ -347,10 +344,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     contentHash: "c9741c504c28d450",
     source: "1e19d62 — sector pages link related guides",
   },
-  // PLACEHOLDER HASH — see the note above.
   "/sectors/industrial-warehousing": {
     lastModified: "2026-10-31",
-    contentHash: "0000000000000000",
+    contentHash: "297a470e8c2178cc",
     source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
