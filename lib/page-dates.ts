@@ -305,9 +305,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "8d96c71 — RAMS and Construction Phase Plans moved to its own page, replaced by a one-sentence pointer (repositioning PR5)",
   },
   "/services/construction-health-safety": {
-    lastModified: "2026-08-11",
-    contentHash: "4d5c6cc06a2d7592",
-    source: "8d96c71 — new page, carved out of health-safety's former RAMS and Construction Phase Plans and Competent Person Support items (repositioning PR5)",
+    lastModified: "2026-10-31",
+    contentHash: "445703088a963877",
+    source: "5dccb8d — expanded into eight grouped sections (site inspections, audits and contractor monitoring, RAMS, investigations, training, construction fire safety, duty-holder boundary, international projects) plus a digital-records pointer; hash regenerated 2026-10-31",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
