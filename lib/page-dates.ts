@@ -306,7 +306,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services/construction-health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "445703088a963877",
+    contentHash: "a77dc639d2ea1667",
     source: "5dccb8d — expanded into eight grouped sections (site inspections, audits and contractor monitoring, RAMS, investigations, training, construction fire safety, duty-holder boundary, international projects) plus a digital-records pointer; hash regenerated 2026-10-31",
   },
   "/services/compliance-support": {
