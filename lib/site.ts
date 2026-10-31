@@ -401,7 +401,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
     eyebrow: "Construction Safety",
     title: "Construction Health & Safety",
-    short: "Construction health and safety consultancy for UK and international projects \u2014 site inspections, independent audits, contractor monitoring, RAMS, investigations, training and digital compliance records.",
+    short: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
     intro: "Professional construction health and safety support, from pre-construction planning through to site delivery. We carry out site inspections and independent audits, monitor contractor compliance, prepare and review risk assessments and method statements, investigate incidents, and train site teams. Inspections, findings, evidence and corrective actions are recorded in our own digital compliance platform, so what was raised and what was closed stays traceable for the life of the project.",
     sections: [
       {
