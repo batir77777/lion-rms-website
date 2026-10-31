@@ -760,22 +760,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // public/img/IMAGE-CREDITS.md before they ship. Until a file exists the
     // hero renders as it always did and each card shows a branded
     // placeholder, so nothing breaks and no unlicensed image can leak out.
-    // heroImage is COMMENTED OUT until the licensed photograph exists.
-    // next/image cannot degrade gracefully the way the cards do — pointing it
-    // at a missing file returns 400 from the optimiser and renders a broken
-    // image. The hero therefore stays text-only, exactly as it was, and
-    // becomes a photo hero the moment these two lines are uncommented and
-    // the file is in place with a row in public/img/IMAGE-CREDITS.md.
-    // heroImage: "/img/industrial/hero-production-floor.jpg",
-    // heroImageAlt: "A production floor in an industrial manufacturing facility",
+    heroImage: "/img/industrial/hero-production-floor.jpg",
+    heroImageAlt: "Industrial robots working within a manufacturing production line",
     riskCards: [
       {
         id: "card-production",
         title: "Manufacturing and production facilities",
         caption: "Machinery, materials handling and maintenance running in one space, often across shifts.",
         detail: "We audit how health and safety is actually organised on a production site — responsibilities, supervision, monitoring and records — and report prioritised findings with photographic evidence.",
-        // Awaiting a licensed photograph: /img/industrial/production-facility.jpg
-        // alt: "Machinery on a factory production floor"
+        image: "/img/industrial/production-facility.jpg",
+        alt: "Manufacturing floor with production machinery and marked pedestrian walkways",
         href: "#industrial-audits",
         linkLabel: "Facility audits",
       },
@@ -784,8 +778,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Machinery guarding and work equipment",
         caption: "Guarding, interlocks, isolation and maintenance regimes around moving machinery.",
         detail: "We review your arrangements under PUWER — guarding, controls, isolation, maintenance and inspection records — and report what we observe in use. Statutory thorough examination and machinery certification are carried out by others.",
-        // Awaiting a licensed photograph: /img/industrial/machinery-guarding.jpg
-        // alt: "Guarding fitted to industrial work equipment"
+        image: "/img/industrial/machinery-guarding.jpg",
+        alt: "Guard rails and perimeter fencing around automated production machinery",
         href: "#machinery-equipment",
         linkLabel: "Machinery reviews",
       },
@@ -794,8 +788,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Warehousing, forklifts and segregation",
         caption: "Vehicle routes, loading areas, racking and the pedestrians moving between them.",
         detail: "We assess workplace transport arrangements, pedestrian segregation, racking condition and damage reporting, and access to height — identifying where specialist racking inspection is needed.",
-        // Awaiting a licensed photograph: /img/industrial/warehouse-forklift.jpg
-        // alt: "A forklift truck operating in a warehouse aisle"
+        // REJECTED candidate warehouse-forklift.jpg: "NISSAN FORKLIFT" and
+        // "UNICARRIERS" are large, central and legible. The brand is effectively
+        // the subject, which reads as an endorsement. Placeholder until replaced.
         href: "#height-lifting-transport",
         linkLabel: "Transport and height",
       },
@@ -804,8 +799,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Welding, fabrication and hot works",
         caption: "Fume, sparks and ignition sources in close company with stored materials.",
         detail: "We review fume control and ventilation, hot-work permits, screening and the fire precautions around welding, cutting and fabrication, including whether LEV is maintained and examined.",
-        // Awaiting a licensed photograph: /img/industrial/welding-fabrication.jpg
-        // alt: "A welder working at a fabrication bench"
+        image: "/img/industrial/welding-fabrication.jpg",
+        alt: "A welder in a protective helmet and gloves working at a fabrication bench",
         href: "#hazardous-substances",
         linkLabel: "Hot works and COSHH",
       },
@@ -814,8 +809,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Construction and site inspections",
         caption: "Plant installations, shutdowns and building work alongside live production.",
         detail: "Independent site inspections against the construction phase plan and agreed method statements, with prioritised findings tracked to closure — covered in full on our Construction Health & Safety page.",
-        // Awaiting a licensed photograph: /img/industrial/construction-inspection.jpg
-        // alt: "A health and safety inspection under way on a construction site"
+        // REJECTED candidate construction-inspection.jpg: a worker in flip-flops on
+        // rubble, others without head protection, and portrait orientation. Unusable
+        // on a page selling construction site inspections. Placeholder until replaced.
         href: "/services/construction-health-safety",
         linkLabel: "Construction H&S",
       },
@@ -824,8 +820,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Industrial fire and hazardous substances",
         caption: "Flammable storage, dust, ignition sources and the escape routes through it all.",
         detail: "Fire risk assessments for production and storage premises, informed by recognised guidance including PAS 79 where appropriate, alongside COSHH assessment of the substances in use.",
-        // Awaiting a licensed photograph: /img/industrial/fire-hazardous-substances.jpg
-        // alt: "Drums of hazardous substances in an industrial storage area"
+        image: "/img/industrial/fire-hazardous-substances.jpg",
+        alt: "Red fire protection pipework beneath the roof of an industrial warehouse",
         href: "#industrial-fire",
         linkLabel: "Fire and substances",
       },

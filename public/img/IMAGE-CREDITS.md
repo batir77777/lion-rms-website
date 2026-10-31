@@ -19,32 +19,48 @@ should not be referenced from any page.
 
 ## Published images
 
-| File | Subject | Source | Licence | Added | Alt text |
-|---|---|---|---|---|---|
-| _(none yet)_ | | | | | |
+All Unsplash, under the Unsplash Licence (https://unsplash.com/license), which
+permits commercial use without permission or attribution. Attribution is
+recorded here anyway, as a matter of provenance rather than obligation.
+Retrieved 2026-10-31, inspected the same day.
 
-## Image plan — seven cards, six photographs
+| File | Subject | Photographer | Source | Alt text |
+|---|---|---|---|---|
+| `industrial/hero-production-floor.jpg` | Automated production line, robot arms, mesh cell guarding | Simon Kadula | [unsplash.com/photos/…8gr6bObQLOI](https://unsplash.com/photos/a-factory-filled-with-lots-of-orange-machines-8gr6bObQLOI) | Industrial robots working within a manufacturing production line |
+| `industrial/production-facility.jpg` | Machine shop with marked pedestrian walkway | MGR P | [unsplash.com/photos/…HNLlzPGbTBM](https://unsplash.com/photos/industrial-factory-floor-with-machinery-and-yellow-lines-HNLlzPGbTBM) | Manufacturing floor with production machinery and marked pedestrian walkways |
+| `industrial/machinery-guarding.jpg` | Press line with perimeter guard rail, fencing, E-stop, floor demarcation | Homa Appliances | [unsplash.com/photos/…SaX8ZBFkLTc](https://unsplash.com/photos/a-machine-that-is-inside-of-a-building-SaX8ZBFkLTc) | Guard rails and perimeter fencing around automated production machinery |
+| `industrial/welding-fabrication.jpg` | Welder in helmet and gloves at a fabrication bench | See source page | [unsplash.com/photos/…X_55Pa9E8h4](https://unsplash.com/photos/a-man-in-a-welding-helmet-working-on-a-piece-of-metal-X_55Pa9E8h4) | A welder in a protective helmet and gloves working at a fabrication bench |
+| `industrial/fire-hazardous-substances.jpg` | Fire protection pipework in an empty warehouse | Gilson Gomes | [unsplash.com/photos/…LvJfhkuDHDw](https://unsplash.com/photos/an-empty-warehouse-with-red-piping-on-the-ceiling-LvJfhkuDHDw) | Red fire protection pipework beneath the roof of an industrial warehouse |
 
-Card 7 (Digital compliance records) **deliberately has no photograph**. The
-only honest image there is a screenshot of the platform, and no screenshot may
-be invented. It keeps the branded placeholder until a genuine screenshot with
-demonstration data is supplied.
+### Inspection notes on the published five
 
-### Awaiting download — referenced by `lib/site.ts`, currently commented out
+- **hero-production-floor** — no people, no legible branding, mesh guarding
+  visible around the cells. Clean.
+- **production-facility** — marked pedestrian walkway, guarded machine
+  enclosures, no people. Minor: a rusted drum with floor staining is visible
+  mid-right. Realistic for a working factory and not presented as our work.
+- **machinery-guarding** — the strongest match for its card: perimeter guard
+  rail, mesh fencing, emergency stop on the pedestal, floor demarcation.
+  Minor: a trailing cable crosses the demarcated zone.
+- **welding-fabrication** — correct PPE (helmet, gauntlets, long sleeves) and
+  a fire extinguisher in shot. Face not identifiable. **Carries a legible
+  Carhartt logo on the jacket, plus smaller Miller and "Defender" marks.**
+  Accepted as incidental workwear branding rather than endorsement; the
+  distinction from the rejected forklift image is that there the brand WAS the
+  subject. Replace if a clean alternative appears.
+- **fire-hazardous-substances** — clean, no people, no branding. Shows fire
+  protection pipework and **no hazardous substances**, so the alt text
+  describes the pipework and does not claim otherwise.
 
-Until each file exists its path stays commented out, so the card shows the
-branded placeholder and the hero stays text-only. Nothing breaks, and no
-unlicensed image can reach a page.
+## Rejected candidates — do not publish
 
-| # | File | Subject needed |
-|---|---|---|
-| H | `industrial/hero-production-floor.jpg` | A production floor in an industrial manufacturing facility — wide, people optional, no visible branding |
-| 1 | `industrial/production-facility.jpg` | Machinery on a factory production floor |
-| 2 | `industrial/machinery-guarding.jpg` | Guarding or interlocks fitted to work equipment |
-| 3 | `industrial/warehouse-forklift.jpg` | A forklift operating in a warehouse aisle |
-| 4 | `industrial/welding-fabrication.jpg` | A welder at a fabrication bench, wearing correct PPE |
-| 5 | `industrial/construction-inspection.jpg` | A site inspection in progress, hi-vis and hard hats |
-| 6 | `industrial/fire-hazardous-substances.jpg` | Drums or containers in an industrial storage area |
+| File | Reason |
+|---|---|
+| `industrial/warehouse-forklift.jpg` | "NISSAN FORKLIFT" and "UNICARRIERS" appear large, central and fully legible — the brand is effectively the subject, which reads as endorsement. Also shows no segregation, racking or pedestrian routes, so a weak match for its card. |
+| `industrial/construction-inspection.jpg` | **Visible unsafe practice.** A worker in flip-flops standing on rubble, and others in the background without head protection. Portrait orientation (1800×2700) rather than landscape. Unusable on a page selling construction site inspections. |
+
+Both files are left untracked in the working tree. They are not committed and
+will never be deployed. Delete them locally whenever convenient.
 
 ### Technical requirements
 
