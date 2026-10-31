@@ -309,6 +309,16 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     contentHash: "a77dc639d2ea1667",
     source: "5dccb8d — expanded into eight grouped sections (site inspections, audits and contractor monitoring, RAMS, investigations, training, construction fire safety, duty-holder boundary, international projects) plus a digital-records pointer; hash regenerated 2026-10-31",
   },
+  // PLACEHOLDER HASH. Google Fonts is unreachable from the environment this
+  // page was written in, so a real build could not be produced there and this
+  // value cannot be computed until `npm run build && npm run sitemap:hashes`
+  // is run on a machine that can reach it. Deliberately all-zero so it fails
+  // loudly rather than looking plausible.
+  "/services/independent-health-safety-audits": {
+    lastModified: "2026-10-31",
+    contentHash: "0000000000000000",
+    source: "change-record: 2026-10-31 — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
+  },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
     contentHash: "4001ce6fe3c8aad3",

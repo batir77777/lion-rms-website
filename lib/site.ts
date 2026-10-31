@@ -241,12 +241,14 @@ export interface ServiceCategory {
   /** See `ServiceSection`. Present only on `fire-safety` for now. */
   sections?: ServiceSection[];
   /**
-   * See `ServicePointer`. Present on `fire-safety` (repositioning PR3, pointing
-   * to `fire-safety-consultancy`) and on `health-safety` (repositioning PR5,
-   * pointing to `construction-health-safety`) — the same mechanism reused for
-   * a second split, not a new one.
+   * See `ServicePointer`. A list, not a single pointer: a category can be the
+   * origin of more than one carve-out, and can also carry a non-carve-out
+   * pointer such as the digital-platform block. `health-safety` and
+   * `construction-health-safety` each hold two after the Independent
+   * Inspections & Audits split — one for the content that moved out, one
+   * for the platform. Rendered in array order, after all sections.
    */
-  pointer?: ServicePointer;
+  pointers?: ServicePointer[];
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -284,14 +286,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // fire-safety-consultancy category's own `short` below — not retyped —
     // so the two pages cannot silently drift apart on what this sentence
     // claims.
-    pointer: {
-      id: "fire-safety-consultancy",
-      eyebrow: "Also Available",
-      title: "Fire Safety Consultancy",
-      body: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
-      href: "/services/fire-safety-consultancy",
-      linkLabel: "View Fire Safety Consultancy",
-    },
+    pointers: [
+      {
+        id: "fire-safety-consultancy",
+        eyebrow: "Also Available",
+        title: "Fire Safety Consultancy",
+        body: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+        href: "/services/fire-safety-consultancy",
+        linkLabel: "View Fire Safety Consultancy",
+      },
+    ],
   },
   {
     // Repositioning PR1 (August 2026) — new page. Carved out of what was
@@ -361,7 +365,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     intro: "Practical health and safety support that helps businesses, landlords, and contractors meet their obligations under the Health and Safety at Work etc. Act 1974 and associated regulations — without unnecessary complexity.",
     items: [
       { name: "Health and Safety Risk Assessments", desc: "Clear, suitable and sufficient risk assessments tailored to your activities, premises, and workforce." },
-      { name: "Workplace Inspections and Audits", desc: "Structured inspections and audits that surface real issues and give you a practical action plan." },
       { name: "Policies and Procedures", desc: "Health and safety policies and documented procedures written in plain English and fit for your organisation." },
       { name: "Training and Compliance Services", desc: "Training and day-to-day guidance to keep your team informed and your obligations met." },
     ],
@@ -376,14 +379,32 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // to a real, visible element rather than becoming a dead fragment. Body
     // text is reused verbatim from the new construction-health-safety
     // category's own `short` below — not retyped.
-    pointer: {
-      id: "rams-construction-phase-plans",
-      eyebrow: "Also Available",
-      title: "Construction Health & Safety",
-      body: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
-      href: "/services/construction-health-safety",
-      linkLabel: "View Construction Health & Safety",
-    },
+    pointers: [
+      // "Workplace Inspections and Audits" moved to
+      // /services/independent-health-safety-audits, where workplace and
+      // construction inspections are covered together rather than split
+      // across two pages. The item had no anchor id of its own, so this
+      // pointer introduces one rather than preserving one. The id avoids the
+      // substring "workplace-inspections", which is a reserved taxonomy tag
+      // slug that tests/taxonomy-health-safety.test.mjs forbids anywhere in
+      // built HTML.
+      {
+        id: "workplace-audits",
+        eyebrow: "Also Available",
+        title: "Workplace Inspections and Audits",
+        body: "Workplace and commercial premises audits, risk assessment reviews and safety management reviews are covered in full on our Independent Inspections & Audits page.",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "View Independent Inspections & Audits",
+      },
+      {
+        id: "rams-construction-phase-plans",
+        eyebrow: "Also Available",
+        title: "Construction Health & Safety",
+        body: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
+        href: "/services/construction-health-safety",
+        linkLabel: "View Construction Health & Safety",
+      },
+    ],
   },
   {
     // Repositioning PR5 (August 2026) — new page, carved out of
@@ -425,18 +446,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           { name: "Competent Person Support", desc: "Ongoing access to qualified health and safety advice for your project team throughout the works." },
           { name: "Documentation review", desc: "Review of contractor documentation before works begin and as the programme changes." },
           { name: "Pre-start and mobilisation advice", desc: "Practical help getting health and safety arrangements in place before work starts on site." },
-        ],
-      },
-      {
-        id: "audits-monitoring",
-        eyebrow: "Assurance",
-        title: "Independent H&S Audits and Contractor Compliance Monitoring",
-        intro: "Independent audits give client organisations assurance that what was specified is actually happening on site. We audit against your project requirements and the applicable legal framework, and report prioritised corrective actions.",
-        items: [
-          { name: "Independent health and safety audits", desc: "Structured audits of site arrangements, reported with prioritised findings and recommended actions." },
-          { name: "Contractor and subcontractor monitoring", desc: "Ongoing monitoring of contractor performance against agreed requirements, with results held in a contractor register." },
-          { name: "Contractor competence review", desc: "Review of contractor documentation and competence evidence at selection and during the works." },
-          { name: "Client-side assurance reporting", desc: "Reporting written for client organisations, project boards and procurement teams." },
         ],
       },
       {
@@ -510,22 +519,164 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         ],
       },
     ],
-    pointer: {
-      id: "digital-records",
-      eyebrow: "Digital and AI",
-      title: "Digital Compliance Records and AI-Assisted Summaries",
-      body: "Every inspection, audit and investigation we carry out is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
-      // Deliberately narrow. The platform's AI is ONE reachable capability
-      // (AI-assisted compliance summaries), behind a paid plan and a
-      // per-organisation toggle that ships disabled. Claims this copy does
-      // NOT make, because the platform does not support them: predictive
-      // risk, trend analysis, automated report drafting, or any reading of
-      // uploaded documents. Keep it that way.
-      bodySecondary:
-        "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records \u2014 the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
-      href: "/contact",
-      linkLabel: "Enquire about our digital platform",
-    },
+    pointers: [
+      // The audits/contractor-monitoring content that used to sit here as a
+      // full section moved to /services/independent-health-safety-audits,
+      // which covers construction sites and workplaces together. The anchor
+      // id is kept identical to the section it replaces, so
+      // `#audits-monitoring` still resolves to a real element rather than
+      // becoming a dead fragment. Same discipline as the PR3 and PR5 splits.
+      {
+        id: "audits-monitoring",
+        eyebrow: "Also Available",
+        title: "Independent H&S Audits and Contractor Compliance Monitoring",
+        body: "Independent audits, contractor and subcontractor compliance monitoring and client-side assurance reporting are covered in full on our dedicated page, for construction sites and workplaces alike.",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "View Independent Inspections & Audits",
+      },
+      {
+        id: "digital-records",
+        eyebrow: "Digital and AI",
+        title: "Digital Compliance Records and AI-Assisted Summaries",
+        body: "Every inspection, audit and investigation we carry out is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
+        // Deliberately narrow. The platform's AI is ONE reachable capability
+        // (AI-assisted compliance summaries), behind a paid plan and a
+        // per-organisation toggle that ships disabled. Claims this copy does
+        // NOT make, because the platform does not support them: predictive
+        // risk, trend analysis, automated report drafting, or any reading of
+        // uploaded documents. Keep it that way.
+        bodySecondary:
+          "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records \u2014 the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
+        href: "/contact",
+        linkLabel: "Enquire about our digital platform",
+      },
+    ],
+  },
+  {
+    // Independent Inspections & Audits (October 2026) — new page, carved out
+    // of TWO existing categories at once: `construction-health-safety`'s
+    // "audits-monitoring" section and `health-safety`'s "Workplace
+    // Inspections and Audits" item. Both origins keep a ServicePointer at a
+    // live anchor, the same discipline used for the PR3 and PR5 splits.
+    //
+    // Scope boundary, stated twice on purpose (section intro and the
+    // high-risk item): we inspect the safety ARRANGEMENTS AND CONTROLS in
+    // place. We do not provide specialist engineering design, design
+    // approval, certification or sign-off. Do not let "approval",
+    // "certification" or "sign-off" drift into this copy.
+    //
+    // International wording claims capability, never track record: "We can
+    // support", never "we have delivered". No named project, no airport, and
+    // no claim of established overseas partnerships — local specialists are
+    // engaged "where required", not pre-existing partners.
+    slug: "independent-health-safety-audits",
+    image: IMAGES.healthSafety,
+    imageAlt: "Health and safety inspection of a construction site",
+    eyebrow: "Independent Assurance",
+    title: "Independent Health & Safety Inspections and Audits",
+    short: "Independent health and safety inspections and audits for construction sites, workplaces and commercial premises — delivered as one-off assignments or regular inspection programmes.",
+    intro: "Independent inspections and audits for developers, contractors, project managers and commercial clients. We assess what is actually happening on site and in the workplace, report prioritised findings supported by photographic evidence, and track corrective actions through to closure. We offer both one-off inspections and regular inspection programmes, and every inspection, finding and action is held in our own digital compliance platform.",
+    sections: [
+      {
+        id: "site-inspections",
+        eyebrow: "Construction",
+        title: "Independent Construction Site Inspections",
+        intro: "Site inspections carried out independently of the parties delivering the work, against the construction phase plan, agreed method statements and the applicable legal framework. We inspect the safety arrangements and controls in place on site. We do not provide specialist engineering design, design approval, certification or sign-off.",
+        featured: true,
+        items: [
+          { name: "Site conditions, welfare and access", desc: "Access and egress, welfare provision, housekeeping, segregation and site security." },
+          { name: "High-risk activity inspections", desc: "Inspection of the arrangements and controls in place for work at height, lifting operations, excavations and hot works — whether the controls described are actually being applied, not whether a design is adequate." },
+          { name: "On-site documentation checks", desc: "Whether the method statements and permits in use reflect the work being carried out." },
+          { name: "Prioritised findings with photographic evidence", desc: "Every finding carries a risk priority and supporting photographs, so nothing is disputed later." },
+        ],
+      },
+      {
+        id: "inspection-programmes",
+        eyebrow: "Ongoing support",
+        title: "Regular Inspection Programmes",
+        intro: "Assurance works best on a rhythm. We agree an inspection programme matched to the risk and pace of the work — commonly weekly or fortnightly on active construction sites, monthly or quarterly for workplaces and portfolios — so performance can be compared visit to visit rather than judged from a single snapshot.",
+        items: [
+          { name: "Weekly or fortnightly site inspections", desc: "A consistent format across the construction programme, so trends and repeat issues are visible." },
+          { name: "Monthly or quarterly workplace inspections", desc: "Scheduled inspections across a premises or portfolio, reported in a comparable form each time." },
+          { name: "Project-specific programmes", desc: "A schedule built around the phases and milestones of a particular project." },
+          { name: "Competent person support between visits", desc: "Qualified health and safety advice as conditions change, not only on inspection days." },
+        ],
+      },
+      {
+        id: "contractor-compliance",
+        eyebrow: "Contractors",
+        title: "Contractor and Subcontractor Compliance Audits",
+        intro: "Where work is carried out by others, responsibility for it does not pass with it. We audit contractor and subcontractor performance against the requirements set for the project, and hold results in a contractor register so the picture is cumulative.",
+        items: [
+          { name: "Contractor compliance audits", desc: "Structured audits of a contractor's arrangements, documentation and site practice against agreed requirements." },
+          { name: "Subcontractor monitoring", desc: "Monitoring of subcontractors, reported to whoever holds the contract." },
+          { name: "Competence and documentation review", desc: "Competence evidence, insurances, training records and method statements, at selection and during the works." },
+          { name: "Contractor register and audit history", desc: "Results held against each contractor, so repeat issues and improvement are both visible." },
+        ],
+      },
+      {
+        id: "workplace-audits",
+        eyebrow: "Workplaces",
+        title: "Workplace and Commercial Premises Audits",
+        intro: "Health and safety audits for offices, retail, industrial and multi-occupancy commercial premises. We audit arrangements as they operate day to day, not as the paperwork describes them.",
+        items: [
+          { name: "Workplace health and safety audits", desc: "Full audits of arrangements, documentation and practice across a site or premises." },
+          { name: "Multi-site and portfolio audits", desc: "One consistent format applied across a portfolio, with results comparable site by site." },
+          { name: "Statutory compliance review", desc: "A review of your health and safety arrangements against the duties that apply to your organisation, with gaps identified and prioritised." },
+          { name: "Practical action plans", desc: "Findings expressed as actions with owners and priorities, not an undifferentiated list of observations." },
+        ],
+      },
+      {
+        id: "assurance-reviews",
+        eyebrow: "Client-side",
+        title: "Client-Side Assurance, Risk and Management Reviews",
+        intro: "Where work is delivered by others, clients often want their own view of how it is being managed. Independent assurance gives you an evidenced picture of whether what was specified is actually being delivered, separate from the parties delivering it.",
+        items: [
+          { name: "Client-side assurance inspections", desc: "Commissioned by the client organisation rather than the contractor, and reported directly to you." },
+          { name: "Project board and procurement reporting", desc: "Written for decision-makers, with a clear position on where things stand." },
+          { name: "Risk assessment review", desc: "Independent review of existing risk assessments against the work as actually carried out, with comments and recommendations." },
+          { name: "Safety management system review", desc: "How responsibilities, supervision, monitoring and review operate in practice." },
+        ],
+      },
+      {
+        id: "investigations-actions",
+        eyebrow: "Response",
+        title: "Incident Investigations and Corrective-Action Monitoring",
+        intro: "Independent investigation of incidents and near misses, establishing what happened and why — then monitoring the corrective actions rather than leaving them in a report.",
+        items: [
+          { name: "Incident and accident investigation", desc: "Structured independent investigation with a factual report and root-cause analysis." },
+          { name: "Near-miss and dangerous occurrence review", desc: "Events that caused no injury but revealed a real risk." },
+          { name: "Corrective-action monitoring", desc: "Actions tracked to closure with owners, target dates and a dated history of what was done." },
+        ],
+      },
+      {
+        id: "major-projects",
+        eyebrow: "Projects",
+        title: "Major Construction and Infrastructure Projects",
+        intro: "We can support major construction and infrastructure projects where health and safety assurance has to be demonstrable rather than assumed — structured inspection and audit regimes, clear reporting lines and auditable digital records.",
+        items: [
+          { name: "UK projects", desc: "Delivered against UK legislation, including the Construction (Design and Management) Regulations 2015 and the Health and Safety at Work etc. Act 1974." },
+          { name: "International projects", desc: "We can support international construction and infrastructure projects, working to the applicable local legislation, the project's own agreed requirements, and recognised international standards and good practice. UK legislation applies only where the project is in the UK, and we can work with suitably qualified local specialists where required." },
+          { name: "Multi-contractor assurance regimes", desc: "Inspection and audit programmes designed for projects with several contractors and formal reporting obligations." },
+        ],
+      },
+    ],
+    pointers: [
+      {
+        id: "digital-records",
+        eyebrow: "Digital and AI",
+        title: "Digital Inspection and Audit Records",
+        body: "Every inspection, audit and investigation is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
+        // Same narrow AI claim as the construction page. One reachable
+        // capability, behind a paid plan and a per-organisation toggle that
+        // ships disabled. No predictive risk, no trend analysis, no automated
+        // report drafting, no reading of uploaded documents.
+        bodySecondary:
+          "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records — the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
+        href: "/contact",
+        linkLabel: "Enquire about our digital platform",
+      },
+    ],
   },
   {
     slug: "compliance-support",

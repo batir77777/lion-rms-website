@@ -133,7 +133,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const mod = await import("../app/sitemap.ts");
     const fn = typeof mod.default === "function" ? mod.default : mod.default.default;
     const entries = await fn();
-    assert.equal(entries.length, 83, `the sitemap should still list 83 URLs, found ${entries.length}`);
+    assert.equal(entries.length, 84, `the sitemap should still list 84 URLs, found ${entries.length}`);
     const offenders = entries
       .map((e) => new URL(e.url).pathname)
       .filter((p) => /not-found|404/.test(p));
@@ -142,7 +142,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
 
   test("_not-found is not registered as an authored route", async () => {
     const { AUTHORED_ROUTES } = await import("../lib/page-dates");
-    assert.equal(AUTHORED_ROUTES.length, 20);
+    assert.equal(AUTHORED_ROUTES.length, 21);
     assert.equal(
       AUTHORED_ROUTES.some((r) => /not-found|404/.test(r)),
       false
@@ -227,6 +227,9 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/services/fire-engineering": ["2026-08-09", "eb7bfd3b8f604106"],
       "/services/health-safety": ["2026-08-11", "df6977068ff84c82"],
       "/services/construction-health-safety": ["2026-08-11", "4d5c6cc06a2d7592"],
+      // Placeholder until the hash is regenerated on a machine that can
+      // reach Google Fonts — see lib/page-dates.ts.
+      "/services/independent-health-safety-audits": ["2026-10-31", "0000000000000000"],
       "/services/compliance-support": ["2026-07-29", "4001ce6fe3c8aad3"],
       "/sectors": ["2026-07-26", "992a2c038a98f14f"],
       "/sectors/residential-blocks-hmos": ["2026-07-29", "ed720862dfc7c469"],
@@ -241,8 +244,8 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/check": ["2026-08-01", "7ec5e829baaf4729"],
       "/contact": ["2026-08-10", "34cd4e9b0e84ceaa"],
     };
-    assert.equal(Object.keys(EXPECTED).length, 20);
-    assert.equal(AUTHORED_ROUTES.length, 20);
+    assert.equal(Object.keys(EXPECTED).length, 21);
+    assert.equal(AUTHORED_ROUTES.length, 21);
 
     const wrong = [];
     for (const [route, [date, hash]] of Object.entries(EXPECTED)) {
