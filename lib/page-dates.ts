@@ -281,47 +281,42 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services": {
     lastModified: "2026-08-11",
-    contentHash: "0ee52b7f57fb9756",
+    contentHash: "12da3dfdcee3a2a8",
     source: "8d96c71 — Construction Health & Safety added as its own service card, sixth service (repositioning PR5)",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
-    contentHash: "e299625369acef01",
+    contentHash: "da662be8fe44c42a",
     source: "b9df1fa — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-08-10",
-    contentHash: "2e0611d1ccf98fd0",
+    contentHash: "4db2dacd52750a35",
     source: "b9df1fa — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "eb7bfd3b8f604106",
+    contentHash: "d11016d686910b83",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
-    lastModified: "2026-08-11",
-    contentHash: "df6977068ff84c82",
-    source: "8d96c71 — RAMS and Construction Phase Plans moved to its own page, replaced by a one-sentence pointer (repositioning PR5)",
+    lastModified: "2026-10-31",
+    contentHash: "97844ee625e75b84",
+    source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "a77dc639d2ea1667",
-    source: "5dccb8d — expanded into eight grouped sections (site inspections, audits and contractor monitoring, RAMS, investigations, training, construction fire safety, duty-holder boundary, international projects) plus a digital-records pointer; hash regenerated 2026-10-31",
+    contentHash: "b64de1d782672c20",
+    source: "08a563d — the audits-monitoring section moved to /services/independent-health-safety-audits, replaced by a pointer at the same anchor; seven sections remain plus the digital-records pointer",
   },
-  // PLACEHOLDER HASH. Google Fonts is unreachable from the environment this
-  // page was written in, so a real build could not be produced there and this
-  // value cannot be computed until `npm run build && npm run sitemap:hashes`
-  // is run on a machine that can reach it. Deliberately all-zero so it fails
-  // loudly rather than looking plausible.
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
-    contentHash: "0000000000000000",
-    source: "change-record: 2026-10-31 — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
+    contentHash: "0c4c1d9b5c67dd1d",
+    source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "4001ce6fe3c8aad3",
+    contentHash: "f0d97ec44610d770",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
