@@ -11,12 +11,19 @@
  *
  * Accessibility. The whole card is one <button> carrying aria-expanded and
  * aria-controls; the panel it controls is a sibling with a matching id, so a
- * screen reader announces the state and can jump to the content. The panel is
- * removed from the tree when collapsed rather than merely hidden, so its link
- * never becomes a focus trap for keyboard users tabbing past a closed card.
- * The "Read more" link sits inside the panel and is therefore only reachable
- * when the panel is open — a nested interactive element inside a button would
- * be invalid markup and unreliable for assistive technology.
+ * screen reader announces the state and can jump to the content.
+ *
+ * The panel is ALWAYS rendered and carries the `hidden` attribute when
+ * collapsed. An earlier version removed it from the tree instead, which left
+ * aria-controls pointing at an id that did not exist — invalid per ARIA, and
+ * some screen readers drop the relationship entirely rather than recover.
+ * `hidden` keeps the reference resolvable while taking the panel out of both
+ * the accessibility tree and the tab order, so the link inside it still
+ * cannot be tabbed into behind a closed card.
+ *
+ * The link sits inside the panel rather than beside the title because a
+ * nested interactive element inside a button is invalid markup and behaves
+ * unpredictably with assistive technology.
  *
  * Motion. Height animation is skipped entirely under prefers-reduced-motion;
  * the panel simply appears. The first client render matches the server render
@@ -106,8 +113,11 @@ export default function RiskCards({
                   </div>
                 </button>
 
-                {open && (
-                  <div id={panelId} className="border-t border-slate-100 bg-slate-50/80 px-5 py-4">
+                <div
+                  id={panelId}
+                  hidden={!open}
+                  className="border-t border-slate-100 bg-slate-50/80 px-5 py-4"
+                >
                     <p className="text-sm leading-relaxed text-slate-600">{card.detail}</p>
                     <Link
                       href={card.href}
@@ -115,8 +125,7 @@ export default function RiskCards({
                     >
                       {card.linkLabel} &rarr;
                     </Link>
-                  </div>
-                )}
+                </div>
               </li>
             );
           })}

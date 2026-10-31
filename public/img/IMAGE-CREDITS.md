@@ -23,21 +23,38 @@ should not be referenced from any page.
 |---|---|---|---|---|---|
 | _(none yet)_ | | | | | |
 
-## Awaiting licensing — referenced but not yet supplied
+## Image plan — seven cards, six photographs
 
-These paths are referenced by `lib/site.ts`. Until the file exists, the hero
-renders without a photograph and each card shows a branded placeholder, so
-nothing breaks and no unlicensed image can appear.
+Card 7 (Digital compliance records) **deliberately has no photograph**. The
+only honest image there is a screenshot of the platform, and no screenshot may
+be invented. It keeps the branded placeholder until a genuine screenshot with
+demonstration data is supplied.
 
-| File | Subject needed |
-|---|---|
-| `industrial/hero-production-floor.jpg` | A production floor in an industrial manufacturing facility — wide, people optional, no visible branding |
-| `industrial/production-facility.jpg` | Machinery on a factory production floor |
-| `industrial/machinery-guarding.jpg` | Guarding or interlocks fitted to work equipment |
-| `industrial/warehouse-forklift.jpg` | A forklift operating in a warehouse aisle |
-| `industrial/welding-fabrication.jpg` | A welder at a fabrication bench, wearing correct PPE |
-| `industrial/construction-inspection.jpg` | A site inspection in progress, hi-vis and hard hats |
-| `industrial/fire-hazardous-substances.jpg` | Drums or containers in an industrial storage area |
+### Awaiting download — referenced by `lib/site.ts`, currently commented out
+
+Until each file exists its path stays commented out, so the card shows the
+branded placeholder and the hero stays text-only. Nothing breaks, and no
+unlicensed image can reach a page.
+
+| # | File | Subject needed |
+|---|---|---|
+| H | `industrial/hero-production-floor.jpg` | A production floor in an industrial manufacturing facility — wide, people optional, no visible branding |
+| 1 | `industrial/production-facility.jpg` | Machinery on a factory production floor |
+| 2 | `industrial/machinery-guarding.jpg` | Guarding or interlocks fitted to work equipment |
+| 3 | `industrial/warehouse-forklift.jpg` | A forklift operating in a warehouse aisle |
+| 4 | `industrial/welding-fabrication.jpg` | A welder at a fabrication bench, wearing correct PPE |
+| 5 | `industrial/construction-inspection.jpg` | A site inspection in progress, hi-vis and hard hats |
+| 6 | `industrial/fire-hazardous-substances.jpg` | Drums or containers in an industrial storage area |
+
+### Technical requirements
+
+- **Local files only.** Download into `public/img/industrial/`; do not
+  reference a remote URL. Local files are optimised by next/image at build
+  time and served as AVIF or WebP at the right size for the device.
+- **At least 1600px wide**, landscape. Cards crop to 4:3 and the hero to 5:4,
+  so avoid anything where the subject sits at the extreme edge.
+- **Under about 1MB each** before optimisation. next/image will resize, but a
+  20MB original slows every build for no benefit.
 
 ### Selection notes
 

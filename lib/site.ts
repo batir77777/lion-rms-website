@@ -830,6 +830,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         linkLabel: "Fire and substances",
       },
       {
+        // Deliberately has no photograph. The six other cards carry licensed
+        // stock; this one keeps the branded placeholder, because the honest
+        // image here is a screenshot of the platform and none may be invented.
+        // A real screenshot can be added later, showing demonstration data
+        // only \u2014 never a client's records, names, sites or logos.
         id: "card-platform",
         title: "Digital compliance records",
         caption: "Every finding, photograph and corrective action held in one auditable record.",
