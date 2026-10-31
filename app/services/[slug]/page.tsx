@@ -187,6 +187,11 @@ export default async function ServiceDetailPage({
                     </p>
                     <h2 className="text-lg font-bold text-navy-900">{cat.pointer.title}</h2>
                     <p className="mt-1.5 max-w-xl text-base leading-relaxed text-slate-600">{cat.pointer.body}</p>
+                    {cat.pointer.bodySecondary && (
+                      <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600">
+                        {cat.pointer.bodySecondary}
+                      </p>
+                    )}
                   </div>
                   <Link
                     href={cat.pointer.href}

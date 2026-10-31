@@ -208,6 +208,16 @@ export interface ServicePointer {
   eyebrow: string;
   title: string;
   body: string;
+  /** Optional second paragraph, rendered directly below `body`.
+   *
+   * Added for `construction-health-safety`, which needs to separate the
+   * platform's STANDARD functions (first paragraph) from the OPTIONAL
+   * AI-assisted summaries (second). That distinction matters commercially:
+   * the AI features sit behind a paid plan and a per-organisation toggle that
+   * is off by default, so running them into the first paragraph would read as
+   * though they ship with every account. Optional, and omitted by every other
+   * pointer, so their rendering is byte-identical. */
+  bodySecondary?: string;
   href: string;
   linkLabel: string;
 }
@@ -502,9 +512,17 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     pointer: {
       id: "digital-records",
-      eyebrow: "Digital records",
-      title: "Digital Inspections, Audit Records and Corrective-Action Tracking",
+      eyebrow: "Digital and AI",
+      title: "Digital Compliance Records and AI-Assisted Summaries",
       body: "Every inspection, audit and investigation we carry out is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
+      // Deliberately narrow. The platform's AI is ONE reachable capability
+      // (AI-assisted compliance summaries), behind a paid plan and a
+      // per-organisation toggle that ships disabled. Claims this copy does
+      // NOT make, because the platform does not support them: predictive
+      // risk, trend analysis, automated report drafting, or any reading of
+      // uploaded documents. Keep it that way.
+      bodySecondary:
+        "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records \u2014 the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
       href: "/contact",
       linkLabel: "Enquire about our digital platform",
     },
