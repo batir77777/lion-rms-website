@@ -28,6 +28,7 @@
 import { existsSync, mkdirSync, copyFileSync, rmSync, readdirSync, statSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
 
 /*
@@ -166,9 +167,35 @@ rmSync(OUT_DIR, { recursive: true, force: true });
  * excerpts open with navigation labels and a phone number, and every page
  * matches every menu item.
  */
+/*
+ * Invoked as `node <pagefind runner>` rather than `npx pagefind`.
+ *
+ * execFileSync spawns without a shell. On Windows `npx` is `npx.cmd`, so the
+ * bare name cannot be resolved and the build died with
+ * `ENOENT: spawnSync npx`. Naming "npx.cmd" explicitly does not fix it:
+ * since the fix for CVE-2024-27980, Node refuses to spawn a .cmd without
+ * `shell: true`, and enabling the shell would put every path argument at the
+ * mercy of cmd.exe quoting.
+ *
+ * Pagefind's bin is a plain CommonJS script, so running it with the same Node
+ * binary that is already executing this file avoids the problem entirely: no
+ * shell, no .cmd, no PATH lookup, and one identical code path on Windows,
+ * macOS, Linux and Vercel. It also drops the need for npx to exist at all.
+ *
+ * `import.meta.resolve` is used because pagefind's "exports" map publishes
+ * only ".", so neither the bin nor package.json can be resolved by subpath,
+ * and the map has no "require" condition for createRequire to use.
+ */
+const pagefindMain = fileURLToPath(import.meta.resolve("pagefind"));
+const pagefindBin = join(dirname(dirname(pagefindMain)), "lib", "runner", "bin.cjs");
+
+if (!existsSync(pagefindBin)) {
+  fail(`Pagefind is installed but its runner was not found at "${pagefindBin}".`);
+}
+
 execFileSync(
-  "npx",
-  ["--no-install", "pagefind", "--site", STAGE_DIR, "--output-path", OUT_DIR, "--root-selector", "main"],
+  process.execPath,
+  [pagefindBin, "--site", STAGE_DIR, "--output-path", OUT_DIR, "--root-selector", "main"],
   { stdio: "inherit" }
 );
 
