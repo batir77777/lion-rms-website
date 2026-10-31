@@ -1,13 +1,27 @@
+import Image from "next/image";
 import Reveal from "./Reveal";
 
+/*
+ * `image` was accepted and deliberately ignored for a long time, so every
+ * "PhotoHero" was in fact a text hero. It now renders when supplied, and
+ * ONLY when supplied: a page that passes no image produces exactly the markup
+ * it did before, so adding this changed no existing page.
+ *
+ * The hero image is the LCP element on any page that has one, hence
+ * `priority` and an explicit `sizes`. It sits beside the text on large
+ * screens and below it on small ones, so the heading is never pushed under
+ * the fold on a phone.
+ */
 export default function PhotoHero({
   eyebrow,
   title,
   body,
   children,
-  image: _image,
+  image,
+  imageAlt,
 }: {
   image?: string;
+  imageAlt?: string;
   eyebrow: string;
   title: string;
   body: string;
@@ -22,7 +36,7 @@ export default function PhotoHero({
         />
       </div>
       <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-40 sm:px-6 sm:pb-24">
-        <div className="max-w-3xl">
+        <div className={image ? "grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]" : "max-w-3xl"}>
           <Reveal>
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-teal-700">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
@@ -36,6 +50,21 @@ export default function PhotoHero({
             </p>
             {children && <div className="mt-8">{children}</div>}
           </Reveal>
+
+          {image && (
+            <Reveal delay={0.1}>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-sm lg:aspect-[5/4]">
+                <Image
+                  src={image}
+                  alt={imageAlt ?? ""}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>

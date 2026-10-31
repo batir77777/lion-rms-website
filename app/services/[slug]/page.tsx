@@ -6,6 +6,7 @@ import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import RelatedContent from "@/components/RelatedContent";
+import RiskCards from "@/components/RiskCards";
 import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { getCaseStudiesForService } from "@/lib/case-studies";
 import { getGuidesForService } from "@/lib/guides";
@@ -86,7 +87,25 @@ export default async function ServiceDetailPage({
           { name: cat.title },
         ]}
       />
-      <PhotoHero eyebrow={cat.eyebrow} title={cat.title} body={cat.intro} />
+      <PhotoHero
+        eyebrow={cat.eyebrow}
+        title={cat.title}
+        body={cat.intro}
+        image={cat.heroImage}
+        imageAlt={cat.heroImageAlt}
+      />
+
+      {/*
+       * Opt-in photograph band. Only categories that declare `riskCards`
+       * render it, so every other service page is byte-identical.
+       */}
+      {cat.riskCards && cat.riskCards.length > 0 && (
+        <RiskCards
+          cards={cat.riskCards}
+          heading={`What we assess on ${cat.title === "Manufacturing & Industrial Safety" ? "an industrial site" : "site"}`}
+          intro="Select any card to see what we look at and which service covers it."
+        />
+      )}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
 

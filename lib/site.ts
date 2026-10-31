@@ -222,6 +222,53 @@ export interface ServicePointer {
   linkLabel: string;
 }
 
+/**
+ * One photograph-led card in the "what we assess" band, above the detail
+ * sections. Clicking the card expands a short panel in place and offers a
+ * link into the section that covers it.
+ *
+ * Deliberately NOT a lightbox. A lightbox shows a bigger photograph, which
+ * serves decoration; expanding in place shows information, which is what a
+ * reader deciding whether to call us actually wants. It also avoids trapping
+ * focus on a phone.
+ *
+ * `image` is a path under /public. It is OPTIONAL on purpose: the card
+ * renders a branded placeholder when the file is absent, so the layout can be
+ * reviewed and approved before any photograph is licensed, and photographs
+ * can be dropped in later without touching this file's shape. Every image
+ * that ships must have a row in public/img/IMAGE-CREDITS.md.
+ *
+ * `alt` describes the photograph for a reader who cannot see it. `caption`
+ * describes the HAZARD and what we assess — never a claim that the picture
+ * shows our work. See the note on RISK_CARD_COPY_RULES below.
+ */
+export interface RiskCard {
+  id: string;
+  title: string;
+  /** One line under the title, always visible. The hazard, not a claim. */
+  caption: string;
+  /** Revealed when the card is expanded: what we actually assess. */
+  detail: string;
+  image?: string;
+  alt?: string;
+  /** Where "Read more" goes — an anchor on this page, or another page. */
+  href: string;
+  linkLabel: string;
+}
+
+/*
+ * RISK_CARD_COPY_RULES — read before editing any card copy.
+ *
+ * 1. A stock photograph of a factory implies nothing untrue. A CAPTION that
+ *    says or suggests we worked there does. Captions describe the hazard and
+ *    the assessment, never a project, client or outcome.
+ * 2. No photograph on this site may be presented as a Lion RMS project
+ *    unless the client has given written permission and the caption says so.
+ * 3. Keep the scope boundary of the parent page: we review arrangements and
+ *    controls; we do not certify, approve or carry out statutory thorough
+ *    examinations.
+ */
+
 export interface ServiceCategory {
   slug: string;
   image: string;
@@ -249,6 +296,15 @@ export interface ServiceCategory {
    * for the platform. Rendered in array order, after all sections.
    */
   pointers?: ServicePointer[];
+  /**
+   * Opt-in photograph for the page hero. Omitted by every other category, so
+   * their heroes render exactly as before — PhotoHero only shows an image
+   * when it is given one. See components/PhotoHero.tsx.
+   */
+  heroImage?: string;
+  heroImageAlt?: string;
+  /** Opt-in. See RiskCard. Absent elsewhere, so no other page changes. */
+  riskCards?: RiskCard[];
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -699,6 +755,89 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // specialist is required" as the operative verbs. Never "certify",
     // "approve", "examine" (in the statutory sense), "classify" or "sign off".
     slug: "manufacturing-industrial-safety",
+    // Opt-in hero photograph and risk cards (visual pilot, October 2026).
+    // Paths point at files that must be licensed and recorded in
+    // public/img/IMAGE-CREDITS.md before they ship. Until a file exists the
+    // hero renders as it always did and each card shows a branded
+    // placeholder, so nothing breaks and no unlicensed image can leak out.
+    // heroImage is COMMENTED OUT until the licensed photograph exists.
+    // next/image cannot degrade gracefully the way the cards do — pointing it
+    // at a missing file returns 400 from the optimiser and renders a broken
+    // image. The hero therefore stays text-only, exactly as it was, and
+    // becomes a photo hero the moment these two lines are uncommented and
+    // the file is in place with a row in public/img/IMAGE-CREDITS.md.
+    // heroImage: "/img/industrial/hero-production-floor.jpg",
+    // heroImageAlt: "A production floor in an industrial manufacturing facility",
+    riskCards: [
+      {
+        id: "card-production",
+        title: "Manufacturing and production facilities",
+        caption: "Machinery, materials handling and maintenance running in one space, often across shifts.",
+        detail: "We audit how health and safety is actually organised on a production site — responsibilities, supervision, monitoring and records — and report prioritised findings with photographic evidence.",
+        // Awaiting a licensed photograph: /img/industrial/production-facility.jpg
+        // alt: "Machinery on a factory production floor"
+        href: "#industrial-audits",
+        linkLabel: "Facility audits",
+      },
+      {
+        id: "card-machinery",
+        title: "Machinery guarding and work equipment",
+        caption: "Guarding, interlocks, isolation and maintenance regimes around moving machinery.",
+        detail: "We review your arrangements under PUWER — guarding, controls, isolation, maintenance and inspection records — and report what we observe in use. Statutory thorough examination and machinery certification are carried out by others.",
+        // Awaiting a licensed photograph: /img/industrial/machinery-guarding.jpg
+        // alt: "Guarding fitted to industrial work equipment"
+        href: "#machinery-equipment",
+        linkLabel: "Machinery reviews",
+      },
+      {
+        id: "card-warehouse",
+        title: "Warehousing, forklifts and segregation",
+        caption: "Vehicle routes, loading areas, racking and the pedestrians moving between them.",
+        detail: "We assess workplace transport arrangements, pedestrian segregation, racking condition and damage reporting, and access to height — identifying where specialist racking inspection is needed.",
+        // Awaiting a licensed photograph: /img/industrial/warehouse-forklift.jpg
+        // alt: "A forklift truck operating in a warehouse aisle"
+        href: "#height-lifting-transport",
+        linkLabel: "Transport and height",
+      },
+      {
+        id: "card-hotworks",
+        title: "Welding, fabrication and hot works",
+        caption: "Fume, sparks and ignition sources in close company with stored materials.",
+        detail: "We review fume control and ventilation, hot-work permits, screening and the fire precautions around welding, cutting and fabrication, including whether LEV is maintained and examined.",
+        // Awaiting a licensed photograph: /img/industrial/welding-fabrication.jpg
+        // alt: "A welder working at a fabrication bench"
+        href: "#hazardous-substances",
+        linkLabel: "Hot works and COSHH",
+      },
+      {
+        id: "card-construction",
+        title: "Construction and site inspections",
+        caption: "Plant installations, shutdowns and building work alongside live production.",
+        detail: "Independent site inspections against the construction phase plan and agreed method statements, with prioritised findings tracked to closure — covered in full on our Construction Health & Safety page.",
+        // Awaiting a licensed photograph: /img/industrial/construction-inspection.jpg
+        // alt: "A health and safety inspection under way on a construction site"
+        href: "/services/construction-health-safety",
+        linkLabel: "Construction H&S",
+      },
+      {
+        id: "card-fire-substances",
+        title: "Industrial fire and hazardous substances",
+        caption: "Flammable storage, dust, ignition sources and the escape routes through it all.",
+        detail: "Fire risk assessments for production and storage premises, informed by recognised guidance including PAS 79 where appropriate, alongside COSHH assessment of the substances in use.",
+        // Awaiting a licensed photograph: /img/industrial/fire-hazardous-substances.jpg
+        // alt: "Drums of hazardous substances in an industrial storage area"
+        href: "#industrial-fire",
+        linkLabel: "Fire and substances",
+      },
+      {
+        id: "card-platform",
+        title: "Digital compliance records",
+        caption: "Every finding, photograph and corrective action held in one auditable record.",
+        detail: "Inspections, audits and investigations are recorded in our own platform: photographic evidence attached to individual findings, actions tracked to closure with a dated history, and reports issued as PDFs.",
+        href: "#digital-records",
+        linkLabel: "The platform",
+      },
+    ],
     image: IMAGES.healthSafety,
     imageAlt: "Health and safety assessment in an industrial workplace",
     eyebrow: "Industrial Safety",
