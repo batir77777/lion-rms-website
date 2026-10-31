@@ -280,9 +280,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
-    lastModified: "2026-08-11",
+    lastModified: "2026-10-31",
     contentHash: "12da3dfdcee3a2a8",
-    source: "8d96c71 — Construction Health & Safety added as its own service card, sixth service (repositioning PR5)",
+    source: "change-record: 2026-10-31 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -314,15 +314,23 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     contentHash: "0c4c1d9b5c67dd1d",
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
+  // PLACEHOLDER HASH — all-zero so it fails loudly. Google Fonts is
+  // unreachable from the verification environment, so no real build can be
+  // produced there. Regenerate with `npm run build && npm run sitemap:hashes`.
+  "/services/manufacturing-industrial-safety": {
+    lastModified: "2026-10-31",
+    contentHash: "0000000000000000",
+    source: "change-record: 2026-10-31 — new page; manufacturing, production and industrial health and safety consultancy",
+  },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
     contentHash: "f0d97ec44610d770",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
-    lastModified: "2026-07-26",
+    lastModified: "2026-10-31",
     contentHash: "28358d919b568005",
-    source: "04ae4c7 — page authored",
+    source: "change-record: 2026-10-31 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
@@ -338,6 +346,12 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     lastModified: "2026-07-29",
     contentHash: "c9741c504c28d450",
     source: "1e19d62 — sector pages link related guides",
+  },
+  // PLACEHOLDER HASH — see the note above.
+  "/sectors/industrial-warehousing": {
+    lastModified: "2026-10-31",
+    contentHash: "0000000000000000",
+    source: "change-record: 2026-10-31 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-08-08",

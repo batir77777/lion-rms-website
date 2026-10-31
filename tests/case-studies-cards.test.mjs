@@ -191,10 +191,18 @@ describe("Structured data and dates", () => {
     // /services/construction-health-safety is a brand new authored route, so
     // it has no prior date to have "kept" in the first place, and is likewise
     // absent from this pin list.
+    //
+    // "/sectors" is deliberately absent as of the Manufacturing & Industrial
+    // stage (2026-10-31): the Industrial & Warehousing card was retitled
+    // Manufacturing, Industrial & Warehousing, its summary rewritten to lead
+    // with health and safety, and the card now links to a page of its own —
+    // changes a reader would notice, so its date legitimately moved too.
+    // /sectors/industrial-warehousing and
+    // /services/manufacturing-industrial-safety are brand new authored
+    // routes with no prior date to have kept, and are likewise absent.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
       "/services/compliance-support": "2026-07-29",
-      "/sectors": "2026-07-26",
       "/sectors/residential-blocks-hmos": "2026-07-29",
       "/sectors/offices-commercial-workplaces": "2026-07-29",
       "/sectors/education": "2026-07-29",
@@ -208,7 +216,7 @@ describe("Structured data and dates", () => {
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 10);
+    assert.equal(Object.keys(DATES).length, 9);
   });
 
   test("the three detail pages keep their own dates", async () => {

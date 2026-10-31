@@ -679,6 +679,152 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
   },
   {
+    // Manufacturing & Industrial Safety (October 2026) — new page, not a
+    // carve-out: nothing on the site covered manufacturing, production or
+    // industrial premises before this. PUWER, LOLER, DSEAR and "fabrication"
+    // had zero occurrences anywhere in the repo.
+    //
+    // SCOPE BOUNDARY — the reason this page exists in this shape. We sell
+    // independent H&S consultancy: audits, inspections, reviews of
+    // arrangements and controls. We do NOT sell statutory thorough
+    // examinations (LOLER/PUWER/PSSR), LEV examinations, machinery
+    // certification, CE/UKCA conformity assessment, engineering design
+    // approval, DSEAR hazardous-area classification or zoning, process
+    // safety engineering, specialist occupational-hygiene measurement, or
+    // intrusive fire investigation. The boundary is stated ONCE in the intro
+    // and then only where a reader would otherwise assume otherwise — it is
+    // not repeated per item, which would read as defensive.
+    //
+    // Keep "review", "observations", "arrangements" and "identify where a
+    // specialist is required" as the operative verbs. Never "certify",
+    // "approve", "examine" (in the statutory sense), "classify" or "sign off".
+    slug: "manufacturing-industrial-safety",
+    image: IMAGES.healthSafety,
+    imageAlt: "Health and safety assessment in an industrial workplace",
+    eyebrow: "Industrial Safety",
+    title: "Manufacturing & Industrial Safety",
+    short: "Health and safety consultancy for manufacturing, production and industrial premises — audits, inspections, machinery and process safety reviews, hazardous substances, and safe systems of work.",
+    intro: "Health and safety consultancy for factories, production facilities, workshops and warehousing. We audit and inspect industrial premises as they actually operate, review the arrangements and controls in place around machinery, processes, substances and contractors, and report prioritised findings with photographic evidence and corrective actions tracked to closure. Statutory thorough examinations, machinery certification and engineering design approval are specialist functions carried out by others; where your site needs one, we identify the gap and tell you what kind of specialist to appoint.",
+    sections: [
+      {
+        id: "industrial-audits",
+        eyebrow: "Audits",
+        title: "Manufacturing and Production Facility H&S Audits",
+        intro: "Full audits of health and safety arrangements across a manufacturing or production site — how work is organised, supervised, monitored and recorded, judged against what is actually happening on the floor.",
+        featured: true,
+        items: [
+          { name: "Production facility health and safety audits", desc: "Arrangements, documentation and practice across the site, reported with prioritised findings and recommended actions." },
+          { name: "Factory and workshop inspections", desc: "Scheduled or unannounced inspections covering the production environment, traffic routes, welfare and housekeeping." },
+          { name: "Multi-site and group audits", desc: "One consistent audit format applied across several premises, so results are comparable site by site." },
+          { name: "Management arrangements review", desc: "How responsibilities, supervision, monitoring and review operate in practice, rather than as the paperwork describes them." },
+        ],
+      },
+      {
+        id: "machinery-equipment",
+        eyebrow: "Machinery",
+        title: "Machinery and Work Equipment Safety Reviews",
+        intro: "A review of your arrangements for work equipment under the Provision and Use of Work Equipment Regulations 1998 — guarding, isolation, maintenance regimes and inspection records, and the safe systems around them. This is an advisory review of arrangements and controls, not a statutory thorough examination or any form of machinery certification.",
+        items: [
+          { name: "PUWER arrangements review", desc: "Whether suitable equipment, guarding, controls, isolation and maintenance arrangements are in place and being followed in practice." },
+          { name: "Guarding and access observations", desc: "Practical observations on guarding, interlocking and access as found in use, reported for your engineers or equipment supplier to act on." },
+          { name: "Isolation and maintenance procedures", desc: "Permit-to-work, lock-off and safe isolation arrangements around maintenance, cleaning and breakdown work." },
+          { name: "Inspection and examination records", desc: "Whether required inspections and examinations are being obtained, recorded and acted on. Where one is overdue we identify it; the examination itself is carried out by a competent person appointed for that purpose." },
+        ],
+      },
+      {
+        id: "height-lifting-transport",
+        eyebrow: "High-risk activities",
+        title: "Work at Height, Lifting Operations and Workplace Transport",
+        intro: "Three of the highest-consequence activity groups in an industrial premises, reviewed as arrangements and controls. Thorough examination of lifting equipment under LOLER is carried out by a competent examiner; we review whether examinations are current and whether their findings have been acted on.",
+        items: [
+          { name: "Work at height arrangements", desc: "Access to plant, mezzanines, roofs and racking, and the equipment, controls and rescue arrangements in use." },
+          { name: "Lifting operations", desc: "Planning, supervision and safe systems of work around lifting activities, including the use of cranes, hoists and lifting accessories." },
+          { name: "Workplace transport and segregation", desc: "Vehicle routes, fork-lift operations, loading and unloading areas, and pedestrian segregation." },
+          { name: "Racking and storage observations", desc: "Condition, loading and damage-reporting arrangements, with specialist racking inspection identified where it is required." },
+        ],
+      },
+      {
+        id: "hazardous-substances",
+        eyebrow: "Substances",
+        title: "COSHH, Hazardous Substances and Hot Works",
+        intro: "Assessment and review of exposure to hazardous substances, and of the arrangements where flammable atmospheres, fume or dust are present.",
+        items: [
+          { name: "COSHH assessments and reviews", desc: "The substances in use, who is exposed and how, and whether the controls in place are suitable and being maintained." },
+          { name: "Welding, hot works and fabrication", desc: "Fume control, hot-work permits, screening, ventilation and fire precautions around welding, cutting and fabrication." },
+          { name: "Local exhaust ventilation arrangements", desc: "Whether LEV is in place, maintained and subject to the required examination. The statutory LEV thorough examination itself is a specialist function." },
+          { name: "DSEAR arrangements review", desc: "Whether DSEAR assessments exist, are current and are reflected in day-to-day controls. We review the arrangements and identify apparent gaps, and recommend a specialist DSEAR assessment where one is needed. Hazardous-area classification and zoning are specialist work we do not undertake." },
+        ],
+      },
+      {
+        id: "safe-systems",
+        eyebrow: "Planning",
+        title: "Risk Assessments and Safe Systems of Work",
+        intro: "Risk assessments written for the work as it is actually carried out, with the people who do it, and the procedures that go with them.",
+        items: [
+          { name: "Task and activity risk assessments", desc: "Assessments for specific production tasks, machinery operations and higher-risk activities." },
+          { name: "Safe systems of work and permits", desc: "Practical procedures for higher-risk tasks, including permit-to-work arrangements where they are needed." },
+          { name: "Manual handling and ergonomics", desc: "Handling, repetitive tasks and workstation arrangements in a production setting." },
+          { name: "Noise and vibration arrangements", desc: "A review of how noise and vibration are being managed — whether assessments exist, controls are applied and health surveillance is in place — identifying where a competent occupational hygiene assessment or measurement survey is needed." },
+        ],
+      },
+      {
+        id: "contractors-maintenance",
+        eyebrow: "Contractors",
+        title: "Contractor Safety and Maintenance Activities",
+        intro: "Shutdowns, installations and maintenance bring contractors into a live production environment, and are usually the highest-risk periods an industrial site has.",
+        items: [
+          { name: "Contractor control arrangements", desc: "Selection, induction, supervision and monitoring of contractors working on your site." },
+          { name: "Maintenance and shutdown safety", desc: "Arrangements around planned maintenance, breakdown work and shutdown periods." },
+          { name: "Permit-to-work systems", desc: "Whether permits are suitable for the work, understood by those using them, and actually being used." },
+          { name: "Contractor register and competence records", desc: "Competence evidence and audit history held against each contractor, so the picture is cumulative." },
+        ],
+      },
+      {
+        id: "monitoring-investigations",
+        eyebrow: "Ongoing support",
+        title: "Regular Inspections, Investigations and Compliance Monitoring",
+        intro: "We offer both one-off assignments and regular inspection programmes — commonly monthly or quarterly for industrial premises, matched to the risk and pace of operations.",
+        items: [
+          { name: "Regular inspection programmes", desc: "A schedule of inspections in a consistent format, so trends and repeat issues are visible rather than judged from a single visit." },
+          { name: "Incident and near-miss investigation", desc: "Independent investigation with a factual report and root-cause analysis." },
+          { name: "Corrective-action monitoring", desc: "Actions tracked to closure with owners, target dates and a dated history of what was done." },
+          { name: "Compliance reporting", desc: "Periodic reporting on position, progress and outstanding actions, written for the people who have to act on it." },
+        ],
+      },
+      {
+        id: "industrial-fire",
+        eyebrow: "Fire safety",
+        title: "Fire Risk Assessments for Industrial Premises",
+        intro: "Fire risk assessments for factories, workshops and warehouses, where process risk, storage arrangements and travel distances all bear on the outcome. These are fire risk assessments of the premises as found; they are not process fire engineering and do not involve intrusive investigation.",
+        items: [
+          { name: "Industrial fire risk assessments", desc: "Assessments informed by recognised guidance, including PAS 79 where appropriate, for production and storage premises." },
+          { name: "Storage and ignition risk", desc: "Flammable storage, racking arrangements, dust accumulation and ignition sources, considered as part of the assessment." },
+          { name: "Means of escape in production environments", desc: "Travel distances, routes through production areas, and final exits where plant and storage affect them." },
+        ],
+      },
+    ],
+    pointers: [
+      {
+        id: "related-audits",
+        eyebrow: "Also Available",
+        title: "Independent H&S Inspections and Audits",
+        body: "Independent inspections and audits across construction sites, workplaces and industrial premises, including contractor compliance monitoring and client-side assurance.",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "View Independent Inspections & Audits",
+      },
+      {
+        id: "digital-records",
+        eyebrow: "Digital and AI",
+        title: "Digital Inspection and Audit Records",
+        body: "Every inspection, audit and investigation is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
+        bodySecondary:
+          "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records — the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
+        href: "/contact",
+        linkLabel: "Enquire about our digital platform",
+      },
+    ],
+  },
+  {
     slug: "compliance-support",
     image: IMAGES.digital,
     imageAlt: "Compliance records and documentation management",
@@ -907,10 +1053,34 @@ export const SECTORS: Sector[] = [
     hasPage: false,
   },
   {
+    // Given a page in the Manufacturing & Industrial stage (October 2026).
+    // The slug is deliberately unchanged — "industrial-warehousing" is the
+    // existing, linkable URL — while the title and summary are rewritten to
+    // lead with manufacturing and with health & safety rather than fire.
+    //
+    // This page describes the ENVIRONMENTS and CLIENTS we support. What we
+    // actually deliver lives at /services/manufacturing-industrial-safety.
+    // Keep that split: a sector page that starts listing services duplicates
+    // the service page and the two drift apart.
     slug: "industrial-warehousing",
-    title: "Industrial & Warehousing",
-    summary: "Fire safety and health & safety support for industrial units, warehouses, and logistics sites.",
-    hasPage: false,
+    title: "Manufacturing, Industrial & Warehousing",
+    summary: "Health and safety support for manufacturing plants, production facilities, workshops, warehouses and logistics sites.",
+    body: "Manufacturing and industrial premises carry a different risk profile from an office or a retail unit: moving machinery, hot works, hazardous substances, vehicle movements and maintenance activity all running in the same space, often across shifts. We support manufacturers, production facilities, engineering workshops, fabrication shops, warehousing and logistics operators, and the landlords and managing agents responsible for industrial estates.",
+    considerations: [
+      "Moving machinery, guarding and safe isolation during maintenance",
+      "Hot works, welding fume and hazardous or flammable substances",
+      "Workplace transport, fork-lift operations and pedestrian segregation",
+      "Racking, storage arrangements and work at height",
+      "Contractors working in a live production environment",
+      "Shift patterns, lone working and out-of-hours cover",
+    ],
+    relatedServices: [
+      "manufacturing-industrial-safety",
+      "independent-health-safety-audits",
+      "health-safety",
+      "fire-safety",
+    ],
+    hasPage: true,
   },
   {
     slug: "mixed-use-developments",

@@ -133,7 +133,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const mod = await import("../app/sitemap.ts");
     const fn = typeof mod.default === "function" ? mod.default : mod.default.default;
     const entries = await fn();
-    assert.equal(entries.length, 84, `the sitemap should still list 84 URLs, found ${entries.length}`);
+    assert.equal(entries.length, 86, `the sitemap should still list 86 URLs, found ${entries.length}`);
     const offenders = entries
       .map((e) => new URL(e.url).pathname)
       .filter((p) => /not-found|404/.test(p));
@@ -142,7 +142,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
 
   test("_not-found is not registered as an authored route", async () => {
     const { AUTHORED_ROUTES } = await import("../lib/page-dates");
-    assert.equal(AUTHORED_ROUTES.length, 21);
+    assert.equal(AUTHORED_ROUTES.length, 23);
     assert.equal(
       AUTHORED_ROUTES.some((r) => /not-found|404/.test(r)),
       false
@@ -221,19 +221,20 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const EXPECTED = {
       "/": ["2026-08-10", "7dd1778f2d9f6442"],
       "/about": ["2026-08-10", "7e8fd7afba487575"],
-      "/services": ["2026-08-11", "12da3dfdcee3a2a8"],
+      "/services": ["2026-10-31", "12da3dfdcee3a2a8"],
       "/services/fire-safety": ["2026-08-10", "da662be8fe44c42a"],
       "/services/fire-safety-consultancy": ["2026-08-10", "4db2dacd52750a35"],
       "/services/fire-engineering": ["2026-08-09", "d11016d686910b83"],
       "/services/health-safety": ["2026-10-31", "97844ee625e75b84"],
       "/services/construction-health-safety": ["2026-10-31", "b64de1d782672c20"],
       "/services/independent-health-safety-audits": ["2026-10-31", "0c4c1d9b5c67dd1d"],
+      "/services/manufacturing-industrial-safety": ["2026-10-31", "0000000000000000"],
       "/services/compliance-support": ["2026-07-29", "f0d97ec44610d770"],
-      "/sectors": ["2026-07-26", "28358d919b568005"],
+      "/sectors": ["2026-10-31", "28358d919b568005"],
       "/sectors/residential-blocks-hmos": ["2026-07-29", "64a0b22f1e2e4583"],
       "/sectors/offices-commercial-workplaces": ["2026-07-29", "c3e0aafb5efbb521"],
       "/sectors/education": ["2026-07-29", "c9741c504c28d450"],
-      // 2026-08-08 arrived with the card removal, not with this change.
+      "/sectors/industrial-warehousing": ["2026-10-31", "0000000000000000"],
       "/case-studies": ["2026-08-08", "4ce08ffd75a7bf21"],
       "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "0104e8acb28f8c9f"],
       "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "efdfb83c4c9638dd"],
@@ -242,8 +243,8 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/check": ["2026-08-01", "e862c068410502d0"],
       "/contact": ["2026-08-10", "f4be21c0f4f75454"],
     };
-    assert.equal(Object.keys(EXPECTED).length, 21);
-    assert.equal(AUTHORED_ROUTES.length, 21);
+    assert.equal(Object.keys(EXPECTED).length, 23);
+    assert.equal(AUTHORED_ROUTES.length, 23);
 
     const wrong = [];
     for (const [route, [date, hash]] of Object.entries(EXPECTED)) {
