@@ -271,107 +271,107 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-10-31",
-    contentHash: "157c80beeaf35d66",
+    contentHash: "7e6375ac45b545f6",
     source: "aa35f69 — the Industrial & Warehousing sector card retitled Manufacturing, Industrial & Warehousing, its summary rewritten, and the card now links to a page",
   },
   "/about": {
     lastModified: "2026-08-10",
-    contentHash: "7e8fd7afba487575",
+    contentHash: "a80350cce5d9a977",
     source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
     lastModified: "2026-10-31",
-    contentHash: "8b49925f99fa0d4c",
+    contentHash: "7b42cba7ea451dea",
     source: "aa35f69 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
-    contentHash: "fcdb3fbac2a53e40",
+    contentHash: "b87a49a77747bb6e",
     source: "b9df1fa — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-08-10",
-    contentHash: "65d70cc3ff327e3d",
+    contentHash: "1caad90e0f0d8212",
     source: "b9df1fa — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "c30bf8bef99ce5d1",
+    contentHash: "d4fdbde1b3649f4f",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "db3e99eee685a54b",
+    contentHash: "8100e9a30d849b76",
     source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "2fc6cc8776cf88c9",
+    contentHash: "0b079940fc00e075",
     source: "08a563d — the audits-monitoring section moved to /services/independent-health-safety-audits, replaced by a pointer at the same anchor; seven sections remain plus the digital-records pointer",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
-    contentHash: "e31cf5cabbc3a767",
+    contentHash: "804746b5c2f3bd9f",
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-10-31",
-    contentHash: "b64c7840c6a0f369",
+    contentHash: "c1dc41f05ffa23fb",
     source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "99c6ea3440095c26",
+    contentHash: "f00dbeb96587498f",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-10-31",
-    contentHash: "3b3f024e4dd06ee2",
+    contentHash: "ff53d34647c72ad1",
     source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "64a0b22f1e2e4583",
+    contentHash: "9b329422567762e1",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "c3e0aafb5efbb521",
+    contentHash: "34e34d76f6d42f48",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "c9741c504c28d450",
+    contentHash: "7ff9c0d98d359d3d",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/industrial-warehousing": {
     lastModified: "2026-10-31",
-    contentHash: "297a470e8c2178cc",
+    contentHash: "370a9ed7c95952f7",
     source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "4ce08ffd75a7bf21",
+    contentHash: "88c30fedd13d0f12",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "0104e8acb28f8c9f",
+    contentHash: "c8d06d078c80c57f",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "efdfb83c4c9638dd",
+    contentHash: "6a91f2eef1e391ce",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "94c69751c10bcd0f",
+    contentHash: "94aa2edeb8cc7267",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "5d149152117c7d4d",
+    contentHash: "d4f6f97a29145d32",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
@@ -381,7 +381,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/contact": {
     lastModified: "2026-08-10",
-    contentHash: "f4be21c0f4f75454",
+    contentHash: "3512ce9291a17796",
     source: "5367330 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
 };
