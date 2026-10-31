@@ -226,7 +226,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/services/fire-safety-consultancy": ["2026-08-10", "2e0611d1ccf98fd0"],
       "/services/fire-engineering": ["2026-08-09", "eb7bfd3b8f604106"],
       "/services/health-safety": ["2026-08-11", "df6977068ff84c82"],
-      "/services/construction-health-safety": ["2026-08-11", "4d5c6cc06a2d7592"],
+      "/services/construction-health-safety": ["2026-10-31", "a77dc639d2ea1667"],
       "/services/compliance-support": ["2026-07-29", "4001ce6fe3c8aad3"],
       "/sectors": ["2026-07-26", "992a2c038a98f14f"],
       "/sectors/residential-blocks-hmos": ["2026-07-29", "ed720862dfc7c469"],
