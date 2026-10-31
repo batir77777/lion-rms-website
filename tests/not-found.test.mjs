@@ -219,8 +219,8 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-08-10", "97078772af6b4696"],
-      "/about": ["2026-08-10", "d9363eeca22b34dd"],
+      "/": ["2026-08-10", "7dd1778f2d9f6442"],
+      "/about": ["2026-08-10", "7e8fd7afba487575"],
       "/services": ["2026-08-11", "0ee52b7f57fb9756"],
       "/services/fire-safety": ["2026-08-10", "e299625369acef01"],
       "/services/fire-safety-consultancy": ["2026-08-10", "2e0611d1ccf98fd0"],
@@ -228,18 +228,18 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/services/health-safety": ["2026-08-11", "df6977068ff84c82"],
       "/services/construction-health-safety": ["2026-10-31", "a77dc639d2ea1667"],
       "/services/compliance-support": ["2026-07-29", "4001ce6fe3c8aad3"],
-      "/sectors": ["2026-07-26", "992a2c038a98f14f"],
-      "/sectors/residential-blocks-hmos": ["2026-07-29", "ed720862dfc7c469"],
-      "/sectors/offices-commercial-workplaces": ["2026-07-29", "48f35993e7679e10"],
-      "/sectors/education": ["2026-07-29", "e2ffbf404f33bebe"],
+      "/sectors": ["2026-07-26", "28358d919b568005"],
+      "/sectors/residential-blocks-hmos": ["2026-07-29", "64a0b22f1e2e4583"],
+      "/sectors/offices-commercial-workplaces": ["2026-07-29", "c3e0aafb5efbb521"],
+      "/sectors/education": ["2026-07-29", "c9741c504c28d450"],
       // 2026-08-08 arrived with the card removal, not with this change.
-      "/case-studies": ["2026-08-08", "c49978b675b4fbcd"],
-      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "0114d39268efe9d8"],
-      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "b57b2039f6568da0"],
-      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "47b939920271aff4"],
-      "/faq": ["2026-08-01", "14275f062531e90e"],
-      "/check": ["2026-08-01", "7ec5e829baaf4729"],
-      "/contact": ["2026-08-10", "34cd4e9b0e84ceaa"],
+      "/case-studies": ["2026-08-08", "4ce08ffd75a7bf21"],
+      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "0104e8acb28f8c9f"],
+      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "efdfb83c4c9638dd"],
+      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "94c69751c10bcd0f"],
+      "/faq": ["2026-08-01", "5d149152117c7d4d"],
+      "/check": ["2026-08-01", "e862c068410502d0"],
+      "/contact": ["2026-08-10", "f4be21c0f4f75454"],
     };
     assert.equal(Object.keys(EXPECTED).length, 20);
     assert.equal(AUTHORED_ROUTES.length, 20);

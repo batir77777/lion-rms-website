@@ -271,12 +271,12 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-08-10",
-    contentHash: "97078772af6b4696",
+    contentHash: "7dd1778f2d9f6442",
     source: "5367330 — credentials strip and AssessorSection gain the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
   "/about": {
     lastModified: "2026-08-10",
-    contentHash: "d9363eeca22b34dd",
+    contentHash: "7e8fd7afba487575",
     source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
@@ -316,57 +316,57 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/sectors": {
     lastModified: "2026-07-26",
-    contentHash: "992a2c038a98f14f",
+    contentHash: "28358d919b568005",
     source: "04ae4c7 — page authored",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "ed720862dfc7c469",
+    contentHash: "64a0b22f1e2e4583",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "48f35993e7679e10",
+    contentHash: "c3e0aafb5efbb521",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "e2ffbf404f33bebe",
+    contentHash: "c9741c504c28d450",
     source: "1e19d62 — sector pages link related guides",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "c49978b675b4fbcd",
+    contentHash: "4ce08ffd75a7bf21",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "0114d39268efe9d8",
+    contentHash: "0104e8acb28f8c9f",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "b57b2039f6568da0",
+    contentHash: "efdfb83c4c9638dd",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "47b939920271aff4",
+    contentHash: "94c69751c10bcd0f",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "14275f062531e90e",
+    contentHash: "5d149152117c7d4d",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "7ec5e829baaf4729",
+    contentHash: "e862c068410502d0",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-08-10",
-    contentHash: "34cd4e9b0e84ceaa",
+    contentHash: "f4be21c0f4f75454",
     source: "5367330 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
 };
