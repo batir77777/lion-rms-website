@@ -29,7 +29,7 @@ Retrieved 2026-10-31, inspected the same day.
 | `industrial/hero-production-floor.jpg` | Automated production line, robot arms, mesh cell guarding | Simon Kadula | [unsplash.com/photos/…8gr6bObQLOI](https://unsplash.com/photos/a-factory-filled-with-lots-of-orange-machines-8gr6bObQLOI) | Industrial robots working within a manufacturing production line |
 | `industrial/production-facility.jpg` | Machine shop with marked pedestrian walkway | MGR P | [unsplash.com/photos/…HNLlzPGbTBM](https://unsplash.com/photos/industrial-factory-floor-with-machinery-and-yellow-lines-HNLlzPGbTBM) | Manufacturing floor with production machinery and marked pedestrian walkways |
 | `industrial/machinery-guarding.jpg` | Press line with perimeter guard rail, fencing, E-stop, floor demarcation | Homa Appliances | [unsplash.com/photos/…SaX8ZBFkLTc](https://unsplash.com/photos/a-machine-that-is-inside-of-a-building-SaX8ZBFkLTc) | Guard rails and perimeter fencing around automated production machinery |
-| `industrial/welding-fabrication.jpg` | Welder in helmet and gloves at a fabrication bench | See source page | [unsplash.com/photos/…X_55Pa9E8h4](https://unsplash.com/photos/a-man-in-a-welding-helmet-working-on-a-piece-of-metal-X_55Pa9E8h4) | A welder in a protective helmet and gloves working at a fabrication bench |
+| `industrial/welding-fabrication.jpg` **(cropped)** | Welder in helmet and gloves at a fabrication bench | See source page | [unsplash.com/photos/…X_55Pa9E8h4](https://unsplash.com/photos/a-man-in-a-welding-helmet-working-on-a-piece-of-metal-X_55Pa9E8h4) | A welder in a protective helmet and gloves working at a fabrication bench |
 | `industrial/fire-hazardous-substances.jpg` | Fire protection pipework in an empty warehouse | Gilson Gomes | [unsplash.com/photos/…LvJfhkuDHDw](https://unsplash.com/photos/an-empty-warehouse-with-red-piping-on-the-ceiling-LvJfhkuDHDw) | Red fire protection pipework beneath the roof of an industrial warehouse |
 
 ### Inspection notes on the published five
@@ -42,12 +42,27 @@ Retrieved 2026-10-31, inspected the same day.
 - **machinery-guarding** — the strongest match for its card: perimeter guard
   rail, mesh fencing, emergency stop on the pedestal, floor demarcation.
   Minor: a trailing cable crosses the demarcated zone.
-- **welding-fabrication** — correct PPE (helmet, gauntlets, long sleeves) and
-  a fire extinguisher in shot. Face not identifiable. **Carries a legible
-  Carhartt logo on the jacket, plus smaller Miller and "Defender" marks.**
-  Accepted as incidental workwear branding rather than endorsement; the
-  distinction from the rejected forklift image is that there the brand WAS the
-  subject. Replace if a clean alternative appears.
+- **welding-fabrication** — **CROPPED from the original.** The original carried
+  a legible Carhartt patch on the jacket at roughly x1095–1160, y745–815 of
+  the 1800×1200 source. The published file is an exact 4:3 crop of
+  (454, 0)–(1446, 744), which excludes the patch entirely, and is stored at
+  992×744.
+
+  Why crop rather than accept it: at card size (475×317) the wordmark was not
+  legible, but at 2× on a high-resolution display it was at the edge of
+  legibility and the patch shape is recognisable to anyone who knows the
+  brand. Cropping removed the question permanently at no real cost.
+
+  What the crop keeps: welding helmet with auto-darkening lens, gauntlet
+  glove, long-sleeved jacket, torch in hand — the PPE is more prominent than
+  before. What it loses: the fire extinguisher and wider workshop context.
+
+  A worn Miller mark remains on the helmet crown. It is scuffed and faded and
+  resolves to a smudge at card size; verified at 1×, 2× and mobile width.
+
+  Note the crop is 992px wide, below the 1600px minimum stated below. That
+  minimum is a sourcing rule for new files; cropping necessarily costs
+  resolution, and 992px still supplies better than 2× for a 475px card.
 - **fire-hazardous-substances** — clean, no people, no branding. Shows fire
   protection pipework and **no hazardous substances**, so the alt text
   describes the pipework and does not claim otherwise.
