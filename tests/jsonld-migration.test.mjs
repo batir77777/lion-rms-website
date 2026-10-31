@@ -127,6 +127,7 @@ const ROUTES_ADDED_SINCE_PR10 = [
   "services/fire-engineering",
   "services/fire-safety-consultancy",
   "services/construction-health-safety",
+  "services/independent-health-safety-audits",
   "guides/fire-compartmentation-survey-explained",
   "guides/health-and-safety-risk-assessment-explained",
 ];
