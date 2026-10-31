@@ -282,7 +282,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-10-31",
     contentHash: "12da3dfdcee3a2a8",
-    source: "change-record: 2026-10-31 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
+    source: "aa35f69 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -320,7 +320,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-10-31",
     contentHash: "0000000000000000",
-    source: "change-record: 2026-10-31 — new page; manufacturing, production and industrial health and safety consultancy",
+    source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
@@ -330,7 +330,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/sectors": {
     lastModified: "2026-10-31",
     contentHash: "28358d919b568005",
-    source: "change-record: 2026-10-31 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
+    source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
@@ -351,7 +351,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/sectors/industrial-warehousing": {
     lastModified: "2026-10-31",
     contentHash: "0000000000000000",
-    source: "change-record: 2026-10-31 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
+    source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
