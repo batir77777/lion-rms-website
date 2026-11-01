@@ -252,8 +252,8 @@ describe("Authored-page content hashes", () => {
       .slice(0, 16);
   };
 
-  test("all 23 authored routes are registered", () => {
-    assert.equal(AUTHORED_ROUTES.length, 23);
+  test("all 24 authored routes are registered", () => {
+    assert.equal(AUTHORED_ROUTES.length, 24);
   });
 
   test("every recorded hash matches the page as built", () => {

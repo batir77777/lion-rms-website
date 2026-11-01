@@ -4,8 +4,15 @@ import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { SITE } from "@/lib/site";
 
+/*
+ * Presets that `?service=` may select. A value absent from this map is
+ * ignored and the select falls back to "Select…", so every key here must have
+ * a matching <option> below — and every service page that deep-links in
+ * (see `ctaHref` on ServiceCategory) must use one of these keys.
+ */
 const SERVICE_LABELS: Record<string, string> = {
   "fire-risk-assessment": "Book a Fire Risk Assessment",
+  training: "Enquire about training",
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -182,6 +189,7 @@ export default function ContactForm() {
             <option value="fire-door-inspection">Fire Door Inspection</option>
             <option value="fire-training">Fire Safety Training</option>
             <option value="health-safety">Health &amp; Safety Support</option>
+            <option value="training">Health &amp; Safety Training</option>
             <option value="other">Other</option>
           </select>
         </div>

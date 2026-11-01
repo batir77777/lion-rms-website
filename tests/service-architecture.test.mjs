@@ -113,7 +113,20 @@ describe("/services/fire-safety#fire-safety-consultancy is a pointer, not a dead
     // site-wide, unrelated to this page's own rendered content — searching
     // the whole document would false-positive on that list, not catch the
     // defect this test exists for.
-    const bodyOnly = page.replace(/<script[^>]*>[\s\S]*?<\/script>/g, "");
+    // The closing "Also available:" strip is excluded for the same reason as
+    // the JSON-LD above: it renders the TITLE of every sibling service
+    // category, site-wide boilerplate that cannot contain this page's item
+    // content. It became a false positive in November 2026, when
+    // /services/health-safety-training was added — its title, "Health &
+    // Safety and Fire Safety Training", contains the FSC item name "Fire
+    // Safety Training" as a substring, so a link to a different page tripped
+    // a test about duplicated content. The defect this test exists for — the
+    // pointer regrowing into a second copy of the moved section — would
+    // appear in the body ABOVE the strip, so narrowing the search here does
+    // not weaken it.
+    const bodyOnly = page
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/g, "")
+      .split(">Also available:<")[0];
     const offenders = FSC_ITEM_NAMES.filter((name) => bodyOnly.includes(name));
     assert.deepEqual(offenders, [], `Fire Safety Consultancy item content still duplicated on fire-safety: ${offenders.join(", ")}`);
   });

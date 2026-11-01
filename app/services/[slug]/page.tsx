@@ -96,14 +96,17 @@ export default async function ServiceDetailPage({
       />
 
       {/*
-       * Opt-in photograph band. Only categories that declare `riskCards`
-       * render it, so every other service page is byte-identical.
+       * Opt-in card band. Only categories that declare `riskCards` render it,
+       * so every other service page is byte-identical. Heading and standfirst
+       * come from the category rather than from a ternary on its title here,
+       * because the band now serves two different propositions — hazards
+       * assessed on an industrial site, and training sessions delivered.
        */}
       {cat.riskCards && cat.riskCards.length > 0 && (
         <RiskCards
           cards={cat.riskCards}
-          heading={`What we assess on ${cat.title === "Manufacturing & Industrial Safety" ? "an industrial site" : "site"}`}
-          intro="Select any card to see what we look at and which service covers it."
+          heading={cat.cardsHeading ?? "What we assess on site"}
+          intro={cat.cardsIntro}
         />
       )}
       <section className="bg-white py-20">
@@ -277,7 +280,7 @@ export default async function ServiceDetailPage({
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/contact"
+                  href={cat.ctaHref ?? "/contact"}
                   className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition hover:opacity-90"
                   style={{ background: "linear-gradient(135deg,#0c1f3f,#0ea5a0)" }}
                 >

@@ -251,6 +251,14 @@ export interface RiskCard {
   detail: string;
   image?: string;
   alt?: string;
+  /**
+   * A key into CARD_ICONS in components/RiskCards.tsx. Set INSTEAD of
+   * `image`, for a band where a photograph would misrepresent rather than
+   * illustrate — training sessions above all, where any stock photograph of
+   * people in a room reads as a course we ran. A card with an icon renders no
+   * media band, so eight of them stay compact. See RISK_CARD_COPY_RULES.
+   */
+  icon?: string;
   /** Where "Read more" goes — an anchor on this page, or another page. */
   href: string;
   linkLabel: string;
@@ -267,6 +275,10 @@ export interface RiskCard {
  * 3. Keep the scope boundary of the parent page: we review arrangements and
  *    controls; we do not certify, approve or carry out statutory thorough
  *    examinations.
+ * 4. On the training page, a card describes what a session covers. It never
+ *    states a duration, a price, a certificate, an accreditation or an
+ *    awarding body, because none of those are settled — and an icon card
+ *    carries no photograph precisely so it cannot imply a session we ran.
  */
 
 export interface ServiceCategory {
@@ -305,6 +317,25 @@ export interface ServiceCategory {
   heroImageAlt?: string;
   /** Opt-in. See RiskCard. Absent elsewhere, so no other page changes. */
   riskCards?: RiskCard[];
+  /**
+   * Heading and standfirst for the `riskCards` band. Explicit per category,
+   * because the band means different things on different pages — hazards we
+   * assess on an industrial site, sessions we deliver on a training page —
+   * and a ternary on the category title in the route file does not scale past
+   * two.
+   */
+  cardsHeading?: string;
+  cardsIntro?: string;
+  /**
+   * Where the page's closing CTA goes. Defaults to "/contact" — which is what
+   * every category used when this was hard-coded in the route file — so only
+   * a category that sets it renders anything different. `health-safety-training`
+   * sets it so the enquiry arrives with the training service already chosen;
+   * the value after `?service=` must exist BOTH as a key in SERVICE_LABELS
+   * and as an <option> in components/ContactForm.tsx, or the form silently
+   * falls back to "Select…".
+   */
+  ctaHref?: string;
 }
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -528,19 +559,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         ],
       },
       {
-        id: "training-inductions",
-        eyebrow: "Workforce",
-        title: "Workforce Safety Training and Site Inductions",
-        intro: "Practical safety training and site-specific inductions for your workforce and contractors, focused on the actual hazards and controls on your project. Training is delivered in-house by our own consultants or suitably qualified associates.",
-        items: [
-          { name: "Fire safety training", desc: "Fire awareness, evacuation procedures and the duties of fire wardens and marshals." },
-          { name: "Manual handling training", desc: "Practical manual handling training based on the tasks and loads on your site." },
-          { name: "Working at height training", desc: "Awareness training covering the hazards, controls and equipment involved in work at height." },
-          { name: "Site inductions", desc: "Project-specific inductions covering site rules, hazards, emergency arrangements and responsibilities." },
-          { name: "Toolbox talks", desc: "Short, practical briefings delivered on site, with attendance recorded." },
-        ],
-      },
-      {
         id: "construction-fire-safety",
         eyebrow: "Fire safety on site",
         title: "Construction Fire Safety and Emergency Planning",
@@ -589,6 +607,22 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         body: "Independent audits, contractor and subcontractor compliance monitoring and client-side assurance reporting are covered in full on our dedicated page, for construction sites and workplaces alike.",
         href: "/services/independent-health-safety-audits",
         linkLabel: "View Independent Inspections & Audits",
+      },
+      // The "Workforce Safety Training and Site Inductions" section moved to
+      // /services/health-safety-training, where the fire, workplace and site
+      // sessions are covered together instead of only in a construction
+      // context. The anchor id is kept identical to the section it replaces —
+      // `training-inductions` — so
+      // `/services/construction-health-safety#training-inductions` still
+      // resolves to a real, visible element. Fourth carve-out in this
+      // pattern, after PR3, PR5 and the audits split above.
+      {
+        id: "training-inductions",
+        eyebrow: "Also Available",
+        title: "Workforce Safety Training and Site Inductions",
+        body: "Site and contractor inductions, toolbox talks, fire safety, manual handling and working at height training are covered in full on our dedicated training page, for construction projects and workplaces alike.",
+        href: "/services/health-safety-training",
+        linkLabel: "View Health & Safety Training",
       },
       {
         id: "digital-records",
@@ -762,6 +796,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // placeholder, so nothing breaks and no unlicensed image can leak out.
     heroImage: "/img/industrial/hero-production-floor.jpg",
     heroImageAlt: "Industrial robots working within a manufacturing production line",
+    // Stated explicitly rather than derived from the category title in the
+    // route file, which is where it lived when this was the only card band.
+    // The strings are the ones that shipped, so the built HTML is unchanged.
+    cardsHeading: "What we assess on an industrial site",
+    cardsIntro: "Select any card to see what we look at and which service covers it.",
     riskCards: [
       {
         id: "card-production",
@@ -965,6 +1004,189 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
   },
   {
+    // SCOPE BOUNDARY — read before editing any copy on this category.
+    //
+    // Lion RMS is NOT an approved or accredited training provider. It holds no
+    // IOSH, NEBOSH, CITB or other awarding-body approval. Nothing here may
+    // claim, imply or hint at one, and no course may be named after an
+    // awarding body's product. The IOSH Training Provider and NEBOSH Learning
+    // Partner applications are unresolved; until one is granted in writing,
+    // neither exists as far as this website is concerned.
+    //
+    // Equally out of bounds, because none of it is settled: session durations,
+    // prices, certificate or attendance-certificate arrangements, course
+    // approval numbers, and any training venue other than the client's own
+    // premises. "Agreed with you before booking" is the device that keeps the
+    // page useful without inventing any of it — do not replace it with a
+    // number.
+    //
+    // Keep "awareness", "practical", "briefing", "covers" and "explains" as
+    // the operative verbs. Never "certified", "accredited", "approved",
+    // "qualifies" or "licensed".
+    //
+    // The eight sessions here are the ones approved on 1 November 2026. Six of
+    // them restate competence the site already advertised (fire awareness,
+    // fire marshal, manual handling, working at height, inductions, toolbox
+    // talks); General Workplace H&S Awareness and COSHH Awareness were added
+    // then. COSHH is held at AWARENESS level deliberately and is subject to a
+    // final competence and delivery confirmation before publication.
+    slug: "health-safety-training",
+    image: IMAGES.healthSafety,
+    imageAlt: "Site team receiving a safety briefing before starting work",
+    eyebrow: "Training",
+    title: "Health & Safety and Fire Safety Training",
+    short:
+      "Practical fire safety and health & safety training delivered at your premises — fire marshal, manual handling, working at height, COSHH awareness, site inductions and toolbox talks.",
+    intro:
+      "Practical safety training delivered at your own premises and built around the hazards your people actually face. Sessions are awareness and duty-focused: they explain the risk, the controls in place and who is responsible for what, in the language of the job rather than of a syllabus. Content, audience and format are agreed with you before anything is booked.",
+    // Icon cards, not photographs. A stock photograph of people in a training
+    // room would read as a session we ran, which is exactly the claim this
+    // page must not make. See the `icon` field on RiskCard.
+    cardsHeading: "Training sessions we deliver",
+    cardsIntro: "Select any session to see what it covers and where it fits.",
+    ctaHref: "/contact?service=training",
+    riskCards: [
+      {
+        id: "card-fire-awareness",
+        title: "Fire Safety Awareness",
+        caption: "What can start a fire in your building, and what everyone does when the alarm sounds.",
+        detail:
+          "Covers the fire risks present in your own premises, how fire and smoke spread, the alarm and detection arrangements in place, escape routes and final exits, and what staff are expected to do on discovering a fire or hearing the alarm. Pitched at all staff, whatever their role.",
+        icon: "flame",
+        href: "/services/fire-safety-consultancy",
+        linkLabel: "Fire safety consultancy",
+      },
+      {
+        id: "card-fire-marshal",
+        title: "Fire Marshal and Fire Warden Training",
+        caption: "For the people who sweep the floor, run the roll call and meet the fire service.",
+        detail:
+          "Covers the fire warden's role before, during and after an evacuation: routine checks, raising the alarm, sweeping an area, assisting people who need help to escape, assembly point procedure and roll call, and handing over to the fire and rescue service. Extinguisher familiarisation is included where your own fire strategy expects staff to use them.",
+        icon: "warden",
+        href: "/services/fire-safety",
+        linkLabel: "Fire safety in occupied buildings",
+      },
+      {
+        id: "card-manual-handling",
+        title: "Manual Handling",
+        caption: "Lifting, carrying, pushing and pulling the loads your people actually handle.",
+        detail:
+          "Covers how handling injuries happen, how the body is loaded, assessing a task by looking at the task, the individual, the load and the environment, and practical technique. It also covers the point at which a task should be redesigned or mechanised rather than trained around. Built from the real tasks and loads on your site.",
+        icon: "lifting",
+        href: "/services/health-safety",
+        linkLabel: "Health & safety support",
+      },
+      {
+        id: "card-working-at-height",
+        title: "Working at Height Awareness",
+        caption: "Steps, ladders, towers and edges — and the decisions taken before anyone goes up.",
+        detail:
+          "Awareness-level training covering the hierarchy of control in the Work at Height Regulations 2005, choosing the right access equipment for the task, pre-use checks, fragile surfaces, falling objects and exclusion zones. It is awareness training, not operator or rescue training: it does not qualify anyone to erect scaffolding, operate a MEWP or carry out a rescue from height.",
+        icon: "height",
+        href: "/services/construction-health-safety",
+        linkLabel: "Construction health & safety",
+      },
+      {
+        id: "card-workplace-awareness",
+        title: "General Workplace Health & Safety Awareness",
+        caption: "The duties, hazards and reporting routes everyone at work is expected to know.",
+        detail:
+          "Covers employer and employee duties under the Health and Safety at Work etc. Act 1974, how risk assessment works and where to find your own, the hazards common to your type of workplace, accident and near-miss reporting, and who to raise a concern with. Works as a general induction-level session or as a refresher.",
+        icon: "clipboard",
+        href: "/guides/health-and-safety-risk-assessment-explained",
+        linkLabel: "Risk assessment explained",
+      },
+      {
+        id: "card-coshh",
+        title: "COSHH Awareness",
+        caption: "The substances in use on your site, the harm they can do and the controls that hold them.",
+        detail:
+          "Awareness-level training on hazardous substances: reading labels and safety data sheets, how exposure happens, the controls in place on your own site, local exhaust ventilation and PPE, and what to do about a spill or a suspected exposure. Based on the substances actually in use rather than a generic slide deck.",
+        icon: "hazard",
+        href: "/guides/coshh-assessment-explained",
+        linkLabel: "COSHH assessment explained",
+      },
+      {
+        id: "card-inductions",
+        title: "Site and Contractor Safety Inductions",
+        caption: "What anyone arriving on site needs to know before they start — staff and contractors alike.",
+        detail:
+          "Project-specific inductions covering site rules, the hazards present, permit arrangements, welfare and emergency procedures, PPE requirements and who holds which responsibility. Delivered for your own workforce and for visiting contractors, with attendance recorded.",
+        icon: "induction",
+        href: "/services/construction-health-safety",
+        linkLabel: "Construction health & safety",
+      },
+      {
+        id: "card-toolbox-talks",
+        title: "Toolbox Talks",
+        caption: "Short, focused briefings delivered where the work is happening.",
+        detail:
+          "Brief practical sessions on a single topic — a hazard that has just appeared on site, a change in method, or a near miss worth learning from — delivered at the workface and recorded. Topics are chosen with you, and can follow directly from the findings of an inspection or audit.",
+        icon: "talk",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "Inspections and audits",
+      },
+    ],
+    sections: [
+      {
+        id: "how-training-works",
+        eyebrow: "Delivery",
+        title: "How Training Is Delivered",
+        intro:
+          "Training is delivered by our own competent consultant, with suitably qualified associates brought in only where that is specifically arranged with you.",
+        items: [
+          {
+            name: "Delivered at your premises",
+            desc: "Sessions run at your own site, office or project, around the hazards, equipment and working practices your people actually encounter — not a generic course delivered off site.",
+          },
+          {
+            name: "Delivered by a chartered practitioner",
+            desc: "Sessions are delivered personally by a chartered safety practitioner (CMIOSH) who also works as a fire engineer (MIFireE), so the training reflects current assessment practice rather than a fixed slide pack.",
+          },
+          {
+            name: "Scoped with you before booking",
+            desc: "Content, audience, group size and session format are agreed with you in advance and confirmed in writing, so you know what will be covered and who it is pitched at before anything is arranged.",
+          },
+          {
+            name: "Recorded for your compliance file",
+            desc: "Attendance is recorded and the session content documented, so the training can be evidenced to a client, an insurer or an enforcing authority after the event.",
+          },
+        ],
+      },
+      {
+        id: "training-scope",
+        eyebrow: "Scope",
+        title: "What These Sessions Are",
+        intro:
+          "Being straightforward about what we deliver is quicker than letting you find out later, so the scope is set out here rather than in the small print.",
+        items: [
+          {
+            name: "Practical, non-accredited workplace training",
+            desc: "These are practical in-house awareness and safety sessions. They explain the risks, the controls and the responsibilities that apply in your workplace. They are not regulated qualifications and they are not awarding-body certificated courses.",
+          },
+          {
+            name: "Where a formal qualification is needed",
+            desc: "Some roles call for a regulated qualification or an accredited certificate — operator tickets for plant and access equipment, for instance, or management-level safety qualifications. Where that applies to your people, we will tell you plainly and point you to a provider holding the relevant approval.",
+          },
+        ],
+      },
+    ],
+    pointers: [
+      {
+        id: "training-records",
+        eyebrow: "Digital and AI",
+        title: "Training and Competence Records",
+        // "auditor" is forbidden in built HTML by
+        // tests/qualifications-credibility.test.mjs — calling anyone an
+        // auditor edges towards certification-body auditor status, which is
+        // not something this practice holds. Say who is actually asking.
+        body: "Attendance and session records are held in our own digital compliance platform alongside your risk assessments, inspections and corrective actions. When a client, an insurer or an enforcing authority asks who was trained and when, the record is already there rather than in somebody's inbox. Client organisations get their own login to see the records for their sites.",
+        href: "/contact",
+        linkLabel: "Enquire about our digital platform",
+      },
+    ],
+  },
+  {
     slug: "compliance-support",
     image: IMAGES.digital,
     imageAlt: "Compliance records and documentation management",
@@ -1014,6 +1236,7 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
   const constructionHealthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "construction-health-safety");
+  const training = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety-training");
   const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
 
   const links = [
@@ -1022,6 +1245,11 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
     fsc && { label: fsc.title, href: `/services/${fsc.slug}` },
     healthSafety && { label: healthSafety.title, href: `/services/${healthSafety.slug}` },
     constructionHealthSafety && { label: constructionHealthSafety.title, href: `/services/${constructionHealthSafety.slug}` },
+    // Added November 2026. Sits after the construction entry because that is
+    // where the training content came from, and before compliance support,
+    // which closes the list. The label is read from the category, so it
+    // cannot drift from the page title.
+    training && { label: training.title, href: `/services/${training.slug}` },
     complianceSupport && { label: complianceSupport.title, href: `/services/${complianceSupport.slug}` },
   ].filter((l): l is { label: string; href: string } => Boolean(l));
 

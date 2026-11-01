@@ -319,6 +319,11 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     contentHash: "c1dc41f05ffa23fb",
     source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
+  "/services/health-safety-training": {
+    lastModified: "2026-11-01",
+    contentHash: "PENDING-WINDOWS-VERIFICATION",
+    source: "new page; health & safety and fire safety training, carved out of construction-health-safety#training-inductions",
+  },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
     contentHash: "f00dbeb96587498f",

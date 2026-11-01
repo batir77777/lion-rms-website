@@ -129,6 +129,7 @@ const ROUTES_ADDED_SINCE_PR10 = [
   "services/construction-health-safety",
   "services/independent-health-safety-audits",
   "services/manufacturing-industrial-safety",
+  "services/health-safety-training",
   "sectors/industrial-warehousing",
   "guides/fire-compartmentation-survey-explained",
   "guides/health-and-safety-risk-assessment-explained",

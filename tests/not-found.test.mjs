@@ -142,7 +142,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
 
   test("_not-found is not registered as an authored route", async () => {
     const { AUTHORED_ROUTES } = await import("../lib/page-dates");
-    assert.equal(AUTHORED_ROUTES.length, 23);
+    assert.equal(AUTHORED_ROUTES.length, 24);
     assert.equal(
       AUTHORED_ROUTES.some((r) => /not-found|404/.test(r)),
       false
@@ -229,6 +229,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/services/construction-health-safety": ["2026-10-31", "0b079940fc00e075"],
       "/services/independent-health-safety-audits": ["2026-10-31", "804746b5c2f3bd9f"],
       "/services/manufacturing-industrial-safety": ["2026-10-31", "c1dc41f05ffa23fb"],
+      "/services/health-safety-training": ["2026-11-01", "PENDING-WINDOWS-VERIFICATION"],
       "/services/compliance-support": ["2026-07-29", "f00dbeb96587498f"],
       "/sectors": ["2026-10-31", "ff53d34647c72ad1"],
       "/sectors/residential-blocks-hmos": ["2026-07-29", "9b329422567762e1"],
@@ -243,8 +244,8 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/check": ["2026-08-01", "e862c068410502d0"],
       "/contact": ["2026-08-10", "3512ce9291a17796"],
     };
-    assert.equal(Object.keys(EXPECTED).length, 23);
-    assert.equal(AUTHORED_ROUTES.length, 23);
+    assert.equal(Object.keys(EXPECTED).length, 24);
+    assert.equal(AUTHORED_ROUTES.length, 24);
 
     const wrong = [];
     for (const [route, [date, hash]] of Object.entries(EXPECTED)) {
