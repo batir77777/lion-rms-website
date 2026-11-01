@@ -272,7 +272,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-11-01",
     contentHash: "69f2f09fc6bd42c7",
-    source: "b1d96d1 — repositioned around health & safety: new hero and H1, nine service cards in three tiers, statistics band and testimonials removed"…and Project Assurance\" and its summary rewritten; the card's own text, not the shared footer",
+    source: "b1d96d1 \u2014 repositioned around health & safety: new hero and H1, nine service cards in three tiers, statistics band and testimonials removed",
   },
   "/about": {
     lastModified: "2026-08-10",
@@ -282,7 +282,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-11-01",
     contentHash: "1e71dac263a7cb30",
-    source: "b1d96d1 — the Enquiry process step no longer promises a same-day quote"…and Project Assurance\" and its summary rewritten",
+    source: "20e1e44 — the Construction Health & Safety card retitled \"…and Project Assurance\" and its summary rewritten",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -367,24 +367,24 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
-    lastModified: "2026-11-01",
+    lastModified: "2026-07-29",
     contentHash: "727e720a333d5429",
-    source: "b1d96d1 — the Enquiry process step no longer promises a same-day quote",
+    source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
-    lastModified: "2026-11-01",
+    lastModified: "2026-07-29",
     contentHash: "aae3e3c78c3f67f3",
-    source: "b1d96d1 — the Enquiry process step no longer promises a same-day quote",
+    source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
-    lastModified: "2026-11-01",
+    lastModified: "2026-07-29",
     contentHash: "b06f46fd19b5d726",
-    source: "b1d96d1 — the Enquiry process step no longer promises a same-day quote",
+    source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/industrial-warehousing": {
-    lastModified: "2026-11-01",
+    lastModified: "2026-10-31",
     contentHash: "31ed994f428632f7",
-    source: "b1d96d1 — the Enquiry process step no longer promises a same-day quote",
+    source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
