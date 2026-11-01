@@ -218,6 +218,39 @@ export interface ServicePointer {
    * though they ship with every account. Optional, and omitted by every other
    * pointer, so their rendering is byte-identical. */
   bodySecondary?: string;
+  /** Optional screenshot, rendered beside the prose on wide viewports and
+   * beneath it on a phone.
+   *
+   * Added for `manufacturing-industrial-safety`, where the platform used to
+   * be a seventh card in the "what we assess" band. It never belonged there —
+   * the other six are premises and hazards we assess, this is how we record
+   * what we find — and seven cards in a three-column grid left it stranded
+   * alone on the last row. Promoting it here fixes both, and gives a
+   * screenshot the width it needs to be legible, which a 371px card never
+   * could.
+   *
+   * ONLY ever a genuine screenshot of our own platform showing demonstration
+   * data. Never a mockup, never a composite, never a client's records, names,
+   * sites or logos. The same rule as IMAGE-CREDITS.md states, repeated here
+   * because this is the one field on the site that invites breaking it.
+   *
+   * Optional, and omitted by every other pointer, so their rendering is
+   * byte-identical — see the spread in app/services/[slug]/page.tsx.
+   *
+   * Presence of `media` declares the slot; `src` fills it. With the slot
+   * declared and no `src`, a plain labelled placeholder renders instead, so
+   * the arrangement can be reviewed before the screenshot exists. That is the
+   * same bargain RiskCards already strikes, and for the same reason: an
+   * invented screenshot of a compliance platform is a fabricated record, and
+   * no layout deadline justifies one. */
+  media?: {
+    /** Path under /public. Omit until the genuine screenshot exists. */
+    src?: string;
+    /** Always required — the slot is not declared without it. */
+    alt: string;
+    /** Optional line printed under the image. */
+    caption?: string;
+  };
   href: string;
   linkLabel: string;
 }
@@ -1023,19 +1056,15 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         href: "#industrial-fire",
         linkLabel: "Fire and substances",
       },
-      {
-        // Deliberately has no photograph. The six other cards carry licensed
-        // stock; this one keeps the branded placeholder, because the honest
-        // image here is a screenshot of the platform and none may be invented.
-        // A real screenshot can be added later, showing demonstration data
-        // only \u2014 never a client's records, names, sites or logos.
-        id: "card-platform",
-        title: "Digital compliance records",
-        caption: "Every finding, photograph and corrective action held in one auditable record.",
-        detail: "Inspections, audits and investigations are recorded in our own platform: photographic evidence attached to individual findings, actions tracked to closure with a dated history, and reports issued as PDFs.",
-        href: "#digital-records",
-        linkLabel: "The platform",
-      },
+      // The platform was a seventh card here until 1 November 2026. Two
+      // things were wrong with that. It was the only card in the band that
+      // is not a premises or a hazard we assess \u2014 it is how we record what
+      // we find \u2014 and seven cards in a three-column grid left it stranded
+      // alone on the last row at every desktop width. Its content now opens
+      // the `digital-records` pointer below, where the screenshot has the
+      // width to be legible. Nothing was lost: the card's `detail` was a
+      // condensed version of that pointer's first paragraph, and its caption
+      // survives as the screenshot's caption.
     ],
     image: IMAGES.healthSafety,
     imageAlt: "Health and safety assessment in an industrial workplace",
@@ -1157,6 +1186,18 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         body: "Every inspection, audit and investigation is recorded in our own digital compliance platform. Photographic evidence attaches to individual findings, corrective actions carry an owner and are tracked to closure with a dated history, and reports are issued as PDFs. Contractor and workforce registers hold competence and training records alongside the inspection history, and client organisations get their own login to see the records for their sites.",
         bodySecondary:
           "AI-assisted compliance summaries are available as an option alongside these standard functions. The figures are calculated directly from your own records — the AI writes only the interpretation that accompanies them, and anything it cannot verify against your data is withheld rather than shown. It is built to support professional judgement, not to replace it: assessments, findings and recommendations remain the work of our consultants.",
+        // The only pointer on the site carrying a screenshot, because this is
+        // the only page where the platform lost its card in the band above.
+        // `src` is deliberately absent until a genuine capture exists; the
+        // slot renders a labelled placeholder meanwhile. Whatever fills it
+        // must show demonstration data only, and must not show a panel the
+        // copy above refuses to claim \u2014 no predictive risk, no trend
+        // analysis, no automated report drafting, no reading of uploaded
+        // documents. An image makes a claim as surely as a sentence does.
+        media: {
+          alt: "The Lion RMS compliance platform showing an inspection record with findings, attached photographs and tracked corrective actions",
+          caption: "Every finding, photograph and corrective action held in one auditable record.",
+        },
         href: "/contact",
         linkLabel: "Enquire about our digital platform",
       },

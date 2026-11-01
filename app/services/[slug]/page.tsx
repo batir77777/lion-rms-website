@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PhotoHero from "@/components/PhotoHero";
@@ -198,7 +199,78 @@ export default async function ServiceDetailPage({
            * content that now lives at `pointer.href`. See ServicePointer
            * in lib/site.ts.
            */}
-          {cat.pointers?.map((pointer) => (
+          {cat.pointers?.map((pointer) =>
+            /*
+             * Two layouts, deliberately not one with an optional media slot.
+             * The plain layout below is reproduced exactly as it shipped,
+             * because threading a conditional column through it would change
+             * the rendered HTML — and so the recorded content hash — of every
+             * other page carrying a pointer, none of which gained anything.
+             * Only `manufacturing-industrial-safety` declares `media`.
+             */
+            pointer.media ? (
+              <div key={pointer.id} id={pointer.id} className="mt-14 scroll-mt-28">
+                <Reveal>
+                  <div className="overflow-hidden rounded-2xl border border-teal-100 bg-teal-50/60">
+                    <div className="grid gap-7 p-7 lg:grid-cols-2 lg:items-center lg:gap-9">
+                      <div>
+                        <p className="mb-1.5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
+                          <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
+                          {pointer.eyebrow}
+                        </p>
+                        <h2 className="text-lg font-bold text-navy-900">{pointer.title}</h2>
+                        <p className="mt-1.5 text-base leading-relaxed text-slate-600">{pointer.body}</p>
+                        {pointer.bodySecondary && (
+                          <p className="mt-3 text-base leading-relaxed text-slate-600">
+                            {pointer.bodySecondary}
+                          </p>
+                        )}
+                        <Link
+                          href={pointer.href}
+                          className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800"
+                        >
+                          {pointer.linkLabel} &rarr;
+                        </Link>
+                      </div>
+                      <figure className="lg:order-last">
+                        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-teal-100 bg-white shadow-sm">
+                          {pointer.media.src ? (
+                            <Image
+                              src={pointer.media.src}
+                              alt={pointer.media.alt}
+                              fill
+                              sizes="(max-width: 1024px) 100vw, 44vw"
+                              className="object-cover object-top"
+                            />
+                          ) : (
+                            /*
+                             * No invented dashboard. A labelled empty frame
+                             * says plainly that the capture is outstanding,
+                             * which is true; a drawn one would be a fabricated
+                             * record of a compliance system, which is the one
+                             * thing this slot must never hold.
+                             */
+                            <div
+                              aria-hidden
+                              className="flex h-full w-full items-center justify-center bg-slate-50 px-6 text-center"
+                            >
+                              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                Platform screenshot to follow
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {pointer.media.caption && (
+                          <figcaption className="mt-3 text-sm leading-relaxed text-slate-500">
+                            {pointer.media.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    </div>
+                  </div>
+                </Reveal>
+              </div>
+            ) : (
             <div key={pointer.id} id={pointer.id} className="mt-14 scroll-mt-28">
               <Reveal>
                 <div className="flex flex-col items-start gap-4 rounded-2xl border border-teal-100 bg-teal-50/60 p-7 sm:flex-row sm:items-center sm:justify-between">
@@ -224,7 +296,8 @@ export default async function ServiceDetailPage({
                 </div>
               </Reveal>
             </div>
-          ))}
+            )
+          )}
 
           {/* Other services */}
           <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
