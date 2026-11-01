@@ -1450,13 +1450,36 @@ export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
   const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
   const constructionHealthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "construction-health-safety");
+  const audits = SERVICE_CATEGORIES.find((c) => c.slug === "independent-health-safety-audits");
+  const manufacturing = SERVICE_CATEGORIES.find((c) => c.slug === "manufacturing-industrial-safety");
+  const training = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety-training");
+  const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
 
-  const fireCards: (HomepageServiceCard | false | undefined)[] = [
-    fra && { icon: "📄", title: fra.title, desc: fra.intro, href: `/services/fire-safety#${fra.id}` },
-    fireEngineering && { icon: "📐", title: fireEngineering.title, desc: fireEngineering.short, href: `/services/${fireEngineering.slug}` },
-    fsc && { icon: "🔥", title: fsc.title, desc: fsc.short, href: `/services/${fsc.slug}` },
-  ];
-
+  /*
+   * Homepage repositioning, 1 November 2026 — three tiers, nine cards.
+   *
+   * The old shape was two clusters and five cards, and it had fallen behind
+   * reality: Independent Audits, Manufacturing & Industrial Safety and
+   * Training all had published pages that the homepage never mentioned,
+   * while the heading above still read "Two Disciplines, Five Services".
+   *
+   * Health & Safety leads, because that is what the practice is being
+   * positioned on. Fire Safety keeps a full tier of its own rather than
+   * being folded in as a footnote: Fire Risk Assessments is still the
+   * strongest commercial term on the site and must stay a headline card.
+   * Training and Compliance Management sit in a third, quieter tier —
+   * visible without competing.
+   *
+   * Compliance Management becomes a card here for the first time. The old
+   * comment explained its absence by saying it was named in the
+   * introductory statement instead; with nine published service pages that
+   * reasoning no longer holds, and leaving it out was how the previous
+   * hand-typed array went stale in the first place.
+   *
+   * Every card still reads its title and description from SERVICE_CATEGORIES
+   * rather than retyping them, so the homepage cannot drift from the pages
+   * it links to.
+   */
   const healthSafetyCards: (HomepageServiceCard | false | undefined)[] = [
     healthSafety && { icon: "🏗️", title: healthSafety.title, desc: healthSafety.short, href: `/services/${healthSafety.slug}` },
     constructionHealthSafety && {
@@ -1465,13 +1488,27 @@ export const HOMEPAGE_SERVICE_CLUSTERS: HomepageServiceCluster[] = (() => {
       desc: constructionHealthSafety.short,
       href: `/services/${constructionHealthSafety.slug}`,
     },
+    audits && { icon: "🔍", title: audits.title, desc: audits.short, href: `/services/${audits.slug}` },
+    manufacturing && { icon: "🏭", title: manufacturing.title, desc: manufacturing.short, href: `/services/${manufacturing.slug}` },
+  ];
+
+  const fireCards: (HomepageServiceCard | false | undefined)[] = [
+    fra && { icon: "📄", title: fra.title, desc: fra.intro, href: `/services/fire-safety#${fra.id}` },
+    fsc && { icon: "🔥", title: fsc.title, desc: fsc.short, href: `/services/${fsc.slug}` },
+    fireEngineering && { icon: "📐", title: fireEngineering.title, desc: fireEngineering.short, href: `/services/${fireEngineering.slug}` },
+  ];
+
+  const supportingCards: (HomepageServiceCard | false | undefined)[] = [
+    training && { icon: "🎓", title: training.title, desc: training.short, href: `/services/${training.slug}` },
+    complianceSupport && { icon: "📋", title: complianceSupport.title, desc: complianceSupport.short, href: `/services/${complianceSupport.slug}` },
   ];
 
   const isCard = (c: HomepageServiceCard | false | undefined): c is HomepageServiceCard => Boolean(c);
 
   return [
-    { label: "Fire Safety & Fire Engineering", cards: fireCards.filter(isCard) },
-    { label: "Health & Safety & Construction Safety", cards: healthSafetyCards.filter(isCard) },
+    { label: "Health & Safety and Construction", cards: healthSafetyCards.filter(isCard) },
+    { label: "Fire Safety", cards: fireCards.filter(isCard) },
+    { label: "Training and Ongoing Compliance", cards: supportingCards.filter(isCard) },
   ];
 })();
 
@@ -1723,15 +1760,33 @@ export const RESOURCES = [
   { title: "Fire Safety Checklist", body: "A quick self-check for landlords and Responsible Persons before your assessment.", href: "/downloads/fire-safety-checklist", external: false },
 ];
 
-export const STATS = [
-  { value: 10, suffix: "+", label: "Years' experience across fire & safety" },
-  { value: 500, suffix: "+", label: "Assessments & inspections completed" },
-  { value: 9, suffix: "", label: "Sectors served — see our sector experience" },
-  { value: 16, suffix: "", label: "London areas covered" },
-];
+/*
+ * EMPTY BY DECISION (1 November 2026), not by oversight.
+ *
+ * This array held four figures. Three had no basis anywhere in the repo or
+ * in the business: "10+ years' experience", "500+ assessments & inspections
+ * completed", and "16 London areas covered" — the last of which was also
+ * contradicted by the only coverage data we have (six Home Counties, plus
+ * London; there is no sixteen-area concept). components/StatsBand.tsx had
+ * already carried a standing note that these were pulled "pending real
+ * figures", but the homepage rendered the array directly and bypassed that.
+ *
+ * The fourth, "9 sectors served", counted SECTORS correctly — but a count of
+ * the taxonomy is not evidence of projects delivered in all nine. The
+ * homepage now presents that as "Sectors We Support" with a link, which is
+ * true, instead of as a performance statistic.
+ *
+ * Do not repopulate this with estimates. A figure goes here only when there
+ * is a record behind it that would survive a client asking to see it.
+ */
+export const STATS: { value: number; suffix: string; label: string }[] = [];
 
 export const PROCESS_STEPS = [
-  { n: "01", title: "Enquiry", body: "Tell us about your premises, portfolio, or project. We confirm scope, timescales, and a clear fixed fee — usually the same day." },
+  // "usually the same day" removed 1 November 2026, with the matching
+  // promise in the homepage's closing CTA. The FAQ deliberately commits to
+  // agreeing a timescale rather than to a turnaround, and nothing on the
+  // site should promise more than the FAQ does.
+  { n: "01", title: "Enquiry", body: "Tell us about your premises, portfolio, or project. We confirm scope, timescales, and a clear fixed fee before any work begins." },
   { n: "02", title: "Site visit", body: "Your assessor visits in person, walking the building and gathering the evidence a suitable and sufficient assessment depends on." },
   { n: "03", title: "Report", body: "You receive a clear, prioritised report in plain English — what matters, why, and in what order to act." },
   { n: "04", title: "Ongoing support", body: "Action tracking, reviews, reminders, and compliance records that keep your compliance current — not a report left in a drawer." },
@@ -1739,13 +1794,19 @@ export const PROCESS_STEPS = [
 
 // "What Clients Receive" section (Phase 4B PR 1) — tangible deliverables,
 // distinct from PROCESS_STEPS above (which describes the steps, not the outputs).
+/*
+ * What a client actually ends up holding. Rewritten 1 November 2026 to lead
+ * on consultancy deliverables — inspections, findings, evidence, priorities,
+ * monitoring — rather than on commercial terms. Every line describes
+ * something we hand over or do, so none of it is a claim about outcomes.
+ */
 export const WHAT_CLIENTS_RECEIVE = [
-  { title: "A clear, prioritised report", body: "Written in plain English — what matters, why, and in what order to act." },
-  { title: "A fixed fee, agreed up front", body: "Confirmed before any work begins, so there are no surprises." },
-  { title: "A named point of contact", body: "The same assessor throughout, not a call centre." },
-  { title: "Actions tracked to completion", body: "A live record, not a report left in a drawer." },
-  { title: "Review dates scheduled automatically", body: "So nothing lapses without your knowledge." },
-  { title: "Audit-ready documentation", body: "Stored and accessible whenever you need it, for inspection or enforcement." },
+  { title: "Independent inspections and audits", body: "Carried out by us rather than by the people delivering the work, against the standards that actually apply to your premises or project." },
+  { title: "Clear findings, with photographic evidence", body: "What we saw and where, recorded at the time, so a finding can be understood without having been there." },
+  { title: "Prioritised recommendations", body: "Ranked by risk and written in plain English — what matters, why, and in what order to deal with it." },
+  { title: "Corrective actions tracked to closure", body: "Each action carries an owner and a target date, with a dated history of what was closed and when." },
+  { title: "Incident and near-miss investigation", body: "Structured, independent investigation when something goes wrong, with root causes identified rather than assumed." },
+  { title: "Reporting and ongoing support", body: "Reports issued as PDFs, review dates scheduled, and the same consultant available between visits as things change." },
 ];
 
 export const STANDARDS_ROW = [
@@ -1753,8 +1814,26 @@ export const STANDARDS_ROW = [
   "BS 9991", "Health & Safety at Work Act 1974", "CDM 2015",
 ];
 
-// Anonymised recent-work highlights for the homepage "Recent Projects"
-// section — condensed versions of entries also shown in full on /case-studies.
+/*
+ * Anonymised recent-work highlights for the homepage "Recent Projects"
+ * section. Every entry here must have a full case study behind it at
+ * /case-studies/<slug>, so a reader who wants the detail can get it.
+ *
+ * Reduced from three to two on 1 November 2026. The removed entry, "RAMS &
+ * construction phase plans", had no case study behind it at all: its twin
+ * lives in OTHER_CASES (lib/case-studies.ts), which is deliberately never
+ * rendered and has no detail page. The old comment here claimed all three
+ * were "shown in full on /case-studies", which was true of two of them.
+ *
+ * The outcome claim on the fire strategy entry is also softened. It
+ * previously said the strategy was "unlocking planning approval without
+ * further queries" — an asserted causal result, stated three times on one
+ * page (here, in the case study, and again as a client testimonial). What we
+ * can stand behind is the work done and that the application was approved,
+ * not that our document is what caused it. The case study at
+ * lib/case-studies.ts:124 still carries the stronger wording and is flagged
+ * for Batir to confirm or soften.
+ */
 export const RECENT_PROJECTS = [
   {
     sector: "Residential · Managing Agent",
@@ -1762,14 +1841,9 @@ export const RECENT_PROJECTS = [
     body: "A programme of Type 1 and Type 4 assessments across a residential block portfolio, feeding straight into an ongoing, prioritised action schedule.",
   },
   {
-    sector: "Construction · Principal Contractor",
-    title: "RAMS & construction phase plans",
-    body: "Risk assessments and construction phase plans developed alongside the project team to support a compliant, well-documented site setup.",
-  },
-  {
     sector: "Mixed-use · Developer",
     title: "Fire strategy for a change-of-use scheme",
-    body: "A bespoke fire strategy setting out evacuation principles and construction details, unlocking planning approval without further queries.",
+    body: "A bespoke fire strategy setting out evacuation principles and construction details, prepared in support of a change-of-use planning application.",
   },
 ];
 

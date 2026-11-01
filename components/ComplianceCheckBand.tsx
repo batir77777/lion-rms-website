@@ -19,7 +19,12 @@ export default function ComplianceCheckBand() {
                   Not sure if you&apos;re compliant?
                 </p>
                 <p className="mt-1 text-sm text-slate-500">
-                  Complete our free 2-minute Fire Safety Compliance Check — instant red / amber / green score, no sign-up needed.
+                  {/*
+                    Was "free 2-minute". The tool itself says "Takes about a
+                    minute", so the page carried two durations for one thing.
+                    No duration is claimed here now.
+                  */}
+                  Complete our free Fire Safety Compliance Check — instant red / amber / green score, no sign-up needed.
                 </p>
               </div>
             </div>

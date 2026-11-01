@@ -4,7 +4,7 @@ import AssessorSection from "@/components/AssessorSection";
 import ComplianceCheckBand from "@/components/ComplianceCheckBand";
 import RecentProjects from "@/components/RecentProjects";
 import WhoWeHelp from "@/components/WhoWeHelp";
-import { TESTIMONIALS, STATS, SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, HOMEPAGE_SERVICE_CLUSTERS, LION_DIGITAL_URL } from "@/lib/site";
+import { SECTORS, WHAT_CLIENTS_RECEIVE, PROCESS_STEPS, COVERAGE_SHORT, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF, HOMEPAGE_SERVICE_CLUSTERS, LION_DIGITAL_URL } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 // Homepage metadata (repositioning PR2, August 2026) — rebalanced from the
@@ -13,24 +13,39 @@ import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 // default metadata in app/layout.tsx, used by every other page, is untouched
 // (out of scope for PR2 — see the "sitewide metadata" note agreed for this
 // PR; a candidate for PR8's SEO/consolidation pass).
+/*
+ * Homepage repositioning, 1 November 2026. Health & safety leads the title
+ * and description, because that is what the practice is now positioned on.
+ *
+ * "Fire risk assessments" is kept IN the title, not dropped to the body.
+ * It is the strongest commercial term on the site, the old title did not
+ * contain it, and the new H1 does — so this change gains that keyword
+ * rather than risking it. Every other fire term the old description carried
+ * is still present below.
+ *
+ * The canonical stays "/", and the three title strings stay identical:
+ * tests/site-quality.test.mjs asserts twitter:title === og:title.
+ * app/layout.tsx's sitewide defaults are deliberately untouched.
+ */
+const HOME_TITLE = "Health & Safety, Construction Safety & Fire Risk Assessments London — Lion RMS";
+const HOME_DESCRIPTION =
+  "Independent health & safety, construction safety and fire safety consultancy serving London, the Home Counties and the wider UK by arrangement. Site inspections, risk assessments, independent audits, CDM 2015 advisory support, fire risk assessments and fire strategies. Led by Batir Turakulov, Chartered Health & Safety Professional (CMIOSH) and Fire Engineer (MIFireE).";
+
 export const metadata: Metadata = {
-  title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
-  description:
-    "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
-    description:
-      "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     url: "/",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fire Safety, Fire Engineering, H&S & Construction Safety London — Lion RMS",
-    description:
-      "Independent fire safety, fire engineering, health & safety and construction safety consultancy across London and the Home Counties. Led by Batir Turakulov, Fire Engineer (MIFireE) and Chartered Health & Safety Professional (CMIOSH). Book a consultation.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
 };
@@ -39,192 +54,76 @@ export default function HomePage() {
   return (
     <div className="bg-white text-slate-800">
 
-      {/* ── HERO ── */}
-      <section
-        className="relative isolate overflow-hidden"
-        style={{ background: "linear-gradient(135deg,#0a1628 0%,#0f2040 55%,#0a1628 100%)" }}
-      >
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute -left-48 -top-24 h-[620px] w-[620px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(0,201,167,0.22) 0%, transparent 62%)" }} />
-          <div className="absolute -right-40 bottom-[-120px] h-[640px] w-[760px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(0,201,167,0.08) 0%, transparent 62%)" }} />
-          <div className="absolute inset-0 opacity-[0.05]"
-            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "46px 46px" }} />
-        </div>
+      {/*
+        ── HERO ──
+        Rebuilt 1 November 2026 for a corporate consultancy read. What went:
+        two radial glow blobs, a grid overlay, the gradient-filled half of
+        the H1, and the three pillar cards in the right-hand column. The
+        cards were where the hero said the most and evidenced the least —
+        and the fire card's scope sentence advertised dedicated fire door
+        inspections and compartmentation surveys, both of which are paused.
 
-        <div className="relative mx-auto flex min-h-[82vh] w-full max-w-7xl items-center px-5 pb-16 pt-32 sm:px-6 lg:pb-24 lg:pt-36">
-          <div className="grid w-full items-center gap-12 lg:grid-cols-2">
+        What stays: a single navy band, one column, the headline, one
+        paragraph, two calls to action, and the credential line. Nothing in
+        this hero is a claim we cannot stand behind.
+      */}
+      <section className="relative isolate" style={{ background: "#0a1628" }}>
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-36">
+          <div className="max-w-3xl">
 
-            {/* Left */}
             <div>
-              <span className="inline-flex flex-col gap-1 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/90 backdrop-blur">
-                <span className="flex items-center gap-2 tracking-[0.12em]" style={{ color: "#5be3c0" }}>
-                  <span className="h-1.5 w-1.5 flex-shrink-0 animate-pulse rounded-full" style={{ background: "#00c9a7" }} aria-hidden />
-                  Lion Risk Management Solutions Limited
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
+                Lion Risk Management Solutions Limited
+                <span className="text-white/35" aria-hidden>
+                  &bull;
                 </span>
-                <span className="pl-3.5 text-white/90">
-                  {COVERAGE_SHORT}
-                </span>
+                <span style={{ color: "#5be3c0" }}>{COVERAGE_SHORT}</span>
               </span>
 
-              <h1 className="mt-6 text-[clamp(2.4rem,5.4vw,4.4rem)] font-extrabold leading-[1.04] tracking-tight text-white">
-                Fire Safety &amp; Fire Engineering,{" "}
-                <span style={{ background: "linear-gradient(100deg,#00c9a7 0%,#5be3c0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Health &amp; Safety &amp; Construction Safety.
-                </span>
+              <h1 className="mt-7 text-[clamp(2.2rem,4.8vw,3.9rem)] font-extrabold leading-[1.08] tracking-tight text-white">
+                Health &amp; Safety, Construction Safety and Fire Risk Assessments
               </h1>
 
-              <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.8)" }}>
-                Independent fire safety, fire engineering and health &amp; safety consultancy, supported by{" "}
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-semibold"
-                  style={{ background: "rgba(0,201,167,0.14)", color: "#5be3c0" }}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="13"
-                    height="13"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="flex-shrink-0"
-                    aria-hidden
-                  >
-                    <rect x="7" y="7" width="10" height="10" rx="1.5" />
-                    <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
-                  </svg>
-                  digital compliance and AI solutions
-                </span>{" "}
-                for organisations across London and the UK.
+              {/*
+                Coverage wording follows the standing rule in lib/site.ts:
+                "London, the Home Counties, and the wider UK by arrangement"
+                — never an unrestricted UK-wide claim. The old hero said
+                "across London and the UK", which was the one place on the
+                site that broke it.
+              */}
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.82)" }}>
+                Independent professional advice for organisations that have to demonstrate
+                compliance, not just claim it. Site inspections, risk assessments and independent
+                audits across workplace, construction and industrial premises, alongside fire risk
+                assessments and fire strategies — carried out and reported by a chartered
+                practitioner, with prioritised recommendations, corrective actions tracked to
+                closure and ongoing support between visits. London, the Home Counties, and the
+                wider UK by arrangement.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-9 flex flex-wrap gap-4">
                 <Link
                   href="/services"
-                  className="inline-flex items-center rounded-full px-8 py-4 text-base font-bold text-white shadow-xl transition hover:-translate-y-0.5"
-                  style={{ background: "linear-gradient(135deg, #00c9a7, #00a889)" }}
+                  className="inline-flex items-center rounded-full bg-white px-8 py-4 text-base font-bold transition hover:bg-slate-100"
+                  style={{ color: "#0a1628" }}
                 >
                   View Services &rarr;
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur transition hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-8 py-4 text-base font-semibold text-white transition hover:bg-white/10"
                 >
                   {CTA_PRIMARY_LABEL}
                 </Link>
               </div>
 
-              <p className="mt-6 text-sm" style={{ color: "rgba(186,230,253,0.45)" }}>
-                Led by Batir Turakulov, Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health &amp; Safety Professional (CMIOSH), holding a Level 4 Diploma in Fire Risk Assessment and a Level 5 Diploma in Fire Engineering Design.
+              <p className="mt-8 max-w-2xl text-sm leading-relaxed" style={{ color: "rgba(186,230,253,0.55)" }}>
+                Led by Batir Turakulov, Chartered Health &amp; Safety Professional (CMIOSH) and
+                Member of the Institution of Fire Engineers (MIFireE), holding a Level 6 Diploma in
+                Applied Health and Safety, a Level 4 Diploma in Fire Risk Assessment and a Level 5
+                Diploma in Fire Engineering Design.
               </p>
 
-              {/*
-                Mobile/tablet version of the three hero-side cards (hidden on
-                lg: the desktop grid at line ~108 handles that breakpoint and
-                up, unchanged). Same three categories, more compact: tighter
-                padding, shorter body copy (title line only, no full
-                paragraph) so the hero doesn't get excessively long on a
-                phone. Digital card keeps its quieter styling and the
-                "Explore Lion Digital" link; the other two intentionally
-                have no link, matching the desktop cards.
-              */}
-              <div className="mt-8 grid grid-cols-1 gap-3 lg:hidden">
-                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(0,201,167,0.08)" }}>
-                  <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#00c9a7" }}>Fire Safety &amp; Fire Engineering</p>
-                  <p className="mt-1 text-sm font-semibold text-white">Fire Risk Assessments, Fire Engineering &amp; Fire Safety Consultancy</p>
-                </div>
-                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(255,255,255,0.04)" }}>
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-blue-200/60">Health &amp; Safety &amp; Construction Safety</p>
-                  <p className="mt-1 text-sm font-semibold text-white">Health &amp; Safety Consultancy &amp; Construction Health &amp; Safety</p>
-                </div>
-                <div className="rounded-xl border border-white/10 p-4" style={{ background: "rgba(0,201,167,0.05)" }}>
-                  <div className="flex items-center gap-1.5">
-                    <span
-                      className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full"
-                      style={{ background: "rgba(0,201,167,0.18)", color: "#5be3c0" }}
-                      aria-hidden
-                    >
-                      <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="7" y="7" width="10" height="10" rx="1.5" />
-                        <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
-                      </svg>
-                    </span>
-                    <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#5be3c0" }}>Digital Compliance &amp; AI Solutions</p>
-                  </div>
-                  <p className="mt-1 text-sm font-semibold text-white">AI, Automation &amp; Digital Compliance Platforms</p>
-                  <a
-                    href={LION_DIGITAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold transition hover:opacity-80"
-                    style={{ color: "#5be3c0" }}
-                  >
-                    Explore Lion Digital &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/*
-              Right — the two co-equal discipline pillars (repositioning
-              PR2). Previously the fire card named only Fire Engineering and
-              Fire Safety Consultancy — omitting Fire Risk Assessments, the
-              lead fire proposition since PR1 — while the H&S card had no
-              construction line at all. Both cards now name all of their
-              side's propositions explicitly, and the trailing credential
-              line that used to sit only under the H&S card has been removed
-              so neither card carries content the other lacks.
-            */}
-            <div className="hidden lg:grid grid-cols-1 gap-4">
-              <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.08)" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#00c9a7" }}>Fire Safety &amp; Fire Engineering</p>
-                <p className="text-white font-semibold text-lg">Fire Risk Assessments, Fire Engineering &amp; Fire Safety Consultancy</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Fire risk assessments informed by recognised guidance including PAS 79 where appropriate, building fire safety, fire strategies, passive and active fire protection, fire door inspections, compartmentation, and training.</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(255,255,255,0.04)" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3 text-blue-200/60">Health &amp; Safety &amp; Construction Safety</p>
-                <p className="text-white font-semibold text-lg">Health &amp; Safety Consultancy &amp; Construction Health &amp; Safety</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Risk assessments, audits, RAMS and construction phase plans, policies, and competent person support for businesses and construction clients — practical and proportionate.</p>
-              </div>
-
-              {/*
-                Third hero card for Lion Digital — deliberately the same
-                rounded-2xl/border/padding shape as the two discipline cards
-                above so it reads as part of the same card group, but kept
-                visually quieter (smaller icon-badge treatment, a muted
-                teal-tinted background rather than the brighter fire-card
-                tint, and a plain text link instead of the cards' bold
-                lead-in style) so Fire Safety / H&S stay the primary focus.
-              */}
-              <div className="rounded-2xl border border-white/10 p-6" style={{ background: "rgba(0,201,167,0.05)" }}>
-                <div className="mb-3 flex items-center gap-2">
-                  <span
-                    className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full"
-                    style={{ background: "rgba(0,201,167,0.18)", color: "#5be3c0" }}
-                    aria-hidden
-                  >
-                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="7" y="7" width="10" height="10" rx="1.5" />
-                      <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
-                    </svg>
-                  </span>
-                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5be3c0" }}>Digital Compliance &amp; AI Solutions</p>
-                </div>
-                <p className="text-white font-semibold text-lg">AI, Automation &amp; Digital Compliance Platforms</p>
-                <p className="mt-2 text-sm" style={{ color: "rgba(186,230,253,0.7)" }}>Bespoke compliance systems, workflow automation and AI-assisted business tools designed to improve efficiency, reporting and compliance.</p>
-                <a
-                  href={LION_DIGITAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-semibold transition hover:opacity-80"
-                  style={{ color: "#5be3c0" }}
-                >
-                  Explore Lion Digital &rarr;
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -247,7 +146,7 @@ export default function HomePage() {
       */}
       <div className="bg-slate-50 border-b border-slate-100 py-4 text-center">
         <p className="mx-auto max-w-3xl px-5 text-sm text-slate-500 sm:px-6">
-          Independent advice on fire safety, fire engineering, health &amp; safety and compliance — working across London, the Home Counties, and the wider UK by arrangement.
+          Independent advice on health &amp; safety, construction safety, fire risk assessments, fire engineering and ongoing compliance — working across London, the Home Counties, and the wider UK by arrangement.
         </p>
       </div>
 
@@ -267,10 +166,12 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Our Services</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
-              Two Disciplines, Five Services
+              Health &amp; Safety, Construction and Fire Safety Consultancy
             </h2>
             <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
-              Fire Safety &amp; Fire Engineering, and Health &amp; Safety &amp; Construction Safety — practical, proportionate consultancy from design-stage advice through to assessment and ongoing compliance management.
+              Nine services across workplace and construction health &amp; safety, specialist fire
+              safety, training and ongoing compliance — each with a page setting out exactly what is
+              and is not included.
             </p>
           </div>
           <div className="space-y-10 mb-10">
@@ -310,21 +211,18 @@ export default function HomePage() {
       {/* ── WHO WE HELP ── */}
       <WhoWeHelp />
 
-      {/* ── STATS ── */}
-      <section className="border-b border-slate-100 bg-slate-50 py-14">
-        <div className="mx-auto max-w-5xl px-5 sm:px-6">
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-4xl font-black" style={{ color: "#0a1628" }}>
-                  {s.value}{s.suffix}
-                </p>
-                <p className="mt-2 text-sm font-medium text-slate-500">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/*
+        ── STATS BAND REMOVED (1 November 2026) ──
+        It carried "10+ years' experience", "500+ assessments & inspections
+        completed", "9 sectors served" and "16 London areas covered". Three
+        of the four had no basis anywhere, and the sixteen-area figure was
+        contradicted by our own coverage data. See the note on STATS in
+        lib/site.ts.
+
+        Nothing invented replaces it. The credentials immediately below are
+        verifiable and do the same job honestly, which is why this band is
+        simply gone rather than refilled.
+      */}
 
       {/* ── ABOUT THE FOUNDER ── */}
       <AssessorSection />
@@ -333,12 +231,19 @@ export default function HomePage() {
       <section className="py-20 border-b border-slate-100">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Sectors We Serve</span>
+            {/*
+              Was "Trusted Across Nine Sectors". Both halves were a problem:
+              "Trusted" is unevidenced, and the count was a taxonomy total
+              presented as a record of delivery. Nine sector pages exist; that
+              is what this section now says.
+            */}
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-teal-700">Sectors</span>
             <h2 className="mt-3 text-3xl font-extrabold text-slate-800 sm:text-4xl">
-              Trusted Across Nine Sectors
+              Sectors We Support
             </h2>
             <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
-              Dedicated guidance for the sectors we&rsquo;re asked about most, and broad experience beyond them.
+              Guidance written for the sectors we are asked about most. Each one sets out the
+              hazards, duties and arrangements that apply to it.
             </p>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -496,7 +401,21 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-10 text-center">
+          {/*
+            AI named once, as an option, in the wording already agreed on the
+            service pages. It must not read as autonomous assessment: the
+            platform calculates from the client's own records and the
+            consultant remains the author of every finding.
+          */}
+          <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-slate-500">
+            AI-assisted compliance summaries are available as an option alongside these standard
+            functions. The figures come from your own records, and the AI writes only the
+            interpretation that accompanies them. It supports professional judgement rather than
+            replacing it: assessments, findings and recommendations remain the work of our
+            consultant.
+          </p>
+
+          <div className="mt-8 text-center">
             <Link
               href="/contact"
               className="inline-flex items-center whitespace-nowrap rounded-full border border-teal-600 px-7 py-3 text-sm font-semibold text-teal-700 transition hover:bg-teal-50"
@@ -560,25 +479,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="py-16 border-b border-slate-100">
-        <div className="mx-auto max-w-6xl px-5 sm:px-6">
-          <p className="mb-10 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-            What clients say
-          </p>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-5 border-t border-slate-100 pt-4">
-                  <p className="text-sm font-semibold text-slate-800">{t.name}</p>
-                  <p className="text-sm text-slate-500">{t.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/*
+        ── TESTIMONIALS REMOVED (1 November 2026) ──
+        Three quotes attributed only to job titles — "Portfolio Manager",
+        "Operations Director", "Project Lead" — with no record anywhere of
+        who said them or whether we have permission to publish them.
+        components/StatsBand.tsx already carried a note about "consented
+        client quotes" being the thing that was missing.
+
+        They are removed pending verification, and NOT replaced: a written
+        testimonial is either a real client's words or it is nothing.
+
+        The TESTIMONIALS array itself is left in lib/site.ts because
+        components/TestimonialGrid.tsx still renders it on the three
+        case-study detail pages. That is the same unverified content on a
+        different URL, and it is flagged for Batir rather than changed here,
+        since those pages are outside this homepage branch.
+      */}
 
       {/* ── FINAL CTA ── */}
       <section
@@ -597,7 +514,14 @@ export default function HomePage() {
             </span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: "rgba(186,230,253,0.75)" }}>
-            Get in touch for a clear, fixed-fee quote. We&rsquo;ll respond the same day and can usually book within the week.
+            {/*
+              Was "We'll respond the same day and can usually book within the
+              week." The FAQ deliberately hedges instead, and the homepage
+              should not promise more than the FAQ does. This is the FAQ's
+              own wording.
+            */}
+            Get in touch for a clear, fixed-fee quote. We aim to be responsive and will agree a
+            timescale with you up front.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link

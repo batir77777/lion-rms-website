@@ -56,9 +56,21 @@ before(() => {
 
 const FORBIDDEN = [/Principal Designer(?!s)/i, /Principal Contractor(?!s)/i];
 
-// The one known, approved occurrence of "Principal Contractor" on the site —
-// see the file header. Removed (all occurrences) before the forbidden-phrase
-// scan runs.
+// WAS the one known, approved occurrence of "Principal Contractor" on the
+// site: the client-sector label on the homepage's "RAMS & construction phase
+// plans" project card. That project was removed from RECENT_PROJECTS on
+// 1 November 2026 — it was the one homepage project with no case study behind
+// it — which took the label with it.
+//
+// The exclusion is therefore no longer needed, and the scan below no longer
+// strips anything: every built page is now checked against the forbidden
+// patterns with nothing carved out. That is strictly stronger than before.
+//
+// The constant stays, and the sanity check below is inverted to assert the
+// label is ABSENT. If it ever returns, that test fails and tells whoever
+// brought it back that the exclusion has to be reinstated deliberately —
+// which is the same protection the original check gave, pointing the other
+// way.
 const KNOWN_CLIENT_SECTOR_LABEL = "Construction · Principal Contractor";
 
 const builtPages = (dir = outDir, out = []) => {
@@ -85,17 +97,18 @@ describe("Lion RMS is never described as a CDM dutyholder", () => {
     );
   });
 
-  test("the known client-sector label still reads exactly as expected (exclusion sanity check)", () => {
-    // RECENT_PROJECTS (lib/site.ts), not OTHER_CASES — OTHER_CASES is
-    // confirmed elsewhere (tests/case-studies-cards.test.mjs) to never be
-    // rendered at all. RECENT_PROJECTS is its homepage-only, separately
-    // condensed twin, and IS rendered, on / only.
-    const homepage = builtPages().find((f) => f.endsWith(path.join("index.html")));
-    assert.ok(homepage, "index.html was not built");
-    const source = fs.readFileSync(homepage, "utf8");
-    assert.ok(
-      source.includes(KNOWN_CLIENT_SECTOR_LABEL),
-      `expected the known client-sector label "${KNOWN_CLIENT_SECTOR_LABEL}" on / — if its wording changed, update KNOWN_CLIENT_SECTOR_LABEL above to match`,
+  test("the known client-sector label is gone, so nothing is excluded from the scan", () => {
+    // Inverted on 1 November 2026 — see the note on KNOWN_CLIENT_SECTOR_LABEL.
+    // The label left the homepage with the project card that carried it, and
+    // the scan below no longer strips anything. If the label comes back, this
+    // fails and says what to do about it.
+    const offenders = pages
+      .filter((f) => fs.readFileSync(f, "utf8").includes(KNOWN_CLIENT_SECTOR_LABEL))
+      .map((f) => "/" + path.relative(outDir, f).replace(/\.html$/, ""));
+    assert.deepEqual(
+      offenders,
+      [],
+      `"${KNOWN_CLIENT_SECTOR_LABEL}" is back on ${offenders.join(", ")}. It describes a CLIENT, not Lion RMS, so it is legitimate — but the scan below now strips nothing, so reinstate the exclusion deliberately rather than weakening the patterns.`,
     );
   });
 
@@ -105,12 +118,11 @@ describe("Lion RMS is never described as a CDM dutyholder", () => {
       const source = fs.readFileSync(file, "utf8");
       // Visible body only — script/JSON-LD blocks stripped first, matching
       // the technique used elsewhere in this suite (service-architecture,
-      // site-quality) — then the one known, approved client-sector label is
-      // removed by exact string match before the forbidden-phrase scan.
-      const bodyOnly = source
-        .replace(/<script[^>]*>[\s\S]*?<\/script>/g, "")
-        .split(KNOWN_CLIENT_SECTOR_LABEL)
-        .join("");
+      // site-quality). Nothing else is carved out: the one approved
+      // client-sector label that used to be excluded here no longer exists
+      // on the site, so the forbidden patterns now apply to every word of
+      // every page.
+      const bodyOnly = source.replace(/<script[^>]*>[\s\S]*?<\/script>/g, "");
       for (const pattern of FORBIDDEN) {
         assert.equal(
           pattern.test(bodyOnly),
