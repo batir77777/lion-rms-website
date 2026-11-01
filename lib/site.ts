@@ -1738,7 +1738,12 @@ export const CREDENTIALS: string[] = [
 
 export const ASSESSOR = {
   name: "Batir Turakulov",
-  role: "Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH)",
+  // Reordered 1 November 2026 to lead with health & safety, matching the
+  // repositioning. Both credentials are unchanged and both still appear —
+  // only the order moves. This string renders as a visible line on /about,
+  // the homepage and all 54 Knowledge Centre pages (via lib/people.ts), and
+  // as jobTitle in both the Person and Organisation JSON-LD.
+  role: "Chartered Health & Safety Professional (CMIOSH) and Fire Engineer (MIFireE)",
   /**
    * Compact form of `role`, for places where the full form would be unwieldy —
    * currently the two portrait alt texts. `role` grew past 120 characters when
@@ -1747,21 +1752,40 @@ export const ASSESSOR = {
    * 125. Same credentials, same order, fewer words. Not a second source of
    * truth: nothing here is a claim that `role` does not already make.
    */
-  shortRole: "Fire Engineer (MIFireE) & Chartered Health & Safety Professional (CMIOSH)",
+  shortRole: "Chartered Health & Safety Professional (CMIOSH) & Fire Engineer (MIFireE)",
   photo: "/batir-turakulov.jpg",
   /*
-   * Deliberately NOT extended with the Level 6 Diploma or CSCS status
-   * (repositioning PR4). This string feeds both PersonJsonLd's description
-   * (About page only) and, via StructuredData.tsx, the sitewide
-   * ProfessionalService JSON-LD's founder.description — rendered on every
-   * page by the root layout. Naming the new credentials here would move
-   * every route's content hash for an invisible JSON-LD field, when the
-   * About page's own dedicated paragraph already states them visibly. The
-   * new credentials still reach structured data correctly: PersonJsonLd
-   * passes QUALIFICATIONS and PROFESSIONAL_CARDS into hasCredential
-   * independently of this bio string.
+   * THE MOST-RENDERED SENTENCE ON THE SITE. Read before editing.
+   *
+   * This string appears in three places: the credential card on /about, the
+   * founder description in the sitewide Organisation JSON-LD (every page),
+   * and the author and reviewer blocks on all 54 Knowledge Centre pages via
+   * lib/people.ts. Changing it moves every authored route's content hash and
+   * rewrites a visible paragraph on roughly seventy-eight built pages. That
+   * is why the Level 6 Diploma was previously kept out of it.
+   *
+   * Rewritten 1 November 2026, with that cost accepted deliberately. It now
+   * leads on chartered health & safety competence and names the Level 6
+   * Diploma, because leaving the most-rendered description of the practice
+   * fire-led would have undercut the repositioning everywhere except the
+   * homepage.
+   *
+   * Kept short on purpose. MIFSM, MIIRSM and AIEMA are real and stay in the
+   * credentials strip, which is where a reader looks for the full list — a
+   * biography that recites nine credentials reads as insecurity, not
+   * authority.
+   *
+   * THE DELIVERY SENTENCE. It used to read "Every assessment is personally
+   * undertaken by Batir". That is an absolute, and it contradicted copy
+   * published the same week on the training and construction pages, which
+   * say associates may be engaged where specifically arranged. It would also
+   * have become false on seventy-eight pages at once the first time an
+   * associate did any of the work. The replacement keeps the real promise —
+   * Batir does the work — without the absolute, and must not drift back.
+   * It does NOT say associates are employed or in regular use, because they
+   * are not.
    */
-  bio: "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in fire engineering, health & safety, fire risk assessments, fire safety consultancy, building fire safety and regulatory compliance across commercial, residential and complex premises. He holds a Level 5 Diploma in Fire Engineering Design and a Level 4 Diploma in Fire Risk Assessment. He provides pragmatic, proportionate consultancy, helping organisations manage risk, achieve compliance and protect people, property and business continuity. Every assessment is personally undertaken by Batir, ensuring clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
+  bio: "Batir Turakulov is a Chartered Health & Safety Professional (CMIOSH) and Fire Engineer (MIFireE), holding a Level 6 Diploma in Applied Health and Safety alongside Level 5 and Level 4 Diplomas in Fire Engineering Design and Fire Risk Assessment. He advises on workplace and construction health & safety, independent inspections and audits, CDM 2015 duties, manufacturing and industrial safety, and health & safety training, alongside fire risk assessments and fire strategies for commercial, residential and complex premises. Batir personally undertakes consultancy assignments, with suitably qualified associates engaged only where specifically agreed with the client in advance, so clients receive technically robust reports, practical recommendations and clear advice aligned with current UK legislation and recognised industry standards.",
   credentials: CREDENTIALS,
 };
 

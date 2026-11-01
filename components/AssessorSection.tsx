@@ -6,17 +6,21 @@ import Link from "next/link";
 import Reveal from "./Reveal";
 import { ASSESSOR } from "@/lib/site";
 
-// Homepage-only trim of the shared ASSESSOR.bio: the bio's opening clause
-// ("Batir Turakulov is a Fire Engineer, Member of the Institution of Fire
-// Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH),")
-// repeats ASSESSOR.role, shown immediately above it here. No content or
-// credibility information is removed — only the repeated opening clause —
-// and ASSESSOR.bio itself is untouched (About page, PersonJsonLd and
-// lib/people.ts all read the full original string).
+// Homepage-only trim of the shared ASSESSOR.bio: its opening clause names the
+// two headline credentials, which ASSESSOR.role already states immediately
+// above this paragraph on the homepage. Only that repeated clause is dropped —
+// no credibility information is lost, and ASSESSOR.bio itself is untouched
+// (/about, PersonJsonLd and lib/people.ts all read the full string).
+//
+// Updated 1 November 2026 to match the rewritten, health-&-safety-first bio.
+// The `startsWith` guard is the point of this construction: if the bio is
+// reworded again and the prefix stops matching, the homepage silently falls
+// back to the full string rather than rendering a mangled sentence. Keep that
+// guard — the trim is a nicety, the fallback is the safety net.
 const HOMEPAGE_BIO_PREFIX =
-  "Batir Turakulov is a Fire Engineer, Member of the Institution of Fire Engineers (MIFireE), and Chartered Health & Safety Professional (CMIOSH), specialising in";
+  "Batir Turakulov is a Chartered Health & Safety Professional (CMIOSH) and Fire Engineer (MIFireE), holding";
 const homepageBio = ASSESSOR.bio.startsWith(HOMEPAGE_BIO_PREFIX)
-  ? `Specialising in${ASSESSOR.bio.slice(HOMEPAGE_BIO_PREFIX.length)}`
+  ? `Holding${ASSESSOR.bio.slice(HOMEPAGE_BIO_PREFIX.length)}`
   : ASSESSOR.bio;
 
 export default function AssessorSection() {
