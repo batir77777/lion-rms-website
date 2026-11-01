@@ -282,7 +282,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-11-01",
     contentHash: "da106857fd92b81f",
-    source: "601ba29 \u2014 hero body and metadata no longer advertise fire door inspections or compartmentation surveys, and the Fire Safety Consultancy card summary is rewritten",
+    source: "67d1ec6 \u2014 the services grid now leads with health & safety, construction, audits and manufacturing, followed by the fire safety services",
   },
   "/services/fire-safety": {
     lastModified: "2026-11-01",
