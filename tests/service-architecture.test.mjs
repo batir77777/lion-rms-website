@@ -124,18 +124,27 @@ describe("/services/fire-safety#fire-safety-consultancy is a pointer, not a dead
     // site-wide, unrelated to this page's own rendered content — searching
     // the whole document would false-positive on that list, not catch the
     // defect this test exists for.
-    // The closing "Also available:" strip is excluded for the same reason as
-    // the JSON-LD above: it renders the TITLE of every sibling service
-    // category, site-wide boilerplate that cannot contain this page's item
-    // content. It became a false positive in November 2026, when
-    // /services/health-safety-training was added — its title, "Health &
-    // Safety and Fire Safety Training", contains the FSC item name "Fire
-    // Safety Training" as a substring, so a link to a different page tripped
-    // a test about duplicated content. The defect this test exists for — the
-    // pointer regrowing into a second copy of the moved section — would
-    // appear in the body ABOVE the strip, so narrowing the search here does
-    // not weaken it.
-    const bodyOnly = page
+    // Scope: this page's <main>, minus the closing "Also available:" strip.
+    //
+    // Everything excluded is site-wide chrome that renders identically on
+    // every page and so cannot be evidence that THIS page duplicates another:
+    // the <script> JSON-LD, whose `knowsAbout` list names "Compartmentation"
+    // site-wide; the header and footer, which since November 2026 include a
+    // Services menu listing every service by title; and the "Also available:"
+    // strip, which lists sibling category titles.
+    //
+    // Each of those has produced a false positive in turn, always the same
+    // way: a sibling page's TITLE contains an item name as a substring —
+    // "Health & Safety and Fire Safety Training" contains "Fire Safety
+    // Training" — so a link to a different page read as duplicated content.
+    //
+    // Narrowing to <main> is the general fix rather than another exclusion:
+    // the defect this test exists for is the pointer regrowing into a second
+    // copy of the moved section, and that can only appear in the page's own
+    // main content.
+    const main = page.slice(page.indexOf("<main"), page.lastIndexOf("</main>"));
+    assert.ok(main.length > 0, "no <main> element found on this page");
+    const bodyOnly = main
       .replace(/<script[^>]*>[\s\S]*?<\/script>/g, "")
       .split(">Also available:<")[0];
     const offenders = FSC_ITEM_NAMES.filter((name) => bodyOnly.includes(name));

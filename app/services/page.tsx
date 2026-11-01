@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import ProcessTimeline from "@/components/ProcessTimeline";
-import { SERVICE_CATEGORIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { SERVICES_IN_DISPLAY_ORDER, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default function ServicesPage() {
       <section className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-7 md:grid-cols-3">
-            {SERVICE_CATEGORIES.map((cat, i) => (
+            {SERVICES_IN_DISPLAY_ORDER.map((cat, i) => (
               <Reveal key={cat.slug} delay={i * 70}>
                 <Link
                   href={`/services/${cat.slug}`}

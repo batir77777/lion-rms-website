@@ -5,10 +5,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "@/components/Logo";
-import { NAV, SITE, CTA_PRIMARY_LABEL, LION_DIGITAL_URL } from "@/lib/site";
+import ServicesMenu from "@/components/ServicesMenu";
+import { NAV, SITE, CTA_PRIMARY_LABEL, LION_DIGITAL_URL, SERVICE_MENU } from "@/lib/site";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  // Mobile services disclosure. Collapses whenever the whole menu closes, so
+  // reopening the menu does not restore a half-expanded state.
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [spy, setSpy] = useState<string | null>(null);
   const pathname = usePathname();
@@ -23,6 +27,9 @@ export default function Header() {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) setServicesOpen(false);
+  }, [open]);
 
   // Close the mobile menu on Escape and return focus to the toggle button.
   useEffect(() => {
@@ -137,6 +144,17 @@ export default function Header() {
         <nav aria-label="Primary" className="hidden items-center gap-1 xl:flex">
           {NAV.map((n) => {
             const active = isActive(n.href);
+            /*
+             * Services becomes a dropdown rather than a plain link, because
+             * six of the nine service pages were reachable from the header
+             * only by landing on /services first and reading the grid. The
+             * NAV array is untouched: the footer's "Pages" column is driven
+             * by the same array, and the entry still points at /services for
+             * every other consumer — only the header renders it differently.
+             */
+            if (n.href === "/services") {
+              return <ServicesMenu key={n.href} active={active} />;
+            }
             return (
               <Link
                 key={n.href}
@@ -240,20 +258,97 @@ export default function Header() {
             className="overflow-hidden border-t border-slate-100 bg-white xl:hidden"
           >
             <nav aria-label="Mobile" className="mx-auto flex max-w-7xl flex-col px-4 py-2 sm:px-6">
-              {NAV.map((n) => (
-                <Link
-                  key={n.href}
-                  href={n.href}
-                  onClick={() => setOpen(false)}
-                  className={`border-b border-slate-100 py-3.5 text-[15px] font-medium ${
-                    isActive(n.href)
-                      ? "text-teal-700"
-                      : "text-slate-700 hover:text-teal-700"
-                  }`}
-                >
-                  {n.label}
-                </Link>
-              ))}
+              {NAV.map((n) => {
+                /*
+                 * Mobile equivalent of the desktop dropdown. The Services row
+                 * keeps its link to /services and gains a separate disclosure
+                 * button beside it, rather than becoming a button outright:
+                 * on a phone, tapping a nav item you recognise should still
+                 * take you to the page. The two targets are side by side and
+                 * each is a full-height tap target.
+                 */
+                if (n.href === "/services") {
+                  return (
+                    <div key={n.href} className="border-b border-slate-100">
+                      <div className="flex items-center justify-between">
+                        <Link
+                          href={n.href}
+                          onClick={() => setOpen(false)}
+                          className={`flex-1 py-3.5 text-[15px] font-medium ${
+                            isActive(n.href) ? "text-teal-700" : "text-slate-700 hover:text-teal-700"
+                          }`}
+                        >
+                          {n.label}
+                        </Link>
+                        <button
+                          type="button"
+                          aria-expanded={servicesOpen}
+                          aria-controls="mobile-services"
+                          aria-label={servicesOpen ? "Hide services" : "Show services"}
+                          onClick={() => setServicesOpen((v) => !v)}
+                          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-50 hover:text-navy-900"
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden
+                            className={`transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
+                        </button>
+                      </div>
+                      {/*
+                        Always rendered and `hidden` when collapsed, so
+                        aria-controls always resolves and the links inside
+                        cannot be tabbed into while the section is closed.
+                      */}
+                      <div id="mobile-services" hidden={!servicesOpen} className="pb-2">
+                        {SERVICE_MENU.map((group) => (
+                          <div key={group.label} className="mb-1">
+                            <p className="px-1 pb-1 pt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-teal-700">
+                              {group.label}
+                            </p>
+                            <ul>
+                              {group.items.map((item) => (
+                                <li key={item.href}>
+                                  <Link
+                                    href={item.href}
+                                    onClick={() => setOpen(false)}
+                                    className="block py-2.5 pl-3 pr-1 text-sm leading-snug text-slate-600 hover:text-teal-700"
+                                  >
+                                    {item.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={n.href}
+                    href={n.href}
+                    onClick={() => setOpen(false)}
+                    className={`border-b border-slate-100 py-3.5 text-[15px] font-medium ${
+                      isActive(n.href)
+                        ? "text-teal-700"
+                        : "text-slate-700 hover:text-teal-700"
+                    }`}
+                  >
+                    {n.label}
+                  </Link>
+                );
+              })}
               {/*
                * Same cross-link as the desktop right-side pill, and the same
                * reasoning for keeping it out of the NAV-driven list above it:

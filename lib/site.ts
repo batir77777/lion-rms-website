@@ -1360,6 +1360,104 @@ export function getCategory(slug: string): ServiceCategory | undefined {
   return SERVICE_CATEGORIES.find((c) => c.slug === slug);
 }
 
+/*
+ * ONE ORDERING, USED EVERYWHERE THE SERVICES ARE LISTED.
+ *
+ * SERVICE_CATEGORIES keeps its historical array order: several comments in
+ * it describe a category's position relative to its neighbours, and the
+ * carve-out notes rely on that reading order. Reordering the array itself
+ * would invalidate those and move a thousand lines for a presentational
+ * change.
+ *
+ * So presentation order lives here instead, as slugs. Health & safety and
+ * construction lead, fire safety follows as the specialism, compliance
+ * management closes. /services renders in this order and so does the
+ * "Also available:" strip on each service page, which is what stops the two
+ * disagreeing.
+ */
+const SERVICE_DISPLAY_ORDER = [
+  "health-safety",
+  "construction-health-safety",
+  "independent-health-safety-audits",
+  "manufacturing-industrial-safety",
+  "health-safety-training",
+  "fire-safety",
+  "fire-safety-consultancy",
+  "fire-engineering",
+  "compliance-support",
+] as const;
+
+/**
+ * SERVICE_CATEGORIES in presentation order.
+ *
+ * Throws rather than falling back if the two lists disagree. A tenth service
+ * added to SERVICE_CATEGORIES and not listed above would otherwise vanish
+ * from /services silently, which is exactly the kind of omission that left
+ * Independent Audits and Manufacturing out of the footer for weeks.
+ */
+export const SERVICES_IN_DISPLAY_ORDER: ServiceCategory[] = (() => {
+  const bySlug = new Map(SERVICE_CATEGORIES.map((c) => [c.slug, c]));
+  const ordered = SERVICE_DISPLAY_ORDER.map((slug) => {
+    const cat = bySlug.get(slug);
+    if (!cat) throw new Error(`SERVICE_DISPLAY_ORDER lists "${slug}", which is not a SERVICE_CATEGORIES slug.`);
+    return cat;
+  });
+  if (ordered.length !== SERVICE_CATEGORIES.length) {
+    const missing = SERVICE_CATEGORIES.filter((c) => !SERVICE_DISPLAY_ORDER.includes(c.slug as (typeof SERVICE_DISPLAY_ORDER)[number]));
+    throw new Error(`SERVICE_DISPLAY_ORDER is missing: ${missing.map((c) => c.slug).join(", ")}`);
+  }
+  return ordered;
+})();
+
+export interface ServiceMenuGroup {
+  label: string;
+  items: { label: string; href: string }[];
+}
+
+/**
+ * The grouped Services menu, for the header dropdown and its mobile
+ * equivalent. Labels are read from the categories rather than retyped, so a
+ * renamed page renames its menu entry too.
+ *
+ * Fire Risk Assessments is listed as its own entry pointing at the section
+ * anchor, not folded into Fire Safety Consultancy: it is the strongest
+ * commercial term on the site and a visitor looking for it should not have
+ * to guess which page it lives on. Same treatment it already gets in the
+ * footer and the homepage cards.
+ */
+export const SERVICE_MENU: ServiceMenuGroup[] = (() => {
+  const get = (slug: string) => SERVICE_CATEGORIES.find((c) => c.slug === slug);
+  const fireSafety = get("fire-safety");
+  const fra = fireSafety?.sections?.find((sec) => sec.id === "fire-risk-assessments");
+  const entry = (slug: string) => {
+    const cat = get(slug);
+    return cat ? { label: cat.title, href: `/services/${cat.slug}` } : null;
+  };
+  const keep = (x: { label: string; href: string } | null): x is { label: string; href: string } => Boolean(x);
+
+  return [
+    {
+      label: "Health & Safety",
+      items: [
+        entry("health-safety"),
+        entry("construction-health-safety"),
+        entry("independent-health-safety-audits"),
+        entry("manufacturing-industrial-safety"),
+        entry("health-safety-training"),
+        entry("compliance-support"),
+      ].filter(keep),
+    },
+    {
+      label: "Fire Safety",
+      items: [
+        fra ? { label: fra.title, href: `/services/fire-safety#${fra.id}` } : null,
+        entry("fire-safety-consultancy"),
+        entry("fire-engineering"),
+      ].filter(keep),
+    },
+  ];
+})();
+
 /**
  * The footer's Services column (repositioning PR1). Hand-ordered rather than
  * derived by flatMap over `SERVICE_CATEGORIES`, because a category's
@@ -1387,20 +1485,32 @@ export const FOOTER_SERVICE_LINKS: { label: string; href: string }[] = (() => {
   const fsc = SERVICE_CATEGORIES.find((c) => c.slug === "fire-safety-consultancy");
   const healthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety");
   const constructionHealthSafety = SERVICE_CATEGORIES.find((c) => c.slug === "construction-health-safety");
+  const audits = SERVICE_CATEGORIES.find((c) => c.slug === "independent-health-safety-audits");
+  const manufacturing = SERVICE_CATEGORIES.find((c) => c.slug === "manufacturing-industrial-safety");
   const training = SERVICE_CATEGORIES.find((c) => c.slug === "health-safety-training");
   const complianceSupport = SERVICE_CATEGORIES.find((c) => c.slug === "compliance-support");
 
+  /*
+   * Reordered November 2026 to put health & safety first, matching the
+   * homepage, the Services index and the header menu — the footer was the
+   * last place still leading with fire. Independent Audits and Manufacturing
+   * & Industrial Safety join it: both have had published pages for weeks and
+   * neither was reachable from the footer, which is the one navigation
+   * element present on every page.
+   *
+   * Fire Risk Assessments stays an explicit entry, not folded into a Fire
+   * Safety link, because it is the strongest commercial term on the site and
+   * the anchor it points at is the page's lead section.
+   */
   const links = [
-    fra && { label: fra.title, href: `/services/fire-safety#${fra.id}` },
-    fireEngineering && { label: fireEngineering.title, href: `/services/${fireEngineering.slug}` },
-    fsc && { label: fsc.title, href: `/services/${fsc.slug}` },
     healthSafety && { label: healthSafety.title, href: `/services/${healthSafety.slug}` },
     constructionHealthSafety && { label: constructionHealthSafety.title, href: `/services/${constructionHealthSafety.slug}` },
-    // Added November 2026. Sits after the construction entry because that is
-    // where the training content came from, and before compliance support,
-    // which closes the list. The label is read from the category, so it
-    // cannot drift from the page title.
+    audits && { label: audits.title, href: `/services/${audits.slug}` },
+    manufacturing && { label: manufacturing.title, href: `/services/${manufacturing.slug}` },
     training && { label: training.title, href: `/services/${training.slug}` },
+    fra && { label: fra.title, href: `/services/fire-safety#${fra.id}` },
+    fsc && { label: fsc.title, href: `/services/${fsc.slug}` },
+    fireEngineering && { label: fireEngineering.title, href: `/services/${fireEngineering.slug}` },
     complianceSupport && { label: complianceSupport.title, href: `/services/${complianceSupport.slug}` },
   ].filter((l): l is { label: string; href: string } => Boolean(l));
 

@@ -7,7 +7,7 @@ import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import ServiceCheckCTA from "@/components/ServiceCheckCTA";
 import RelatedContent from "@/components/RelatedContent";
 import RiskCards from "@/components/RiskCards";
-import { SERVICE_CATEGORIES, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
+import { SERVICE_CATEGORIES, SERVICES_IN_DISPLAY_ORDER, SITE, SITE_URL, getCategory, COVERAGE_COUNTIES, CTA_PRIMARY_LABEL, CTA_SECONDARY_LABEL, CTA_SECONDARY_HREF } from "@/lib/site";
 import { getCaseStudiesForService } from "@/lib/case-studies";
 import { getGuidesForService } from "@/lib/guides";
 import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
@@ -228,8 +228,13 @@ export default async function ServiceDetailPage({
 
           {/* Other services */}
           <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+            {/*
+              Rendered in SERVICES_IN_DISPLAY_ORDER, not array order, so this
+              strip agrees with /services and the header menu instead of
+              presenting a third sequence. Same set of links either way.
+            */}
             <p className="text-sm font-medium text-slate-500">Also available:</p>
-            {SERVICE_CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => (
+            {SERVICES_IN_DISPLAY_ORDER.filter((c) => c.slug !== cat.slug).map((c) => (
               <Link
                 key={c.slug}
                 href={`/services/${c.slug}`}
