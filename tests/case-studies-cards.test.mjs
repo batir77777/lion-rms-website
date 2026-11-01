@@ -200,15 +200,21 @@ describe("Structured data and dates", () => {
     // /sectors/industrial-warehousing and
     // /services/manufacturing-industrial-safety are brand new authored
     // routes with no prior date to have kept, and are likewise absent.
+    //
+    // The three case-study DETAIL pages left this list on 1 November 2026.
+    // TestimonialGrid was unmounted from CaseStudyDetail, so all three lost a
+    // visible section — three quotes attributed to job titles only, with no
+    // record of consent to publish — and the mixed-use study's outcome was
+    // softened: it no longer claims the fire strategy "unlocked" planning
+    // approval. Both are changes a reader would notice, so their dates
+    // legitimately moved. What this test still guards is that THAT change did
+    // not drag anything else with it.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const DATES = {
       "/services/compliance-support": "2026-07-29",
       "/sectors/residential-blocks-hmos": "2026-07-29",
       "/sectors/offices-commercial-workplaces": "2026-07-29",
       "/sectors/education": "2026-07-29",
-      "/case-studies/residential-portfolio-fire-risk-assessment": "2026-08-01",
-      "/case-studies/mixed-use-fire-strategy-change-of-use": "2026-08-01",
-      "/case-studies/multi-site-commercial-compliance-management": "2026-08-01",
       "/faq": "2026-08-01",
       "/check": "2026-08-01",
     };
@@ -216,17 +222,21 @@ describe("Structured data and dates", () => {
       .filter(([route, date]) => AUTHORED_PAGE_DATES[route].lastModified !== date)
       .map(([route]) => route);
     assert.deepEqual(drifted, []);
-    assert.equal(Object.keys(DATES).length, 9);
+    assert.equal(Object.keys(DATES).length, 6);
   });
 
-  test("the three detail pages keep their own dates", async () => {
+  test("the three detail pages share one date, whatever it is", async () => {
+    // Was pinned at 2026-08-01. The three pages changed together on
+    // 1 November 2026 when TestimonialGrid was unmounted, so a fixed date no
+    // longer says anything true. What is still worth asserting is that they
+    // move TOGETHER: they render the same component, so one drifting alone
+    // means someone edited a detail page by hand without the others.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
-    for (const c of CASE_STUDIES) {
-      assert.equal(
-        AUTHORED_PAGE_DATES[`/case-studies/${c.slug}`].lastModified,
-        "2026-08-01",
-        `${c.slug}: a detail page date moved, which this change must not do`
-      );
-    }
+    const dates = CASE_STUDIES.map((c) => AUTHORED_PAGE_DATES[`/case-studies/${c.slug}`].lastModified);
+    assert.equal(
+      new Set(dates).size,
+      1,
+      `case-study detail dates have diverged: ${dates.join(", ")}`
+    );
   });
 });

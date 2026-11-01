@@ -42,9 +42,20 @@ const html = (route) => {
 // off /services/fire-safety in PR3 — used below as a duplicate-content guard,
 // so the pointer block can never silently regrow into a second copy of the
 // section it replaced.
+// Updated 1 November 2026. "Fire Door Inspections" and "Compartmentation"
+// left this list because they left the site: both described a standalone
+// survey, and both services are paused. They are replaced on the Fire Safety
+// Consultancy page by a single item describing the visual observation that
+// happens inside a fire risk assessment.
+//
+// The duplicate-content guard this list feeds is unaffected — it only needs
+// names unique to the Fire Safety Consultancy content, and these three still
+// are. "Compartmentation" could not have stayed in any case: it is a
+// legitimate fire-engineering design term appearing on
+// /services/fire-engineering, so keeping it would have made the guard fire on
+// correct copy once the standalone service was gone.
 const FSC_ITEM_NAMES = [
-  "Fire Door Inspections",
-  "Compartmentation",
+  "Fire Doors and Compartmentation Within an Assessment",
   "Fire Safety Training",
   "Advice for Landlords, Duty Holders",
 ];
@@ -101,7 +112,7 @@ describe("/services/fire-safety#fire-safety-consultancy is a pointer, not a dead
     assert.match(page, /href="\/services\/fire-safety-consultancy"/, "no link to /services/fire-safety-consultancy found");
   });
 
-  test("none of the five original item names are duplicated here", () => {
+  test("none of the item names unique to this page are duplicated here", () => {
     // The defect this guards against: the pointer regrowing into a second
     // copy of the section that moved to /services/fire-safety-consultancy,
     // which would make the two pages near-duplicates.
@@ -154,7 +165,7 @@ describe("/services/fire-safety-consultancy is a real, separate, indexable page"
     assert.match(title, /^Fire Safety Consultancy/, `title does not lead with Fire Safety Consultancy: "${title}"`);
   });
 
-  test("all five original items are present in full", () => {
+  test("every item unique to this page is present in full", () => {
     for (const name of FSC_ITEM_NAMES) {
       assert.ok(page.includes(name), `expected "${name}" on the dedicated page, not found`);
     }

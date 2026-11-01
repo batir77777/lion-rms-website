@@ -11,19 +11,19 @@ import { DEFAULT_OG_IMAGE } from "@/lib/content-jsonld";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
+    "Health & safety consultancy, construction health & safety and CDM advisory, independent inspections and audits, manufacturing and industrial safety, training, fire risk assessments, fire strategies and fire engineering from Lion RMS.",
   alternates: { canonical: "/services" },
   openGraph: {
     type: "website",
     title: "Services",
-    description: "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
+    description: "Health & safety consultancy, construction health & safety and CDM advisory, independent inspections and audits, manufacturing and industrial safety, training, fire risk assessments, fire strategies and fire engineering from Lion RMS.",
     url: "/services",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Services",
-    description: "Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training from Lion RMS.",
+    description: "Health & safety consultancy, construction health & safety and CDM advisory, independent inspections and audits, manufacturing and industrial safety, training, fire risk assessments, fire strategies and fire engineering from Lion RMS.",
     images: [DEFAULT_OG_IMAGE],
   },
 };
@@ -35,7 +35,7 @@ export default function ServicesPage() {
       <PhotoHero
         eyebrow="Services"
         title="Fire engineering, health & safety and fire risk assessment services"
-        body="Fire engineering consultancy, fire risk assessments, fire safety consultancy, fire strategies, fire door inspections, compartmentation, health & safety consultancy and training — practical, proportionate advice for landlords, managing agents, businesses, and developers."
+        body="Health & safety consultancy, construction health & safety and CDM advisory, independent inspections and audits, manufacturing and industrial safety, training, fire risk assessments, fire strategies and fire engineering — practical, proportionate advice for landlords, managing agents, businesses, contractors and developers."
       />
 
       <section className="bg-white py-20">

@@ -186,7 +186,13 @@ export default function ContactForm() {
             <option value="">Select…</option>
             <option value="fire-risk-assessment">Fire Risk Assessment</option>
             <option value="fire-strategy">Fire Strategy</option>
-            <option value="fire-door-inspection">Fire Door Inspection</option>
+            {/*
+              The "Fire Door Inspection" option was removed on 1 November
+              2026: offering it in the enquiry form is advertising a service
+              that is paused. Someone who wants fire doors looked at can
+              choose Fire Risk Assessment, which includes visual observation
+              of them, or Other.
+            */}
             <option value="fire-training">Fire Safety Training</option>
             <option value="health-safety">Health &amp; Safety Support</option>
             <option value="training">Health &amp; Safety Training</option>

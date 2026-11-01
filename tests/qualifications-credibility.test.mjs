@@ -65,11 +65,19 @@ describe("the data model holds only what was verified, and nothing else", () => 
     }
   });
 
-  test("PROFESSIONAL_CARDS carries CSCS, category exactly as printed on the card", async () => {
+  test("PROFESSIONAL_CARDS is empty while the CSCS card awaits confirmation", async () => {
+    // Inverted 1 November 2026. The CSCS Professionally Qualified Person card
+    // was pulled from the public site — homepage chips, About page and Person
+    // JSON-LD — because its CURRENT validity has not been confirmed, and a
+    // professional card is a claim about today.
+    //
+    // This test used to pin the card's presence and wording. It now pins its
+    // ABSENCE, so the credential cannot drift back by accident. When the card
+    // is confirmed in date, restore the entry in lib/site.ts and restore this
+    // test to its previous form in the same change — the wording to use is
+    // kept in CSCS_WORDING above.
     const { PROFESSIONAL_CARDS } = await import("../lib/site.ts");
-    assert.equal(PROFESSIONAL_CARDS.length, 1);
-    assert.equal(PROFESSIONAL_CARDS[0].abbr, "CSCS");
-    assert.equal(PROFESSIONAL_CARDS[0].status, "Professionally Qualified Person");
+    assert.deepEqual(PROFESSIONAL_CARDS, []);
   });
 
   test("every ProfessionalCard entry has only abbr, status and fullName — no expiry or number", async () => {
@@ -87,17 +95,18 @@ describe("the data model holds only what was verified, and nothing else", () => 
     );
   });
 
-  test("CREDENTIALS renders the CSCS card as exactly the owner's specified wording", async () => {
+  test("CREDENTIALS does not render a CSCS card while it awaits confirmation", async () => {
     const { CREDENTIALS } = await import("../lib/site.ts");
-    assert.ok(
+    assert.equal(
       CREDENTIALS.includes(CSCS_WORDING),
-      `CREDENTIALS does not contain the exact string "${CSCS_WORDING}"`
+      false,
+      `CREDENTIALS still carries "${CSCS_WORDING}" — see the note on PROFESSIONAL_CARDS above`
     );
   });
 });
 
-describe("Person JSON-LD carries the new credentials, and nothing more than that", () => {
-  test("hasCredential includes exactly one Professional Card entry, named correctly", async () => {
+describe("Person JSON-LD carries the verified credentials, and nothing more than that", () => {
+  test("hasCredential carries no Professional Card entry while CSCS is unconfirmed", async () => {
     const { ASSESSOR, MEMBERSHIPS, QUALIFICATIONS, PROFESSIONAL_CARDS, SITE } = await import("../lib/site.ts");
     const { buildPersonProfileSchema } = await import("../lib/content-jsonld.ts");
     const schema = buildPersonProfileSchema({
@@ -110,9 +119,12 @@ describe("Person JSON-LD carries the new credentials, and nothing more than that
       qualifications: QUALIFICATIONS,
       professionalCards: PROFESSIONAL_CARDS,
     });
+    // No Professional Card is published while the CSCS card awaits
+    // confirmation of current validity — see PROFESSIONAL_CARDS above. The
+    // qualifications assertion below is the part that must keep passing
+    // either way.
     const cards = schema.hasCredential.filter((c) => c.credentialCategory === "Professional Card");
-    assert.equal(cards.length, 1);
-    assert.equal(cards[0].name, "Construction Skills Certification Scheme (CSCS) — Professionally Qualified Person");
+    assert.deepEqual(cards, []);
 
     const quals = schema.hasCredential.filter((c) => c.credentialCategory === "Qualification");
     assert.ok(quals.some((q) => q.name === NCRQ_TITLE));

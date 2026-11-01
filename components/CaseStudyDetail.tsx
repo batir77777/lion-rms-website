@@ -113,7 +113,15 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
       </div>
     </section>
 
-    <TestimonialGrid />
+    {/*
+      TestimonialGrid unmounted 1 November 2026, with the same three quotes
+      coming off the homepage. They are attributed to job titles only, with
+      no record of who said them or whether we have permission to publish.
+      Unverified on a case-study page is unverified anywhere.
+
+      Not replaced. The import and the component are left in place so this is
+      one line to restore once there are consented quotes to show.
+    */}
 
     <section className="bg-white py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">

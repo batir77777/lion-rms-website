@@ -379,7 +379,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         id: "fire-safety-consultancy",
         eyebrow: "Also Available",
         title: "Fire Safety Consultancy",
-        body: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+        body: "Fire safety advice and support for buildings already in use — fire risk assessments, training, and day-to-day guidance for landlords, duty holders and Responsible Persons.",
         href: "/services/fire-safety-consultancy",
         linkLabel: "View Fire Safety Consultancy",
       },
@@ -425,17 +425,34 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     imageAlt: "Consultant inspecting a fire door closer in a commercial corridor, holding a tablet",
     eyebrow: "Fire Safety",
     title: "Fire Safety Consultancy",
-    short: "Fire safety advice and support for buildings already in use — door inspections, compartmentation, training and day-to-day duty-holder guidance.",
+    // PAUSED SERVICES — 1 November 2026. This sentence named "door
+    // inspections" and "compartmentation" as separately available services.
+    // Both are paused. What remains true is that a fire risk assessment
+    // includes visual observation of fire doors and compartmentation, which
+    // is how the page now describes it. Do not reinstate either as a
+    // standalone offer without Batir saying so.
+    short: "Fire safety advice and support for buildings already in use — fire risk assessments, training, and day-to-day guidance for landlords, duty holders and Responsible Persons.",
     // Reused verbatim from the sentence that used to introduce this content on
     // /services/fire-safety (repositioning PR1), minus its leading "Alongside
     // assessment, we provide" clause — that clause described this content's
     // relationship to Fire Risk Assessments from the FRA page's point of view,
     // which no longer applies now this is its own page.
-    intro: "Ongoing fire safety consultancy for buildings already in use — fire door inspections, compartmentation surveys, training, and clear advice for landlords, duty holders and Responsible Persons.",
+    intro: "Ongoing fire safety consultancy for buildings already in use — fire risk assessments, practical training, and clear advice for landlords, duty holders and Responsible Persons on what the law asks of them and what to do about it.",
     items: [
       { name: "Fire Safety Consultancy", desc: "Specialist fire safety advice for duty holders, building owners and managing agents — fire safety management arrangements, regulatory interpretation, remedial strategy and ongoing compliance support." },
-      { name: "Fire Door Inspections", desc: "Inspection of fire doors and their hardware against current standards, with a clear schedule of defects and remedial priorities." },
-      { name: "Compartmentation", desc: "Survey and review of compartmentation and fire-stopping to identify breaches that could compromise the building's passive fire protection." },
+      // Replaced the "Fire Door Inspections" and "Compartmentation" items on
+      // 1 November 2026. Both described a standalone survey — a dedicated
+      // inspection "against current standards", and a "survey and review ...
+      // to identify breaches". Those services are paused.
+      //
+      // What is left is what a non-intrusive fire risk assessment actually
+      // involves, written so it cannot be read as more than it is: we look,
+      // from what is accessible, and we report what we saw. No specialist
+      // verification, no certification, no opening up, no standalone survey.
+      // Keep "observation" and "report what we see" as the operative words;
+      // never "inspect against", "verify", "certify", "survey" or "confirm
+      // compliance".
+      { name: "Fire Doors and Compartmentation Within an Assessment", desc: "A fire risk assessment includes visual observation of fire doors and the compartmentation we can see — doors, their condition and obvious defects, and visible breaches in walls and ceilings where they are accessible. We report what we observe and say where a specialist inspection or intrusive investigation is needed. We do not currently offer dedicated fire door or compartmentation surveys, and we do not verify or certify either." },
       { name: "Fire Safety Training", desc: "Practical training for staff, managers, and fire marshals covering prevention, evacuation, equipment use, and legal responsibilities — delivered on-site." },
       { name: "Advice for Landlords, Duty Holders & Responsible Persons", desc: "Straightforward guidance on your legal duties so you can make informed, compliant decisions about your premises." },
     ],
@@ -1683,13 +1700,24 @@ export interface ProfessionalCard {
 // number or registration/candidate number is stored here or anywhere else in
 // the codebase — none of that is ever rendered publicly or in structured
 // data.
-export const PROFESSIONAL_CARDS: ProfessionalCard[] = [
-  {
-    abbr: "CSCS",
-    status: "Professionally Qualified Person",
-    fullName: "Construction Skills Certification Scheme (CSCS) — Professionally Qualified Person",
-  },
-];
+/*
+ * EMPTIED 1 November 2026, temporarily, on the owner's instruction.
+ *
+ * This held the CSCS Professionally Qualified Person card. The card's
+ * CURRENT VALIDITY has not been confirmed, and a professional card is a
+ * statement about today, not about the past — so it comes off the homepage,
+ * the About page and the Person JSON-LD until it is checked.
+ *
+ * This is a pause, not a deletion: the wording above is the owner's own
+ * specified form and is kept here so reinstating it is a one-line change
+ * once the card is confirmed in date. Nothing else about the credential —
+ * expiry, card number, registration or candidate number — is stored here or
+ * anywhere else, and that does not change on reinstatement.
+ *
+ * The memberships and diplomas are untouched. CMIOSH and MIFireE in
+ * particular are verified and stay exactly as they are.
+ */
+export const PROFESSIONAL_CARDS: ProfessionalCard[] = [];
 
 export interface Assurance {
   name: string;

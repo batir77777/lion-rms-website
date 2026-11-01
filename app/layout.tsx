@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Lion Risk Management Solutions",
   },
   description:
-    "Fire engineering, health & safety and fire risk assessment consultancy across London and the Home Counties. Fire strategies, fire door inspections, compartmentation, H&S consultancy and training. Led by a Fire Engineer (MIFireE) and CMIOSH Chartered health & safety professional.",
+    "Health & safety, construction safety and fire safety consultancy across London and the Home Counties. Site inspections, independent audits, CDM 2015 advisory support, fire risk assessments, fire strategies and training. Led by a CMIOSH Chartered health & safety professional and Fire Engineer (MIFireE).",
   keywords: [
     "fire risk assessment London",
     "fire engineer London",
@@ -35,8 +35,6 @@ export const metadata: Metadata = {
     "fire safety consultancy",
     "health and safety consultant",
     "fire strategy",
-    "fire door inspection",
-    "compartmentation survey",
     "RAMS",
     "compliance management",
   ],

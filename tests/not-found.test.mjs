@@ -220,10 +220,10 @@ describe("The 404 stays out of the sitemap and out of search", () => {
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
       "/": ["2026-11-01", "69f2f09fc6bd42c7"],
-      "/about": ["2026-08-10", "db71ca5e72932b21"],
+      "/about": ["2026-11-01", "db71ca5e72932b21"],
       "/services": ["2026-11-01", "1e71dac263a7cb30"],
-      "/services/fire-safety": ["2026-08-10", "aadc06ecdf3bbee3"],
-      "/services/fire-safety-consultancy": ["2026-08-10", "2f82c597aa98838a"],
+      "/services/fire-safety": ["2026-11-01", "aadc06ecdf3bbee3"],
+      "/services/fire-safety-consultancy": ["2026-11-01", "2f82c597aa98838a"],
       "/services/fire-engineering": ["2026-08-09", "5959b217298114a1"],
       "/services/health-safety": ["2026-10-31", "9fea88645a51344e"],
       "/services/construction-health-safety": ["2026-11-01", "5f8e7097d52075f5"],
@@ -237,12 +237,12 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/sectors/education": ["2026-07-29", "b06f46fd19b5d726"],
       "/sectors/industrial-warehousing": ["2026-10-31", "31ed994f428632f7"],
       "/case-studies": ["2026-08-08", "0e4628d435cc30c6"],
-      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-08-01", "1ba8ee439292b9a5"],
-      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-08-01", "1c9b89055a41a8a5"],
-      "/case-studies/multi-site-commercial-compliance-management": ["2026-08-01", "ecfc90b97987ab82"],
+      "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-11-01", "1ba8ee439292b9a5"],
+      "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-11-01", "1c9b89055a41a8a5"],
+      "/case-studies/multi-site-commercial-compliance-management": ["2026-11-01", "ecfc90b97987ab82"],
       "/faq": ["2026-08-01", "d175664bfc7dbd21"],
       "/check": ["2026-08-01", "7732dcbe04056131"],
-      "/contact": ["2026-08-10", "566ec34df9029118"],
+      "/contact": ["2026-11-01", "566ec34df9029118"],
     };
     assert.equal(Object.keys(EXPECTED).length, 24);
     assert.equal(AUTHORED_ROUTES.length, 24);

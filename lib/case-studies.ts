@@ -120,8 +120,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Construction detail requirements identified early, before they became a design or cost problem later in the project",
       "A strategy document structured so it could be referenced directly in the Building Regulations submission",
     ],
+    // Softened 1 November 2026. It previously said the strategy "unlocked"
+    // the application — an asserted causal result. What we can stand behind
+    // is the document we produced and that the application proceeded; a
+    // planning decision turns on far more than our strategy, and claiming
+    // otherwise is a claim about someone else's decision, not our work.
     outcome:
-      "The fire strategy unlocked the change-of-use planning application, with the evacuation principles and construction details accepted without a further round of planning queries.",
+      "The fire strategy set out the evacuation principles and construction details for the change-of-use application, and the application proceeded without a further round of fire safety queries.",
     servicesProvided: ["fire-safety"],
     relatedSectors: ["mixed-use-developments", "construction-developers"],
     relatedServices: ["fire-safety"],
