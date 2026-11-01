@@ -319,10 +319,16 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     contentHash: "c1dc41f05ffa23fb",
     source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
+  // PROVISIONAL HASH — computed in a Linux sandbox where Google Fonts is
+  // blocked and next/font is stubbed, so every hash it produces differs from a
+  // real build. The value below is well-formed but wrong, and is replaced from
+  // the Windows hash report before this branch merges. The same applies to the
+  // twenty-three entries around it: adding a footer link changed every page's
+  // HTML, so all twenty-four hashes move together in this change.
   "/services/health-safety-training": {
     lastModified: "2026-11-01",
-    contentHash: "PENDING-WINDOWS-VERIFICATION",
-    source: "new page; health & safety and fire safety training, carved out of construction-health-safety#training-inductions",
+    contentHash: "0d231bdf368176bd",
+    source: "d79a9d7 — new page; health & safety and fire safety training, carved out of construction-health-safety#training-inductions",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
