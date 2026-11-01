@@ -236,7 +236,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/sectors/offices-commercial-workplaces": ["2026-07-29", "aae3e3c78c3f67f3"],
       "/sectors/education": ["2026-07-29", "b06f46fd19b5d726"],
       "/sectors/industrial-warehousing": ["2026-10-31", "31ed994f428632f7"],
-      "/case-studies": ["2026-08-08", "0e4628d435cc30c6"],
+      "/case-studies": ["2026-11-01", "0e4628d435cc30c6"],
       "/case-studies/residential-portfolio-fire-risk-assessment": ["2026-11-01", "1ba8ee439292b9a5"],
       "/case-studies/mixed-use-fire-strategy-change-of-use": ["2026-11-01", "1c9b89055a41a8a5"],
       "/case-studies/multi-site-commercial-compliance-management": ["2026-11-01", "ecfc90b97987ab82"],

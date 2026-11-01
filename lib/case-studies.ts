@@ -91,7 +91,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     sectorLabel: "Mixed-use · Developer",
     sectorSlug: "mixed-use-developments",
     excerpt:
-      "A bespoke fire strategy supporting a change-of-use planning application, setting out evacuation principles and construction details for Building Regulations compliance — unlocking planning approval without further queries.",
+      // Same softening as the `outcome` below — this `summary` carried the
+      // identical causal claim and renders on the case-studies index and in
+      // the page's own metadata, so changing only one of the two would have
+      // left it live in both places.
+      "A bespoke fire strategy supporting a change-of-use planning application, setting out evacuation principles and construction details for Building Regulations compliance, with the application proceeding without a further round of fire safety queries.",
     tags: ["Fire Strategy", "Building Regs", "Planning"],
     keyFacts: {
       sector: "Mixed-use & change of use developments",

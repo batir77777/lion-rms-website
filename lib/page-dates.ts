@@ -277,22 +277,22 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/about": {
     lastModified: "2026-11-01",
     contentHash: "db71ca5e72932b21",
-    source: "HEADSHA \u2014 the CSCS Professionally Qualified Person claim removed from the Competence card and the biography pending confirmation of the card's current validity",
+    source: "601ba29 \u2014 the CSCS Professionally Qualified Person claim removed from the Competence card and the biography pending confirmation of the card's current validity",
   },
   "/services": {
     lastModified: "2026-11-01",
     contentHash: "1e71dac263a7cb30",
-    source: "HEADSHA \u2014 hero body and metadata no longer advertise fire door inspections or compartmentation surveys, and the Fire Safety Consultancy card summary is rewritten",
+    source: "601ba29 \u2014 hero body and metadata no longer advertise fire door inspections or compartmentation surveys, and the Fire Safety Consultancy card summary is rewritten",
   },
   "/services/fire-safety": {
     lastModified: "2026-11-01",
     contentHash: "aadc06ecdf3bbee3",
-    source: "HEADSHA \u2014 the Fire Safety Consultancy pointer no longer advertises door inspections or compartmentation",
+    source: "601ba29 \u2014 the Fire Safety Consultancy pointer no longer advertises door inspections or compartmentation",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-11-01",
     contentHash: "2f82c597aa98838a",
-    source: "HEADSHA \u2014 the Fire Door Inspections and Compartmentation items replaced by one describing visual observation within a fire risk assessment; both standalone surveys are paused",
+    source: "601ba29 \u2014 the Fire Door Inspections and Compartmentation items replaced by one describing visual observation within a fire risk assessment; both standalone surveys are paused",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
@@ -387,24 +387,24 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
-    lastModified: "2026-08-08",
+    lastModified: "2026-11-01",
     contentHash: "0e4628d435cc30c6",
-    source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
+    source: "601ba29 \u2014 the mixed-use case-study summary no longer claims the fire strategy unlocked planning approval",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-11-01",
     contentHash: "1ba8ee439292b9a5",
-    source: "HEADSHA \u2014 unverified testimonials removed from case-study detail pages",
+    source: "601ba29 \u2014 unverified testimonials removed from case-study detail pages",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-11-01",
     contentHash: "1c9b89055a41a8a5",
-    source: "HEADSHA \u2014 unverified testimonials removed, and the outcome no longer claims the fire strategy unlocked planning approval",
+    source: "601ba29 \u2014 unverified testimonials removed, and the outcome no longer claims the fire strategy unlocked planning approval",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-11-01",
     contentHash: "ecfc90b97987ab82",
-    source: "HEADSHA \u2014 unverified testimonials removed from case-study detail pages",
+    source: "601ba29 \u2014 unverified testimonials removed from case-study detail pages",
   },
   "/faq": {
     lastModified: "2026-08-01",
@@ -419,7 +419,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/contact": {
     lastModified: "2026-11-01",
     contentHash: "566ec34df9029118",
-    source: "HEADSHA \u2014 the Fire Door Inspection enquiry option removed while that service is paused",
+    source: "601ba29 \u2014 the Fire Door Inspection enquiry option removed while that service is paused",
   },
 };
 

@@ -140,16 +140,24 @@ describe("Structured data and dates", () => {
     assert.equal(list.itemListElement.length, CASE_STUDIES.length);
   });
 
-  test("/case-studies records the card removal as a reader-visible change", async () => {
-    // Removing three visible cards is the policy's FIRST case: both the hash
-    // and the date move. It is also the only authored-page entry this change
-    // touches — asserted below, so the registry footprint cannot widen
-    // unnoticed.
+  test("/case-studies records its last reader-visible change", async () => {
+    // Removing three visible cards was the policy's FIRST case: both the hash
+    // and the date move. That is still why this test exists.
+    //
+    // The pinned values moved on 1 November 2026, because the index page
+    // changed again: the mixed-use study's `summary` renders on these cards,
+    // and it no longer claims the fire strategy was "unlocking planning
+    // approval". A reader of this page sees different words, so the date
+    // moved with them.
+    //
+    // The assertion is deliberately not loosened to "any date". It still
+    // names one, so the next change has to come back here and say what it
+    // was — which is the whole point of the registry.
     const { AUTHORED_PAGE_DATES } = await import("../lib/page-dates");
     const entry = AUTHORED_PAGE_DATES["/case-studies"];
-    assert.equal(entry.lastModified, "2026-08-08");
+    assert.equal(entry.lastModified, "2026-11-01");
     // The hash is pinned in tests/not-found.test.mjs, which is where it last moved.
-    assert.match(entry.source, /^change-record: 2026-08-08 — remove three unpublished summary case-study cards$/);
+    assert.match(entry.source, /^[0-9a-f]{7} — the mixed-use case-study summary no longer claims the fire strategy unlocked planning approval$/);
   });
 
   test("no other authored-page DATE is touched", async () => {
