@@ -272,12 +272,12 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-11-01",
     contentHash: "f2949aea4e6d8734",
-    source: "b1d96d1 \u2014 repositioned around health & safety: new hero and H1, nine service cards in three tiers, statistics band and testimonials removed",
+    source: "7eca1f4 \u2014 the assessor role and biography on the homepage now lead with chartered health & safety competence",
   },
   "/about": {
     lastModified: "2026-11-01",
     contentHash: "23fd4c4f85ab16f5",
-    source: "601ba29 \u2014 the CSCS Professionally Qualified Person claim removed from the Competence card and the biography pending confirmation of the card's current validity",
+    source: "7eca1f4 \u2014 H1, metadata and prose reordered to lead with health & safety, the hero no longer repeats the biography, and the \u201cevery assessment personally undertaken\u201d absolute is replaced",
   },
   "/services": {
     lastModified: "2026-11-01",
