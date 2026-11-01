@@ -271,52 +271,52 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-11-01",
-    contentHash: "572325845e2a9dd8",
+    contentHash: "69f2f09fc6bd42c7",
     source: "20e1e44 — the Construction Health & Safety service card retitled \"…and Project Assurance\" and its summary rewritten; the card's own text, not the shared footer",
   },
   "/about": {
     lastModified: "2026-08-10",
-    contentHash: "0749b4ff1a5d735c",
+    contentHash: "db71ca5e72932b21",
     source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
     lastModified: "2026-11-01",
-    contentHash: "297d0132c76c39e1",
+    contentHash: "1e71dac263a7cb30",
     source: "20e1e44 — the Construction Health & Safety card retitled \"…and Project Assurance\" and its summary rewritten",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
-    contentHash: "01f4a700c77e7634",
+    contentHash: "aadc06ecdf3bbee3",
     source: "b9df1fa — Fire Safety Consultancy section moved to its own page, replaced by a one-sentence pointer (repositioning PR3)",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-08-10",
-    contentHash: "e6cc9202cff94e29",
+    contentHash: "2f82c597aa98838a",
     source: "b9df1fa — new page, carved out of fire-safety's former Fire Safety Consultancy section (repositioning PR3)",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "0cae5c8de1e50f31",
+    contentHash: "5959b217298114a1",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "3dc8a31175e12ad0",
+    contentHash: "9fea88645a51344e",
     source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-11-01",
-    contentHash: "27c36b6451e45e7b",
+    contentHash: "5f8e7097d52075f5",
     source: "20e1e44 — retitled \"…and Project Assurance\" and rebuilt around nine service cards, with CDM 2015 advisory raised to the second section and the international wording cut back to capability",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
-    contentHash: "eff9e15ad5460355",
+    contentHash: "68ece8186c079581",
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-10-31",
-    contentHash: "eac59c88cf09d88a",
+    contentHash: "ba89e77a66a7891b",
     source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
   },
   // PROVISIONAL HASH — computed in a Linux sandbox where Google Fonts is
@@ -353,72 +353,72 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   // dishonesty this registry exists to prevent.
   "/services/health-safety-training": {
     lastModified: "2026-11-01",
-    contentHash: "71b937a88dea71ac",
+    contentHash: "233bf560feb9db97",
     source: "d79a9d7 — new page; health & safety and fire safety training, carved out of construction-health-safety#training-inductions",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "f2f8d81b92818ca2",
+    contentHash: "42744fa6770072b0",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-10-31",
-    contentHash: "de3833c9c0a35b55",
+    contentHash: "3f52a178b7674146",
     source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "d9a1849ab2edb08a",
+    contentHash: "727e720a333d5429",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "bf1566154c88f285",
+    contentHash: "aae3e3c78c3f67f3",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "c0a7590376dae789",
+    contentHash: "b06f46fd19b5d726",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/industrial-warehousing": {
     lastModified: "2026-10-31",
-    contentHash: "6694a50915138d7f",
+    contentHash: "31ed994f428632f7",
     source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-08-08",
-    contentHash: "c514586bc4b011ac",
+    contentHash: "0e4628d435cc30c6",
     source: "change-record: 2026-08-08 — remove three unpublished summary case-study cards",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-08-01",
-    contentHash: "b117a5669a9d959f",
+    contentHash: "1ba8ee439292b9a5",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-08-01",
-    contentHash: "b715e8cec6e77d8e",
+    contentHash: "1c9b89055a41a8a5",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-08-01",
-    contentHash: "5f90fb7d9d3452d8",
+    contentHash: "ecfc90b97987ab82",
     source: "574519f — Type 3 corrected to Type 4 and explanations rewritten",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "6b34b46c8b5d3bbb",
+    contentHash: "d175664bfc7dbd21",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "44672cdf8b9944b7",
+    contentHash: "7732dcbe04056131",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-08-10",
-    contentHash: "ff254f2555e6cb10",
+    contentHash: "566ec34df9029118",
     source: "5367330 — Qualifications badge block gains the Level 6 Diploma and CSCS Professionally Qualified Person status (repositioning PR4)",
   },
 };
