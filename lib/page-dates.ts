@@ -271,52 +271,52 @@ export interface PageDate {
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
     lastModified: "2026-11-01",
-    contentHash: "7415af3964a8412d",
+    contentHash: "34b6fb5bd87b2ae7",
     source: "7eca1f4 \u2014 the assessor role and biography on the homepage now lead with chartered health & safety competence",
   },
   "/about": {
     lastModified: "2026-11-01",
-    contentHash: "dd9fc2b4ee337fc9",
+    contentHash: "360adaa0d7676b3a",
     source: "7eca1f4 \u2014 H1, metadata and prose reordered to lead with health & safety, the hero no longer repeats the biography, and the \u201cevery assessment personally undertaken\u201d absolute is replaced",
   },
   "/services": {
     lastModified: "2026-11-01",
-    contentHash: "7392fc7c5b890c37",
+    contentHash: "cac22b6b70caad34",
     source: "67d1ec6 \u2014 the services grid now leads with health & safety, construction, audits and manufacturing, followed by the fire safety services",
   },
   "/services/fire-safety": {
     lastModified: "2026-11-01",
-    contentHash: "131ae419b3552d99",
+    contentHash: "3e2f042c58817cfa",
     source: "601ba29 \u2014 the Fire Safety Consultancy pointer no longer advertises door inspections or compartmentation",
   },
   "/services/fire-safety-consultancy": {
     lastModified: "2026-11-01",
-    contentHash: "ecdc6b0825c214ce",
+    contentHash: "e97fd6d9dc25f773",
     source: "601ba29 \u2014 the Fire Door Inspections and Compartmentation items replaced by one describing visual observation within a fire risk assessment; both standalone surveys are paused",
   },
   "/services/fire-engineering": {
     lastModified: "2026-08-09",
-    contentHash: "c3f78437d0b7c4e6",
+    contentHash: "afd00ac050e2c300",
     source: "c9c3ae9 — new page, carved out of fire-safety's former Fire Engineering and Fire Strategies items (repositioning PR1)",
   },
   "/services/health-safety": {
     lastModified: "2026-10-31",
-    contentHash: "4fe1817beb6b208f",
+    contentHash: "0e6ab5464cca7dd9",
     source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
     lastModified: "2026-11-01",
-    contentHash: "dd90dc6e48ff58e0",
+    contentHash: "a843634294ed14ab",
     source: "20e1e44 — retitled \"…and Project Assurance\" and rebuilt around nine service cards, with CDM 2015 advisory raised to the second section and the international wording cut back to capability",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
-    contentHash: "6cc4c3064bc51d14",
+    contentHash: "457d30b7c419558e",
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-11-01",
-    contentHash: "ca01bb5f9bf8b055",
+    contentHash: "d31906686ad64e72",
     source: "cd70ce1 — the platform left the card band for the digital-records block, which now carries a genuine screenshot of the demonstration environment; the band is a clean 3x2 of hazards",
   },
   // PROVISIONAL HASH — computed in a Linux sandbox where Google Fonts is
@@ -353,72 +353,72 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   // dishonesty this registry exists to prevent.
   "/services/health-safety-training": {
     lastModified: "2026-11-01",
-    contentHash: "2190b4ca02c60c64",
+    contentHash: "12800423cc4ad948",
     source: "d79a9d7 — new page; health & safety and fire safety training, carved out of construction-health-safety#training-inductions",
   },
   "/services/compliance-support": {
     lastModified: "2026-07-29",
-    contentHash: "89b133d297ca0402",
+    contentHash: "ed70b12b0044e5d5",
     source: "2caa255 — service pages link related guides instead of insights",
   },
   "/sectors": {
     lastModified: "2026-10-31",
-    contentHash: "fadf9631be14d901",
+    contentHash: "2241afb7767cc20e",
     source: "aa35f69 — Industrial & Warehousing retitled Manufacturing, Industrial & Warehousing, summary rewritten, and the card now links to a page",
   },
   "/sectors/residential-blocks-hmos": {
     lastModified: "2026-07-29",
-    contentHash: "3d99cb58ebc3fcef",
+    contentHash: "af269badaab95237",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/offices-commercial-workplaces": {
     lastModified: "2026-07-29",
-    contentHash: "541b7484174e99aa",
+    contentHash: "8a929ee488b2da9e",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/education": {
     lastModified: "2026-07-29",
-    contentHash: "de841e2175b15f6f",
+    contentHash: "d40f4e92be46b35c",
     source: "1e19d62 — sector pages link related guides",
   },
   "/sectors/industrial-warehousing": {
     lastModified: "2026-10-31",
-    contentHash: "abcab0a7531c032f",
+    contentHash: "ffb692286959cb21",
     source: "aa35f69 — sector given a page; retitled Manufacturing, Industrial & Warehousing and rewritten to lead with health and safety",
   },
   "/case-studies": {
     lastModified: "2026-11-01",
-    contentHash: "066fdad4333c9061",
+    contentHash: "91f28d8f19856e91",
     source: "601ba29 \u2014 the mixed-use case-study summary no longer claims the fire strategy unlocked planning approval",
   },
   "/case-studies/residential-portfolio-fire-risk-assessment": {
     lastModified: "2026-11-01",
-    contentHash: "4484c7a9df94a627",
+    contentHash: "0bdae24f67e7c345",
     source: "601ba29 \u2014 unverified testimonials removed from case-study detail pages",
   },
   "/case-studies/mixed-use-fire-strategy-change-of-use": {
     lastModified: "2026-11-01",
-    contentHash: "5d22aa0d36634ef8",
+    contentHash: "740c685834544c23",
     source: "601ba29 \u2014 unverified testimonials removed, and the outcome no longer claims the fire strategy unlocked planning approval",
   },
   "/case-studies/multi-site-commercial-compliance-management": {
     lastModified: "2026-11-01",
-    contentHash: "9cf7598ff536032a",
+    contentHash: "0c47416d786ef83d",
     source: "601ba29 \u2014 unverified testimonials removed from case-study detail pages",
   },
   "/faq": {
     lastModified: "2026-08-01",
-    contentHash: "885d8275658be03b",
+    contentHash: "5e9fc65d11e998a4",
     source: "574519f — FAQS Type 1-4 answer rewritten in lib/site.ts",
   },
   "/check": {
     lastModified: "2026-08-01",
-    contentHash: "8cd78c8eef0de8e6",
+    contentHash: "5d7da2337a029f59",
     source: "8822620 — 'What this result is, and is not' disclaimer added",
   },
   "/contact": {
     lastModified: "2026-11-01",
-    contentHash: "fe2324cdcc05590c",
+    contentHash: "5a0ec6503e8ba626",
     source: "601ba29 \u2014 the Fire Door Inspection enquiry option removed while that service is paused",
   },
 };
