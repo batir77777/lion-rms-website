@@ -341,7 +341,10 @@ describe("/services/construction-health-safety is a real, separate, indexable pa
 describe("Footer links resolve to the new Construction Health & Safety page", () => {
   test("FOOTER_SERVICE_LINKS carries a real, built route for Construction Health & Safety", async () => {
     const { FOOTER_SERVICE_LINKS } = await import("../lib/site.ts");
-    const link = FOOTER_SERVICE_LINKS.find((l) => l.label === "Construction Health & Safety");
+    // Retitled "…and Project Assurance" in November 2026. Looked up by exact
+    // label on purpose: the footer reads its text from the category, so this
+    // assertion is what catches the two drifting apart.
+    const link = FOOTER_SERVICE_LINKS.find((l) => l.label === "Construction Health & Safety and Project Assurance");
     assert.ok(link, "no Construction Health & Safety entry in FOOTER_SERVICE_LINKS");
     assert.equal(link.href, "/services/construction-health-safety");
     const file = path.join(outDir, `${link.href.replace(/^\//, "")}.html`);
@@ -353,7 +356,7 @@ describe("The homepage's Construction Health & Safety card points at the dedicat
   test("HOMEPAGE_SERVICE_CLUSTERS links straight to /services/construction-health-safety", async () => {
     const { HOMEPAGE_SERVICE_CLUSTERS } = await import("../lib/site.ts");
     const allCards = HOMEPAGE_SERVICE_CLUSTERS.flatMap((cluster) => cluster.cards);
-    const card = allCards.find((c) => c.title === "Construction Health & Safety");
+    const card = allCards.find((c) => c.title === "Construction Health & Safety and Project Assurance");
     assert.ok(card, "no Construction Health & Safety card found on the homepage");
     assert.equal(card.href, "/services/construction-health-safety");
   });
@@ -368,11 +371,17 @@ describe("The homepage's Construction Health & Safety card points at the dedicat
     );
   });
 
-  test("the homepage card's visible wording is unchanged from before the split", () => {
+  test("the homepage card's visible wording matches the category's `short`", () => {
+    // Pinned so the card cannot drift silently. It was last changed in
+    // November 2026, when the page was retitled "…and Project Assurance" and
+    // `short` was rewritten to lead on the services a construction client
+    // actually buys. Changing `short` is a visible homepage change, so this
+    // assertion is meant to fail and make someone decide, not to be updated
+    // reflexively alongside it.
     const page = html("index");
     assert.match(
       page,
-      /Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients\./,
+      /Site inspections, CDM 2015 advisory support, RAMS and construction phase plans, incident investigation and independent project assurance for construction clients, developers and contractors\./,
       "homepage Construction Health & Safety card wording has changed"
     );
   });

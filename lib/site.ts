@@ -302,10 +302,11 @@ export interface ServiceCategory {
   /**
    * See `ServicePointer`. A list, not a single pointer: a category can be the
    * origin of more than one carve-out, and can also carry a non-carve-out
-   * pointer such as the digital-platform block. `health-safety` and
-   * `construction-health-safety` each hold two after the Independent
-   * Inspections & Audits split — one for the content that moved out, one
-   * for the platform. Rendered in array order, after all sections.
+   * pointer such as the digital-platform block. `health-safety` holds two
+   * after the Independent Inspections & Audits split — one for the content
+   * that moved out, one for the platform — and `construction-health-safety`
+   * holds three, having since given its training section away as well.
+   * Rendered in array order, after all sections.
    */
   pointers?: ServicePointer[];
   /**
@@ -497,30 +498,149 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     // Repositioning PR5 (August 2026) — new page, carved out of
     // `health-safety`'s former "RAMS and Construction Phase Plans" and
     // "Competent Person Support" items (see the ServicePointer note on
-    // `health-safety`, above). Both items below are moved, not rewritten —
-    // same names, same descriptions — matching the "moved, not rewritten"
-    // discipline used for the Fire Safety Consultancy split in PR3.
+    // `health-safety`, above). Both items are moved, not rewritten — same
+    // names, same descriptions — matching the "moved, not rewritten"
+    // discipline used for the Fire Safety Consultancy split in PR3. Those two
+    // item NAMES are pinned verbatim by tests/service-architecture.test.mjs,
+    // which also asserts neither appears on /services/health-safety.
     //
-    // The intro's final sentence is newly drafted for this page, but cites
-    // only verified, already-public credentials recorded elsewhere in this
-    // file (see CREDENTIALS / PROFESSIONAL_CARDS below) — no card number,
-    // grade, or expiry, matching the rule already documented there. It does
-    // not name or imply either CDM dutyholder role: the wording stays to
-    // "alongside your project team" / "competent-person support," never
-    // "as Principal Designer" or "as Principal Contractor" — see
-    // tests/dutyholder-boundary.test.mjs for the regression guard.
+    // DUTY-HOLDER BOUNDARY — the hard rule on this page.
+    // tests/dutyholder-boundary.test.mjs bans the SINGULAR "Principal
+    // Designer" and "Principal Contractor" from every built page, with no
+    // exemption for a disclaimer: "we do not act as Principal Designer" would
+    // fail the suite. The plural passes, describing third parties. So this
+    // page says "appointed duty holders" throughout and never names either
+    // role in the singular. That is a deliberate choice of vocabulary, not an
+    // oversight, and the guard must not be weakened to get around it.
+    //
+    // MARKET FOCUS (November 2026). This is a UK page. UK construction
+    // clients, developers, contractors and refurbishment projects are the
+    // subject of roughly everything here; `major-international-projects` is
+    // one short section at the end and stays that way. Its wording claims
+    // CAPABILITY, never track record — "we can consider", never "we have
+    // delivered" — matching the rule written for the audits page (see the
+    // comment on `independent-health-safety-audits` below). No named project,
+    // no client, no airport, no country, no funder, and no claim of
+    // established overseas teams or partnerships.
+    //
+    // SCOPE SPLIT. The card band names the services a construction client
+    // buys, but the DETAIL for inspection programmes, client-side assurance
+    // and contractor monitoring lives on
+    // /services/independent-health-safety-audits, and inductions and toolbox
+    // talks on /services/health-safety-training. Those cards link out rather
+    // than restating what those pages own; the two "Also Available" pointers
+    // below stay one sentence each. That is what stops three pages competing
+    // for the same terms.
     //
     // Positioned in this array immediately after Health & Safety, matching
     // the reading order established by FOOTER_SERVICE_LINKS and
-    // HOMEPAGE_SERVICE_CLUSTERS below (Health & Safety Consultancy, then
-    // Construction Health & Safety).
+    // HOMEPAGE_SERVICE_CLUSTERS below.
     slug: "construction-health-safety",
     image: IMAGES.healthSafety,
     imageAlt: "Organised modern office workstation representing workplace compliance and risk assessment",
     eyebrow: "Construction Safety",
-    title: "Construction Health & Safety",
-    short: "Risk assessments, method statements and construction phase plans developed alongside your project team, with ongoing competent-person support for construction clients.",
-    intro: "Professional construction health and safety support, from pre-construction planning through to site delivery. We carry out site inspections and independent audits, monitor contractor compliance, prepare and review risk assessments and method statements, investigate incidents, and train site teams. Inspections, findings, evidence and corrective actions are recorded in our own digital compliance platform, so what was raised and what was closed stays traceable for the life of the project.",
+    // Retitled November 2026. `title` is also the <title>, the OpenGraph and
+    // Twitter copy, the Service JSON-LD name, the breadcrumb leaf, the footer
+    // label on every page and the homepage card heading — so this one string
+    // moves all twenty-four content hashes. The slug and canonical URL are
+    // deliberately unchanged.
+    title: "Construction Health & Safety and Project Assurance",
+    short: "Site inspections, CDM 2015 advisory support, RAMS and construction phase plans, incident investigation and independent project assurance for construction clients, developers and contractors.",
+    intro: "Independent construction health and safety consultancy for UK clients, developers, contractors and project teams — from pre-construction planning and CDM 2015 advisory support through to site delivery and handover. We inspect, advise, investigate and report: you get prioritised findings backed by photographic evidence, recommended actions with owners and dates, and a record of what was raised and what was closed that holds for the life of the project.",
+    // Icon cards, as on the Manufacturing and Training pages. No photographs:
+    // public/img/IMAGE-CREDITS.md already records a rejected construction
+    // candidate showing a worker in flip-flops on rubble and others with no
+    // head protection, which is representative of the stock available, and a
+    // photograph of a site reads as a site we worked on.
+    //
+    // Each card names a service a construction client buys and says what they
+    // receive. Four link OUT, to the page that owns the detail — see the
+    // scope-split note above. Captions describe the work, never a project.
+    cardsHeading: "What we do on your project",
+    cardsIntro: "Select any service to see what it covers and where it is delivered.",
+    riskCards: [
+      {
+        id: "card-site-inspections",
+        title: "Construction site safety inspections",
+        caption: "Site conditions, welfare, access and egress, inspected against the plan you are working to.",
+        detail: "One-off or recurring inspections against the construction phase plan and the agreed method statements. You receive prioritised findings with photographic evidence, recommended actions with owners and target dates, and a dated record of what was closed.",
+        icon: "checklist",
+        href: "#site-safety",
+        linkLabel: "Site inspections and competent-person support",
+      },
+      {
+        id: "card-inspection-programmes",
+        title: "Regular inspection programmes",
+        caption: "Weekly, fortnightly, monthly or quarterly visits in one consistent format.",
+        detail: "A standing programme across the construction phase, reported the same way each time so trends and repeat issues become visible rather than being re-discovered. Programme frequencies and formats are set out in full on our Independent Inspections & Audits page.",
+        icon: "calendar",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "Inspection programmes",
+      },
+      {
+        id: "card-client-assurance",
+        title: "Client-side project assurance",
+        caption: "Independent evidence for the client, the project board or the funder, not the delivery team.",
+        detail: "Assurance inspections and reporting carried out independently of the parties delivering the work, written for people who have to make decisions about a project rather than run it. Covered in full on our Independent Inspections & Audits page.",
+        icon: "shield",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "Client-side assurance",
+      },
+      {
+        id: "card-contractor-monitoring",
+        title: "Contractor and subcontractor monitoring",
+        caption: "Work carried out by others, checked against the requirements set for the project.",
+        detail: "Compliance audits of contractors and subcontractors, with competence, insurance and documentation reviewed at selection and during the works, and results held in a contractor register so the picture is cumulative. Covered in full on our Independent Inspections & Audits page.",
+        icon: "contractors",
+        href: "/services/independent-health-safety-audits",
+        linkLabel: "Contractor compliance",
+      },
+      {
+        id: "card-cdm",
+        title: "CDM 2015 advisory support",
+        caption: "Advice for clients and appointed duty holders on what the Regulations ask of them.",
+        detail: "Practical advisory support on duties under the Construction (Design and Management) Regulations 2015 — what the client has to do, what has to be in place before work starts, and whether the arrangements made are adequate in practice. We advise and monitor; the statutory duties stay with the appointed duty holders.",
+        icon: "cdm",
+        href: "#how-we-work",
+        linkLabel: "How we work with duty holders",
+      },
+      {
+        id: "card-rams",
+        title: "RAMS and construction phase plans",
+        caption: "Written for the work as it will actually be carried out, not lifted from a template.",
+        detail: "Task-specific risk assessments, method statements and construction phase plans prepared alongside your project team, or reviewed and commented on where your contractor has authored them. We always make clear which of the two applies, because responsibility for a document stays with its author.",
+        icon: "clipboard",
+        href: "#rams-planning",
+        linkLabel: "Planning and documentation",
+      },
+      {
+        id: "card-pre-start",
+        title: "Pre-start and mobilisation reviews",
+        caption: "Checking the arrangements are real before anyone starts work, not after.",
+        detail: "A review of the health and safety arrangements, documentation and site set-up ahead of mobilisation, so gaps are found while they are still cheap to fix. You receive a written list of what is missing and what to do about it, in priority order.",
+        icon: "flag",
+        href: "#site-safety",
+        linkLabel: "Pre-start advice",
+      },
+      {
+        id: "card-investigations",
+        title: "Incident and near-miss investigations",
+        caption: "What happened, why it happened, and what stops it happening again.",
+        detail: "Independent investigation of construction incidents, near misses and dangerous occurrences, with a factual report, root-cause analysis and corrective actions assigned to owners and tracked to closure.",
+        icon: "magnifier",
+        href: "#investigations",
+        linkLabel: "Investigations",
+      },
+      {
+        id: "card-construction-fire",
+        title: "Construction fire safety and emergency arrangements",
+        caption: "Fire precautions that keep pace with a building that changes every week.",
+        detail: "Fire and emergency arrangements for the construction phase: precautions and escape routes appropriate to each stage, hot-work and ignition-source control, site fire safety inspections, and arrangements where part of a building stays occupied while works continue.",
+        icon: "flame",
+        href: "#construction-fire-safety",
+        linkLabel: "Construction fire safety",
+      },
+    ],
     sections: [
       {
         id: "site-safety",
@@ -533,6 +653,23 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           { name: "Competent Person Support", desc: "Ongoing access to qualified health and safety advice for your project team throughout the works." },
           { name: "Documentation review", desc: "Review of contractor documentation before works begin and as the programme changes." },
           { name: "Pre-start and mobilisation advice", desc: "Practical help getting health and safety arrangements in place before work starts on site." },
+        ],
+      },
+      {
+        id: "how-we-work",
+        eyebrow: "CDM 2015",
+        title: "CDM 2015 Advisory Support and Working with Your Duty Holders",
+        // The scope sentence this page turns on. It is stated positively —
+        // what we do — then bounded, rather than led by a disclaimer. The
+        // roles are never named in the singular; see the duty-holder note at
+        // the top of this category.
+        intro: "We provide advisory support on duties under the Construction (Design and Management) Regulations 2015, and we support appointed duty holders rather than replacing them. Lion RMS does not automatically assume a statutory duty-holder appointment: those duties, and the decisions that go with them, stay with the people appointed to hold them, and our role is to advise, inspect, monitor and report so that they can discharge them with evidence. Depending on the appointment, our involvement in documentation takes one of three forms, and we always make clear which applies.",
+        items: [
+          { name: "Client duties under CDM 2015", desc: "What the Regulations ask of a construction client — making suitable arrangements, allowing adequate time and resources, and satisfying yourself that those arrangements are working — explained against your actual project rather than in the abstract." },
+          { name: "Reviewing the arrangements made", desc: "An independent view of whether the pre-construction information, the construction phase plan and the appointments made are adequate in practice, and what to do where they are not." },
+          { name: "Prepare", desc: "We author the document, with your input, and it is issued in our name." },
+          { name: "Review", desc: "Your contractor authors it; we examine it against the works and the applicable requirements and report what should change. Responsibility for the document stays with its author." },
+          { name: "Advise", desc: "We give guidance on arrangements, controls or competence, without authoring or approving a specific document." },
         ],
       },
       {
@@ -572,24 +709,21 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         ],
       },
       {
-        id: "how-we-work",
-        eyebrow: "How we work",
-        title: "Working with Your Duty Holders",
-        intro: "We support appointed duty holders rather than replacing them: statutory duties under the Construction (Design and Management) Regulations 2015 remain with the appointed duty holders. Depending on the appointment, our involvement in documentation takes one of three forms, and we always make clear which applies.",
-        items: [
-          { name: "Prepare", desc: "We author the document, with your input, and it is issued in our name." },
-          { name: "Review", desc: "Your contractor authors it; we examine it against the works and the applicable requirements and report what should change. Responsibility for the document stays with its author." },
-          { name: "Advise", desc: "We give guidance on arrangements, controls or competence, without authoring or approving a specific document." },
-        ],
-      },
-      {
         id: "major-international-projects",
         eyebrow: "Projects",
-        title: "Major and International Projects",
-        intro: "We support client organisations, developers and contractors on larger projects where health and safety assurance must be demonstrable rather than assumed \u2014 structured inspection and audit regimes, clear reporting lines and auditable digital records.",
+        title: "Larger Projects, and Work Outside the UK",
+        // CAPABILITY, NEVER TRACK RECORD. "We can consider", never "we have
+        // delivered". The previous wording said "We support client
+        // organisations... on larger projects" in the present tense with no
+        // hedge \u2014 the only place on the site that asserted major-project work
+        // as current activity, written before the rule on the audits page
+        // existed. Corrected November 2026. No named project, client,
+        // country, airport or funder, and no claim of standing overseas
+        // teams or partnerships. Keep this section SHORT: this is a UK page.
+        intro: "Most of our construction work is in the UK. We can also consider larger projects and assignments outside the UK where the scope suits a specialist advisory practice of our size, subject to resourcing, local requirements and a scope agreed in writing before anything is committed.",
         items: [
           { name: "UK projects", desc: "Delivered against UK legislation, including the Construction (Design and Management) Regulations 2015 and the Health and Safety at Work etc. Act 1974." },
-          { name: "International projects", desc: "We can support international construction projects, working to the applicable local legislation, the project's own requirements, and recognised international standards and good practice. Where local law, permitting or specialist design input is required, we work alongside locally appointed duty holders and local specialists." },
+          { name: "Projects outside the UK", desc: "CDM 2015 is UK legislation and applies only to projects in the UK. For work elsewhere we can advise against the applicable local legal framework, the project's own agreed requirements, and recognised international standards and good practice \u2014 working with suitably qualified local specialists where local law, permitting or specialist design input requires it." },
         ],
       },
     ],

@@ -63,6 +63,14 @@ const CARD_ICONS: Record<string, React.ReactNode> = {
   hazard: <><path d="M10 3h4v4.2l4.2 9.1A2 2 0 0 1 16.4 19H7.6a2 2 0 0 1-1.8-2.7L10 7.2V3Z" /><path d="M7.4 13.5h9.2" /></>,
   induction: <><path d="M4 20V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15" /><path d="M14 9h5a1 1 0 0 1 1 1v10M3 20h18" /><path d="M10.5 12h.01" /></>,
   talk: <><path d="M20 4.5H8A1.5 1.5 0 0 0 6.5 6v6A1.5 1.5 0 0 0 8 13.5h2.5V17l3.5-3.5H20A1.5 1.5 0 0 0 21.5 12V6A1.5 1.5 0 0 0 20 4.5Z" /><path d="M6.5 16.5H4A1.5 1.5 0 0 1 2.5 15v-.5" /></>,
+  // Added November 2026 for the construction page.
+  checklist: <><path d="M7.5 5.5H6A1.5 1.5 0 0 0 4.5 7v12A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-1.5V7a1.5 1.5 0 0 0-1.5-1.5h-1.5" /><path d="M9 3.5h6V6H9z" /><path d="m8.5 11.5 1.8 1.8 3.7-3.7M8.5 16.5h7" /></>,
+  calendar: <><rect x="4" y="5.5" width="16" height="14.5" rx="1.5" /><path d="M4 10h16M8.5 3.5V7M15.5 3.5V7" /><path d="M8.5 13.5h.01M12 13.5h.01M15.5 13.5h.01M8.5 16.8h.01M12 16.8h.01" /></>,
+  shield: <><path d="M12 3.2 5 6v5.6c0 4 2.9 7.6 7 9.2 4.1-1.6 7-5.2 7-9.2V6l-7-2.8Z" /><path d="m9 12 2.2 2.2L15.3 10" /></>,
+  contractors: <><circle cx="9" cy="7.5" r="2.6" /><path d="M3.8 20v-2.4A3.6 3.6 0 0 1 7.4 14h3.2a3.6 3.6 0 0 1 3.6 3.6V20" /><path d="M16.2 5.4a2.6 2.6 0 0 1 0 4.9M17.6 14h.6a3.6 3.6 0 0 1 3.6 3.6V20" /></>,
+  cdm: <><path d="M12 4.5v15M5 8h14" /><path d="M5 8 2.8 13.2a3.1 3.1 0 0 0 4.4 0L5 8ZM19 8l-2.2 5.2a3.1 3.1 0 0 0 4.4 0L19 8Z" /><path d="M8.5 20h7" /></>,
+  flag: <><path d="M6 21V4" /><path d="M6 4.8h10.8l-2.1 3.6 2.1 3.6H6" /></>,
+  magnifier: <><circle cx="10.8" cy="10.8" r="5.8" /><path d="m15.2 15.2 4.4 4.4" /><path d="M8.6 10.8h4.4" /></>,
 };
 
 export default function RiskCards({
