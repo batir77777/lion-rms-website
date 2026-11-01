@@ -87,12 +87,37 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        /*
+         * bg-white/95, not /96. Tailwind only generates opacity modifiers for
+         * steps in its scale — multiples of 5 — so `bg-white/96` compiled to
+         * NOTHING and this bar had no background at all whenever it was
+         * scrolled or the mobile menu was open. On the homepage that meant a
+         * slate-700 close icon sitting directly on the dark navy hero, which
+         * is the "close icon is invisible" defect. Verified by grepping the
+         * built stylesheet: .bg-white\/85, \/10 and \/5 are present, \/96 is
+         * not. Keep opacity values on multiples of 5.
+         */
         scrolled || open
-          ? "border-b border-slate-200 bg-white/96 shadow-sm backdrop-blur-xl"
+          ? "border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl"
           : "border-b border-transparent bg-white/85 backdrop-blur-sm"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
+      {/*
+        The row's intrinsic width, measured at 1280px: logo 49 + nav 824 +
+        right group 503 = 1376px, inside a container whose usable width is
+        1232px. Nothing shrank, because every item is whitespace-nowrap, so
+        "Request a Quote" simply ran off the screen — by 121px at 1280, 38px
+        at 1366 and 1px at 1440. It only looked fine at 1920 because the
+        overflow still landed inside a wider viewport.
+
+        Two changes fix it without touching the design. The Lion Digital pill
+        (201px plus its gap) now waits for 2xl, where there is room for it;
+        below that it is still reachable from the mobile menu and the footer.
+        And at 2xl the container widens, because the nav itself grows there
+        (2xl:px-3.5 on each of nine links) and 1280px could not hold it
+        either.
+      */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 2xl:max-w-[96rem]">
         {/* shrink-0: without it the logo is the flex item that gives way when
             the row is over-constrained, and it silently compresses to nothing
             rather than the layout visibly breaking. Found at 1280px during the
@@ -154,7 +179,7 @@ export default function Header() {
             href={LION_DIGITAL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-teal-200 hover:text-teal-700"
+            className="hidden whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-teal-200 hover:text-teal-700 2xl:inline-flex"
           >
             AI &amp; Digital Solutions &#8599;
           </a>

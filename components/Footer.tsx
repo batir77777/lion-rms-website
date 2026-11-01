@@ -149,7 +149,15 @@ export default function Footer() {
           <p className="text-sm text-slate-400">
             &copy; {new Date().getFullYear()} Lion Risk Management Solutions Limited. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          {/*
+            flex-wrap, added November 2026. Four links and three separators on
+            one unwrappable line gave this row an intrinsic width of 402px,
+            which is wider than a 390px, 375px or 320px viewport — and because
+            it is the widest thing on the page, it set the horizontal scroll
+            for the whole site at those widths. Wrapping costs nothing above
+            about 430px, where the row already fits on one line.
+          */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             {/*
              * "UK Hosted" and "UK GDPR Compliant" were removed here. The first
              * was not accurate — the site is statically served from a global

@@ -290,7 +290,7 @@ export default async function GlossaryTermPage({
               </Link>
               <Link
                 href={CTA_SECONDARY_HREF}
-                className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+                className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
               >
                 {CTA_SECONDARY_LABEL}
               </Link>
