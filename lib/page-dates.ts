@@ -280,9 +280,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "5367330 — new health & safety competence paragraph, rewritten Competence value card, new credentials (repositioning PR4)",
   },
   "/services": {
-    lastModified: "2026-10-31",
+    lastModified: "2026-11-01",
     contentHash: "7b42cba7ea451dea",
-    source: "aa35f69 — an eighth service card, Manufacturing & Industrial Safety; the seventh card (Independent Inspections & Audits) also landed without its date moving",
+    source: "d79a9d7 — a ninth service card, Health & Safety and Fire Safety Training",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -305,9 +305,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "08a563d — Workplace Inspections and Audits moved to /services/independent-health-safety-audits, replaced by a pointer at #workplace-audits",
   },
   "/services/construction-health-safety": {
-    lastModified: "2026-10-31",
+    lastModified: "2026-11-01",
     contentHash: "0b079940fc00e075",
-    source: "08a563d — the audits-monitoring section moved to /services/independent-health-safety-audits, replaced by a pointer at the same anchor; seven sections remain plus the digital-records pointer",
+    source: "d79a9d7 — the training-inductions section moved to /services/health-safety-training, replaced by a pointer at the same anchor; six sections remain plus three pointers",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
@@ -325,6 +325,24 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   // the Windows hash report before this branch merges. The same applies to the
   // twenty-three entries around it: adding a footer link changed every page's
   // HTML, so all twenty-four hashes move together in this change.
+  //
+  // THE DATES DO NOT MOVE WITH THEM. Three routes changed in a way a reader
+  // would notice, and only those three carry 2026-11-01:
+  //
+  //   /services/health-safety-training      new page
+  //   /services/construction-health-safety  a section became a pointer
+  //   /services                             a ninth card in the grid
+  //
+  // The other twenty-one gained a footer link and, for the eight sibling
+  // service pages, one more chip in the closing "Also available:" strip.
+  // Neither is a content change, and the precedent is already in this file:
+  // /services/fire-safety has sat at 2026-08-10 through PR5, the audits split
+  // and the manufacturing split, gaining a chip each time without its date
+  // moving. /services is the mirror case — aa35f69 records that its date was
+  // wrongly left alone when the seventh card landed, because a new card IS
+  // visible. A hash that moves for a shared-component change is not evidence
+  // the page changed; backdating the sitemap to say otherwise is the exact
+  // dishonesty this registry exists to prevent.
   "/services/health-safety-training": {
     lastModified: "2026-11-01",
     contentHash: "0d231bdf368176bd",
