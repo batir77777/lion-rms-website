@@ -212,7 +212,7 @@ export default async function ServiceDetailPage({
               <div key={pointer.id} id={pointer.id} className="mt-14 scroll-mt-28">
                 <Reveal>
                   <div className="overflow-hidden rounded-2xl border border-teal-100 bg-teal-50/60">
-                    <div className="grid gap-7 p-7 lg:grid-cols-2 lg:items-center lg:gap-9">
+                    <div className="grid gap-7 p-7">
                       <div>
                         <p className="mb-1.5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-teal-700">
                           <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden />
@@ -232,14 +232,14 @@ export default async function ServiceDetailPage({
                           {pointer.linkLabel} &rarr;
                         </Link>
                       </div>
-                      <figure className="lg:order-last">
+                      <figure>
                         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-teal-100 bg-white shadow-sm">
                           {pointer.media.src ? (
                             <Image
                               src={pointer.media.src}
                               alt={pointer.media.alt}
                               fill
-                              sizes="(max-width: 1024px) 100vw, 44vw"
+                              sizes="(max-width: 1280px) 100vw, 980px"
                               className="object-cover object-top"
                             />
                           ) : (
@@ -260,9 +260,18 @@ export default async function ServiceDetailPage({
                             </div>
                           )}
                         </div>
-                        {pointer.media.caption && (
-                          <figcaption className="mt-3 text-sm leading-relaxed text-slate-500">
-                            {pointer.media.caption}
+                        {(pointer.media.caption || pointer.media.disclosure) && (
+                          <figcaption className="mt-3">
+                            {pointer.media.caption && (
+                              <span className="block text-sm leading-relaxed text-slate-600">
+                                {pointer.media.caption}
+                              </span>
+                            )}
+                            {pointer.media.disclosure && (
+                              <span className="mt-1 block text-xs leading-relaxed text-slate-400">
+                                {pointer.media.disclosure}
+                              </span>
+                            )}
                           </figcaption>
                         )}
                       </figure>

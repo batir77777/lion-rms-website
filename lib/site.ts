@@ -218,8 +218,18 @@ export interface ServicePointer {
    * though they ship with every account. Optional, and omitted by every other
    * pointer, so their rendering is byte-identical. */
   bodySecondary?: string;
-  /** Optional screenshot, rendered beside the prose on wide viewports and
-   * beneath it on a phone.
+  /** Optional screenshot, rendered full width beneath the prose.
+   *
+   * It began as a second column beside the prose, which is the arrangement
+   * the layout wanted. Measured at 1440px, that column gave the image 467px
+   * — a 3x reduction from the 1388px capture, at which the interface's
+   * small-caps labels and the due date on the critical finding stopped being
+   * readable. Beneath the prose it gets 974px, a 1.4x reduction, and every
+   * label reads. An interface screenshot nobody can read is decoration
+   * pretending to be evidence, so the measurement decided the layout rather
+   * than the other way round. On a phone it is 293px either way; it stays,
+   * because at that size it still shows a working system exists and the
+   * caption carries the meaning.
    *
    * Added for `manufacturing-industrial-safety`, where the platform used to
    * be a seventh card in the "what we assess" band. It never belonged there —
@@ -250,6 +260,11 @@ export interface ServicePointer {
     alt: string;
     /** Optional line printed under the image. */
     caption?: string;
+    /** Optional second line under the caption, smaller, naming what the
+     * image actually is. A screenshot of a working system shows records a
+     * reader may take for someone's real ones, so the image says in its own
+     * furniture that the data is a demonstration. */
+    disclosure?: string;
   };
   href: string;
   linkLabel: string;
@@ -1195,8 +1210,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         // analysis, no automated report drafting, no reading of uploaded
         // documents. An image makes a claim as surely as a sentence does.
         media: {
-          alt: "The Lion RMS compliance platform showing an inspection record with findings, attached photographs and tracked corrective actions",
-          caption: "Every finding, photograph and corrective action held in one auditable record.",
+          src: "/img/platform/compliance-overview.png",
+          alt: "The Lion RMS platform's compliance overview: a compliance score, counts of open, overdue and high-priority actions, and the next critical deadline with its site, priority and due date",
+          caption: "Monitor inspection findings, overdue actions and compliance performance across multiple sites.",
+          disclosure: "Lion RMS demonstration environment \u2014 illustrative data only.",
         },
         href: "/contact",
         linkLabel: "Enquire about our digital platform",

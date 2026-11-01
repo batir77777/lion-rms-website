@@ -16,7 +16,11 @@ not be referenced from any page.
 4. **No client premises** without written permission from that client, and
    the caption must say so.
 5. **Platform screenshots use demonstration data only** — never a client's
-   records, names, sites or logos.
+   records, names, sites or logos. A screenshot is captured from the running
+   platform and published unaltered: no figure is edited, no panel is pasted
+   in, and no feature is shown that the page's own copy does not claim. The
+   page carries a visible disclosure naming it as a demonstration
+   environment.
 6. **AI-generated images are recorded as such**, with the generator, the date
    and any upscaling or sharpening applied. They are never described to the
    reader as photographs, and the on-page disclaimer names both kinds.
@@ -79,6 +83,49 @@ two areas generators usually fail examined at full resolution:
   the October rejection of `construction-inspection.jpg` required.
 
 Neither contains a legible company name, logo or number plate.
+
+### Platform screenshots
+
+Captured from the Lion RMS platform's staging environment on 1 November 2026,
+signed in to the **Lion RMS Demo University** organisation. The organisation,
+its three sites and every record in it are fictional demonstration data; the
+interface, the figures and the layout are the real product, unaltered.
+
+| File | Subject | Origin | Alt text |
+|---|---|---|---|
+| `platform/compliance-overview.png` | Compliance Overview: score, action counts, top-risk site, next critical deadline | Screenshot, Lion RMS staging, 2026-11-01 | The Lion RMS platform's compliance overview: a compliance score, counts of open, overdue and high-priority actions, and the next critical deadline with its site, priority and due date |
+
+**Nothing was edited.** Cropped to 16:10 and re-encoded, and that is all. No
+figure was changed, no panel was moved or pasted in, nothing was retouched or
+blurred. The crop was chosen so that nothing needed removing in the first
+place.
+
+**What the crop deliberately excludes**, all of it present elsewhere in the
+same session and none of it publishable:
+
+- Every reference to `LION RMS INTERNATIONAL DEMO — Uzbekistan Industrial
+  Facility`, which appears against nearly every corrective action and twice in
+  the dashboard's own Recent Activity and Recent Reports feeds. Uzbekistan
+  stays off this website.
+- The `[SYNTHETIC DEMO]` title prefixes and the `SYNTHETIC DEMONSTRATION DATA
+  - NOT A REAL INSPECTION` descriptions carried by the demo actions.
+- A `[STAGING VALIDATION] Phase 3.3 Client Admin - Create workflow test`
+  record, which is developer debris.
+- The signed-in user's name and email address, in the sidebar's account block.
+
+**What it shows that the copy claims**: open, overdue and high-priority action
+counts; reports submitted; sites needing attention; and a named finding with
+its site, priority and an overdue due date. **What it does not show, and why
+that is deliberate**: no AI panel appears anywhere in it. The copy beside it
+refuses to claim predictive risk, trend analysis, automated report drafting or
+document reading, and an image makes a claim as surely as a sentence does.
+
+One honest gap: the dashboard reads `0 EVIDENCE RECORDS`, because the
+demonstration data holds no photographs attached to findings. The copy's
+claim that photographic evidence attaches to individual findings is therefore
+stated but not pictured. The owner was told, and chose not to alter the
+demonstration database for marketing purposes — which is the right call, and
+is recorded here so nobody later mistakes the gap for an oversight.
 
 ### Inspection notes on the licensed photographs
 
