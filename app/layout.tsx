@@ -72,7 +72,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-GB" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="flex min-h-screen flex-col">
+      {/*
+       * The bottom padding reserves the height of the mobile contact bar
+       * (components/FloatingContact), so the document ENDS above it rather
+       * than behind it: without this the last ~70px of every page — footer
+       * lines, badges, the final CTA — sat permanently underneath, which is
+       * what the old floating circles did to the bottom-right corner. It is
+       * constant on phones, including while the bar hides itself for a
+       * focused field or a scroll, because reflowing the page under the
+       * visitor's thumb mid-form would be worse than a strip of empty space.
+       * `md:pb-0` must stay in step with the bar's own `md:hidden`.
+       */}
+      <body className="flex min-h-screen flex-col pb-[calc(4.25rem+env(safe-area-inset-bottom,0px))] md:pb-0">
         {/*
          * Skip link. First focusable element in the DOM, visually hidden until
          * focused, so a keyboard user does not have to tab through the whole

@@ -31,6 +31,7 @@ export default function ServicesMenu({ active }: { active: boolean }) {
   const panelId = useId();
   const groupRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Escape closes and returns focus to the button, so a keyboard user is not
   // dropped at the top of the document.
@@ -56,6 +57,39 @@ export default function ServicesMenu({ active }: { active: boolean }) {
     }
     window.addEventListener("mousedown", onDown);
     return () => window.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  /*
+   * Deliberate scrolling closes the panel. A dropdown left hanging while the
+   * page moves under it reads as stuck.
+   *
+   * Two guards, both of which exist to protect keyboard users rather than to
+   * tune the feel:
+   *
+   *   1. If focus is inside the PANEL, the scroll is almost certainly the
+   *      browser bringing a just-focused link into view as someone tabs
+   *      through it. Closing then would snatch the menu away mid-tab and
+   *      strand the focus, so that scroll is ignored outright. The panel
+   *      specifically, not the whole group: clicking the button leaves focus
+   *      on the button, and guarding on the group would have meant the menu
+   *      never closed on scroll for a mouse user at all. That is exactly what
+   *      the first version did, and the test caught it.
+   *   2. A small threshold, because trackpad momentum and the one or two
+   *      pixels a browser settles by are not a visitor scrolling. Below it
+   *      the panel stays open.
+   *
+   * Passive, and registered only while open, like the two effects above.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const startY = window.scrollY;
+    const onScroll = () => {
+      if (panelRef.current?.contains(document.activeElement)) return;
+      if (Math.abs(window.scrollY - startY) < 12) return;
+      setOpen(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [open]);
 
   // Tabbing out of the last link closes the panel rather than leaving it open
@@ -105,6 +139,7 @@ export default function ServicesMenu({ active }: { active: boolean }) {
         the same reasoning as the expandable cards in RiskCards.
       */}
       <div
+        ref={panelRef}
         id={panelId}
         hidden={!open}
         className="absolute left-0 top-full z-50 mt-3 w-[34rem] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"

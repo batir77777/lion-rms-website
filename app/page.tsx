@@ -420,7 +420,14 @@ export default function HomePage() {
               href="/contact"
               className="inline-flex items-center whitespace-nowrap rounded-full border border-teal-600 px-7 py-3 text-sm font-semibold text-teal-700 transition hover:bg-teal-50"
             >
-              Explore the Lion RMS Platform &rarr;
+              {/*
+                "Enquire", not "Explore": the destination is /contact, and a
+                button promising exploration that opens an enquiry form says
+                one thing and does another. It also now matches the
+                "Enquire about our digital platform" button the service pages
+                already carry.
+              */}
+              Enquire about the Lion RMS Platform &rarr;
             </Link>
           </div>
         </div>

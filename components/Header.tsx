@@ -31,6 +31,22 @@ export default function Header() {
     if (!open) setServicesOpen(false);
   }, [open]);
 
+  /*
+   * The mobile contact bar hides itself while this menu is open — the visitor
+   * is navigating, not calling, and the expanded menu should own the screen.
+   * Published as an attribute on <body> rather than lifted into shared state
+   * because the bar is a sibling in the layout, not a child of this header,
+   * and a context provider for one boolean would be the larger change. The
+   * cleanup removes it, so an unmount can never strand the bar hidden.
+   */
+  useEffect(() => {
+    if (open) document.body.dataset.navOpen = "true";
+    else delete document.body.dataset.navOpen;
+    return () => {
+      delete document.body.dataset.navOpen;
+    };
+  }, [open]);
+
   // Close the mobile menu on Escape and return focus to the toggle button.
   useEffect(() => {
     if (!open) return;
