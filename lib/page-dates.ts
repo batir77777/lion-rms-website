@@ -315,9 +315,9 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
     source: "08a563d — new page, carved out of construction-health-safety's audits-monitoring section and health-safety's Workplace Inspections and Audits item",
   },
   "/services/manufacturing-industrial-safety": {
-    lastModified: "2026-10-31",
+    lastModified: "2026-11-01",
     contentHash: "f002f94d9a8a2e00",
-    source: "aa35f69 — new page; manufacturing, production and industrial health and safety consultancy",
+    source: "change-record: 2026-11-01 — the warehousing and construction cards gained images in place of plain teal bands; a reader sees two new pictures, so the date moves with the hash",
   },
   // PROVISIONAL HASH — computed in a Linux sandbox where Google Fonts is
   // blocked and next/font is stubbed, so every hash it produces differs from a

@@ -209,10 +209,19 @@ export default function RiskCards({
           })}
         </ul>
 
+        {/*
+          Widened 1 November 2026 to cover both kinds of image on the band.
+          Four of the six industrial cards are licensed stock photographs;
+          two are AI-generated illustrations. Saying only "photographs" would
+          have been inaccurate the moment the second kind appeared, and the
+          part that matters — that none of them is our work or a client's
+          premises — is true of both and stays.
+        */}
         {cards.some((c) => c.image) && (
           <p className="mt-8 max-w-3xl text-xs leading-relaxed text-slate-400">
-            Photographs are licensed stock images illustrating the types of premises, activities
-            and hazards we assess. They do not depict Lion RMS projects or clients.
+            Images are licensed stock photographs or AI-generated illustrations, used to show the
+            types of premises, activities and hazards we assess. None of them depicts a Lion RMS
+            project or a client&rsquo;s premises.
           </p>
         )}
       </div>

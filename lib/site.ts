@@ -978,9 +978,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Warehousing, forklifts and segregation",
         caption: "Vehicle routes, loading areas, racking and the pedestrians moving between them.",
         detail: "We assess workplace transport arrangements, pedestrian segregation, racking condition and damage reporting, and access to height — identifying where specialist racking inspection is needed.",
-        // REJECTED candidate warehouse-forklift.jpg: "NISSAN FORKLIFT" and
-        // "UNICARRIERS" are large, central and legible. The brand is effectively
-        // the subject, which reads as an endorsement. Placeholder until replaced.
+        // AI-generated illustration, 1 November 2026, replacing the branded
+        // stock candidate rejected in October ("NISSAN FORKLIFT" and
+        // "UNICARRIERS" were legible and effectively the subject). The
+        // lettering on this forklift is generator glyphs, not a real mark,
+        // and is illegible at card size. See public/img/IMAGE-CREDITS.md.
+        image: "/img/industrial/warehouse-segregation.jpg",
+        alt: "Forklift operating in a warehouse aisle beside a marked green pedestrian walkway",
         href: "#height-lifting-transport",
         linkLabel: "Transport and height",
       },
@@ -999,9 +1003,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Construction and site inspections",
         caption: "Plant installations, shutdowns and building work alongside live production.",
         detail: "Independent site inspections against the construction phase plan and agreed method statements, with prioritised findings tracked to closure — covered in full on our Construction Health & Safety page.",
-        // REJECTED candidate construction-inspection.jpg: a worker in flip-flops on
-        // rubble, others without head protection, and portrait orientation. Unusable
-        // on a page selling construction site inspections. Placeholder until replaced.
+        // AI-generated illustration, 1 November 2026, replacing the stock
+        // candidate rejected in October for visible unsafe practice (a worker
+        // in flip-flops on rubble, others without head protection). Everyone
+        // shown here is in a hard hat and hi-vis, and the open floors have
+        // edge protection. See public/img/IMAGE-CREDITS.md.
+        image: "/img/industrial/construction-site-inspection.jpg",
+        alt: "Two people in hard hats and hi-vis reviewing a steel-frame building under construction, holding tablets",
         href: "/services/construction-health-safety",
         linkLabel: "Construction H&S",
       },

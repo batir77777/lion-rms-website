@@ -228,7 +228,10 @@ describe("The 404 stays out of the sitemap and out of search", () => {
       "/services/health-safety": ["2026-10-31", "4fe1817beb6b208f"],
       "/services/construction-health-safety": ["2026-11-01", "dd90dc6e48ff58e0"],
       "/services/independent-health-safety-audits": ["2026-10-31", "6cc4c3064bc51d14"],
-      "/services/manufacturing-industrial-safety": ["2026-10-31", "f002f94d9a8a2e00"],
+      // Date moved 2026-11-01: the warehousing and construction cards gained
+      // images in place of plain teal bands. Two new pictures on the page is
+      // something a reader notices, which is the test for moving a date.
+      "/services/manufacturing-industrial-safety": ["2026-11-01", "f002f94d9a8a2e00"],
       "/services/health-safety-training": ["2026-11-01", "2190b4ca02c60c64"],
       "/services/compliance-support": ["2026-07-29", "89b133d297ca0402"],
       "/sectors": ["2026-10-31", "fadf9631be14d901"],
