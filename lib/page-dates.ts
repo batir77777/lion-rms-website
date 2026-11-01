@@ -316,8 +316,8 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   },
   "/services/manufacturing-industrial-safety": {
     lastModified: "2026-11-01",
-    contentHash: "424da05871226db1",
-    source: "529999a — the warehousing and construction cards gained images in place of plain teal bands; a reader sees two new pictures, so the date moves with the hash",
+    contentHash: "ca01bb5f9bf8b055",
+    source: "cd70ce1 — the platform left the card band for the digital-records block, which now carries a genuine screenshot of the demonstration environment; the band is a clean 3x2 of hazards",
   },
   // PROVISIONAL HASH — computed in a Linux sandbox where Google Fonts is
   // blocked and next/font is stubbed, so every hash it produces differs from a
