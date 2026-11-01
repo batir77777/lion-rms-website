@@ -270,9 +270,9 @@ export interface PageDate {
 
 export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/": {
-    lastModified: "2026-10-31",
+    lastModified: "2026-11-01",
     contentHash: "572325845e2a9dd8",
-    source: "aa35f69 — the Industrial & Warehousing sector card retitled Manufacturing, Industrial & Warehousing, its summary rewritten, and the card now links to a page",
+    source: "20e1e44 — the Construction Health & Safety service card retitled \"…and Project Assurance\" and its summary rewritten; the card's own text, not the shared footer",
   },
   "/about": {
     lastModified: "2026-08-10",
@@ -282,7 +282,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services": {
     lastModified: "2026-11-01",
     contentHash: "297d0132c76c39e1",
-    source: "d79a9d7 — a ninth service card, Health & Safety and Fire Safety Training",
+    source: "20e1e44 — the Construction Health & Safety card retitled \"…and Project Assurance\" and its summary rewritten",
   },
   "/services/fire-safety": {
     lastModified: "2026-08-10",
@@ -307,7 +307,7 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   "/services/construction-health-safety": {
     lastModified: "2026-11-01",
     contentHash: "27c36b6451e45e7b",
-    source: "d79a9d7 — the training-inductions section moved to /services/health-safety-training, replaced by a pointer at the same anchor; six sections remain plus three pointers",
+    source: "20e1e44 — retitled \"…and Project Assurance\" and rebuilt around nine service cards, with CDM 2015 advisory raised to the second section and the international wording cut back to capability",
   },
   "/services/independent-health-safety-audits": {
     lastModified: "2026-10-31",
@@ -332,6 +332,14 @@ export const AUTHORED_PAGE_DATES: Record<string, PageDate> = {
   //   /services/health-safety-training      new page
   //   /services/construction-health-safety  a section became a pointer
   //   /services                             a ninth card in the grid
+  //
+  // The same rule decided the Construction Health & Safety retitle later the
+  // same day (20e1e44). Renaming that category changes the FOOTER LABEL on
+  // every page, so all twenty-four hashes moved again — but the footer is a
+  // shared component, so only the three routes whose OWN content changed took
+  // the date: the construction page itself, /services (its card), and the
+  // homepage (its card). Visible text changing inside a shared component is
+  // still a shared-component change.
   //
   // The other twenty-one gained a footer link and, for the eight sibling
   // service pages, one more chip in the closing "Also available:" strip.

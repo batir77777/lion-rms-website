@@ -219,7 +219,7 @@ describe("The 404 stays out of the sitemap and out of search", () => {
      */
     const { AUTHORED_PAGE_DATES, AUTHORED_ROUTES } = await import("../lib/page-dates");
     const EXPECTED = {
-      "/": ["2026-10-31", "572325845e2a9dd8"],
+      "/": ["2026-11-01", "572325845e2a9dd8"],
       "/about": ["2026-08-10", "0749b4ff1a5d735c"],
       "/services": ["2026-11-01", "297d0132c76c39e1"],
       "/services/fire-safety": ["2026-08-10", "01f4a700c77e7634"],
